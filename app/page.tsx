@@ -73,7 +73,7 @@ export default function Home() {
       <section className="workspace" aria-label="청년주거나침반 AI 추천 화면">
         <header className="topbar">
           <div>
-            <p className="eyebrow">공모전 MVP</p>
+            <p className="eyebrow">맞춤형 주거지원 안내</p>
             <h1>청년주거나침반 AI</h1>
           </div>
           <span className="status">규칙 기반 추천</span>

@@ -15,11 +15,16 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   background: var(--background);
   color: var(--text);
   font-family: Arial, "Noto Sans KR", sans-serif;
+  overflow-x: hidden;
 }
 
 button,
@@ -29,12 +34,14 @@ textarea {
 
 .shell {
   min-height: 100vh;
-  padding: 32px;
+  padding: max(32px, env(safe-area-inset-top)) max(32px, env(safe-area-inset-right))
+    max(32px, env(safe-area-inset-bottom)) max(32px, env(safe-area-inset-left));
 }
 
 .workspace {
   width: min(1120px, 100%);
   margin: 0 auto;
+  min-width: 0;
 }
 
 .topbar {
@@ -62,8 +69,9 @@ p {
 
 h1 {
   margin-bottom: 0;
-  font-size: clamp(32px, 5vw, 56px);
+  font-size: clamp(30px, 5vw, 56px);
   line-height: 1.05;
+  overflow-wrap: anywhere;
 }
 
 h2 {
@@ -96,12 +104,14 @@ h2 {
   grid-template-columns: 0.8fr 1.2fr;
   gap: 24px;
   padding: 24px;
+  min-width: 0;
 }
 
 .prompt-copy p,
 .empty-state p,
 .summary {
   color: var(--muted);
+  line-height: 1.6;
 }
 
 .search-form {
@@ -118,6 +128,8 @@ textarea {
   padding: 16px;
   color: var(--text);
   background: #fbfcfa;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 textarea:focus {
@@ -140,7 +152,7 @@ textarea:focus {
 
 .prompt-buttons button,
 .primary-button {
-  min-height: 40px;
+  min-height: 44px;
   border-radius: 8px;
   border: 1px solid var(--line);
   padding: 0 14px;
@@ -206,6 +218,7 @@ textarea:focus {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+  min-width: 0;
 }
 
 .program-card {
@@ -213,12 +226,14 @@ textarea:focus {
   min-height: 440px;
   flex-direction: column;
   padding: 20px;
+  min-width: 0;
 }
 
 .card-head {
   display: flex;
   gap: 12px;
   align-items: flex-start;
+  min-width: 0;
 }
 
 .rank {
@@ -243,6 +258,7 @@ textarea:focus {
   margin-bottom: 0;
   font-size: 20px;
   line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .summary {
@@ -266,9 +282,13 @@ dt {
 dd {
   margin: 0;
   line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .program-card a {
+  display: grid;
+  min-height: 44px;
+  place-items: center;
   margin-top: auto;
   border-radius: 8px;
   padding: 12px 14px;
@@ -290,7 +310,8 @@ dd {
 
 @media (max-width: 860px) {
   .shell {
-    padding: 20px;
+    padding: max(20px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right))
+      max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
   }
 
   .topbar,
@@ -306,5 +327,89 @@ dd {
 
   .program-card {
     min-height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .shell {
+    padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right))
+      max(20px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+
+  .topbar {
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-size: 34px;
+    line-height: 1.08;
+  }
+
+  h2 {
+    font-size: 22px;
+    line-height: 1.25;
+  }
+
+  .status {
+    justify-self: start;
+    min-height: 36px;
+    padding: 8px 12px;
+  }
+
+  .input-panel,
+  .profile-box,
+  .empty-state {
+    padding: 16px;
+  }
+
+  .input-panel {
+    gap: 16px;
+  }
+
+  textarea {
+    min-height: 124px;
+    padding: 14px;
+  }
+
+  .form-actions {
+    gap: 12px;
+  }
+
+  .prompt-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .prompt-buttons button {
+    width: 100%;
+    padding: 0 8px;
+  }
+
+  .primary-button {
+    width: 100%;
+  }
+
+  .chips span {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .result-heading {
+    margin: 22px 0 12px;
+  }
+
+  .program-card {
+    padding: 16px;
+  }
+
+  .card-head h3 {
+    font-size: 19px;
+  }
+
+  .summary {
+    min-height: 0;
+    margin: 14px 0;
   }
 }
