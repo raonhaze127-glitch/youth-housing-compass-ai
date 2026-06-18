@@ -1,6 +1,10 @@
 .next/
 node_modules/
 .npm-cache/
+.vercel/
+.vercel-data/
+.vercel-config/
+.vercel-cache/
 out/
 .env*.local
 *.log
