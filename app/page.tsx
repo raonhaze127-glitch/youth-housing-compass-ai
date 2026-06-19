@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import { ApplicationStatusBadge } from "@/app/components/ApplicationStatusBadge";
 import type { Recommendation, UserProfile } from "@/lib/types";
 
 type ApiResult = {
@@ -49,7 +50,7 @@ export default function Home() {
     setError("");
 
     try {
-      const response = await fetch("/api/recommend", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message })
@@ -94,9 +95,14 @@ export default function Home() {
             />
             <div className="form-actions">
               <div className="prompt-buttons" aria-label="예시 입력">
-                {SAMPLE_PROMPTS.map((prompt) => (
-                  <button key={prompt} type="button" onClick={() => setMessage(prompt)}>
-                    예시
+                {SAMPLE_PROMPTS.map((prompt, index) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    title={prompt}
+                    onClick={() => setMessage(prompt)}
+                  >
+                    예시 {index + 1}
                   </button>
                 ))}
               </div>
@@ -123,7 +129,7 @@ export default function Home() {
 
             <div className="result-heading">
               <p className="section-label">추천 결과</p>
-              <h2>신청 가능성이 높은 사업 3개</h2>
+              <h2>조건에 맞는 주거지원 사업 {result.recommendations.length}개</h2>
             </div>
 
             <div className="cards">
@@ -132,7 +138,10 @@ export default function Home() {
                   <div className="card-head">
                     <span className="rank">{index + 1}</span>
                     <div>
-                      <p>{program.organization}</p>
+                      <div className="card-meta">
+                        <p>{program.organization}</p>
+                        <ApplicationStatusBadge status={program.status} />
+                      </div>
                       <h3>{program.title}</h3>
                     </div>
                   </div>
@@ -153,7 +162,7 @@ export default function Home() {
                       <dd>{program.benefit_summary}</dd>
                     </div>
                   </dl>
-                  <a href={program.url} target="_blank" rel="noreferrer">
+                  <a href={program.announcement_url} target="_blank" rel="noreferrer">
                     원문 확인
                   </a>
                 </article>

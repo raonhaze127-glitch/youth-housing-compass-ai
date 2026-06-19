@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import programs from "@/data/housing_programs.json";
-import { recommendPrograms } from "@/lib/matcher";
 import { parseUserInput } from "@/lib/parser";
+import { recommendPrograms } from "@/lib/recommender";
 import type { HousingProgram } from "@/lib/types";
 
 export async function POST(request: Request) {
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   }
 
   const profile = parseUserInput(message);
-  const recommendations = recommendPrograms(profile, programs as HousingProgram[], 3);
+  const recommendations = recommendPrograms(profile, programs as HousingProgram[]);
 
   return NextResponse.json({
     profile,
