@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: youth-housing-compass-announcement-api
+    runtime: python
+    rootDir: services/announcement-api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: ANNOUNCEMENT_SOURCE
+        value: k_apt_alert
+      - key: K_APT_ALERT_API_BASE_URL
+        value: https://k-apt-alert-proxy.onrender.com
+      - key: SOURCE_TIMEOUT_SECONDS
+        value: "180"
+      - key: ANNOUNCEMENT_DATABASE_PATH
+        value: /tmp/compass.db

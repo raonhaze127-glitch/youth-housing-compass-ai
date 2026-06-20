@@ -99,6 +99,13 @@ cd services/announcement-api
 
 `test:live`는 실제 외부 API를 사용하므로 네트워크와 원문 제공기관 상태에 영향을 받습니다.
 
+## 배포
+
+- Next.js 웹앱은 Vercel에 배포합니다.
+- `render.yaml`은 `services/announcement-api`를 Render 웹 서비스로 배포합니다.
+- Render 무료 인스턴스의 `/tmp` SQLite는 재시작 시 초기화될 수 있으므로 프로필·관심 공고 저장은 출품용 시연 범위입니다.
+- 웹앱의 `ANNOUNCEMENT_API_BASE_URL`에 배포된 FastAPI 주소를 설정하면 실공고 모드가 활성화됩니다.
+
 ## 주의사항
 
 현재 데이터는 공모전 시연을 위한 샘플입니다. 추천 결과는 정보 탐색을 위한 참고용이며 실제 신청 자격을 확정하지 않습니다. 신청 전 반드시 해당 기관의 최신 공고 원문을 확인해야 합니다.
