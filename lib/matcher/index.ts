@@ -28,7 +28,13 @@ export function matchProgram(
   const reasons: string[] = [];
   let score = 0;
 
-  if (profile.age && profile.age >= program.age_min && profile.age <= program.age_max) {
+  if (
+    profile.age &&
+    program.age_min !== null &&
+    program.age_max !== null &&
+    profile.age >= program.age_min &&
+    profile.age <= program.age_max
+  ) {
     score += 30;
     reasons.push(`만 ${profile.age}세가 지원 연령 범위에 들어갑니다.`);
   }
@@ -42,7 +48,7 @@ export function matchProgram(
     );
   }
 
-  if (profile.homeless === true && program.homeless_required) {
+  if (profile.homeless === true && program.homeless_required === true) {
     score += 20;
     reasons.push("무주택 조건이 필요한 사업과 입력 조건이 맞습니다.");
   }
@@ -78,9 +84,11 @@ export function matchProgram(
   } else if (status === "planned") {
     score += 4;
     reasons.push(`${program.apply_start}부터 접수가 시작될 예정입니다.`);
-  } else {
+  } else if (status === "closed") {
     score -= 20;
     reasons.push("접수가 마감되어 다음 모집 공고를 확인해야 합니다.");
+  } else {
+    reasons.push("신청기간이 확인되지 않아 원문 일정 확인이 필요합니다.");
   }
 
   if (score === 0) {

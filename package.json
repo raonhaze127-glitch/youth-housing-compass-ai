@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:full": "node scripts/dev-full.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:integration": "node scripts/integration-smoke.mjs",
+    "test:live": "node scripts/integration-live-smoke.mjs"
   },
   "dependencies": {
     "next": "^15.3.0",

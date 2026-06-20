@@ -18,6 +18,8 @@ export function getApplicationStatus(
 ): ApplicationStatus {
   const today = getKoreanDate(now);
 
+  if (!program.apply_start || !program.apply_end) return "unknown";
+
   if (today < program.apply_start) return "planned";
   if (today > program.apply_end) return "closed";
   return "open";

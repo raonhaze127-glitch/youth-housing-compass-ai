@@ -1,12 +1,22 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
-import { ApplicationStatusBadge } from "@/app/components/ApplicationStatusBadge";
+import { ProgramCard } from "@/app/components/ProgramCard";
+import { EligibilityPanel } from "@/app/components/EligibilityPanel";
+import { ChangesPanel } from "@/app/components/ChangesPanel";
 import type { Recommendation, UserProfile } from "@/lib/types";
 
 type ApiResult = {
   profile: UserProfile;
   recommendations: Recommendation[];
+  answer: string;
+  dataSource: "sample" | "live";
+  warning?: string;
+};
+
+type ConversationMessage = {
+  role: "user" | "assistant";
+  content: string;
 };
 
 const SAMPLE_PROMPTS = [
@@ -20,6 +30,7 @@ export default function Home() {
   const [result, setResult] = useState<ApiResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [conversation, setConversation] = useState<ConversationMessage[]>([]);
 
   const profileSummary = useMemo(() => {
     if (!result?.profile) return [];
@@ -53,7 +64,11 @@ export default function Home() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message })
+        body: JSON.stringify({
+          message,
+          contextProgramIds: result?.recommendations.map((program) => program.id) ?? [],
+          profileContext: result?.profile
+        })
       });
 
       if (!response.ok) {
@@ -61,7 +76,13 @@ export default function Home() {
         throw new Error(payload.error ?? "추천 결과를 불러오지 못했습니다.");
       }
 
-      setResult((await response.json()) as ApiResult);
+      const nextResult = (await response.json()) as ApiResult;
+      setResult(nextResult);
+      setConversation((current) => [
+        ...current,
+        { role: "user", content: message },
+        { role: "assistant", content: nextResult.answer }
+      ]);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "알 수 없는 오류가 발생했습니다.");
     } finally {
@@ -77,7 +98,9 @@ export default function Home() {
             <p className="eyebrow">맞춤형 주거지원 안내</p>
             <h1>청년주거나침반 AI</h1>
           </div>
-          <span className="status">규칙 기반 추천</span>
+          <span className="status">
+            {result?.dataSource === "live" ? "실공고 연동" : "규칙 기반 추천"}
+          </span>
         </header>
 
         <section className="input-panel">
@@ -114,8 +137,20 @@ export default function Home() {
           {error ? <p className="error">{error}</p> : null}
         </section>
 
+        {conversation.length ? (
+          <section className="conversation" aria-label="대화 내용" aria-live="polite">
+            {conversation.map((item, index) => (
+              <div className={`message ${item.role}`} key={`${item.role}-${index}`}>
+                <span>{item.role === "user" ? "나" : "청나주"}</span>
+                <p>{item.content}</p>
+              </div>
+            ))}
+          </section>
+        ) : null}
+
         {result ? (
           <section className="results">
+            {result.warning ? <p className="data-warning">{result.warning}</p> : null}
             <div className="profile-box">
               <p className="section-label">추출된 조건</p>
               <div className="chips">
@@ -127,6 +162,15 @@ export default function Home() {
               </div>
             </div>
 
+            {result.dataSource === "live" ? (
+              <>
+                <div className="feature-panels">
+                  <EligibilityPanel />
+                  <ChangesPanel />
+                </div>
+              </>
+            ) : null}
+
             <div className="result-heading">
               <p className="section-label">추천 결과</p>
               <h2>조건에 맞는 주거지원 사업 {result.recommendations.length}개</h2>
@@ -134,38 +178,7 @@ export default function Home() {
 
             <div className="cards">
               {result.recommendations.map((program, index) => (
-                <article className="program-card" key={program.id}>
-                  <div className="card-head">
-                    <span className="rank">{index + 1}</span>
-                    <div>
-                      <div className="card-meta">
-                        <p>{program.organization}</p>
-                        <ApplicationStatusBadge status={program.status} />
-                      </div>
-                      <h3>{program.title}</h3>
-                    </div>
-                  </div>
-                  <p className="summary">{program.summary}</p>
-                  <dl>
-                    <div>
-                      <dt>추천 이유</dt>
-                      <dd>{program.reasons.slice(0, 2).join(" ")}</dd>
-                    </div>
-                    <div>
-                      <dt>신청기간</dt>
-                      <dd>
-                        {program.apply_start} ~ {program.apply_end}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>지원내용</dt>
-                      <dd>{program.benefit_summary}</dd>
-                    </div>
-                  </dl>
-                  <a href={program.announcement_url} target="_blank" rel="noreferrer">
-                    원문 확인
-                  </a>
-                </article>
+                <ProgramCard program={program} index={index} key={program.id} />
               ))}
             </div>
           </section>

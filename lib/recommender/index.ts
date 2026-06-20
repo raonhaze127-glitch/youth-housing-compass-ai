@@ -10,7 +10,8 @@ import type {
 const STATUS_ORDER: Record<ApplicationStatus, number> = {
   open: 0,
   planned: 1,
-  closed: 2
+  unknown: 2,
+  closed: 3
 };
 
 export function recommendPrograms(

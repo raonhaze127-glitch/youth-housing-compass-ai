@@ -1,14 +1,16 @@
 export type HousingProgram = {
   id: string;
+  source_id?: string;
+  category?: string;
   title: string;
   organization: string;
   region: string;
   district: string;
   housing_type: string;
   target: string[];
-  age_min: number;
-  age_max: number;
-  homeless_required: boolean;
+  age_min: number | null;
+  age_max: number | null;
+  homeless_required: boolean | null;
   income_condition: string;
   apply_start: string;
   apply_end: string;
@@ -19,9 +21,10 @@ export type HousingProgram = {
   benefit_summary: string;
   required_documents: string[];
   source_type: string;
+  total_units?: number | null;
 };
 
-export type ApplicationStatus = "open" | "planned" | "closed";
+export type ApplicationStatus = "open" | "planned" | "closed" | "unknown";
 
 export type UserProfile = {
   region?: string;

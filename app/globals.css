@@ -28,7 +28,8 @@ body {
 }
 
 button,
-textarea {
+textarea,
+input {
   font: inherit;
 }
 
@@ -187,6 +188,177 @@ textarea:focus {
   margin-top: 24px;
 }
 
+.data-warning {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid #e9c46a;
+  border-radius: 12px;
+  background: #fff8df;
+  color: #72540b;
+  line-height: 1.55;
+}
+
+.conversation {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.message {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+
+.message span {
+  padding-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.message p {
+  margin: 0;
+  border-radius: 8px;
+  padding: 12px 14px;
+  line-height: 1.55;
+}
+
+.message.user p {
+  background: #edf4f1;
+}
+
+.message.assistant p {
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.feature-panels {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.eligibility-panel,
+.changes-panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px;
+  background: var(--surface);
+}
+
+.eligibility-panel > div > p,
+.changes-message {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.eligibility-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.eligibility-form label {
+  display: grid;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.eligibility-form input[type="number"] {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  color: var(--text);
+}
+
+.eligibility-form input[type="date"],
+.eligibility-form select {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  color: var(--text);
+  background: var(--surface);
+}
+
+.eligibility-form .checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.score-result {
+  display: grid;
+  gap: 5px;
+  margin-top: 14px;
+  border-radius: 8px;
+  padding: 14px;
+  background: #edf4f1;
+}
+
+.score-result strong {
+  color: var(--accent-strong);
+  font-size: 22px;
+}
+
+.score-result span {
+  font-size: 14px;
+}
+
+.changes-panel {
+  align-content: start;
+}
+
+.changes-button {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.changes-list {
+  display: grid;
+  gap: 9px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.changes-list li {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+}
+
+.changes-list li div {
+  display: grid;
+  gap: 2px;
+}
+
+.changes-list small {
+  color: var(--muted);
+}
+
+.change-type {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.change-type.new { background: #e2f4ed; color: #087052; }
+.change-type.updated { background: #fff1d8; color: #89590a; }
+.change-type.removed { background: #f2f2f2; color: #666666; }
+
 .profile-box {
   padding: 18px;
 }
@@ -284,6 +456,11 @@ textarea:focus {
   color: #666666;
 }
 
+.application-status.unknown {
+  background: #fff3cd;
+  color: #72520b;
+}
+
 .card-head h3 {
   margin-bottom: 0;
   font-size: 20px;
@@ -315,18 +492,67 @@ dd {
   overflow-wrap: anywhere;
 }
 
-.program-card a {
+.card-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.card-actions a,
+.card-actions button {
   display: grid;
   min-height: 44px;
   place-items: center;
-  margin-top: auto;
   border-radius: 8px;
   padding: 12px 14px;
+  border: 1px solid var(--line);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.card-actions button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.primary-link {
+  grid-column: 1 / -1;
   background: var(--accent);
   color: #ffffff;
   text-align: center;
   text-decoration: none;
-  font-weight: 700;
+}
+
+.secondary-action,
+.secondary-link {
+  background: #edf4f1;
+  color: var(--accent-strong);
+  text-align: center;
+  text-decoration: none;
+}
+
+.insight-box {
+  margin-top: 16px;
+  border-left: 3px solid var(--accent);
+  padding: 12px;
+  background: #f3f8f5;
+}
+
+.insight-box p {
+  max-height: 180px;
+  margin: 6px 0;
+  overflow-y: auto;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.insight-box small {
+  color: var(--muted);
+  line-height: 1.4;
 }
 
 .empty-state {
@@ -351,7 +577,8 @@ dd {
   }
 
   .input-panel,
-  .cards {
+  .cards,
+  .feature-panels {
     grid-template-columns: 1fr;
   }
 
@@ -432,6 +659,10 @@ dd {
 
   .program-card {
     padding: 16px;
+  }
+
+  .eligibility-form {
+    grid-template-columns: 1fr;
   }
 
   .card-head h3 {
