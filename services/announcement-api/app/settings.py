@@ -14,6 +14,8 @@ class Settings:
     sample_data_path: Path
     timeout_seconds: int
     database_path: Path
+    data_go_kr_api_key: str
+    direct_cache_ttl_seconds: int
 
 
 def load_settings() -> Settings:
@@ -31,4 +33,6 @@ def load_settings() -> Settings:
                 str(Path(__file__).resolve().parents[1] / ".local" / "compass.db"),
             )
         ),
+        data_go_kr_api_key=os.getenv("DATA_GO_KR_API_KEY", "").strip(),
+        direct_cache_ttl_seconds=max(60, int(os.getenv("DIRECT_CACHE_TTL_SECONDS", "900"))),
     )

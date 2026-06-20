@@ -6,7 +6,6 @@ const root = process.cwd();
 const apiDirectory = path.join(root, "services", "announcement-api");
 const python = path.join(apiDirectory, ".venv", "Scripts", "python.exe");
 const nextCli = path.join(root, "node_modules", "next", "dist", "bin", "next");
-const upstream = process.env.K_APT_ALERT_API_BASE_URL ?? "https://k-apt-alert-proxy.onrender.com";
 const children = [];
 
 function start(command, args, options) {
@@ -44,8 +43,8 @@ start(python, ["-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port",
   cwd: apiDirectory,
   env: {
     ...process.env,
-    ANNOUNCEMENT_SOURCE: "k_apt_alert",
-    K_APT_ALERT_API_BASE_URL: upstream,
+    ANNOUNCEMENT_SOURCE: "direct",
+    DATA_GO_KR_API_KEY: process.env.DATA_GO_KR_API_KEY ?? "",
     SOURCE_TIMEOUT_SECONDS: "180"
   }
 });

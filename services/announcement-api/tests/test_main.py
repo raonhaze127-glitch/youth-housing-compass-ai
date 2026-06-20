@@ -19,6 +19,8 @@ class AnnouncementApiTests(unittest.TestCase):
                 "status": "ok",
                 "source": "sample",
                 "upstream_features": False,
+                "direct_features": False,
+                "collector_warnings": [],
             },
         )
 

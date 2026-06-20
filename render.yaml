@@ -10,10 +10,10 @@ services:
     autoDeploy: true
     envVars:
       - key: ANNOUNCEMENT_SOURCE
-        value: k_apt_alert
-      - key: K_APT_ALERT_API_BASE_URL
-        value: https://k-apt-alert-proxy.onrender.com
+        value: direct
       - key: SOURCE_TIMEOUT_SECONDS
         value: "180"
+      - key: DIRECT_CACHE_TTL_SECONDS
+        value: "900"
       - key: ANNOUNCEMENT_DATABASE_PATH
         value: /tmp/compass.db

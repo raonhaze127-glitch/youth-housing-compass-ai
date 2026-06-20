@@ -13,9 +13,8 @@ const api = spawn(
     cwd: apiDirectory,
     env: {
       ...process.env,
-      ANNOUNCEMENT_SOURCE: process.env.ANNOUNCEMENT_SOURCE ?? "k_apt_alert",
-      K_APT_ALERT_API_BASE_URL:
-        process.env.K_APT_ALERT_API_BASE_URL ?? "https://k-apt-alert-proxy.onrender.com",
+      ANNOUNCEMENT_SOURCE: process.env.ANNOUNCEMENT_SOURCE ?? "direct",
+      DATA_GO_KR_API_KEY: process.env.DATA_GO_KR_API_KEY ?? "",
       SOURCE_TIMEOUT_SECONDS: process.env.SOURCE_TIMEOUT_SECONDS ?? "180"
     },
     stdio: "inherit",

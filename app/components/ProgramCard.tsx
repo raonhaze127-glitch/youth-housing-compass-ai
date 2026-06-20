@@ -53,7 +53,7 @@ export function ProgramCard({ program, index }: { program: Recommendation; index
   const [insight, setInsight] = useState<Insight | null>(null);
   const [loadingAction, setLoadingAction] = useState<"raw" | "competition" | null>(null);
   const sourceId = program.source_id ?? program.id;
-  const hasLiveFeatures = program.source_type === "k_apt_alert_proxy";
+  const hasLiveFeatures = ["k_apt_alert_proxy", "direct_collector"].includes(program.source_type);
 
   useEffect(() => {
     if (!hasLiveFeatures) {

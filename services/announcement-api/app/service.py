@@ -3,6 +3,7 @@ from __future__ import annotations
 from .models import Announcement
 from .settings import Settings
 from .sources import AnnouncementSource, KAptAlertSource, SampleSource
+from .direct import DirectAnnouncementSource
 
 
 def build_source(settings: Settings) -> AnnouncementSource:
@@ -12,6 +13,12 @@ def build_source(settings: Settings) -> AnnouncementSource:
         return KAptAlertSource(
             settings.k_apt_alert_api_base_url,
             settings.timeout_seconds,
+        )
+    if settings.source == "direct":
+        return DirectAnnouncementSource(
+            settings.data_go_kr_api_key,
+            settings.timeout_seconds,
+            settings.direct_cache_ttl_seconds,
         )
     raise ValueError(f"지원하지 않는 ANNOUNCEMENT_SOURCE입니다: {settings.source}")
 
