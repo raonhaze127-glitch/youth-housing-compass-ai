@@ -12,6 +12,8 @@ type Insight = {
 };
 
 const FAVORITES_KEY = "youth-housing-compass:favorites";
+const ENABLE_ANNOUNCEMENT_INSIGHTS =
+  process.env.NEXT_PUBLIC_ENABLE_ANNOUNCEMENT_INSIGHTS === "true";
 
 function readFavorites() {
   try {
@@ -153,7 +155,7 @@ export function ProgramCard({ program, index }: { program: Recommendation; index
         </div>
       </dl>
 
-      {insight ? (
+      {ENABLE_ANNOUNCEMENT_INSIGHTS && insight ? (
         <div className="insight-box" aria-live="polite">
           <strong>{insight.title}</strong>
           <p>{insight.body}</p>
@@ -165,7 +167,7 @@ export function ProgramCard({ program, index }: { program: Recommendation; index
         <button type="button" className="secondary-action" onClick={toggleFavorite} disabled={favoriteLoading}>
           {favoriteLoading ? "저장 중" : favorite ? "관심 해제" : "관심 저장"}
         </button>
-        {hasLiveFeatures ? (
+        {hasLiveFeatures && ENABLE_ANNOUNCEMENT_INSIGHTS ? (
           <>
             <button
               type="button"

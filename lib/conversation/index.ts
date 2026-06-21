@@ -30,7 +30,7 @@ export function createConversationalAnswer(
   if (selected && /서류|준비/.test(message)) {
     return selected.required_documents.length
       ? `${selected.title} 준비서류: ${selected.required_documents.join(", ")}. 공고 유형과 개인 상황에 따라 추가 서류가 필요할 수 있습니다.`
-      : `${selected.title}의 준비서류가 아직 구조화되지 않았습니다. 카드의 공고 해석 또는 원문 확인을 이용해주세요.`;
+      : `${selected.title}의 준비서류가 아직 구조화되지 않았습니다. 기관 원문 공고를 확인해주세요.`;
   }
 
   if (selected && /기간|일정|언제|마감/.test(message)) {
@@ -44,11 +44,11 @@ export function createConversationalAnswer(
   }
 
   if (selected && /경쟁률/.test(message)) {
-    return `${selected.title} 카드의 경쟁률 버튼에서 실제 결과, 지역 이력, 통계 추정치 순으로 확인할 수 있습니다. 출처가 통계 추정치라면 참고값으로만 보세요.`;
+    return `${selected.title}의 공식 경쟁률 데이터는 현재 연동하지 않습니다. 기관의 모집결과 공고를 확인해주세요.`;
   }
 
   if (selected) {
-    return `${selected.title}에 대해 자격, 준비서류, 신청기간, 지원내용 또는 경쟁률을 물어보실 수 있습니다.`;
+    return `${selected.title}에 대해 자격, 준비서류, 신청기간 또는 지원내용을 물어보실 수 있습니다.`;
   }
 
   if (!recommendations.length) {

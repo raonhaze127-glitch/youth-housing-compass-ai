@@ -60,8 +60,8 @@ python -m venv .venv
   - `ANNOUNCEMENT_SYNC_TOKEN`을 설정하면 `X-Sync-Token` 헤더가 필요
 - `POST /v1/eligibility/score`: 청약 가점·1순위·특별공급 사전 점검
 - `POST /v1/announcements/match`: 공고와 프로필 적합도
-- `GET /v1/notices/{id}/raw`: 공고 원문과 섹션 추출 결과
-- `GET /v1/announcements/{id}/competition`: 경쟁률과 출처
+- `GET /v1/notices/{id}/raw`: 향후 확장용 원문·섹션 추출 시범 API(현재 카드 비노출)
+- `GET /v1/announcements/{id}/competition`: 향후 확장용 경쟁률 시범 API(현재 카드 비노출)
 - `GET /v1/announcements/{id}/calendar.ics`: 일정 파일
 - `GET /v1/changes`: 신규·수정·삭제 변동 이력
 - `GET/PUT/DELETE /v1/users/{user_id}/profile`: 로컬 MVP 프로필
