@@ -103,7 +103,9 @@ def _announcement(
 
 def _json_items(payload: Any) -> list[dict[str, Any]]:
     if isinstance(payload, list):
-        return [item for item in payload if isinstance(item, dict)]
+        direct_items = [item for item in payload if isinstance(item, dict)]
+        if any(_is_announcement_record(item) for item in direct_items):
+            return direct_items
     if isinstance(payload, dict) and isinstance(payload.get("data"), list):
         return [item for item in payload["data"] if isinstance(item, dict)]
     body = payload.get("response", {}).get("body", {}) if isinstance(payload, dict) else {}
@@ -112,7 +114,28 @@ def _json_items(payload: Any) -> list[dict[str, Any]]:
         items = items.get("item", [])
     if isinstance(items, dict):
         items = [items]
-    return [item for item in items if isinstance(item, dict)] if isinstance(items, list) else []
+    standard_items = [item for item in items if isinstance(item, dict)] if isinstance(items, list) else []
+    if standard_items:
+        return standard_items
+    return _find_announcement_records(payload)
+
+
+def _is_announcement_record(value: dict[str, Any]) -> bool:
+    return any(key in value for key in ("BBS_SN", "PBLANC_NO", "HOUSE_MANAGE_NO"))
+
+
+def _find_announcement_records(payload: Any) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    if isinstance(payload, dict):
+        if _is_announcement_record(payload):
+            records.append(payload)
+        else:
+            for value in payload.values():
+                records.extend(_find_announcement_records(value))
+    elif isinstance(payload, list):
+        for value in payload:
+            records.extend(_find_announcement_records(value))
+    return records
 
 
 def _fetch_applyhome(api_key: str, months_back: int, timeout: int, fetched_at: str) -> list[Announcement]:

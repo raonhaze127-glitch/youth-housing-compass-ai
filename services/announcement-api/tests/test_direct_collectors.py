@@ -23,6 +23,10 @@ class DirectCollectorTests(unittest.TestCase):
         items = _json_items([{"BBS_SN": "10"}, "ignored"])
         self.assertEqual(items, [{"BBS_SN": "10"}])
 
+    def test_lh_wrapped_list_response_is_supported(self):
+        items = _json_items([{"dsList": [{"BBS_SN": "11", "BBS_TL": "공고"}]}])
+        self.assertEqual(items, [{"BBS_SN": "11", "BBS_TL": "공고"}])
+
     def test_collector_warning_does_not_expose_service_key(self):
         source = DirectAnnouncementSource("top-secret-key", 5, 0)
         response = FakeResponse({})
