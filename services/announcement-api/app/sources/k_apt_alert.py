@@ -76,11 +76,17 @@ def normalize_announcement(item: dict, fetched_at: str) -> Announcement:
 class KAptAlertSource:
     name = "k_apt_alert"
 
-    def __init__(self, base_url: str, timeout_seconds: int = 30):
+    def __init__(
+        self,
+        base_url: str,
+        timeout_seconds: int = 30,
+        include_private_housing: bool = False,
+    ):
         if not base_url:
             raise ValueError("K_APT_ALERT_API_BASE_URL이 필요합니다.")
         self.base_url = base_url.rstrip("/")
         self.timeout_seconds = timeout_seconds
+        self.include_private_housing = include_private_housing
 
     def fetch(self, months_back: int = 2) -> list[Announcement]:
         query = urlencode(
@@ -103,4 +109,9 @@ class KAptAlertSource:
             raise SourceError("k-apt-alert 응답에 announcements 배열이 없습니다.")
 
         fetched_at = str(payload.get("fetched_at") or datetime.now(timezone.utc).isoformat())
-        return [normalize_announcement(item, fetched_at) for item in items if item.get("id")]
+        normalized = [
+            normalize_announcement(item, fetched_at) for item in items if item.get("id")
+        ]
+        if self.include_private_housing:
+            return normalized
+        return [item for item in normalized if item.organization in {"LH", "SH", "GH"}]

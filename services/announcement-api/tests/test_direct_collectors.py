@@ -58,7 +58,9 @@ class DirectCollectorTests(unittest.TestCase):
         self.assertEqual(items, [{"BBS_SN": "11", "BBS_TL": "공고"}])
 
     def test_collector_warning_does_not_expose_service_key(self):
-        source = DirectAnnouncementSource("top-secret-key", 5, 0)
+        source = DirectAnnouncementSource(
+            "top-secret-key", 5, 0, include_private_housing=True
+        )
         response = FakeResponse({})
         response.status_code = 401
         response.reason = "Unauthorized"
@@ -77,6 +79,40 @@ class DirectCollectorTests(unittest.TestCase):
         self.assertIn("HTTP 401", warnings)
         self.assertNotIn("top-secret-key", warnings)
         self.assertNotIn("serviceKey", warnings)
+
+    def test_public_only_mode_skips_applyhome_collection(self):
+        source = DirectAnnouncementSource("key", 5, 60)
+        lh_item = _announcement(
+            source_id="lh_1", title="LH 공공주택", organization="LH",
+            category="LH 공공주택", region="서울", fetched_at="now",
+        )
+        with mock.patch("app.direct.collectors._fetch_applyhome") as applyhome, mock.patch(
+            "app.direct.collectors._fetch_lh", return_value=[lh_item]
+        ), mock.patch("app.direct.collectors._fetch_sh", return_value=[]), mock.patch(
+            "app.direct.collectors._fetch_gh", return_value=[]
+        ):
+            result = source.fetch(force_refresh=True)
+        applyhome.assert_not_called()
+        self.assertEqual([item.organization for item in result], ["LH"])
+
+    def test_public_only_mode_hides_stored_applyhome_announcements(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = DirectAnnouncementSource(
+                "", 5, 60, Path(directory) / "announcements.db"
+            )
+            public = _announcement(
+                source_id="sh_1", title="SH 공공주택", organization="SH",
+                category="SH 공공주택", region="서울", fetched_at="now",
+            )
+            private = _announcement(
+                source_id="apt_1", title="민영 아파트", organization="청약홈",
+                category="APT", region="서울", fetched_at="now",
+            )
+            source.repository.upsert(
+                [public.to_dict(), private.to_dict()], "2026-06-21T00:00:00+00:00"
+            )
+            result = source._stored_items()
+        self.assertEqual([item.source_id for item in result], ["sh_1"])
 
     def test_five_applyhome_channels_are_normalized(self):
         payload = {

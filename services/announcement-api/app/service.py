@@ -13,6 +13,7 @@ def build_source(settings: Settings) -> AnnouncementSource:
         return KAptAlertSource(
             settings.k_apt_alert_api_base_url,
             settings.timeout_seconds,
+            settings.include_private_housing,
         )
     if settings.source == "direct":
         return DirectAnnouncementSource(
@@ -21,6 +22,7 @@ def build_source(settings: Settings) -> AnnouncementSource:
             settings.direct_cache_ttl_seconds,
             settings.database_path,
             settings.direct_sync_interval_seconds,
+            settings.include_private_housing,
         )
     raise ValueError(f"지원하지 않는 ANNOUNCEMENT_SOURCE입니다: {settings.source}")
 

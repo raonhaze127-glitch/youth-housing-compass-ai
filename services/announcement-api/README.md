@@ -5,7 +5,7 @@
 현재 단계에서는 세 가지 소스를 지원합니다.
 
 - `sample`: 루트의 `data/housing_programs.json`을 읽는 기본 모드
-- `direct`: 청약홈 5종·LH 공개 API와 SH·GH HTML을 기관 원본에서 직접 수집하는 모드
+- `direct`: LH 공개 API와 SH·GH HTML에서 공공주택을 직접 수집하는 모드
 - `k_apt_alert`: `K_APT_ALERT_API_BASE_URL`로 지정한 k-apt-alert 호환 API를 호출해 공통 모델로 정규화하는 모드
 
 Next.js 화면과 API 프록시로 연결되어 있습니다. 외부 API 환경변수를 설정하지 않으면 네트워크 요청 없이 샘플 모드로 동작합니다.
@@ -27,9 +27,10 @@ python -m venv .venv
 |---|---|---|
 | `ANNOUNCEMENT_SOURCE` | `sample` | `sample`, `direct`, `k_apt_alert` |
 | `K_APT_ALERT_API_BASE_URL` | 없음 | k-apt-alert 호환 API 기본 URL |
-| `DATA_GO_KR_API_KEY` | 없음 | 청약홈 5종·LH 직접 수집용 공공데이터 키 |
+| `DATA_GO_KR_API_KEY` | 없음 | LH 직접 수집용 공공데이터 키 |
 | `DIRECT_CACHE_TTL_SECONDS` | `900` | 직접 수집 메모리 캐시 시간 |
 | `DIRECT_SYNC_INTERVAL_SECONDS` | `86400` | 일반 조회가 자동 증분 동기화를 다시 허용하는 최소 간격 |
+| `INCLUDE_PRIVATE_HOUSING` | `false` | 향후 민간주택 확장 시에만 청약홈 수집·노출 활성화 |
 | `ANNOUNCEMENT_SYNC_TOKEN` | 없음 | 예약 동기화 엔드포인트 보호용 선택 토큰 |
 | `SAMPLE_DATA_PATH` | 루트 샘플 JSON | 샘플 데이터 경로 재정의 |
 | `SOURCE_TIMEOUT_SECONDS` | `180` | 외부 API 요청 제한 시간 |
@@ -40,6 +41,8 @@ python -m venv .venv
 `ANNOUNCEMENT_SOURCE=k_apt_alert`인데 API 주소가 없으면 서비스 시작 시 오류가 발생합니다. 조용히 샘플로 대체하지 않아 데이터 출처가 섞이지 않게 합니다.
 
 `ANNOUNCEMENT_SOURCE=direct`에서 공공데이터 키가 없으면 SH·GH만 수집합니다. 기관별 수집 실패는 다른 채널을 막지 않으며 마지막 성공 캐시를 유지합니다.
+
+기본 서비스 범위는 LH·SH·GH 공공주택입니다. 청약홈 수집 코드는 향후 민간주택 확장을 위해 남겨 두지만 `INCLUDE_PRIVATE_HOUSING=false`에서는 호출하지 않으며, SQLite에 과거 청약홈 데이터가 남아 있어도 목록·변동·원문 조회에 노출하지 않습니다.
 
 ## API
 

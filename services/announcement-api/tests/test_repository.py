@@ -63,6 +63,7 @@ class AnnouncementRepositoryTests(unittest.TestCase):
         changes = self.repository.list_changes(change_type="updated")
         self.assertEqual(changes["source"], "direct_sqlite_history")
         self.assertEqual(changes["count"], 1)
+        self.assertEqual(changes["changes"][0]["organization"], "LH")
         self.assertEqual(changes["changes"][0]["field_changes"]["title"]["after"], "정정 공고")
 
     def test_sync_state_is_persisted(self):
