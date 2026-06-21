@@ -16,7 +16,7 @@ from ..status import calculate_status, normalize_date
 from .changes import ChangeTracker
 
 APPLYHOME_BASE = "https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1"
-LH_URL = "http://apis.data.go.kr/B552555/lhNoticeInfo1/getNoticeInfo1"
+LH_URL = "https://apis.data.go.kr/B552555/lhNoticeInfo1/getNoticeInfo1"
 SH_BOARDS = {
     "공공분양": "https://www.i-sh.co.kr/app/lay2/program/S48T1581C563/www/brd/m_247/list.do?multi_itm_seq=1",
     "공공임대": "https://www.i-sh.co.kr/app/lay2/program/S48T1581C563/www/brd/m_247/list.do?multi_itm_seq=2",
@@ -48,6 +48,19 @@ GYEONGGI_CITIES = (
     "의정부", "시흥", "파주", "김포", "광명", "광주", "군포", "오산", "이천", "양주",
     "구리", "안성", "포천", "의왕", "하남", "여주", "동두천", "과천", "가평", "양평",
 )
+
+
+def _safe_collection_error(name: str, error: Exception) -> str:
+    """Return an operator-facing error without URLs, query strings, or secrets."""
+    if isinstance(error, requests.HTTPError) and error.response is not None:
+        status = error.response.status_code
+        reason = error.response.reason or "HTTP 오류"
+        return f"{name} 수집 실패: HTTP {status} {reason}"
+    if isinstance(error, requests.RequestException):
+        return f"{name} 수집 실패: 요청 오류 ({type(error).__name__})"
+    return f"{name} 수집 실패: 내부 오류 ({type(error).__name__})"
+
+
 INCLUDE_WORDS = ("모집공고", "분양공고", "입주자 모집", "입주자모집", "공급공고", "청약공고", "본청약")
 EXCLUDE_WORDS = ("당첨자", "발표", "계약대상", "선정결과", "취소", "명단")
 
@@ -274,7 +287,7 @@ class DirectAnnouncementSource:
                 try:
                     collected.extend(future.result())
                 except Exception as error:
-                    errors.append(f"{name} 수집 실패: {error}")
+                    errors.append(_safe_collection_error(name, error))
         unique = {item.source_id: item for item in collected if item.source_id and item.title}
         items = sorted(unique.values(), key=lambda item: (item.apply_end or item.metadata.get("notice_date") or ""), reverse=True)
         with self._lock:

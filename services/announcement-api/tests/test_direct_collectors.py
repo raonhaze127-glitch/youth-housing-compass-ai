@@ -2,7 +2,9 @@ import unittest
 from datetime import date
 from unittest import mock
 
-from app.direct.collectors import _fetch_applyhome, _fetch_lh
+import requests
+
+from app.direct.collectors import DirectAnnouncementSource, _fetch_applyhome, _fetch_lh
 
 
 class FakeResponse:
@@ -17,6 +19,27 @@ class FakeResponse:
 
 
 class DirectCollectorTests(unittest.TestCase):
+    def test_collector_warning_does_not_expose_service_key(self):
+        source = DirectAnnouncementSource("top-secret-key", 5, 0)
+        response = FakeResponse({})
+        response.status_code = 401
+        response.reason = "Unauthorized"
+        error = requests.HTTPError(
+            "401 for https://example.test?serviceKey=top-secret-key",
+            response=response,
+        )
+        with mock.patch("app.direct.collectors._fetch_applyhome", side_effect=error), mock.patch(
+            "app.direct.collectors._fetch_lh", return_value=[]
+        ), mock.patch("app.direct.collectors._fetch_sh", return_value=[]), mock.patch(
+            "app.direct.collectors._fetch_gh", return_value=[]
+        ):
+            with self.assertRaises(Exception):
+                source.fetch()
+        warnings = " ".join(source.errors)
+        self.assertIn("HTTP 401", warnings)
+        self.assertNotIn("top-secret-key", warnings)
+        self.assertNotIn("serviceKey", warnings)
+
     def test_five_applyhome_channels_are_normalized(self):
         payload = {
             "data": [{
