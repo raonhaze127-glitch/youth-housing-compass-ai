@@ -157,7 +157,20 @@ class DirectFeatureClient:
     def changes(self, since: str = "", change_type: str = "", limit: int = 50) -> dict[str, Any]:
         self.source.fetch()
         if self.source.repository:
-            return self.source.repository.list_changes(since, change_type, limit)
+            result = self.source.repository.list_changes(since, change_type, 200)
+            if self.source.include_private_housing:
+                result["changes"] = result["changes"][:limit]
+            else:
+                result["changes"] = [
+                    change
+                    for change in result["changes"]
+                    if change.get("organization") in {"LH", "SH", "GH"}
+                ][:limit]
+            result["count"] = len(result["changes"])
+            result["tracking_status"] = (
+                "ready" if result["changes"] else "bootstrap_no_diff_yet"
+            )
+            return result
         return self.source.tracker.query(since, change_type, limit)
 
     def calendar(self, announcement_id: str) -> BinaryResponse:

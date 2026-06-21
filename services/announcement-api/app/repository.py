@@ -349,6 +349,7 @@ class AnnouncementRepository:
                 "id": row["source_id"],
                 "type": row["change_type"],
                 "name": after.get("title"),
+                "organization": after.get("organization"),
                 "region": after.get("region"),
                 "detected_at": row["changed_at"],
             }

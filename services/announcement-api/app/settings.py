@@ -17,7 +17,15 @@ class Settings:
     data_go_kr_api_key: str
     direct_cache_ttl_seconds: int
     direct_sync_interval_seconds: int
+    include_private_housing: bool
     sync_token: str
+
+
+def _environment_flag(name: str, default: bool = False) -> bool:
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
 def load_settings() -> Settings:
@@ -40,5 +48,6 @@ def load_settings() -> Settings:
         direct_sync_interval_seconds=max(
             3600, int(os.getenv("DIRECT_SYNC_INTERVAL_SECONDS", "86400"))
         ),
+        include_private_housing=_environment_flag("INCLUDE_PRIVATE_HOUSING", False),
         sync_token=os.getenv("ANNOUNCEMENT_SYNC_TOKEN", "").strip(),
     )

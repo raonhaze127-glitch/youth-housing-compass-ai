@@ -33,6 +33,7 @@ APPLYHOME_CHANNELS = (
     ("public_rent", "공공지원민간임대", "getPblPvtRentLttotPblancDetail"),
     ("optional", "임의공급", "getOPTLttotPblancDetail"),
 )
+PUBLIC_HOUSING_ORGANIZATIONS = frozenset({"LH", "SH", "GH"})
 AREA_CODES = {
     "100": "서울", "200": "인천", "300": "경기", "400": "부산", "401": "대구",
     "402": "광주", "403": "대전", "404": "울산", "405": "세종", "500": "강원",
@@ -296,11 +297,13 @@ class DirectAnnouncementSource:
         cache_ttl_seconds: int = 900,
         database_path: Path | None = None,
         sync_interval_seconds: int = 86400,
+        include_private_housing: bool = False,
     ):
         self.api_key = api_key
         self.timeout_seconds = min(timeout_seconds, 60)
         self.cache_ttl_seconds = max(60, cache_ttl_seconds)
         self.sync_interval_seconds = max(3600, sync_interval_seconds)
+        self.include_private_housing = include_private_housing
         self.repository = AnnouncementRepository(database_path) if database_path else None
         self.tracker = ChangeTracker()
         self._cache: list[Announcement] = []
@@ -316,7 +319,7 @@ class DirectAnnouncementSource:
     def sync_status(self) -> dict[str, Any]:
         state = self.repository.sync_state(self.name) if self.repository else None
         return {
-            "stored_count": self.repository.count() if self.repository else len(self._cache),
+            "stored_count": len(self._stored_items()),
             "last_success_at": state.get("last_success_at") if state else None,
             "window_start": state.get("window_start") if state else None,
             "window_end": state.get("window_end") if state else None,
@@ -325,19 +328,27 @@ class DirectAnnouncementSource:
 
     def _stored_items(self) -> list[Announcement]:
         if not self.repository:
-            return list(self._cache)
+            return self._visible_items(self._cache)
         items = []
         for payload in self.repository.list_payloads():
             status = calculate_status(
                 str(payload.get("apply_start") or ""), str(payload.get("apply_end") or "")
             )
             payload["status"] = status
-            items.append(Announcement(**payload))
+            announcement = Announcement(**payload)
+            if self._is_visible(announcement):
+                items.append(announcement)
         return sorted(
             items,
             key=lambda item: item.apply_end or item.metadata.get("notice_date") or "",
             reverse=True,
         )
+
+    def _is_visible(self, item: Announcement) -> bool:
+        return self.include_private_housing or item.organization in PUBLIC_HOUSING_ORGANIZATIONS
+
+    def _visible_items(self, items: list[Announcement]) -> list[Announcement]:
+        return [item for item in items if self._is_visible(item)]
 
     def _sync_is_due(self) -> bool:
         if not self.repository:
@@ -360,7 +371,7 @@ class DirectAnnouncementSource:
         now = time.time()
         with self._lock:
             if self._cache and not force_refresh and now - self._cache_at < self.cache_ttl_seconds:
-                return list(self._cache)
+                return self._visible_items(self._cache)
         stored = self._stored_items()
         if stored and not force_refresh and not self._sync_is_due():
             with self._lock:
@@ -376,15 +387,16 @@ class DirectAnnouncementSource:
             "gh": lambda: _fetch_gh(self.timeout_seconds, fetched_at, lookback_days),
         }
         if self.api_key:
-            jobs["applyhome"] = lambda: _fetch_applyhome(
-                self.api_key, lookback_days, self.timeout_seconds, fetched_at
-            )
+            if self.include_private_housing:
+                jobs["applyhome"] = lambda: _fetch_applyhome(
+                    self.api_key, lookback_days, self.timeout_seconds, fetched_at
+                )
             jobs["lh"] = lambda: _fetch_lh(
                 self.api_key, lookback_days, self.timeout_seconds, fetched_at
             )
             self._errors = []
         else:
-            self._errors = ["DATA_GO_KR_API_KEY가 없어 청약홈·LH 채널을 건너뜁니다."]
+            self._errors = ["DATA_GO_KR_API_KEY가 없어 LH 채널을 건너뜁니다."]
         collected: list[Announcement] = []
         errors = list(self._errors)
         with ThreadPoolExecutor(max_workers=len(jobs)) as executor:

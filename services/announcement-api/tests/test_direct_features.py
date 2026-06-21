@@ -1,5 +1,7 @@
 import time
+import tempfile
 import unittest
+from pathlib import Path
 from unittest import mock
 
 from app.direct.collectors import DirectAnnouncementSource, _announcement
@@ -52,6 +54,25 @@ class DirectFeatureTests(unittest.TestCase):
             result = source.fetch()
         self.assertEqual([entry.source_id for entry in result], ["sh_1"])
         self.assertTrue(any("gh 수집 실패" in warning for warning in source.errors))
+
+    def test_change_history_hides_private_announcements(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = DirectAnnouncementSource(
+                "", 5, 60, Path(directory) / "announcements.db"
+            )
+            public = sample_announcement()
+            private = _announcement(
+                source_id="apt_1", title="민영 아파트", organization="청약홈",
+                category="APT", region="서울", fetched_at="now",
+            )
+            source.repository.upsert(
+                [public.to_dict(), private.to_dict()], "2026-06-21T00:00:00+00:00"
+            )
+            client = DirectFeatureClient(source, 5)
+            with mock.patch.object(source, "fetch", return_value=[public]):
+                result = client.changes()
+        self.assertEqual(result["count"], 1)
+        self.assertEqual(result["changes"][0]["organization"], "SH")
 
 
 if __name__ == "__main__":

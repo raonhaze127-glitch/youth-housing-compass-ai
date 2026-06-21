@@ -17,5 +17,7 @@ services:
         value: "900"
       - key: DIRECT_SYNC_INTERVAL_SECONDS
         value: "86400"
+      - key: INCLUDE_PRIVATE_HOUSING
+        value: "false"
       - key: ANNOUNCEMENT_DATABASE_PATH
         value: /tmp/compass.db
