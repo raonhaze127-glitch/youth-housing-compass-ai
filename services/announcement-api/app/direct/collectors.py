@@ -102,6 +102,8 @@ def _announcement(
 
 
 def _json_items(payload: Any) -> list[dict[str, Any]]:
+    if isinstance(payload, list):
+        return [item for item in payload if isinstance(item, dict)]
     if isinstance(payload, dict) and isinstance(payload.get("data"), list):
         return [item for item in payload["data"] if isinstance(item, dict)]
     body = payload.get("response", {}).get("body", {}) if isinstance(payload, dict) else {}

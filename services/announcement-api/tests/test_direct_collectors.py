@@ -4,7 +4,7 @@ from unittest import mock
 
 import requests
 
-from app.direct.collectors import DirectAnnouncementSource, _fetch_applyhome, _fetch_lh
+from app.direct.collectors import DirectAnnouncementSource, _fetch_applyhome, _fetch_lh, _json_items
 
 
 class FakeResponse:
@@ -19,6 +19,10 @@ class FakeResponse:
 
 
 class DirectCollectorTests(unittest.TestCase):
+    def test_lh_direct_list_response_is_supported(self):
+        items = _json_items([{"BBS_SN": "10"}, "ignored"])
+        self.assertEqual(items, [{"BBS_SN": "10"}])
+
     def test_collector_warning_does_not_expose_service_key(self):
         source = DirectAnnouncementSource("top-secret-key", 5, 0)
         response = FakeResponse({})
