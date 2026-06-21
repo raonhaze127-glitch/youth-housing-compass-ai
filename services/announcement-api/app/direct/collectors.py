@@ -180,9 +180,20 @@ def _infer_region(title: str) -> str:
 
 
 def _fetch_lh(api_key: str, months_back: int, timeout: int, fetched_at: str) -> list[Announcement]:
-    response = requests.get(LH_URL, params={"serviceKey": api_key, "pageNo": "1", "numOfRows": "100"}, timeout=timeout)
+    today = datetime.now().date()
+    cutoff = today - timedelta(days=31 * months_back)
+    response = requests.get(
+        LH_URL,
+        params={
+            "ServiceKey": api_key,
+            "PG_SZ": "100",
+            "SCH_ST_DT": cutoff.isoformat(),
+            "SCH_ED_DT": today.isoformat(),
+            "PAGE": "1",
+        },
+        timeout=timeout,
+    )
     response.raise_for_status()
-    cutoff = datetime.now().date() - timedelta(days=31 * months_back)
     result = []
     for item in _json_items(response.json()):
         title = str(item.get("BBS_TL") or "")

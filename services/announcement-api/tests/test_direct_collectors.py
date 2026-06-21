@@ -83,11 +83,17 @@ class DirectCollectorTests(unittest.TestCase):
                 }
             }
         }
-        with mock.patch("app.direct.collectors.requests.get", return_value=FakeResponse(payload)):
+        with mock.patch("app.direct.collectors.requests.get", return_value=FakeResponse(payload)) as request:
             result = _fetch_lh("key", 2, 5, "now")
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0].organization, "LH")
         self.assertEqual(result[0].region, "서울")
+        params = request.call_args.kwargs["params"]
+        self.assertEqual(params["ServiceKey"], "key")
+        self.assertEqual(params["PG_SZ"], "100")
+        self.assertEqual(params["PAGE"], "1")
+        self.assertIn("SCH_ST_DT", params)
+        self.assertIn("SCH_ED_DT", params)
 
 
 if __name__ == "__main__":
