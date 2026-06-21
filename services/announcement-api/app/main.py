@@ -1,0 +1,201 @@
+from __future__ import annotations
+
+from typing import Any
+
+from fastapi import Body, FastAPI, Header, HTTPException, Query
+from fastapi.responses import Response
+
+from .service import build_source, filter_announcements
+from .repository import UserRepository
+from .settings import load_settings
+from .sources import SourceError
+from .upstream import KAptAlertClient
+from .direct import DirectAnnouncementSource, DirectFeatureClient
+
+settings = load_settings()
+source = build_source(settings)
+repository = UserRepository(settings.database_path)
+upstream = (
+    KAptAlertClient(settings.k_apt_alert_api_base_url, settings.timeout_seconds)
+    if settings.k_apt_alert_api_base_url
+    else None
+)
+direct_features = (
+    DirectFeatureClient(source, settings.timeout_seconds)
+    if isinstance(source, DirectAnnouncementSource)
+    else None
+)
+feature_client = direct_features or upstream
+
+app = FastAPI(
+    title="청년주거나침반 Announcement API",
+    version="0.1.0",
+    description="공고 소스와 청나주 웹앱 사이의 수집·정규화 경계",
+)
+
+
+@app.get("/health")
+def health() -> dict:
+    return {
+        "status": "ok",
+        "source": source.name,
+        "upstream_features": upstream is not None,
+        "direct_features": direct_features is not None,
+        "collector_warnings": source.errors if isinstance(source, DirectAnnouncementSource) else [],
+        "sync": source.sync_status if isinstance(source, DirectAnnouncementSource) else None,
+    }
+
+
+def require_feature_client():
+    if feature_client is None:
+        raise HTTPException(
+            status_code=503,
+            detail="직접 수집 또는 호환 API가 설정되지 않아 확장 기능을 사용할 수 없습니다.",
+        )
+    return feature_client
+
+
+def feature_call(callback):
+    try:
+        return callback(require_feature_client())
+    except SourceError as error:
+        raise HTTPException(status_code=502, detail=str(error)) from error
+
+
+@app.get("/v1/announcements")
+def announcements(
+    region: str = Query(default=""),
+    status: str = Query(default=""),
+    category: str = Query(default=""),
+    months_back: int = Query(default=2, ge=1, le=12),
+    days_back: int | None = Query(default=None, ge=1, le=365),
+    force_refresh: bool = Query(default=False),
+) -> dict:
+    try:
+        if isinstance(source, DirectAnnouncementSource):
+            items = source.fetch(
+                months_back=months_back,
+                days_back=days_back,
+                force_refresh=force_refresh,
+            )
+        else:
+            items = source.fetch(months_back=months_back)
+    except SourceError as error:
+        raise HTTPException(status_code=502, detail=str(error)) from error
+
+    filtered = filter_announcements(items, region, status, category)
+    return {
+        "count": len(filtered),
+        "source": source.name,
+        "announcements": [item.to_dict() for item in filtered],
+        "sync": source.sync_status if isinstance(source, DirectAnnouncementSource) else None,
+    }
+
+
+@app.post("/v1/announcements/sync")
+def sync_announcements(
+    payload: dict[str, Any] = Body(default={}),
+    x_sync_token: str = Header(default=""),
+) -> dict:
+    if not isinstance(source, DirectAnnouncementSource):
+        raise HTTPException(status_code=409, detail="직접 수집 모드에서만 동기화할 수 있습니다.")
+    if settings.sync_token and x_sync_token != settings.sync_token:
+        raise HTTPException(status_code=401, detail="동기화 인증값이 올바르지 않습니다.")
+    full = bool(payload.get("full", False))
+    requested_days = int(payload.get("days_back") or 7)
+    days_back = 90 if full else max(1, min(requested_days, 31))
+    try:
+        items = source.fetch(days_back=days_back, force_refresh=True)
+    except SourceError as error:
+        raise HTTPException(status_code=502, detail=str(error)) from error
+    return {
+        "status": "ok",
+        "mode": "full_reconciliation" if full else "incremental",
+        "stored_count": len(items),
+        "sync": source.sync_status,
+        "collector_warnings": source.errors,
+    }
+
+
+@app.post("/v1/eligibility/score")
+def eligibility_score(payload: dict[str, Any] = Body(...)) -> dict:
+    return feature_call(lambda client: client.score(payload))
+
+
+@app.post("/v1/announcements/match")
+def announcement_match(payload: dict[str, Any] = Body(...)) -> dict:
+    return feature_call(lambda client: client.match(payload))
+
+
+@app.get("/v1/notices/{notice_id}/raw")
+def notice_raw(notice_id: str, force_refresh: bool = Query(default=False)) -> dict:
+    return feature_call(lambda client: client.notice_raw(notice_id, force_refresh))
+
+
+@app.get("/v1/announcements/{announcement_id}/competition")
+def competition(
+    announcement_id: str,
+    history: bool = Query(default=True),
+) -> dict:
+    return feature_call(lambda client: client.competition(announcement_id, history))
+
+
+@app.get("/v1/announcements/{announcement_id}/calendar.ics")
+def calendar(announcement_id: str) -> Response:
+    result = feature_call(lambda client: client.calendar(announcement_id))
+    return Response(
+        content=result.content,
+        media_type="text/calendar",
+        headers={
+            "Content-Disposition": f'attachment; filename="{announcement_id}.ics"'
+        },
+    )
+
+
+@app.get("/v1/changes")
+def changes(
+    since: str = Query(default=""),
+    change_type: str = Query(default=""),
+    limit: int = Query(default=50, ge=1, le=200),
+) -> dict:
+    return feature_call(
+        lambda client: client.changes(since, change_type, limit)
+    )
+
+
+@app.get("/v1/users/{user_id}/profile")
+def get_profile(user_id: str) -> dict:
+    result = repository.get_profile(user_id)
+    if result is None:
+        raise HTTPException(status_code=404, detail="저장된 프로필이 없습니다.")
+    return result
+
+
+@app.put("/v1/users/{user_id}/profile")
+def save_profile(user_id: str, profile: dict[str, Any] = Body(...)) -> dict:
+    return repository.save_profile(user_id, profile)
+
+
+@app.delete("/v1/users/{user_id}/profile")
+def delete_profile(user_id: str) -> dict:
+    return {"deleted": repository.delete_profile(user_id)}
+
+
+@app.get("/v1/users/{user_id}/favorites")
+def list_favorites(user_id: str) -> dict:
+    items = repository.list_favorites(user_id)
+    return {"count": len(items), "favorites": items}
+
+
+@app.put("/v1/users/{user_id}/favorites/{announcement_id}")
+def save_favorite(
+    user_id: str,
+    announcement_id: str,
+    announcement: dict[str, Any] = Body(...),
+) -> dict:
+    return repository.save_favorite(user_id, announcement_id, announcement)
+
+
+@app.delete("/v1/users/{user_id}/favorites/{announcement_id}")
+def delete_favorite(user_id: str, announcement_id: str) -> dict:
+    return {"deleted": repository.delete_favorite(user_id, announcement_id)}

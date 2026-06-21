@@ -1,4 +1,4 @@
-import type { UserProfile } from "./types";
+import type { UserProfile } from "../types";
 
 const REGIONS = ["서울", "경기", "인천", "부산", "대구", "광주", "대전", "울산", "세종"];
 const SEOUL_DISTRICTS = [

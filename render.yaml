@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: youth-housing-compass-announcement-api
+    runtime: python
+    plan: free
+    rootDir: services/announcement-api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: ANNOUNCEMENT_SOURCE
+        value: direct
+      - key: SOURCE_TIMEOUT_SECONDS
+        value: "180"
+      - key: DIRECT_CACHE_TTL_SECONDS
+        value: "900"
+      - key: DIRECT_SYNC_INTERVAL_SECONDS
+        value: "86400"
+      - key: ANNOUNCEMENT_DATABASE_PATH
+        value: /tmp/compass.db
