@@ -21,6 +21,7 @@ class AnnouncementApiTests(unittest.TestCase):
                 "upstream_features": False,
                 "direct_features": False,
                 "collector_warnings": [],
+                "sync": None,
             },
         )
 

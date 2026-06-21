@@ -35,6 +35,17 @@ class DirectApiTests(unittest.TestCase):
         self.assertEqual(score.status_code, 200)
         self.assertEqual(score.json()["scores"]["max_total"], 84)
 
+    def test_manual_incremental_sync_endpoint(self):
+        with mock.patch.object(main_module, "source", self.source), mock.patch.object(
+            self.source, "fetch", return_value=self.source._cache
+        ) as fetch:
+            response = self.client.post(
+                "/v1/announcements/sync", json={"days_back": 7}
+            )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["mode"], "incremental")
+        fetch.assert_called_once_with(days_back=7, force_refresh=True)
+
 
 if __name__ == "__main__":
     unittest.main()

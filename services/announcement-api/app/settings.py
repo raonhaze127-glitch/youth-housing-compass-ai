@@ -16,6 +16,8 @@ class Settings:
     database_path: Path
     data_go_kr_api_key: str
     direct_cache_ttl_seconds: int
+    direct_sync_interval_seconds: int
+    sync_token: str
 
 
 def load_settings() -> Settings:
@@ -35,4 +37,8 @@ def load_settings() -> Settings:
         ),
         data_go_kr_api_key=os.getenv("DATA_GO_KR_API_KEY", "").strip(),
         direct_cache_ttl_seconds=max(60, int(os.getenv("DIRECT_CACHE_TTL_SECONDS", "900"))),
+        direct_sync_interval_seconds=max(
+            3600, int(os.getenv("DIRECT_SYNC_INTERVAL_SECONDS", "86400"))
+        ),
+        sync_token=os.getenv("ANNOUNCEMENT_SYNC_TOKEN", "").strip(),
     )

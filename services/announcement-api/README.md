@@ -29,6 +29,8 @@ python -m venv .venv
 | `K_APT_ALERT_API_BASE_URL` | 없음 | k-apt-alert 호환 API 기본 URL |
 | `DATA_GO_KR_API_KEY` | 없음 | 청약홈 5종·LH 직접 수집용 공공데이터 키 |
 | `DIRECT_CACHE_TTL_SECONDS` | `900` | 직접 수집 메모리 캐시 시간 |
+| `DIRECT_SYNC_INTERVAL_SECONDS` | `86400` | 일반 조회가 자동 증분 동기화를 다시 허용하는 최소 간격 |
+| `ANNOUNCEMENT_SYNC_TOKEN` | 없음 | 예약 동기화 엔드포인트 보호용 선택 토큰 |
 | `SAMPLE_DATA_PATH` | 루트 샘플 JSON | 샘플 데이터 경로 재정의 |
 | `SOURCE_TIMEOUT_SECONDS` | `180` | 외부 API 요청 제한 시간 |
 | `ANNOUNCEMENT_DATABASE_PATH` | `.local/compass.db` | 프로필·관심 공고 SQLite 경로 |
@@ -47,6 +49,12 @@ python -m venv .venv
   - `status`: `open`, `planned`, `closed`, `unknown`
   - `category`: 카테고리 필터
   - `months_back`: 직접 수집 또는 호환 API 조회 기간
+  - `days_back`: 직접 수집 증분 조회 일수
+  - `force_refresh`: 저장소를 무시하고 즉시 동기화
+- `POST /v1/announcements/sync`: 예약 증분 동기화
+  - 기본 최근 7일 중복 조회
+  - `{ "full": true }`는 최근 90일 재대조
+  - `ANNOUNCEMENT_SYNC_TOKEN`을 설정하면 `X-Sync-Token` 헤더가 필요
 - `POST /v1/eligibility/score`: 청약 가점·1순위·특별공급 사전 점검
 - `POST /v1/announcements/match`: 공고와 프로필 적합도
 - `GET /v1/notices/{id}/raw`: 공고 원문과 섹션 추출 결과
@@ -62,7 +70,9 @@ python -m venv .venv
 
 ## Render 배포
 
-루트 `render.yaml`의 Blueprint로 배포할 수 있습니다. 무료 인스턴스에서는 SQLite 경로를 `/tmp/compass.db`로 사용하므로 서버 재시작 후 프로필과 관심 공고가 초기화될 수 있습니다. 공모전 시연 이후에는 영속 데이터베이스로 교체해야 합니다.
+루트 `render.yaml`의 Blueprint로 배포할 수 있습니다. `.github/workflows/daily-announcement-sync.yml`은 매일 오전 7시(KST)에 최근 7일을 중복 조회하고, 일요일에는 최근 90일을 재대조합니다. 공고는 `source_id` 기준으로 SQLite에 upsert하며 최초 발견·마지막 확인·변경 시각과 내용 해시를 저장합니다.
+
+무료 인스턴스에서는 SQLite 경로가 `/tmp/compass.db`이므로 서버 재시작·재배포 시 공고, 프로필, 관심 공고가 초기화될 수 있습니다. 예약 워크플로는 기본 브랜치에 병합된 후 실행됩니다. 공모전 이후 실제 영속성을 보장하려면 외부 영속 데이터베이스 또는 Render 영구 디스크로 교체해야 합니다.
 
 ## 테스트
 

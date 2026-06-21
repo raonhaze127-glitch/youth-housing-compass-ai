@@ -14,6 +14,7 @@
 - 청약홈 5종·LH 공개 API와 SH·GH HTML 직접 수집 모드
 - 청약 가점·특별공급·1순위 사전 점검과 실공고 적합도
 - 공고 원문 해석, 경쟁률, ICS 일정, 변동 추적
+- 공고 SQLite 누적 저장과 매일 오전 7시 증분 동기화 구조
 - 후속 질문이 가능한 대화 흐름
 - SQLite 기반 프로필·관심 공고 저장
 
@@ -103,7 +104,9 @@ cd services/announcement-api
 
 - Next.js 웹앱은 Vercel에 배포합니다.
 - `render.yaml`은 `services/announcement-api`를 Render 웹 서비스로 배포합니다.
-- Render 무료 인스턴스의 `/tmp` SQLite는 재시작 시 초기화될 수 있으므로 프로필·관심 공고 저장은 출품용 시연 범위입니다.
+- 최초 실행은 최근 90일을 적재하고 이후 매일 오전 7시 최근 7일, 일요일 최근 90일을 재대조합니다.
+- Render 무료 인스턴스의 `/tmp` SQLite는 재시작 시 초기화될 수 있으므로 공고·프로필·관심 공고 저장은 출품용 시연 범위입니다.
+- GitHub 예약 워크플로는 이 브랜치가 기본 브랜치에 병합된 후 실행됩니다.
 - 웹앱의 `ANNOUNCEMENT_API_BASE_URL`에 배포된 FastAPI 주소를 설정하면 실공고 모드가 활성화됩니다.
 
 ## 주의사항

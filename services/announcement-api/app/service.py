@@ -19,6 +19,8 @@ def build_source(settings: Settings) -> AnnouncementSource:
             settings.data_go_kr_api_key,
             settings.timeout_seconds,
             settings.direct_cache_ttl_seconds,
+            settings.database_path,
+            settings.direct_sync_interval_seconds,
         )
     raise ValueError(f"지원하지 않는 ANNOUNCEMENT_SOURCE입니다: {settings.source}")
 

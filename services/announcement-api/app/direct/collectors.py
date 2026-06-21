@@ -4,6 +4,7 @@ import re
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
 from threading import Lock
 from typing import Any, Callable
 
@@ -11,6 +12,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from ..models import Announcement
+from ..repository import AnnouncementRepository
 from ..sources import SourceError
 from ..status import calculate_status, normalize_date
 from .changes import ChangeTracker
@@ -138,11 +140,11 @@ def _find_announcement_records(payload: Any) -> list[dict[str, Any]]:
     return records
 
 
-def _fetch_applyhome(api_key: str, months_back: int, timeout: int, fetched_at: str) -> list[Announcement]:
+def _fetch_applyhome(api_key: str, days_back: int, timeout: int, fetched_at: str) -> list[Announcement]:
     now = datetime.now()
     params_base = {
         "serviceKey": api_key, "pageNo": "1", "numOfRows": "100",
-        "startmonth": (now - timedelta(days=30 * months_back)).strftime("%Y%m"),
+        "startmonth": (now - timedelta(days=days_back)).strftime("%Y%m"),
         "endmonth": now.strftime("%Y%m"),
     }
     result: list[Announcement] = []
@@ -179,9 +181,9 @@ def _infer_region(title: str) -> str:
     return "전국"
 
 
-def _fetch_lh(api_key: str, months_back: int, timeout: int, fetched_at: str) -> list[Announcement]:
+def _fetch_lh(api_key: str, days_back: int, timeout: int, fetched_at: str) -> list[Announcement]:
     today = datetime.now().date()
-    cutoff = today - timedelta(days=31 * months_back)
+    cutoff = today - timedelta(days=days_back)
     response = requests.get(
         LH_URL,
         params={
@@ -228,7 +230,7 @@ def _recent(raw: str, formats: tuple[str, ...], days: int = 100) -> str:
     return ""
 
 
-def _fetch_sh(timeout: int, fetched_at: str) -> list[Announcement]:
+def _fetch_sh(timeout: int, fetched_at: str, days_back: int = 100) -> list[Announcement]:
     result = []
     for board, (housing_type, url) in enumerate(SH_BOARDS.items(), start=1):
         response = requests.get(url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0 youth-housing-compass"})
@@ -241,7 +243,7 @@ def _fetch_sh(timeout: int, fetched_at: str) -> list[Announcement]:
             title = cells[1].get_text(" ", strip=True)
             link = cells[1].find("a")
             match = re.search(r"getDetailView\(['\"](\d+)", str(link.get("onclick", "")) if link else "")
-            notice_date = _recent(cells[3].get_text(strip=True), ("%Y-%m-%d",))
+            notice_date = _recent(cells[3].get_text(strip=True), ("%Y-%m-%d",), days_back)
             if not match or not notice_date or not any(word in title for word in INCLUDE_WORDS) or any(word in title for word in EXCLUDE_WORDS):
                 continue
             district = next((name for name in SEOUL_DISTRICTS if name in title), "")
@@ -255,7 +257,7 @@ def _fetch_sh(timeout: int, fetched_at: str) -> list[Announcement]:
     return result
 
 
-def _fetch_gh(timeout: int, fetched_at: str) -> list[Announcement]:
+def _fetch_gh(timeout: int, fetched_at: str, days_back: int = 100) -> list[Announcement]:
     result = []
     for page in range(1, 4):
         response = requests.get(GH_URL, params={"pageIndex": page, "article.offset": (page - 1) * 10, "articleLimit": 10}, timeout=timeout, headers={"User-Agent": "Mozilla/5.0 youth-housing-compass"})
@@ -268,7 +270,9 @@ def _fetch_gh(timeout: int, fetched_at: str) -> list[Announcement]:
             title = cells[2].get_text(" ", strip=True)
             link = cells[2].find("a", href=True)
             match = re.search(r"articleNo=(\d+)", str(link.get("href", "")) if link else "")
-            notice_date = _recent(cells[4].get_text(strip=True), ("%y.%m.%d", "%Y-%m-%d"))
+            notice_date = _recent(
+                cells[4].get_text(strip=True), ("%y.%m.%d", "%Y-%m-%d"), days_back
+            )
             if not match or not notice_date or not any(word in title for word in INCLUDE_WORDS) or any(word in title for word in EXCLUDE_WORDS):
                 continue
             city = next((name for name in GYEONGGI_CITIES if name in title), "")
@@ -285,10 +289,19 @@ def _fetch_gh(timeout: int, fetched_at: str) -> list[Announcement]:
 class DirectAnnouncementSource:
     name = "direct"
 
-    def __init__(self, api_key: str, timeout_seconds: int = 30, cache_ttl_seconds: int = 900):
+    def __init__(
+        self,
+        api_key: str,
+        timeout_seconds: int = 30,
+        cache_ttl_seconds: int = 900,
+        database_path: Path | None = None,
+        sync_interval_seconds: int = 86400,
+    ):
         self.api_key = api_key
         self.timeout_seconds = min(timeout_seconds, 60)
         self.cache_ttl_seconds = max(60, cache_ttl_seconds)
+        self.sync_interval_seconds = max(3600, sync_interval_seconds)
+        self.repository = AnnouncementRepository(database_path) if database_path else None
         self.tracker = ChangeTracker()
         self._cache: list[Announcement] = []
         self._cache_at = 0.0
@@ -299,19 +312,77 @@ class DirectAnnouncementSource:
     def errors(self) -> list[str]:
         return list(self._errors)
 
-    def fetch(self, months_back: int = 2) -> list[Announcement]:
+    @property
+    def sync_status(self) -> dict[str, Any]:
+        state = self.repository.sync_state(self.name) if self.repository else None
+        return {
+            "stored_count": self.repository.count() if self.repository else len(self._cache),
+            "last_success_at": state.get("last_success_at") if state else None,
+            "window_start": state.get("window_start") if state else None,
+            "window_end": state.get("window_end") if state else None,
+            "last_item_count": state.get("item_count") if state else None,
+        }
+
+    def _stored_items(self) -> list[Announcement]:
+        if not self.repository:
+            return list(self._cache)
+        items = []
+        for payload in self.repository.list_payloads():
+            status = calculate_status(
+                str(payload.get("apply_start") or ""), str(payload.get("apply_end") or "")
+            )
+            payload["status"] = status
+            items.append(Announcement(**payload))
+        return sorted(
+            items,
+            key=lambda item: item.apply_end or item.metadata.get("notice_date") or "",
+            reverse=True,
+        )
+
+    def _sync_is_due(self) -> bool:
+        if not self.repository:
+            return True
+        state = self.repository.sync_state(self.name)
+        if not state:
+            return True
+        try:
+            last_success = datetime.fromisoformat(str(state["last_success_at"]))
+        except (TypeError, ValueError):
+            return True
+        return (datetime.now(timezone.utc) - last_success).total_seconds() >= self.sync_interval_seconds
+
+    def fetch(
+        self,
+        months_back: int = 2,
+        days_back: int | None = None,
+        force_refresh: bool = False,
+    ) -> list[Announcement]:
         now = time.time()
         with self._lock:
-            if self._cache and now - self._cache_at < self.cache_ttl_seconds:
+            if self._cache and not force_refresh and now - self._cache_at < self.cache_ttl_seconds:
                 return list(self._cache)
+        stored = self._stored_items()
+        if stored and not force_refresh and not self._sync_is_due():
+            with self._lock:
+                self._cache = stored
+                self._cache_at = now
+            return stored
+
+        bootstrap = not stored
+        lookback_days = days_back or (max(90, months_back * 31) if bootstrap else 7)
         fetched_at = datetime.now(timezone.utc).isoformat()
         jobs: dict[str, Callable[[], list[Announcement]]] = {
-            "sh": lambda: _fetch_sh(self.timeout_seconds, fetched_at),
-            "gh": lambda: _fetch_gh(self.timeout_seconds, fetched_at),
+            "sh": lambda: _fetch_sh(self.timeout_seconds, fetched_at, lookback_days),
+            "gh": lambda: _fetch_gh(self.timeout_seconds, fetched_at, lookback_days),
         }
         if self.api_key:
-            jobs["applyhome"] = lambda: _fetch_applyhome(self.api_key, months_back, self.timeout_seconds, fetched_at)
-            jobs["lh"] = lambda: _fetch_lh(self.api_key, months_back, self.timeout_seconds, fetched_at)
+            jobs["applyhome"] = lambda: _fetch_applyhome(
+                self.api_key, lookback_days, self.timeout_seconds, fetched_at
+            )
+            jobs["lh"] = lambda: _fetch_lh(
+                self.api_key, lookback_days, self.timeout_seconds, fetched_at
+            )
+            self._errors = []
         else:
             self._errors = ["DATA_GO_KR_API_KEY가 없어 청약홈·LH 채널을 건너뜁니다."]
         collected: list[Announcement] = []
@@ -326,6 +397,17 @@ class DirectAnnouncementSource:
                     errors.append(_safe_collection_error(name, error))
         unique = {item.source_id: item for item in collected if item.source_id and item.title}
         items = sorted(unique.values(), key=lambda item: (item.apply_end or item.metadata.get("notice_date") or ""), reverse=True)
+        if self.repository and items:
+            self.repository.upsert([item.to_dict() for item in items], fetched_at)
+            window_end = datetime.now().date()
+            self.repository.record_sync(
+                self.name,
+                (window_end - timedelta(days=lookback_days)).isoformat(),
+                window_end.isoformat(),
+                len(items),
+                fetched_at,
+            )
+            items = self._stored_items()
         with self._lock:
             self._errors = errors
             if items:
@@ -333,6 +415,11 @@ class DirectAnnouncementSource:
                 self._cache_at = now
             elif self._cache:
                 return list(self._cache)
+        if not items and stored:
+            with self._lock:
+                self._cache = stored
+                self._cache_at = now
+            return stored
         if not items:
             raise SourceError("직접 수집 결과가 없습니다. " + " / ".join(errors[:3]))
         self.tracker.observe([item.to_dict() for item in items])

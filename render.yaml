@@ -15,5 +15,7 @@ services:
         value: "180"
       - key: DIRECT_CACHE_TTL_SECONDS
         value: "900"
+      - key: DIRECT_SYNC_INTERVAL_SECONDS
+        value: "86400"
       - key: ANNOUNCEMENT_DATABASE_PATH
         value: /tmp/compass.db

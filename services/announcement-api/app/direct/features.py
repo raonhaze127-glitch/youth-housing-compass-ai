@@ -156,6 +156,8 @@ class DirectFeatureClient:
 
     def changes(self, since: str = "", change_type: str = "", limit: int = 50) -> dict[str, Any]:
         self.source.fetch()
+        if self.source.repository:
+            return self.source.repository.list_changes(since, change_type, limit)
         return self.source.tracker.query(since, change_type, limit)
 
     def calendar(self, announcement_id: str) -> BinaryResponse:

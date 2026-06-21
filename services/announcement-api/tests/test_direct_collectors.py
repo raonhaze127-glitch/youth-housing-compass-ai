@@ -1,10 +1,18 @@
 import unittest
+import tempfile
 from datetime import date
+from pathlib import Path
 from unittest import mock
 
 import requests
 
-from app.direct.collectors import DirectAnnouncementSource, _fetch_applyhome, _fetch_lh, _json_items
+from app.direct.collectors import (
+    DirectAnnouncementSource,
+    _announcement,
+    _fetch_applyhome,
+    _fetch_lh,
+    _json_items,
+)
 
 
 class FakeResponse:
@@ -19,6 +27,28 @@ class FakeResponse:
 
 
 class DirectCollectorTests(unittest.TestCase):
+    def test_incremental_sync_accumulates_previous_announcements(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = DirectAnnouncementSource(
+                "", 5, 60, Path(directory) / "announcements.db", 3600
+            )
+            first = _announcement(
+                source_id="sh_1", title="첫 공고", organization="SH",
+                category="SH 공공주택", region="서울", fetched_at="first",
+            )
+            second = _announcement(
+                source_id="sh_2", title="둘째 공고", organization="SH",
+                category="SH 공공주택", region="서울", fetched_at="second",
+            )
+            with mock.patch(
+                "app.direct.collectors._fetch_sh", side_effect=[[first], [second]]
+            ), mock.patch("app.direct.collectors._fetch_gh", return_value=[]):
+                source.fetch(days_back=90, force_refresh=True)
+                accumulated = source.fetch(days_back=7, force_refresh=True)
+            self.assertEqual({item.source_id for item in accumulated}, {"sh_1", "sh_2"})
+            self.assertEqual(source.sync_status["stored_count"], 2)
+            self.assertEqual(source.sync_status["last_item_count"], 1)
+
     def test_lh_direct_list_response_is_supported(self):
         items = _json_items([{"BBS_SN": "10"}, "ignored"])
         self.assertEqual(items, [{"BBS_SN": "10"}])

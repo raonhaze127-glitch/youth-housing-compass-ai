@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from fastapi import Body, FastAPI, HTTPException, Query
+from fastapi import Body, FastAPI, Header, HTTPException, Query
 from fastapi.responses import Response
 
 from .service import build_source, filter_announcements
@@ -42,6 +42,7 @@ def health() -> dict:
         "upstream_features": upstream is not None,
         "direct_features": direct_features is not None,
         "collector_warnings": source.errors if isinstance(source, DirectAnnouncementSource) else [],
+        "sync": source.sync_status if isinstance(source, DirectAnnouncementSource) else None,
     }
 
 
@@ -67,9 +68,18 @@ def announcements(
     status: str = Query(default=""),
     category: str = Query(default=""),
     months_back: int = Query(default=2, ge=1, le=12),
+    days_back: int | None = Query(default=None, ge=1, le=365),
+    force_refresh: bool = Query(default=False),
 ) -> dict:
     try:
-        items = source.fetch(months_back=months_back)
+        if isinstance(source, DirectAnnouncementSource):
+            items = source.fetch(
+                months_back=months_back,
+                days_back=days_back,
+                force_refresh=force_refresh,
+            )
+        else:
+            items = source.fetch(months_back=months_back)
     except SourceError as error:
         raise HTTPException(status_code=502, detail=str(error)) from error
 
@@ -78,6 +88,32 @@ def announcements(
         "count": len(filtered),
         "source": source.name,
         "announcements": [item.to_dict() for item in filtered],
+        "sync": source.sync_status if isinstance(source, DirectAnnouncementSource) else None,
+    }
+
+
+@app.post("/v1/announcements/sync")
+def sync_announcements(
+    payload: dict[str, Any] = Body(default={}),
+    x_sync_token: str = Header(default=""),
+) -> dict:
+    if not isinstance(source, DirectAnnouncementSource):
+        raise HTTPException(status_code=409, detail="직접 수집 모드에서만 동기화할 수 있습니다.")
+    if settings.sync_token and x_sync_token != settings.sync_token:
+        raise HTTPException(status_code=401, detail="동기화 인증값이 올바르지 않습니다.")
+    full = bool(payload.get("full", False))
+    requested_days = int(payload.get("days_back") or 7)
+    days_back = 90 if full else max(1, min(requested_days, 31))
+    try:
+        items = source.fetch(days_back=days_back, force_refresh=True)
+    except SourceError as error:
+        raise HTTPException(status_code=502, detail=str(error)) from error
+    return {
+        "status": "ok",
+        "mode": "full_reconciliation" if full else "incremental",
+        "stored_count": len(items),
+        "sync": source.sync_status,
+        "collector_warnings": source.errors,
     }
 
 
