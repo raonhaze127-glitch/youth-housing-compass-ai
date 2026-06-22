@@ -60,8 +60,8 @@ python -m venv .venv
   - `ANNOUNCEMENT_SYNC_TOKEN`을 설정하면 `X-Sync-Token` 헤더가 필요
 - `POST /v1/eligibility/score`: 청약 가점·1순위·특별공급 사전 점검
 - `POST /v1/announcements/match`: 공고와 프로필 적합도
-- `GET /v1/notices/{id}/raw`: 공고 원문과 섹션 추출 결과
-- `GET /v1/announcements/{id}/competition`: 경쟁률과 출처
+- `GET /v1/notices/{id}/raw`: 향후 확장용 원문·섹션 추출 시범 API(현재 카드 비노출)
+- `GET /v1/announcements/{id}/competition`: 향후 확장용 경쟁률 시범 API(현재 카드 비노출)
 - `GET /v1/announcements/{id}/calendar.ics`: 일정 파일
 - `GET /v1/changes`: 신규·수정·삭제 변동 이력
 - `GET/PUT/DELETE /v1/users/{user_id}/profile`: 로컬 MVP 프로필
@@ -73,9 +73,9 @@ python -m venv .venv
 
 ## Render 배포
 
-루트 `render.yaml`의 Blueprint로 배포할 수 있습니다. `.github/workflows/daily-announcement-sync.yml`은 매일 오전 7시(KST)에 최근 7일을 중복 조회하고, 일요일에는 최근 90일을 재대조합니다. 공고는 `source_id` 기준으로 SQLite에 upsert하며 최초 발견·마지막 확인·변경 시각과 내용 해시를 저장합니다.
+루트 `render.yaml`의 Blueprint로 배포할 수 있습니다. `.github/workflows/daily-announcement-sync.yml`은 매일 오전 7시(KST)에 최근 7일을 중복 조회하고, 일요일에는 최근 90일을 재대조합니다. 공고는 `source_id` 기준으로 SQLite에 upsert하며 최초 발견·마지막 확인·변경 시각과 내용 해시를 저장합니다. 검증된 결과는 `data/live_housing_programs.json`에도 병합 저장해 Render 장애 시 웹앱의 실공고 폴백으로 사용합니다.
 
-무료 인스턴스에서는 SQLite 경로가 `/tmp/compass.db`이므로 서버 재시작·재배포 시 공고, 프로필, 관심 공고가 초기화될 수 있습니다. 예약 워크플로는 기본 브랜치에 병합된 후 실행됩니다. 공모전 이후 실제 영속성을 보장하려면 외부 영속 데이터베이스 또는 Render 영구 디스크로 교체해야 합니다.
+무료 인스턴스에서는 SQLite 경로가 `/tmp/compass.db`이므로 서버 재시작·재배포 시 공고, 프로필, 관심 공고가 초기화될 수 있습니다. 정적 실공고 스냅샷은 Git에 남으므로 추천 화면은 마지막 성공 데이터를 계속 표시합니다. 예약 워크플로는 기본 브랜치에 병합된 후 실행됩니다. `DATA_GO_KR_API_KEY`를 GitHub Actions secret으로 추가하면 Render를 거치지 않고 직접 수집하며, 키가 없을 때는 Render API 내보내기를 대체 경로로 사용합니다. 공모전 이후 실제 영속성을 보장하려면 외부 영속 데이터베이스 또는 Render 영구 디스크로 교체해야 합니다.
 
 ## 테스트
 

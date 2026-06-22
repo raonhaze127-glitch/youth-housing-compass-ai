@@ -12,6 +12,8 @@ type Insight = {
 };
 
 const FAVORITES_KEY = "youth-housing-compass:favorites";
+const ENABLE_ANNOUNCEMENT_INSIGHTS =
+  process.env.NEXT_PUBLIC_ENABLE_ANNOUNCEMENT_INSIGHTS === "true";
 
 function readFavorites() {
   try {
@@ -153,7 +155,7 @@ export function ProgramCard({ program, index }: { program: Recommendation; index
         </div>
       </dl>
 
-      {insight ? (
+      {ENABLE_ANNOUNCEMENT_INSIGHTS && insight ? (
         <div className="insight-box" aria-live="polite">
           <strong>{insight.title}</strong>
           <p>{insight.body}</p>
@@ -163,9 +165,25 @@ export function ProgramCard({ program, index }: { program: Recommendation; index
 
       <div className="card-actions">
         <button type="button" className="secondary-action" onClick={toggleFavorite} disabled={favoriteLoading}>
-          {favoriteLoading ? "저장 중" : favorite ? "관심 해제" : "관심 저장"}
+          {favoriteLoading ? (
+            <span>저장 중</span>
+          ) : favorite ? (
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" style={{ color: "#ef4444" }}>
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+              </svg>
+              관심 해제
+            </span>
+          ) : (
+            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+              </svg>
+              관심 저장
+            </span>
+          )}
         </button>
-        {hasLiveFeatures ? (
+        {hasLiveFeatures && ENABLE_ANNOUNCEMENT_INSIGHTS ? (
           <>
             <button
               type="button"
@@ -173,7 +191,16 @@ export function ProgramCard({ program, index }: { program: Recommendation; index
               onClick={() => loadInsight("raw")}
               disabled={loadingAction !== null}
             >
-              {loadingAction === "raw" ? "분석 중" : "공고 해석"}
+              {loadingAction === "raw" ? (
+                "분석 중"
+              ) : (
+                <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                  </svg>
+                  공고 해석
+                </span>
+              )}
             </button>
             <button
               type="button"
@@ -181,18 +208,43 @@ export function ProgramCard({ program, index }: { program: Recommendation; index
               onClick={() => loadInsight("competition")}
               disabled={loadingAction !== null}
             >
-              {loadingAction === "competition" ? "조회 중" : "경쟁률"}
+              {loadingAction === "competition" ? (
+                "조회 중"
+              ) : (
+                <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                  </svg>
+                  경쟁률
+                </span>
+              )}
             </button>
             <a
               className="secondary-link"
               href={`/api/announcements/${encodeURIComponent(sourceId)}/calendar`}
             >
-              일정 저장
+              <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                일정 저장
+              </span>
             </a>
           </>
         ) : null}
         <a className="primary-link" href={program.announcement_url} target="_blank" rel="noreferrer">
-          원문 확인
+          <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+            원문 확인
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </span>
         </a>
       </div>
     </article>
