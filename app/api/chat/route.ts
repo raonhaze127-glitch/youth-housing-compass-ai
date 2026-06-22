@@ -40,7 +40,9 @@ export async function POST(request: Request) {
     const loaded = await loadHousingPrograms();
     const programs = loaded.programs;
     let recommendations = recommendPrograms(profile, programs);
-    recommendations = await applyLiveMatches(profile, recommendations);
+    if (loaded.dataSource === "live") {
+      recommendations = await applyLiveMatches(profile, recommendations);
+    }
 
     return NextResponse.json({
       profile,

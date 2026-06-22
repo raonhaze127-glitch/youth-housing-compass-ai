@@ -73,9 +73,9 @@ python -m venv .venv
 
 ## Render 배포
 
-루트 `render.yaml`의 Blueprint로 배포할 수 있습니다. `.github/workflows/daily-announcement-sync.yml`은 매일 오전 7시(KST)에 최근 7일을 중복 조회하고, 일요일에는 최근 90일을 재대조합니다. 공고는 `source_id` 기준으로 SQLite에 upsert하며 최초 발견·마지막 확인·변경 시각과 내용 해시를 저장합니다.
+루트 `render.yaml`의 Blueprint로 배포할 수 있습니다. `.github/workflows/daily-announcement-sync.yml`은 매일 오전 7시(KST)에 최근 7일을 중복 조회하고, 일요일에는 최근 90일을 재대조합니다. 공고는 `source_id` 기준으로 SQLite에 upsert하며 최초 발견·마지막 확인·변경 시각과 내용 해시를 저장합니다. 검증된 결과는 `data/live_housing_programs.json`에도 병합 저장해 Render 장애 시 웹앱의 실공고 폴백으로 사용합니다.
 
-무료 인스턴스에서는 SQLite 경로가 `/tmp/compass.db`이므로 서버 재시작·재배포 시 공고, 프로필, 관심 공고가 초기화될 수 있습니다. 예약 워크플로는 기본 브랜치에 병합된 후 실행됩니다. 공모전 이후 실제 영속성을 보장하려면 외부 영속 데이터베이스 또는 Render 영구 디스크로 교체해야 합니다.
+무료 인스턴스에서는 SQLite 경로가 `/tmp/compass.db`이므로 서버 재시작·재배포 시 공고, 프로필, 관심 공고가 초기화될 수 있습니다. 정적 실공고 스냅샷은 Git에 남으므로 추천 화면은 마지막 성공 데이터를 계속 표시합니다. 예약 워크플로는 기본 브랜치에 병합된 후 실행됩니다. `DATA_GO_KR_API_KEY`를 GitHub Actions secret으로 추가하면 Render를 거치지 않고 직접 수집하며, 키가 없을 때는 Render API 내보내기를 대체 경로로 사용합니다. 공모전 이후 실제 영속성을 보장하려면 외부 영속 데이터베이스 또는 Render 영구 디스크로 교체해야 합니다.
 
 ## 테스트
 

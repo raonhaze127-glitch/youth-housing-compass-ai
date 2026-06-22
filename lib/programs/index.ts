@@ -1,4 +1,5 @@
 import samplePrograms from "@/data/housing_programs.json";
+import liveSnapshot from "@/data/live_housing_programs.json";
 import { fetchAnnouncementApi, getAnnouncementApiBaseUrl } from "../announcement-api";
 import type { ApplicationStatus, HousingProgram } from "../types";
 
@@ -34,8 +35,13 @@ type AnnouncementApiResponse = {
 
 export type ProgramLoadResult = {
   programs: HousingProgram[];
-  dataSource: "live" | "sample";
+  dataSource: "live" | "snapshot" | "sample";
   warning?: string;
+};
+
+type LiveSnapshot = {
+  generated_at?: string;
+  announcements?: AnnouncementApiItem[];
 };
 
 function toHousingProgram(item: AnnouncementApiItem): HousingProgram {
@@ -68,7 +74,17 @@ function toHousingProgram(item: AnnouncementApiItem): HousingProgram {
 
 export async function loadHousingPrograms(): Promise<ProgramLoadResult> {
   const baseUrl = getAnnouncementApiBaseUrl();
+  const storedSnapshot = liveSnapshot as unknown as LiveSnapshot;
+  const snapshotItems = Array.isArray(storedSnapshot.announcements)
+    ? storedSnapshot.announcements
+    : [];
   if (!baseUrl) {
+    if (snapshotItems.length) {
+      return {
+        programs: snapshotItems.map(toHousingProgram),
+        dataSource: "snapshot"
+      };
+    }
     return { programs: samplePrograms as HousingProgram[], dataSource: "sample" };
   }
 
@@ -82,7 +98,7 @@ export async function loadHousingPrograms(): Promise<ProgramLoadResult> {
     }
 
     const payload = (await response.json()) as AnnouncementApiResponse;
-    if (!Array.isArray(payload.announcements)) {
+    if (!Array.isArray(payload.announcements) || !payload.announcements.length) {
       throw new Error("공고 서비스 응답 형식이 올바르지 않습니다.");
     }
 
@@ -91,6 +107,18 @@ export async function loadHousingPrograms(): Promise<ProgramLoadResult> {
       dataSource: "live"
     };
   } catch (error) {
+    if (snapshotItems.length) {
+      const generatedAt = storedSnapshot.generated_at
+        ? new Date(storedSnapshot.generated_at).toLocaleString("ko-KR", {
+            timeZone: "Asia/Seoul"
+          })
+        : "최근";
+      return {
+        programs: snapshotItems.map(toHousingProgram),
+        dataSource: "snapshot",
+        warning: `실시간 공고 연결이 불안정해 ${generatedAt} 저장된 실공고를 표시합니다.`
+      };
+    }
     return {
       programs: samplePrograms as HousingProgram[],
       dataSource: "sample",

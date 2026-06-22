@@ -16,28 +16,59 @@ concurrency:
   group: daily-announcement-sync
   cancel-in-progress: false
 
+permissions:
+  contents: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: services/announcement-api/requirements.txt
+
+      - name: Install collector dependencies
+        run: pip install -r services/announcement-api/requirements.txt
+
       - name: Choose sync window
         id: window
         shell: bash
         run: |
           if [[ "${{ inputs.full }}" == "true" || "$(date -u +%u)" == "6" ]]; then
-            echo 'payload={"full":true}' >> "$GITHUB_OUTPUT"
+            echo 'days_back=90' >> "$GITHUB_OUTPUT"
           else
-            echo 'payload={"days_back":7}' >> "$GITHUB_OUTPUT"
+            echo 'days_back=7' >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Wake service and sync announcements
+      - name: Collect and validate public housing snapshot
+        env:
+          DATA_GO_KR_API_KEY: ${{ secrets.DATA_GO_KR_API_KEY }}
+          ANNOUNCEMENT_SYNC_TOKEN: ${{ secrets.ANNOUNCEMENT_SYNC_TOKEN }}
+          ANNOUNCEMENT_API_BASE_URL: https://youth-housing-compass-announcement-api.onrender.com
+        run: >-
+          python services/announcement-api/scripts/export_snapshot.py
+          --days-back "${{ steps.window.outputs.days_back }}"
+          --minimum-count 10
+
+      - name: Commit updated snapshot
         shell: bash
         run: |
-          curl --fail --silent --show-error --retry 5 --retry-all-errors \
-            --connect-timeout 30 --max-time 300 \
-            -X POST \
-            -H "Content-Type: application/json" \
-            -H "X-Sync-Token: ${{ secrets.ANNOUNCEMENT_SYNC_TOKEN }}" \
-            --data '${{ steps.window.outputs.payload }}' \
-            https://youth-housing-compass-announcement-api.onrender.com/v1/announcements/sync
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/live_housing_programs.json
+          if git diff --cached --quiet; then
+            echo "Snapshot is unchanged."
+            exit 0
+          fi
+          git commit -m "Update public housing snapshot"
+          git pull --rebase origin main
+          git push origin HEAD:main
