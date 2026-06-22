@@ -1,10 +1,280 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-22T03:42:27.961974+00:00",
+  "generated_at": "2026-06-22T23:19:40.168942+00:00",
   "source": "github_actions_direct",
-  "count": 82,
+  "count": 91,
   "collector_warnings": [],
   "announcements": [
+    {
+      "id": "direct:sh_305877",
+      "title": "2026년 1차 행복주택 입주자 모집(2026.05.28.공고) 최종 청약 경쟁률 게시",
+      "organization": "SH",
+      "source_id": "sh_305877",
+      "source_type": "direct_collector",
+      "category": "SH 공공주택",
+      "region": "서울",
+      "district": "",
+      "housing_type": "공공임대",
+      "target": [],
+      "apply_start": "",
+      "apply_end": "",
+      "status": "unknown",
+      "announcement_url": "https://www.i-sh.co.kr/app/lay2/program/S48T1581C563/www/brd/m_247/view.do?seq=305877&multi_itm_seq=2",
+      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
+      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
+      "benefit_summary": "",
+      "required_documents": [],
+      "age_min": null,
+      "age_max": null,
+      "homeless_required": null,
+      "income_condition": "",
+      "total_units": null,
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
+      "schedule_confirmed": false,
+      "metadata": {
+        "notice_date": "2026-06-22"
+      }
+    },
+    {
+      "id": "direct:lh_9102431899",
+      "title": "부산범천2 1BL 공공분양주택 선착순 잔여세대 동호표 알림('26.06.22. 기준)",
+      "organization": "LH",
+      "source_id": "lh_9102431899",
+      "source_type": "direct_collector",
+      "category": "LH 공공주택",
+      "region": "부산",
+      "district": "",
+      "housing_type": "분양주택",
+      "target": [],
+      "apply_start": "",
+      "apply_end": "",
+      "status": "unknown",
+      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=02&bbsSn=9102431899",
+      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
+      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
+      "benefit_summary": "",
+      "required_documents": [],
+      "age_min": null,
+      "age_max": null,
+      "homeless_required": null,
+      "income_condition": "",
+      "total_units": null,
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
+      "schedule_confirmed": false,
+      "metadata": {
+        "notice_date": "2026-06-22"
+      }
+    },
+    {
+      "id": "direct:lh_7000019796",
+      "title": "양주옥정 종교용지 공급공고 추첨결과 게시",
+      "organization": "LH",
+      "source_id": "lh_7000019796",
+      "source_type": "direct_collector",
+      "category": "LH 공공주택",
+      "region": "경기",
+      "district": "",
+      "housing_type": "기타용지",
+      "target": [],
+      "apply_start": "",
+      "apply_end": "",
+      "status": "unknown",
+      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=01&bbsSn=7000019796",
+      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
+      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
+      "benefit_summary": "",
+      "required_documents": [],
+      "age_min": null,
+      "age_max": null,
+      "homeless_required": null,
+      "income_condition": "",
+      "total_units": null,
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
+      "schedule_confirmed": false,
+      "metadata": {
+        "notice_date": "2026-06-22"
+      }
+    },
+    {
+      "id": "direct:lh_7000019795",
+      "title": "의정부우정 단독주택용지(주거전용) 공급공고 추첨결과 게시",
+      "organization": "LH",
+      "source_id": "lh_7000019795",
+      "source_type": "direct_collector",
+      "category": "LH 공공주택",
+      "region": "경기",
+      "district": "",
+      "housing_type": "주택용지",
+      "target": [],
+      "apply_start": "",
+      "apply_end": "",
+      "status": "unknown",
+      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=01&bbsSn=7000019795",
+      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
+      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
+      "benefit_summary": "",
+      "required_documents": [],
+      "age_min": null,
+      "age_max": null,
+      "homeless_required": null,
+      "income_condition": "",
+      "total_units": null,
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
+      "schedule_confirmed": false,
+      "metadata": {
+        "notice_date": "2026-06-22"
+      }
+    },
+    {
+      "id": "direct:lh_7000019793",
+      "title": "구리갈매역세권 주유소용지 공급공고 개찰결과 게시",
+      "organization": "LH",
+      "source_id": "lh_7000019793",
+      "source_type": "direct_collector",
+      "category": "LH 공공주택",
+      "region": "경기",
+      "district": "",
+      "housing_type": "기타용지",
+      "target": [],
+      "apply_start": "",
+      "apply_end": "",
+      "status": "unknown",
+      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=01&bbsSn=7000019793",
+      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
+      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
+      "benefit_summary": "",
+      "required_documents": [],
+      "age_min": null,
+      "age_max": null,
+      "homeless_required": null,
+      "income_condition": "",
+      "total_units": null,
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
+      "schedule_confirmed": false,
+      "metadata": {
+        "notice_date": "2026-06-22"
+      }
+    },
+    {
+      "id": "direct:lh_7000019791",
+      "title": "의정부고산 및 의정부민락2 근린생활시설, 단독주택용지 공급공고 개찰결과 및 계약체결 안내",
+      "organization": "LH",
+      "source_id": "lh_7000019791",
+      "source_type": "direct_collector",
+      "category": "LH 공공주택",
+      "region": "경기",
+      "district": "",
+      "housing_type": "기타용지",
+      "target": [],
+      "apply_start": "",
+      "apply_end": "",
+      "status": "unknown",
+      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=01&bbsSn=7000019791",
+      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
+      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
+      "benefit_summary": "",
+      "required_documents": [],
+      "age_min": null,
+      "age_max": null,
+      "homeless_required": null,
+      "income_condition": "",
+      "total_units": null,
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
+      "schedule_confirmed": false,
+      "metadata": {
+        "notice_date": "2026-06-22"
+      }
+    },
+    {
+      "id": "direct:lh_7000019790",
+      "title": "의정부고산 종교시설용지 공급공고 추첨결과 게시",
+      "organization": "LH",
+      "source_id": "lh_7000019790",
+      "source_type": "direct_collector",
+      "category": "LH 공공주택",
+      "region": "경기",
+      "district": "",
+      "housing_type": "기타용지",
+      "target": [],
+      "apply_start": "",
+      "apply_end": "",
+      "status": "unknown",
+      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=01&bbsSn=7000019790",
+      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
+      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
+      "benefit_summary": "",
+      "required_documents": [],
+      "age_min": null,
+      "age_max": null,
+      "homeless_required": null,
+      "income_condition": "",
+      "total_units": null,
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
+      "schedule_confirmed": false,
+      "metadata": {
+        "notice_date": "2026-06-22"
+      }
+    },
+    {
+      "id": "direct:lh_7000019789",
+      "title": "구리갈매역세권 근린생활시설용지 공급공고 개찰결과 게시",
+      "organization": "LH",
+      "source_id": "lh_7000019789",
+      "source_type": "direct_collector",
+      "category": "LH 공공주택",
+      "region": "경기",
+      "district": "",
+      "housing_type": "기타용지",
+      "target": [],
+      "apply_start": "",
+      "apply_end": "",
+      "status": "unknown",
+      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=01&bbsSn=7000019789",
+      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
+      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
+      "benefit_summary": "",
+      "required_documents": [],
+      "age_min": null,
+      "age_max": null,
+      "homeless_required": null,
+      "income_condition": "",
+      "total_units": null,
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
+      "schedule_confirmed": false,
+      "metadata": {
+        "notice_date": "2026-06-22"
+      }
+    },
+    {
+      "id": "direct:lh_7000019788",
+      "title": "파주운정3 종교시설용지 재공급공고 추첨결과 게시",
+      "organization": "LH",
+      "source_id": "lh_7000019788",
+      "source_type": "direct_collector",
+      "category": "LH 공공주택",
+      "region": "경기",
+      "district": "",
+      "housing_type": "기타용지",
+      "target": [],
+      "apply_start": "",
+      "apply_end": "",
+      "status": "unknown",
+      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=01&bbsSn=7000019788",
+      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
+      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
+      "benefit_summary": "",
+      "required_documents": [],
+      "age_min": null,
+      "age_max": null,
+      "homeless_required": null,
+      "income_condition": "",
+      "total_units": null,
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
+      "schedule_confirmed": false,
+      "metadata": {
+        "notice_date": "2026-06-22"
+      }
+    },
     {
       "id": "direct:lh_9102431897",
       "title": "[접수결과 게시] 시흥시 신혼희망타운 행복주택[주거약자용] 접수결과",
@@ -29,7 +299,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-19"
@@ -59,7 +329,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-19"
@@ -89,7 +359,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-18"
@@ -119,7 +389,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-18"
@@ -149,7 +419,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-18"
@@ -179,7 +449,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-18"
@@ -209,7 +479,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-18"
@@ -239,7 +509,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-17"
@@ -269,7 +539,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-17"
@@ -299,7 +569,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-17"
@@ -329,7 +599,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-16"
@@ -359,7 +629,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-16"
@@ -389,7 +659,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-16"
@@ -419,7 +689,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-16"
@@ -449,7 +719,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-16"
@@ -479,7 +749,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-15"
@@ -509,7 +779,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-15"
@@ -539,7 +809,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-15"
@@ -569,7 +839,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-15"
@@ -599,7 +869,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-15"
@@ -629,7 +899,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-15"
@@ -659,7 +929,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-15"
@@ -689,7 +959,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-22T03:42:21.634459+00:00",
+      "fetched_at": "2026-06-22T23:19:34.717607+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-15"
