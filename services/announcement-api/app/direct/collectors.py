@@ -16,6 +16,7 @@ from ..repository import AnnouncementRepository
 from ..sources import SourceError
 from ..status import calculate_status, normalize_date
 from .changes import ChangeTracker
+from .interpretation import is_public_recruitment_notice
 
 APPLYHOME_BASE = "https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1"
 LH_URL = "https://apis.data.go.kr/B552555/lhNoticeInfo1/getNoticeInfo1"
@@ -51,6 +52,10 @@ GYEONGGI_CITIES = (
     "의정부", "시흥", "파주", "김포", "광명", "광주", "군포", "오산", "이천", "양주",
     "구리", "안성", "포천", "의왕", "하남", "여주", "동두천", "과천", "가평", "양평",
 )
+HOUSING_TYPE_KEYWORDS = (
+    "통합공공임대", "행복주택", "국민임대", "영구임대", "매입임대",
+    "전세임대", "장기전세", "사회주택", "공공분양", "신혼희망타운",
+)
 
 
 def _safe_collection_error(name: str, error: Exception) -> str:
@@ -71,6 +76,10 @@ EXCLUDE_WORDS = ("당첨자", "발표", "계약대상", "선정결과", "취소"
 def _digits(value: Any) -> int | None:
     text = "".join(character for character in str(value or "") if character.isdigit())
     return int(text) if text else None
+
+
+def _housing_type(title: str, fallback: str) -> str:
+    return next((keyword for keyword in HOUSING_TYPE_KEYWORDS if keyword in title), fallback)
 
 
 def _district(address: str) -> str:
@@ -185,39 +194,47 @@ def _infer_region(title: str) -> str:
 def _fetch_lh(api_key: str, days_back: int, timeout: int, fetched_at: str) -> list[Announcement]:
     today = datetime.now().date()
     cutoff = today - timedelta(days=days_back)
-    response = requests.get(
-        LH_URL,
-        params={
-            "ServiceKey": api_key,
-            "PG_SZ": "100",
-            "SCH_ST_DT": cutoff.isoformat(),
-            "SCH_ED_DT": today.isoformat(),
-            "PAGE": "1",
-        },
-        timeout=timeout,
-    )
-    response.raise_for_status()
     result = []
-    for item in _json_items(response.json()):
-        title = str(item.get("BBS_TL") or "")
-        raw_id = str(item.get("BBS_SN") or "")
-        if not raw_id or not any(word in title for word in ("분양", "청약", "공급", "행복주택", "공공주택", "입주자")):
-            continue
-        if any(word in title for word in ("입찰", "용역", "공사", "물품")):
-            continue
-        registered = normalize_date(str(item.get("BBS_WOU_DTTM") or "")[:10])
-        if registered:
-            try:
-                if date.fromisoformat(registered) < cutoff:
-                    continue
-            except ValueError:
-                pass
-        result.append(_announcement(
-            source_id=f"lh_{raw_id}", title=title, organization="LH", category="LH 공공주택",
-            region=_infer_region(title), housing_type=str(item.get("AIS_TP_CD_NM") or "공공임대/분양"),
-            url=str(item.get("LINK_URL") or "https://apply.lh.or.kr"), fetched_at=fetched_at,
-            metadata={"notice_date": registered},
-        ))
+    page_size = 100
+    for page in range(1, 11):
+        response = requests.get(
+            LH_URL,
+            params={
+                "ServiceKey": api_key,
+                "PG_SZ": str(page_size),
+                "SCH_ST_DT": cutoff.isoformat(),
+                "SCH_ED_DT": today.isoformat(),
+                "PAGE": str(page),
+            },
+            timeout=timeout,
+        )
+        response.raise_for_status()
+        items = _json_items(response.json())
+        if not items:
+            break
+        for item in items:
+            title = str(item.get("BBS_TL") or "")
+            raw_id = str(item.get("BBS_SN") or "")
+            housing_type = str(item.get("AIS_TP_CD_NM") or "공공임대/분양")
+            if not raw_id or not is_public_recruitment_notice(
+                {"title": title, "housing_type": housing_type, "organization": "LH"}
+            ):
+                continue
+            registered = normalize_date(str(item.get("BBS_WOU_DTTM") or "")[:10])
+            if registered:
+                try:
+                    if date.fromisoformat(registered) < cutoff:
+                        continue
+                except ValueError:
+                    pass
+            result.append(_announcement(
+                source_id=f"lh_{raw_id}", title=title, organization="LH", category="LH 공공주택",
+                region=_infer_region(title), housing_type=housing_type,
+                url=str(item.get("LINK_URL") or "https://apply.lh.or.kr"), fetched_at=fetched_at,
+                metadata={"notice_date": registered},
+            ))
+        if len(items) < page_size:
+            break
     return result
 
 
@@ -234,28 +251,45 @@ def _recent(raw: str, formats: tuple[str, ...], days: int = 100) -> str:
 def _fetch_sh(timeout: int, fetched_at: str, days_back: int = 100) -> list[Announcement]:
     result = []
     for board, (housing_type, url) in enumerate(SH_BOARDS.items(), start=1):
-        response = requests.get(url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0 youth-housing-compass"})
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, "html.parser")
-        for row in soup.select("table tr"):
-            cells = row.find_all("td")
-            if len(cells) < 5:
-                continue
-            title = cells[1].get_text(" ", strip=True)
-            link = cells[1].find("a")
-            match = re.search(r"getDetailView\(['\"](\d+)", str(link.get("onclick", "")) if link else "")
-            notice_date = _recent(cells[3].get_text(strip=True), ("%Y-%m-%d",), days_back)
-            if not match or not notice_date or not any(word in title for word in INCLUDE_WORDS) or any(word in title for word in EXCLUDE_WORDS):
-                continue
-            district = next((name for name in SEOUL_DISTRICTS if name in title), "")
-            source_id = f"sh_{match.group(1)}"
-            result.append(_announcement(
-                source_id=source_id, title=title, organization="SH", category="SH 공공주택",
-                region="서울", district=district, housing_type=housing_type,
-                url=SH_DETAIL.format(seq=match.group(1), board=board), fetched_at=fetched_at,
-                metadata={"notice_date": notice_date},
-            ))
-    return result
+        for page in range(1, 11):
+            response = requests.get(
+                url,
+                params={"page": page},
+                timeout=timeout,
+                headers={"User-Agent": "Mozilla/5.0 youth-housing-compass"},
+            )
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, "html.parser")
+            saw_recent_row = False
+            for row in soup.select("table tr"):
+                cells = row.find_all("td")
+                if len(cells) < 5:
+                    continue
+                title = cells[1].get_text(" ", strip=True)
+                link = cells[1].find("a")
+                match = re.search(r"getDetailView\(['\"](\d+)", str(link.get("onclick", "")) if link else "")
+                notice_date = _recent(cells[3].get_text(strip=True), ("%Y-%m-%d",), days_back)
+                if notice_date:
+                    saw_recent_row = True
+                if not match or not notice_date or not is_public_recruitment_notice(
+                    {"title": title, "housing_type": housing_type, "organization": "SH"}
+                ):
+                    continue
+                district = next((name for name in SEOUL_DISTRICTS if name in title), "")
+                source_id = f"sh_{match.group(1)}"
+                result.append(_announcement(
+                    source_id=source_id, title=title, organization="SH", category="SH 공공주택",
+                    region="서울", district=district, housing_type=_housing_type(title, housing_type),
+                    url=SH_DETAIL.format(seq=match.group(1), board=board), fetched_at=fetched_at,
+                    metadata={"notice_date": notice_date},
+                ))
+            if not saw_recent_row:
+                break
+    unique_by_title: dict[str, Announcement] = {}
+    for item in result:
+        normalized_title = re.sub(r"^(?:NEW\s*)?(?:\[수정\]\s*)?", "", item.title).strip()
+        unique_by_title.setdefault(normalized_title, item)
+    return list(unique_by_title.values())
 
 
 def _fetch_gh(timeout: int, fetched_at: str, days_back: int = 100) -> list[Announcement]:
@@ -274,13 +308,15 @@ def _fetch_gh(timeout: int, fetched_at: str, days_back: int = 100) -> list[Annou
             notice_date = _recent(
                 cells[4].get_text(strip=True), ("%y.%m.%d", "%Y-%m-%d"), days_back
             )
-            if not match or not notice_date or not any(word in title for word in INCLUDE_WORDS) or any(word in title for word in EXCLUDE_WORDS):
+            if not match or not notice_date or not is_public_recruitment_notice(
+                {"title": title, "housing_type": "공공임대/분양", "organization": "GH"}
+            ):
                 continue
             city = next((name for name in GYEONGGI_CITIES if name in title), "")
             article = match.group(1)
             result.append(_announcement(
                 source_id=f"gh_{article}", title=title, organization="GH", category="GH 공공주택",
-                region="경기", district=f"{city}시" if city else "", housing_type="공공임대/분양",
+                region="경기", district=f"{city}시" if city else "", housing_type=_housing_type(title, "공공임대/분양"),
                 url=f"{GH_URL}?mode=view&articleNo={article}", fetched_at=fetched_at,
                 metadata={"notice_date": notice_date},
             ))
@@ -407,7 +443,11 @@ class DirectAnnouncementSource:
                     collected.extend(future.result())
                 except Exception as error:
                     errors.append(_safe_collection_error(name, error))
-        unique = {item.source_id: item for item in collected if item.source_id and item.title}
+        unique = {
+            item.source_id: item
+            for item in collected
+            if item.source_id and item.title and is_public_recruitment_notice(item)
+        }
         items = sorted(unique.values(), key=lambda item: (item.apply_end or item.metadata.get("notice_date") or ""), reverse=True)
         if self.repository and items:
             self.repository.upsert([item.to_dict() for item in items], fetched_at)

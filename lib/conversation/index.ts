@@ -57,5 +57,15 @@ export function createConversationalAnswer(
 
   const active = recommendations.filter((item) => item.status === "open").length;
   const planned = recommendations.filter((item) => item.status === "planned").length;
-  return `입력한 조건으로 ${recommendations.length}개 공고를 찾았습니다. 접수중 ${active}개, 모집예정 ${planned}개이며 카드의 번호를 사용해 “1번 자격”처럼 이어서 질문할 수 있습니다.`;
+  const analyzed = recommendations.filter((item) =>
+    ["high", "medium"].includes(item.analysis_quality ?? "")
+  ).length;
+  const top = recommendations[0];
+  const topSchedule = top.apply_start && top.apply_end
+    ? `신청기간은 ${top.apply_start}부터 ${top.apply_end}까지입니다.`
+    : "신청기간은 기관 원문에서 추가 확인이 필요합니다.";
+  const evidence = ["high", "medium"].includes(top.analysis_quality ?? "")
+    ? "공식 공고문과 첨부파일을 분석한 근거가 있는 공고입니다."
+    : "아직 상세 분석이 부족해 원문 확인이 필요한 공고입니다.";
+  return `입력한 조건으로 실제 모집공고 ${recommendations.length}개를 찾았습니다. 접수중 ${active}개, 모집예정 ${planned}개${analyzed ? `, 공고문 분석 완료 ${analyzed}개` : ""}입니다. 가장 먼저 볼 공고는 “${top.title}”입니다. ${top.reasons[0] ?? "입력 조건과의 적합성을 확인했습니다."} ${topSchedule} ${evidence} “1번 자격”처럼 이어서 질문해보세요.`;
 }

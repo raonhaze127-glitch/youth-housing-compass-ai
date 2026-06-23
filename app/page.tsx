@@ -19,11 +19,34 @@ type ConversationMessage = {
   content: string;
 };
 
+type ChatResponse = Partial<ApiResult> & { error?: string };
+
+async function readChatResponse(response: Response): Promise<ChatResponse> {
+  const contentType = response.headers.get("content-type") ?? "";
+  const body = await response.text();
+
+  if (!contentType.includes("application/json")) {
+    throw new Error(
+      "추천 서버가 갱신 중입니다. 잠시 후 다시 시도해주세요."
+    );
+  }
+
+  try {
+    return JSON.parse(body) as ChatResponse;
+  } catch {
+    throw new Error("추천 서버 응답을 읽지 못했습니다. 잠시 후 다시 시도해주세요.");
+  }
+}
+
 const SAMPLE_PROMPTS = [
   "서울 사는 28세 무주택 직장인인데 월세 부담이 커요",
   "경기 거주 31세 무주택 청년이고 월소득 230만원이라 전세보증금 지원을 찾고 있어요",
   "서울 강서구 33세 신혼부부인데 공공임대주택을 알아보고 싶어요"
 ];
+
+// 공고 변경 추적과 청약 가점 계산은 검증이 끝날 때까지 화면에서 숨깁니다.
+const ENABLE_DECISION_TOOLS =
+  process.env.NEXT_PUBLIC_ENABLE_DECISION_TOOLS === "true";
 
 // 로고 3번: 아늑한 집 & 부드러운 길잡이 (SVG)
 function CompassLogo({ className = "w-12 h-12", style }: { className?: string; style?: React.CSSProperties }) {
@@ -85,7 +108,7 @@ function CompassLogo({ className = "w-12 h-12", style }: { className?: string; s
 }
 
 export default function Home() {
-  const [message, setMessage] = useState(SAMPLE_PROMPTS[0]);
+  const [message, setMessage] = useState("");
   const [result, setResult] = useState<ApiResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -93,12 +116,20 @@ export default function Home() {
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // message 값이 바뀔 때마다 textarea의 높이를 scrollHeight에 맞추어 자동 조절
+  // message 값이 바뀔 때마다 textarea의 높이를 scrollHeight에 맞추어 자동 조절 (렌더링 타이밍 보장)
   useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
+    const adjustHeight = () => {
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto";
+        textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      }
+    };
+
+    adjustHeight();
+
+    // 마운트 시점 및 폰트 렌더링 지연에 따른 실측 오차를 방지하기 위해 80ms 후 추가 실행
+    const timer = setTimeout(adjustHeight, 80);
+    return () => clearTimeout(timer);
   }, [message]);
 
   const profileSummary = useMemo(() => {
@@ -120,6 +151,9 @@ export default function Home() {
         : profile.householdType === "youth"
           ? "유형: 청년"
           : "",
+      profile.children?.length
+        ? `자녀: ${profile.children.map((child) => `${child.age}세`).join(", ")}`
+        : "",
       profile.interests.length ? `관심: ${profile.interests.join(", ")}` : ""
     ].filter(Boolean);
   }, [result]);
@@ -142,12 +176,13 @@ export default function Home() {
         })
       });
 
+      const payload = await readChatResponse(response);
+
       if (!response.ok) {
-        const payload = (await response.json()) as { error?: string };
         throw new Error(payload.error ?? "추천 결과를 불러오지 못했습니다.");
       }
 
-      const nextResult = (await response.json()) as ApiResult;
+      const nextResult = payload as ApiResult;
       setResult(nextResult);
       setConversation((current) => [
         ...current,
@@ -188,13 +223,15 @@ export default function Home() {
         {/* 대화 전 웰컴 스크린 */}
         {!isChatActive && (
           <section className="chat-welcome">
-            <div className="logo-wrapper">
-              <CompassLogo style={{ width: 56, height: 56 }} />
+            <div className="logo-wrapper" style={{ display: "flex", alignItems: "center", gap: "10px", color: "var(--accent)", marginBottom: "20px" }}>
+              <CompassLogo style={{ width: 38, height: 38 }} />
+              <span style={{ fontSize: "26px", fontWeight: 850, letterSpacing: "-0.03em", color: "var(--accent)" }}>
+                청년주거나침반
+              </span>
             </div>
-            <h1>청년님, 오늘 어떤 주거지원을 찾으시나요?</h1>
+            <h1>안녕하세요, 어떤 집을 찾으시나요?</h1>
             <p>
-              조건이나 고민을 문장으로 편하게 입력하시면,
-              맞춤형 공공주택과 청년 지원 정책을 골라 나침반처럼 길을 안내해 드립니다.
+              조건이나 고민을 대화하듯이 입력하시면 맞춤형 공공주택을 골라 나침반처럼 길을 안내해 드립니다.
             </p>
           </section>
         )}
@@ -229,7 +266,7 @@ export default function Home() {
             </div>
 
             {/* 실공고 연동 기능 패널들 */}
-            {result.dataSource === "live" ? (
+            {result.dataSource === "live" && ENABLE_DECISION_TOOLS ? (
               <div className="feature-panels">
                 <EligibilityPanel />
                 <ChangesPanel />
@@ -252,7 +289,7 @@ export default function Home() {
         {/* 결과가 없을 때의 기본 가이드 화면 */}
         {!result && !isChatActive && (
           <section className="empty-state">
-            <p>아래 예시 질문을 누르시거나 직접 입력하여 나침반을 움직여보세요.</p>
+            <p>아래 예시 질문을 누르시거나 궁금한 내용을 직접 입력하세요.</p>
           </section>
         )}
 
@@ -274,7 +311,7 @@ export default function Home() {
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               aria-label="주거 상황 입력"
-              placeholder="청년주거나침반 AI에게 물어보기..."
+              placeholder="청주나AI에게 물어보기"
               rows={1}
               onKeyDown={(event) => {
                 // 엔터키 입력 시 전송 (Shift+Enter는 줄바꿈)

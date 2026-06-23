@@ -131,6 +131,11 @@ export function ProgramCard({ program, index }: { program: Recommendation; index
           <div className="card-meta">
             <p>{program.organization}</p>
             <ApplicationStatusBadge status={program.status} />
+            {program.analysis_quality && program.analysis_quality !== "failed" ? (
+              <span className={`analysis-badge ${program.analysis_quality}`}>
+                공고문 분석
+              </span>
+            ) : null}
           </div>
           <h3>{program.title}</h3>
         </div>
