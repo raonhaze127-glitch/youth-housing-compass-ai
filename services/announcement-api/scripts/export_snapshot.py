@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
+import re
 import sys
 from typing import Any
 
@@ -147,6 +148,30 @@ def _merge_preserving_analysis(
     return merged
 
 
+def _deduplicate_snapshot(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    unique: dict[tuple[str, str], dict[str, Any]] = {}
+    for item in items:
+        normalized_title = re.sub(
+            r"[^0-9A-Za-z가-힣]",
+            "",
+            re.sub(
+                r"^(?:\[(?:정정공고|수정)\]|\((?:최초|추가|예비)\))\s*",
+                "",
+                str(item.get("title") or ""),
+            ),
+        )
+        key = (str(item.get("organization") or ""), normalized_title)
+        current = unique.get(key)
+        if not current:
+            unique[key] = item
+            continue
+        current_is_apply = str(current.get("source_id") or "").startswith("gh_apply_")
+        item_is_apply = str(item.get("source_id") or "").startswith("gh_apply_")
+        if item_is_apply and not current_is_apply:
+            unique[key] = _merge_preserving_analysis(current, item)
+    return list(unique.values())
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -224,7 +249,7 @@ def main() -> None:
                 item,
             )
     announcements = sorted(
-        merged.values(),
+        _deduplicate_snapshot(list(merged.values())),
         key=lambda item: (
             str(item.get("apply_end") or ""),
             str(item.get("metadata", {}).get("notice_date") or ""),

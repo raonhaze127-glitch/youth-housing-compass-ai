@@ -3,10 +3,12 @@ from __future__ import annotations
 import re
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from dataclasses import replace
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from threading import Lock
 from typing import Any, Callable
+from urllib.parse import urlencode
 
 import requests
 from bs4 import BeautifulSoup
@@ -16,7 +18,8 @@ from ..repository import AnnouncementRepository
 from ..sources import SourceError
 from ..status import calculate_status, normalize_date
 from .changes import ChangeTracker
-from .interpretation import is_public_recruitment_notice
+from .http_compat import CurlRequestError, curl_text
+from .interpretation import interpret_notice_text, is_public_recruitment_notice
 
 APPLYHOME_BASE = "https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1"
 LH_URL = "https://apis.data.go.kr/B552555/lhNoticeInfo1/getNoticeInfo1"
@@ -26,6 +29,20 @@ SH_BOARDS = {
 }
 SH_DETAIL = "https://www.i-sh.co.kr/app/lay2/program/S48T1581C563/www/brd/m_247/view.do?seq={seq}&multi_itm_seq={board}"
 GH_URL = "https://www.gh.or.kr/gh/announcement-of-salerental001.do"
+GH_APPLY_CHANNELS = {
+    "rent": {
+        "category": "GH 임대주택",
+        "housing_type": "공공임대",
+        "list_url": "https://apply.gh.or.kr/sb/sr/sr7150/selectPbancRentHouseList.do",
+        "detail_url": "https://apply.gh.or.kr/sb/sr/sr7150/selectPbancDetailView.do",
+    },
+    "purchase": {
+        "category": "GH 매입임대",
+        "housing_type": "매입임대",
+        "list_url": "https://apply.gh.or.kr/sb/sr/sr7155/selectPbancRentHouseList.do",
+        "detail_url": "https://apply.gh.or.kr/sb/sr/sr7155/selectPbancDetailView.do",
+    },
+}
 
 APPLYHOME_CHANNELS = (
     ("apt", "APT", "getAPTLttotPblancDetail"),
@@ -51,11 +68,17 @@ GYEONGGI_CITIES = (
     "수원", "성남", "고양", "용인", "부천", "안산", "남양주", "안양", "화성", "평택",
     "의정부", "시흥", "파주", "김포", "광명", "광주", "군포", "오산", "이천", "양주",
     "구리", "안성", "포천", "의왕", "하남", "여주", "동두천", "과천", "가평", "양평",
+    "연천",
 )
 HOUSING_TYPE_KEYWORDS = (
     "통합공공임대", "행복주택", "국민임대", "영구임대", "매입임대",
     "전세임대", "장기전세", "사회주택", "공공분양", "신혼희망타운",
 )
+GH_DISTRICT_ALIASES = {
+    "다산": "남양주시",
+    "평촌": "안양시",
+    "탑석": "의정부시",
+}
 
 
 def _safe_collection_error(name: str, error: Exception) -> str:
@@ -292,7 +315,141 @@ def _fetch_sh(timeout: int, fetched_at: str, days_back: int = 100) -> list[Annou
     return list(unique_by_title.values())
 
 
-def _fetch_gh(timeout: int, fetched_at: str, days_back: int = 100) -> list[Announcement]:
+def _gh_district(title: str) -> str:
+    alias = next((district for keyword, district in GH_DISTRICT_ALIASES.items() if keyword in title), "")
+    if alias:
+        return alias
+    city = next((name for name in GYEONGGI_CITIES if name in title), "")
+    if not city:
+        return ""
+    return f"{city}{'군' if city in {'가평', '양평', '연천'} else '시'}"
+
+
+def _gh_detail_district(text: str) -> str:
+    matches = re.findall(
+        r"(?:소재지|공급\s*위치)\s*:?[\s\n]*(?:경기도\s*)?([가-힣]+(?:시|군))",
+        text,
+    )
+    unique = list(dict.fromkeys(matches))
+    return unique[0] if len(unique) == 1 else ""
+
+
+def _parse_gh_apply_list(
+    html: str,
+    channel: str,
+    fetched_at: str,
+    days_back: int,
+) -> list[Announcement]:
+    config = GH_APPLY_CHANNELS[channel]
+    cutoff = datetime.now().date() - timedelta(days=days_back)
+    result: list[Announcement] = []
+    soup = BeautifulSoup(html, "html.parser")
+    for row in soup.select("table tbody tr"):
+        link = row.select_one("a[data-pbancno]")
+        cells = row.find_all("td")
+        if not link or len(cells) < 8:
+            continue
+        pbanc_no = str(link.get("data-pbancno") or "").strip()
+        title = link.get_text(" ", strip=True)
+        pbanc_kind = str(link.get("data-pbanckndcd") or "").strip()
+        business_type = str(link.get("data-biztynm") or "").strip()
+        notice_date = normalize_date(cells[5].get_text(" ", strip=True))
+        apply_end = normalize_date(cells[6].get_text(" ", strip=True))
+        listed_status = cells[7].get_text(" ", strip=True)
+        is_active = listed_status in {"공고중", "접수중"}
+        if notice_date:
+            try:
+                if date.fromisoformat(notice_date) < cutoff and not is_active:
+                    continue
+            except ValueError:
+                pass
+        housing_type = _housing_type(title, business_type or str(config["housing_type"]))
+        if not pbanc_no or not is_public_recruitment_notice(
+            {"title": title, "housing_type": housing_type, "organization": "GH"}
+        ):
+            continue
+        search_url = f"{config['list_url']}?{urlencode({'searchTitle': title})}"
+        result.append(
+            _announcement(
+                source_id=f"gh_apply_{channel}_{pbanc_no}",
+                title=title,
+                organization="GH",
+                category=str(config["category"]),
+                region="경기" if "경기" in cells[3].get_text(" ", strip=True) else _infer_region(title),
+                district=_gh_district(title),
+                housing_type=housing_type,
+                end=apply_end,
+                url=search_url,
+                fetched_at=fetched_at,
+                metadata={
+                    "notice_date": notice_date,
+                    "listed_status": listed_status,
+                    "gh_apply_channel": channel,
+                    "pbanc_no": pbanc_no,
+                    "pbanc_kind_code": pbanc_kind,
+                    "business_type_name": business_type,
+                    "detail_url": config["detail_url"],
+                },
+            )
+        )
+    return result
+
+
+def _fetch_gh_apply_channel(
+    channel: str, timeout: int, fetched_at: str, days_back: int
+) -> list[Announcement]:
+    config = GH_APPLY_CHANNELS[channel]
+    result: list[Announcement] = []
+    for page in range(1, 11):
+        html = curl_text(
+            str(config["list_url"]),
+            timeout,
+            data={
+                "pageIndex": page,
+                "searchArea": "",
+                "searchCate": "",
+                "searchState": "",
+                "searchTitle": "",
+            },
+        )
+        soup = BeautifulSoup(html, "html.parser")
+        if not soup.select_one("a[data-pbancno]"):
+            break
+        page_items = _parse_gh_apply_list(html, channel, fetched_at, days_back)
+        for item in page_items:
+            metadata = item.metadata
+            try:
+                detail_html = curl_text(
+                    str(metadata["detail_url"]),
+                    timeout,
+                    data={
+                        "previewYn": "0",
+                        "pbancNo": metadata["pbanc_no"],
+                        "pbancKndCd": metadata["pbanc_kind_code"],
+                        "bizTyNm": metadata["business_type_name"],
+                    },
+                )
+                detail_text = BeautifulSoup(detail_html, "html.parser").get_text("\n", strip=True)
+                interpreted = interpret_notice_text(detail_text)
+                start = interpreted["apply_start"] or item.apply_start
+                end = interpreted["apply_end"] or item.apply_end
+                item = replace(
+                    item,
+                    district=item.district or _gh_detail_district(detail_text),
+                    apply_start=start,
+                    apply_end=end,
+                    status=calculate_status(start, end),
+                    schedule_confirmed=bool(start and end),
+                )
+            except (CurlRequestError, KeyError, TypeError, ValueError):
+                pass
+            result.append(item)
+        if len(soup.select("a[data-pbancno]")) < 10:
+            break
+    return result
+
+
+def _fetch_gh_legacy(timeout: int, fetched_at: str, days_back: int = 100) -> list[Announcement]:
     result = []
     for page in range(1, 4):
         response = requests.get(GH_URL, params={"pageIndex": page, "article.offset": (page - 1) * 10, "articleLimit": 10}, timeout=timeout, headers={"User-Agent": "Mozilla/5.0 youth-housing-compass"})
@@ -321,6 +478,20 @@ def _fetch_gh(timeout: int, fetched_at: str, days_back: int = 100) -> list[Annou
                 metadata={"notice_date": notice_date},
             ))
     return result
+
+
+def _fetch_gh(timeout: int, fetched_at: str, days_back: int = 100) -> list[Announcement]:
+    result: list[Announcement] = []
+    successful_channels = 0
+    for channel in GH_APPLY_CHANNELS:
+        try:
+            result.extend(_fetch_gh_apply_channel(channel, timeout, fetched_at, days_back))
+            successful_channels += 1
+        except (CurlRequestError, requests.RequestException, KeyError, TypeError, ValueError):
+            continue
+    if successful_channels:
+        return list({item.source_id: item for item in result}.values())
+    return _fetch_gh_legacy(timeout, fetched_at, days_back)
 
 
 class DirectAnnouncementSource:
