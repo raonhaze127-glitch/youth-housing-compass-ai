@@ -33,12 +33,21 @@ INCLUDE_NOTICE_PATTERNS = (
 )
 EXCLUDE_NOTICE_PATTERNS = (
     re.compile(r"접수\s*(?:결과|현황)"),
+    re.compile(r"접수\s*마감"),
+    re.compile(r"신청\s*결과"),
     re.compile(r"신청\s*현황"),
+    re.compile(r"마감\s*(?:현황|결과|단지|게시)"),
+    re.compile(r"결과\s*(?:안내|게시|공지|알림)"),
     re.compile(r"청약\s*(?:신청\s*)?경쟁률|경쟁률\s*(?:게시|공지)"),
     re.compile(r"당첨자|발표|선정\s*결과|개찰\s*결과|추첨\s*결과"),
+    re.compile(r"(?:예비)?입주자\s*선정\s*안내"),
     re.compile(r"서류\s*심사|자격\s*심사|입주\s*대상자"),
+    re.compile(r"서류\s*(?:제출|접수)\s*안내"),
     re.compile(r"계약\s*(?:체결|결과)|결과\s*알림|동호표|마감\s*안내"),
+    re.compile(r"배정\s*물량|공급\s*대상\s*주택\s*게시"),
+    re.compile(r"(?:모집|청약|신청|공급)\s*관련\s*안내|사진\s*(?:정정|변경)\s*안내"),
     re.compile(r"공고문.*(?:수정|변경)|(?:수정|변경)\s*안내"),
+    re.compile(r"정정\s*안내"),
     re.compile(r"민영\s*주택"),
 )
 NON_HOUSING_TYPES = ("용지", "상가", "산업시설", "업무시설", "유치원")
@@ -116,6 +125,40 @@ def is_public_recruitment_notice(item: Announcement | dict[str, Any]) -> bool:
     if not any(pattern.search(title) for pattern in INCLUDE_NOTICE_PATTERNS):
         return False
     return not any(pattern.search(title) for pattern in EXCLUDE_NOTICE_PATTERNS)
+
+
+def _select_enrichment_candidates(
+    candidates: list[Announcement], limit: int, offset: int = 0
+) -> list[Announcement]:
+    if limit <= 0:
+        return []
+    if offset > 0:
+        return candidates[offset : offset + limit]
+
+    organizations = ("LH", "SH", "GH")
+    groups = {
+        organization: [
+            item for item in candidates if item.organization == organization
+        ]
+        for organization in organizations
+    }
+    positions = {organization: 0 for organization in organizations}
+    selected: list[Announcement] = []
+    while len(selected) < limit:
+        added = False
+        for organization in organizations:
+            position = positions[organization]
+            group = groups[organization]
+            if position >= len(group):
+                continue
+            selected.append(group[position])
+            positions[organization] += 1
+            added = True
+            if len(selected) >= limit:
+                break
+        if not added:
+            break
+    return selected
 
 
 def _normalize_text(text: str) -> str:
@@ -517,7 +560,7 @@ def enrich_announcements(
     offset: int = 0,
 ) -> list[Announcement]:
     candidates = [item for item in announcements if is_public_recruitment_notice(item)]
-    selected = candidates[offset : offset + limit]
+    selected = _select_enrichment_candidates(candidates, limit, offset)
     if not selected:
         return announcements
     enriched: dict[str, Announcement] = {}

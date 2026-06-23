@@ -75,8 +75,11 @@ try {
 
   if (!response.ok) throw new Error(JSON.stringify(result));
   if (!result.recommendations?.length) throw new Error("추천 결과가 비어 있습니다.");
-  if (result.recommendations[0].source_type !== "sample") {
-    throw new Error("공고 서비스의 샘플 소스를 거치지 않았습니다.");
+  if (result.dataSource !== "snapshot") {
+    throw new Error("검증된 실공고 스냅샷을 사용하지 않았습니다.");
+  }
+  if (!["LH", "SH", "GH"].includes(result.recommendations[0].organization)) {
+    throw new Error("공공주택 범위 밖의 추천 결과가 포함됐습니다.");
   }
 
   const followUpResponse = await fetch("http://127.0.0.1:3010/api/chat", {
@@ -97,6 +100,7 @@ try {
     JSON.stringify(
       {
         api_source: health.source,
+        data_source: result.dataSource,
         profile_region: result.profile.region,
         recommendation_count: result.recommendations.length,
         first_id: result.recommendations[0].id,

@@ -81,7 +81,7 @@ function isPublicRecruitmentNotice(item: AnnouncementApiItem) {
   const title = item.title ?? "";
   const housingType = item.housing_type ?? "";
   const included = /(입주자\s*모집|예비입주자\s*모집|모집\s*공고|공급\s*공고|본청약)/.test(title);
-  const excluded = /(접수\s*(결과|현황)|신청\s*현황|청약\s*(신청\s*)?경쟁률|경쟁률\s*(게시|공지)|당첨자|발표|선정\s*결과|개찰\s*결과|추첨\s*결과|서류\s*심사|자격\s*심사|입주\s*대상자|계약\s*(체결|결과)|결과\s*알림|동호표|마감\s*안내|민영\s*주택)/.test(title);
+  const excluded = /(접수\s*(결과|현황|마감)|신청\s*(결과|현황)|마감\s*(현황|결과|단지|게시|안내)|결과\s*(안내|게시|공지|알림)|청약\s*(신청\s*)?경쟁률|경쟁률\s*(게시|공지)|당첨자|발표|선정\s*결과|(예비)?입주자\s*선정\s*안내|개찰\s*결과|추첨\s*결과|서류\s*(심사|(제출|접수)\s*안내)|자격\s*심사|입주\s*대상자|계약\s*(체결|결과)|동호표|배정\s*물량|공급\s*대상\s*주택\s*게시|(모집|청약|신청|공급)\s*관련\s*안내|사진\s*(정정|변경)\s*안내|공고문.*(수정|변경)|(수정|변경|정정)\s*안내|민영\s*주택)/.test(title);
   const nonHousing = /(용지|상가|산업시설|업무시설|유치원)/.test(`${title} ${housingType}`);
   return ["LH", "SH", "GH"].includes(item.organization) && included && !excluded && !nonHousing;
 }
