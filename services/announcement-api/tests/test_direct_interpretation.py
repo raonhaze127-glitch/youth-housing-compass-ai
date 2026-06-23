@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import patch
 
 from app.direct.interpretation import (
+    _select_enrichment_candidates,
     enrich_announcement,
     interpret_notice_text,
     is_public_recruitment_notice,
@@ -38,6 +39,69 @@ class DirectInterpretationTests(unittest.TestCase):
                     "housing_type": "기타용지",
                 }
             )
+        )
+
+    def test_filters_lh_follow_up_posts_but_keeps_corrected_notice(self):
+        excluded_titles = (
+            "[접수마감 결과안내] 시흥시 국민임대 예비입주자 모집",
+            "본청약 입주자 모집 배정물량 안내",
+            "국민임대 입주자 모집 공급대상주택 게시",
+            "예비입주자 모집 서류제출 안내",
+            "입주자 모집 신청 결과 및 마감단지 게시",
+            "입주자 모집 주택사진 정정 안내",
+        )
+        for title in excluded_titles:
+            with self.subTest(title=title):
+                self.assertFalse(
+                    is_public_recruitment_notice(
+                        {
+                            "organization": "LH",
+                            "title": title,
+                            "housing_type": "국민임대",
+                        }
+                    )
+                )
+
+        self.assertTrue(
+            is_public_recruitment_notice(
+                {
+                    "organization": "LH",
+                    "title": "[정정공고] 고양시 국민임대주택 예비입주자 모집공고",
+                    "housing_type": "국민임대",
+                }
+            )
+        )
+
+    def test_balances_enrichment_across_public_organizations(self):
+        announcements = [
+            Announcement(
+                id=f"direct:{organization.lower()}_{index}",
+                source_id=f"{organization.lower()}_{index}",
+                source_type="direct_collector",
+                title=f"{organization} 공공임대 입주자 모집공고 {index}",
+                organization=organization,
+                category="공공임대",
+                region="전국",
+                district="",
+                housing_type="공공임대",
+                target=(),
+                apply_start="",
+                apply_end="",
+                status="unknown",
+                announcement_url="https://example.com/notice",
+                summary="",
+                eligibility_summary="",
+                benefit_summary="",
+                required_documents=(),
+            )
+            for organization in ("LH", "SH", "GH")
+            for index in range(4)
+        ]
+
+        selected = _select_enrichment_candidates(announcements, limit=6)
+        self.assertEqual(
+            [item.organization for item in selected],
+            ["LH", "SH", "GH", "LH", "SH", "GH"],
         )
 
     def test_extracts_grounded_eligibility_fields(self):
