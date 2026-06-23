@@ -33,11 +33,11 @@ class DirectCollectorTests(unittest.TestCase):
                 "", 5, 60, Path(directory) / "announcements.db", 3600
             )
             first = _announcement(
-                source_id="sh_1", title="첫 공고", organization="SH",
+                source_id="sh_1", title="첫 행복주택 입주자 모집공고", organization="SH",
                 category="SH 공공주택", region="서울", fetched_at="first",
             )
             second = _announcement(
-                source_id="sh_2", title="둘째 공고", organization="SH",
+                source_id="sh_2", title="둘째 행복주택 입주자 모집공고", organization="SH",
                 category="SH 공공주택", region="서울", fetched_at="second",
             )
             with mock.patch(
@@ -83,7 +83,7 @@ class DirectCollectorTests(unittest.TestCase):
     def test_public_only_mode_skips_applyhome_collection(self):
         source = DirectAnnouncementSource("key", 5, 60)
         lh_item = _announcement(
-            source_id="lh_1", title="LH 공공주택", organization="LH",
+            source_id="lh_1", title="LH 행복주택 입주자 모집공고", organization="LH",
             category="LH 공공주택", region="서울", fetched_at="now",
         )
         with mock.patch("app.direct.collectors._fetch_applyhome") as applyhome, mock.patch(

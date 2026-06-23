@@ -22,6 +22,7 @@ export type HousingProgram = {
   required_documents: string[];
   source_type: string;
   total_units?: number | null;
+  analysis_quality?: "high" | "medium" | "low" | "failed";
 };
 
 export type ApplicationStatus = "open" | "planned" | "closed" | "unknown";
@@ -33,6 +34,7 @@ export type UserProfile = {
   homeless?: boolean;
   incomeLevel?: "low" | "middle" | "high" | "unknown";
   householdType?: "youth" | "newlywed" | "unknown";
+  children?: Array<{ age: number }>;
   interests: string[];
   rawText: string;
 };

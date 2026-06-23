@@ -48,6 +48,11 @@ export function matchProgram(
     );
   }
 
+  if (profile.district && program.district === profile.district) {
+    score += 18;
+    reasons.push(`${profile.district} 세부 지역과 일치합니다.`);
+  }
+
   if (profile.homeless === true && program.homeless_required === true) {
     score += 20;
     reasons.push("무주택 조건이 필요한 사업과 입력 조건이 맞습니다.");

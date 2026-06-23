@@ -20,7 +20,12 @@ export function recommendPrograms(
   limit?: number,
   now = new Date()
 ): Recommendation[] {
-  const recommendations = programs
+  const regionEligiblePrograms = profile.region
+    ? programs.filter(
+        (program) => program.region === profile.region || program.region === "전국"
+      )
+    : programs;
+  const recommendations = regionEligiblePrograms
     .map((program) => matchProgram(profile, program, getApplicationStatus(program, now)))
     .sort((a, b) => {
       const statusDifference = STATUS_ORDER[a.status] - STATUS_ORDER[b.status];

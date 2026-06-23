@@ -27,6 +27,10 @@ type AnnouncementApiItem = {
   age_max: number | null;
   homeless_required: boolean | null;
   income_condition: string;
+  metadata?: {
+    analysis_quality?: "high" | "medium" | "low" | "failed";
+    analysis_source?: string;
+  };
 };
 
 type AnnouncementApiResponse = {
@@ -68,15 +72,45 @@ function toHousingProgram(item: AnnouncementApiItem): HousingProgram {
     benefit_summary: item.benefit_summary,
     required_documents: item.required_documents,
     source_type: item.source_type,
-    total_units: item.total_units
+    total_units: item.total_units,
+    analysis_quality: item.metadata?.analysis_quality
   };
+}
+
+function isPublicRecruitmentNotice(item: AnnouncementApiItem) {
+  const title = item.title ?? "";
+  const housingType = item.housing_type ?? "";
+  const included = /(입주자\s*모집|예비입주자\s*모집|모집\s*공고|공급\s*공고|본청약)/.test(title);
+  const excluded = /(접수\s*(결과|현황)|신청\s*현황|청약\s*(신청\s*)?경쟁률|경쟁률\s*(게시|공지)|당첨자|발표|선정\s*결과|개찰\s*결과|추첨\s*결과|서류\s*심사|자격\s*심사|입주\s*대상자|계약\s*(체결|결과)|결과\s*알림|동호표|마감\s*안내|민영\s*주택)/.test(title);
+  const nonHousing = /(용지|상가|산업시설|업무시설|유치원)/.test(`${title} ${housingType}`);
+  return ["LH", "SH", "GH"].includes(item.organization) && included && !excluded && !nonHousing;
+}
+
+function mergeLiveWithAnalyzedSnapshot(
+  liveItems: AnnouncementApiItem[],
+  snapshotItems: AnnouncementApiItem[]
+) {
+  const analyzed = new Map(
+    snapshotItems
+      .filter((item) => item.metadata?.analysis_source === "official_notice_and_attachments")
+      .map((item) => [item.source_id, item])
+  );
+  const merged = new Map<string, AnnouncementApiItem>();
+  for (const item of liveItems) {
+    const stored = analyzed.get(item.source_id);
+    merged.set(item.source_id, stored ? { ...item, ...stored } : item);
+  }
+  for (const item of snapshotItems) {
+    if (!merged.has(item.source_id)) merged.set(item.source_id, item);
+  }
+  return [...merged.values()].filter(isPublicRecruitmentNotice);
 }
 
 export async function loadHousingPrograms(): Promise<ProgramLoadResult> {
   const baseUrl = getAnnouncementApiBaseUrl();
   const storedSnapshot = liveSnapshot as unknown as LiveSnapshot;
   const snapshotItems = Array.isArray(storedSnapshot.announcements)
-    ? storedSnapshot.announcements
+    ? storedSnapshot.announcements.filter(isPublicRecruitmentNotice)
     : [];
   if (!baseUrl) {
     if (snapshotItems.length) {
@@ -103,7 +137,10 @@ export async function loadHousingPrograms(): Promise<ProgramLoadResult> {
     }
 
     return {
-      programs: payload.announcements.map(toHousingProgram),
+      programs: mergeLiveWithAnalyzedSnapshot(
+        payload.announcements,
+        snapshotItems
+      ).map(toHousingProgram),
       dataSource: "live"
     };
   } catch (error) {
