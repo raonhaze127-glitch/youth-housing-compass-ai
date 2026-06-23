@@ -1,4 +1,8 @@
-import { isClearlyIneligible, matchProgram } from "../matcher";
+import {
+  isClearlyIneligible,
+  matchProgram,
+  matchesProgramDistrict
+} from "../matcher";
 import { getApplicationStatus } from "../status";
 import type {
   ApplicationStatus,
@@ -25,9 +29,14 @@ export function recommendPrograms(
         (program) => program.region === profile.region || program.region === "전국"
       )
     : programs;
-  const recommendations = regionEligiblePrograms
+  const eligiblePrograms = regionEligiblePrograms
     .filter((program) => !profile.district || !program.district || program.district === profile.district)
-    .filter((program) => !isClearlyIneligible(profile, program))
+    .filter((program) => !isClearlyIneligible(profile, program));
+  const districtMatches = profile.district
+    ? eligiblePrograms.filter((program) => matchesProgramDistrict(program, profile.district!))
+    : [];
+  const scopedPrograms = districtMatches.length ? districtMatches : eligiblePrograms;
+  const recommendations = scopedPrograms
     .map((program) => matchProgram(profile, program, getApplicationStatus(program, now)))
     .sort((a, b) => {
       const statusDifference = STATUS_ORDER[a.status] - STATUS_ORDER[b.status];
