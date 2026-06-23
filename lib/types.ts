@@ -35,6 +35,8 @@ export type UserProfile = {
   incomeLevel?: "low" | "middle" | "high" | "unknown";
   householdType?: "youth" | "newlywed" | "unknown";
   children?: Array<{ age: number }>;
+  childrenCount?: number;
+  youngestChildAgeMax?: number;
   interests: string[];
   rawText: string;
 };

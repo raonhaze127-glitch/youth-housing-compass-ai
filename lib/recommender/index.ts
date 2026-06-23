@@ -1,4 +1,4 @@
-import { matchProgram } from "../matcher";
+import { isClearlyIneligible, matchProgram } from "../matcher";
 import { getApplicationStatus } from "../status";
 import type {
   ApplicationStatus,
@@ -26,6 +26,8 @@ export function recommendPrograms(
       )
     : programs;
   const recommendations = regionEligiblePrograms
+    .filter((program) => !profile.district || !program.district || program.district === profile.district)
+    .filter((program) => !isClearlyIneligible(profile, program))
     .map((program) => matchProgram(profile, program, getApplicationStatus(program, now)))
     .sort((a, b) => {
       const statusDifference = STATUS_ORDER[a.status] - STATUS_ORDER[b.status];
