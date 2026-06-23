@@ -131,16 +131,10 @@ export function ProgramCard({ program, index }: { program: Recommendation; index
           <div className="card-meta">
             <p>{program.organization}</p>
             <ApplicationStatusBadge status={program.status} />
-            {program.analysis_quality && program.analysis_quality !== "failed" ? (
-              <span className={`analysis-badge ${program.analysis_quality}`}>
-                공고문 분석
-              </span>
-            ) : null}
           </div>
           <h3>{program.title}</h3>
         </div>
       </div>
-      <p className="summary">{program.summary}</p>
       <dl>
         <div>
           <dt>추천 이유</dt>
@@ -153,10 +147,6 @@ export function ProgramCard({ program, index }: { program: Recommendation; index
               ? `${program.apply_start} ~ ${program.apply_end}`
               : "일정 확인 필요"}
           </dd>
-        </div>
-        <div>
-          <dt>지원내용</dt>
-          <dd>{program.benefit_summary || program.eligibility_summary}</dd>
         </div>
       </dl>
 
