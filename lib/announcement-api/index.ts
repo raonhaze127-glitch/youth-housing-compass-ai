@@ -14,7 +14,7 @@ export async function fetchAnnouncementApi(
   return fetch(`${baseUrl}${path}`, {
     ...init,
     cache: "no-store",
-    signal: init?.signal ?? AbortSignal.timeout(190_000)
+    signal: init?.signal ?? AbortSignal.timeout(12_000)
   });
 }
 

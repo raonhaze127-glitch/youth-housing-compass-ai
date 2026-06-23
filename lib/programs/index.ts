@@ -112,13 +112,15 @@ export async function loadHousingPrograms(): Promise<ProgramLoadResult> {
   const snapshotItems = Array.isArray(storedSnapshot.announcements)
     ? storedSnapshot.announcements.filter(isPublicRecruitmentNotice)
     : [];
+  // GitHub Actions가 매일 검증·커밋한 스냅샷을 우선 사용합니다.
+  // 무료 Render의 절전 복구를 기다리지 않아 공모전 시연이 즉시 응답합니다.
+  if (snapshotItems.length) {
+    return {
+      programs: snapshotItems.map(toHousingProgram),
+      dataSource: "snapshot"
+    };
+  }
   if (!baseUrl) {
-    if (snapshotItems.length) {
-      return {
-        programs: snapshotItems.map(toHousingProgram),
-        dataSource: "snapshot"
-      };
-    }
     return { programs: samplePrograms as HousingProgram[], dataSource: "sample" };
   }
 
