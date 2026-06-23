@@ -16,6 +16,7 @@ from bs4 import BeautifulSoup
 
 from ..models import Announcement
 from ..status import calculate_status
+from .http_compat import CurlRequestError, curl_bytes, curl_text
 
 
 ALLOWED_NOTICE_HOSTS = (
@@ -98,8 +99,8 @@ DATE_TOKEN = (
     r"20\d{2}\s*년\s*\d{1,2}\s*월\s*\d{1,2}\s*일)"
 )
 DATE_RANGE_PATTERN = re.compile(
-    rf"(?:접수\s*기간|신청\s*기간|청약\s*접수|인터넷\s*접수|서류\s*접수|신청\s*접수)"
-    rf"[^\n]{{0,100}}?({DATE_TOKEN})[.\s]*(?:\([^)]{{1,5}}\))?[.\s]*"
+    rf"(?:접수\s*기간|온라인\s*접수\s*기간|신청\s*기간|청약\s*접수|인터넷\s*접수|서류\s*접수|신청\s*접수)"
+    rf"[\s\S]{{0,100}}?({DATE_TOKEN})(?:\s+\d{{1,2}}:\d{{2}})?[.\s]*(?:\([^)]{{1,5}}\))?[.\s]*"
     rf"(?:~|∼|부터|－|–|—|-)[^\d]{{0,12}}({DATE_TOKEN})"
 )
 
@@ -253,18 +254,22 @@ def _extract_hwpx(content: bytes) -> str:
 
 
 def _extract_attachment(url: str, timeout: int) -> tuple[str, str]:
-    response = requests.get(
-        url,
-        timeout=timeout,
-        headers={"User-Agent": USER_AGENT, "Accept": "*/*"},
-        allow_redirects=True,
-    )
-    response.raise_for_status()
     maximum = 25 * 1024 * 1024
-    declared = int(response.headers.get("Content-Length", "0") or 0)
-    if declared > maximum or len(response.content) > maximum:
+    if "apply.gh.or.kr" in url:
+        content = curl_bytes(url, timeout)
+        declared = len(content)
+    else:
+        response = requests.get(
+            url,
+            timeout=timeout,
+            headers={"User-Agent": USER_AGENT, "Accept": "*/*"},
+            allow_redirects=True,
+        )
+        response.raise_for_status()
+        declared = int(response.headers.get("Content-Length", "0") or 0)
+        content = response.content
+    if declared > maximum or len(content) > maximum:
         return "", "too_large"
-    content = response.content
     if content.startswith(b"%PDF"):
         from pypdf import PdfReader
 
@@ -289,17 +294,33 @@ def fetch_notice_text(
 ) -> tuple[str, list[dict[str, Any]]]:
     if not _allowed_url(announcement.announcement_url):
         return "", []
-    response = requests.get(
-        announcement.announcement_url,
-        timeout=timeout,
-        headers={"User-Agent": USER_AGENT, "Accept-Language": "ko-KR,ko;q=0.9"},
-    )
-    response.raise_for_status()
-    response.encoding = response.apparent_encoding or response.encoding
-    soup = BeautifulSoup(response.text, "html.parser")
+    detail_url = str(announcement.metadata.get("detail_url") or "")
+    if "apply.gh.or.kr" in detail_url and announcement.metadata.get("pbanc_no"):
+        response_text = curl_text(
+            detail_url,
+            timeout,
+            data={
+                "previewYn": "0",
+                "pbancNo": announcement.metadata.get("pbanc_no", ""),
+                "pbancKndCd": announcement.metadata.get("pbanc_kind_code", ""),
+                "bizTyNm": announcement.metadata.get("business_type_name", ""),
+            },
+        )
+        response_base_url = detail_url
+    else:
+        response = requests.get(
+            announcement.announcement_url,
+            timeout=timeout,
+            headers={"User-Agent": USER_AGENT, "Accept-Language": "ko-KR,ko;q=0.9"},
+        )
+        response.raise_for_status()
+        response.encoding = response.apparent_encoding or response.encoding
+        response_text = response.text
+        response_base_url = announcement.announcement_url
+    soup = BeautifulSoup(response_text, "html.parser")
     attachments: list[dict[str, Any]] = []
-    parts = [_clean_soup(BeautifulSoup(response.text, "html.parser"))]
-    attachment_urls = _attachment_urls(soup, announcement.announcement_url)
+    parts = [_clean_soup(BeautifulSoup(response_text, "html.parser"))]
+    attachment_urls = _attachment_urls(soup, response_base_url)
     if "i-sh.co.kr" in announcement.announcement_url:
         attachment_urls = list(
             dict.fromkeys(_sh_attachment_urls(response.text) + attachment_urls)
@@ -314,6 +335,7 @@ def fetch_notice_text(
                 parts.append(extracted)
         except (
             requests.RequestException,
+            CurlRequestError,
             OSError,
             KeyError,
             TypeError,
@@ -402,10 +424,27 @@ def _normalize_date_token(value: str) -> str:
 
 
 def _application_period(text: str) -> tuple[str, str]:
-    match = DATE_RANGE_PATTERN.search(text)
-    if not match:
+    candidates: list[tuple[int, str, str]] = []
+    for match in DATE_RANGE_PATTERN.finditer(text):
+        start = _normalize_date_token(match.group(1))
+        end = _normalize_date_token(match.group(2))
+        if not start or not end or start > end:
+            continue
+        label = match.group(0)[: match.start(1) - match.start()]
+        score = 0
+        if re.search(r"온라인\s*접수|인터넷\s*접수|청약\s*접수", label):
+            score += 8
+        elif re.search(r"접수\s*기간|신청\s*기간|신청\s*접수", label):
+            score += 5
+        if "서류" in label:
+            score -= 4
+        if start != end:
+            score += 2
+        candidates.append((score, start, end))
+    if not candidates:
         return "", ""
-    return _normalize_date_token(match.group(1)), _normalize_date_token(match.group(2))
+    _, start, end = max(candidates, key=lambda candidate: (candidate[0], candidate[2]))
+    return start, end
 
 
 def _age_range(text: str) -> tuple[int | None, int | None]:

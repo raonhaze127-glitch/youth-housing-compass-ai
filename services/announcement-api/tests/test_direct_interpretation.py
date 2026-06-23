@@ -4,6 +4,7 @@ from unittest.mock import patch
 from app.direct.interpretation import (
     _select_enrichment_candidates,
     enrich_announcement,
+    fetch_notice_text,
     interpret_notice_text,
     is_public_recruitment_notice,
     _sh_attachment_urls,
@@ -12,6 +13,40 @@ from app.models import Announcement
 
 
 class DirectInterpretationTests(unittest.TestCase):
+    @patch("app.direct.interpretation.curl_text")
+    def test_fetches_gh_apply_detail_with_post(self, curl):
+        curl.return_value = "<html><body>신청자격 무주택세대구성원 접수기간 2026.07.01 ~ 2026.07.03</body></html>"
+        announcement = Announcement(
+            id="direct:gh_apply_purchase_795",
+            source_id="gh_apply_purchase_795",
+            source_type="direct_collector",
+            title="26년 매입임대주택 입주자 모집공고",
+            organization="GH",
+            category="GH 매입임대",
+            region="경기",
+            district="",
+            housing_type="매입임대",
+            target=(),
+            apply_start="",
+            apply_end="",
+            status="unknown",
+            announcement_url="https://apply.gh.or.kr/sb/sr/sr7155/selectPbancRentHouseList.do",
+            summary="",
+            eligibility_summary="",
+            benefit_summary="",
+            required_documents=(),
+            metadata={
+                "detail_url": "https://apply.gh.or.kr/sb/sr/sr7155/selectPbancDetailView.do",
+                "pbanc_no": "795",
+                "pbanc_kind_code": "01",
+                "business_type_name": "매입임대",
+            },
+        )
+        text, attachments = fetch_notice_text(announcement)
+        self.assertIn("신청자격", text)
+        self.assertEqual(attachments, [])
+        self.assertEqual(curl.call_args.kwargs["data"]["pbancNo"], "795")
+
     def test_filters_results_and_non_housing_posts(self):
         self.assertTrue(
             is_public_recruitment_notice(
@@ -129,6 +164,14 @@ class DirectInterpretationTests(unittest.TestCase):
         )
         self.assertEqual(result["apply_start"], "2026-06-30")
         self.assertEqual(result["apply_end"], "2026-07-03")
+
+    def test_extracts_gh_online_application_period(self):
+        result = interpret_notice_text(
+            "접수기간 정정 2026.06.11 ~ 2026.06.11\n"
+            "공급일정\n온라인접수기간\n:\n2026.06.30 10:00 ~ 2026.07.02 18:00"
+        )
+        self.assertEqual(result["apply_start"], "2026-06-30")
+        self.assertEqual(result["apply_end"], "2026-07-02")
 
     def test_extracts_two_digit_year_from_schedule_table(self):
         result = interpret_notice_text(

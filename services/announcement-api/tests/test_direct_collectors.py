@@ -12,6 +12,8 @@ from app.direct.collectors import (
     _fetch_applyhome,
     _fetch_lh,
     _json_items,
+    _gh_detail_district,
+    _parse_gh_apply_list,
 )
 
 
@@ -27,6 +29,35 @@ class FakeResponse:
 
 
 class DirectCollectorTests(unittest.TestCase):
+    def test_gh_apply_rental_list_is_normalized(self):
+        today = date.today().isoformat()
+        html = f"""
+        <table><tbody><tr>
+          <td>1</td><td>국민임대</td><td>
+            <a data-pbancno="800" data-pbanckndcd="01" data-biztynm="국민임대">
+              고양시 국민임대주택 예비입주자 모집공고
+            </a>
+          </td><td>경기도</td><td>PDF</td><td>{today}</td>
+          <td>2026-07-10</td><td>접수중</td><td>-</td><td>10</td>
+        </tr></tbody></table>
+        """
+        result = _parse_gh_apply_list(html, "rent", "now", 7)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].source_id, "gh_apply_rent_800")
+        self.assertEqual(result[0].category, "GH 임대주택")
+        self.assertEqual(result[0].region, "경기")
+        self.assertEqual(result[0].district, "고양시")
+        self.assertEqual(result[0].apply_end, "2026-07-10")
+        self.assertEqual(result[0].metadata["pbanc_no"], "800")
+        self.assertIn("searchTitle=", result[0].announcement_url)
+
+    def test_gh_detail_district_ignores_footer_office_address(self):
+        text = (
+            "공급정보 소재지 경기도 남양주시 다산동 6013 "
+            "찾아오시는길 경기도 수원시 영통구 센트럴타운로 43"
+        )
+        self.assertEqual(_gh_detail_district(text), "남양주시")
+
     def test_incremental_sync_accumulates_previous_announcements(self):
         with tempfile.TemporaryDirectory() as directory:
             source = DirectAnnouncementSource(
