@@ -32,6 +32,8 @@ export async function POST(request: Request) {
         incomeLevel: parsedProfile.incomeLevel !== "unknown" ? parsedProfile.incomeLevel : previous.incomeLevel,
         householdType: parsedProfile.householdType !== "unknown" ? parsedProfile.householdType : previous.householdType,
         children: parsedProfile.children ?? previous.children,
+        childrenCount: parsedProfile.childrenCount ?? previous.childrenCount,
+        youngestChildAgeMax: parsedProfile.youngestChildAgeMax ?? previous.youngestChildAgeMax,
         interests: parsedProfile.interests.length ? parsedProfile.interests : previous.interests,
         rawText: message
       }

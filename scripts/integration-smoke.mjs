@@ -96,6 +96,39 @@ try {
     throw new Error("후속 질문이 이전 추천 맥락을 사용하지 못했습니다.");
   }
 
+  const familyResponse = await fetch("http://127.0.0.1:3010/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message: "고양시 40세 무주택 2세이하 1자녀"
+    })
+  });
+  const familyResult = await familyResponse.json();
+  if (!familyResponse.ok) throw new Error(JSON.stringify(familyResult));
+  if (
+    familyResult.profile?.region !== "경기" ||
+    familyResult.profile?.district !== "고양시" ||
+    familyResult.profile?.childrenCount !== 1 ||
+    familyResult.profile?.youngestChildAgeMax !== 2
+  ) {
+    throw new Error("시·군 또는 자녀 조건을 정확히 추출하지 못했습니다.");
+  }
+  if (
+    familyResult.recommendations.some(
+      (item) =>
+        !["경기", "전국"].includes(item.region) ||
+        /청년형|도전숙|공공기숙사|자립준비청년/.test(item.title)
+    )
+  ) {
+    throw new Error("지역·연령·전용대상과 명백히 맞지 않는 공고가 포함됐습니다.");
+  }
+  const goyangProgram = familyResult.recommendations.find(
+    (item) => item.source_id === "gh_64932"
+  );
+  if (!goyangProgram?.reasons?.some((reason) => reason.includes("고양시"))) {
+    throw new Error("공고문 안의 고양시 공급지역을 추천 근거로 사용하지 못했습니다.");
+  }
+
   process.stdout.write(
     JSON.stringify(
       {
@@ -105,6 +138,8 @@ try {
         recommendation_count: result.recommendations.length,
         first_id: result.recommendations[0].id,
         first_status: result.recommendations[0].status,
+        family_recommendation_count: familyResult.recommendations.length,
+        family_first_id: familyResult.recommendations[0]?.id,
         follow_up: followUp.answer
       },
       null,

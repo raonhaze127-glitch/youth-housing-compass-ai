@@ -151,8 +151,8 @@ export default function Home() {
         : profile.householdType === "youth"
           ? "유형: 청년"
           : "",
-      profile.children?.length
-        ? `자녀: ${profile.children.map((child) => `${child.age}세`).join(", ")}`
+      profile.childrenCount || profile.children?.length
+        ? `자녀: ${profile.childrenCount ?? profile.children?.length}명${profile.youngestChildAgeMax !== undefined ? ` (${profile.youngestChildAgeMax}세 이하)` : profile.children?.[0]?.age ? ` (${profile.children[0].age}세)` : ""}`
         : "",
       profile.interests.length ? `관심: ${profile.interests.join(", ")}` : ""
     ].filter(Boolean);

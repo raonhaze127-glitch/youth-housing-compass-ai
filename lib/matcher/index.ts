@@ -10,6 +10,63 @@ function matchesRegion(profile: UserProfile, program: HousingProgram) {
   return program.region === profile.region || program.region === "전국";
 }
 
+function programText(program: HousingProgram) {
+  return [
+    program.title,
+    program.summary,
+    program.eligibility_summary,
+    program.benefit_summary,
+    ...program.target
+  ].join(" ");
+}
+
+function hasChildren(profile: UserProfile) {
+  return Boolean(profile.childrenCount || profile.children?.length);
+}
+
+function mentionsDistrict(program: HousingProgram, district: string) {
+  if (program.district === district) return true;
+  const shortDistrict = district.replace(/(?:시|군|구)$/, "");
+  const text = programText(program);
+  return text.includes(district) || (shortDistrict.length >= 2 && text.includes(shortDistrict));
+}
+
+export function isClearlyIneligible(profile: UserProfile, program: HousingProgram) {
+  const text = programText(program);
+  const raw = profile.rawText;
+
+  if (profile.age !== undefined) {
+    if (program.age_min !== null && profile.age < program.age_min) return true;
+    if (program.age_max !== null && profile.age > program.age_max) return true;
+    const youthOnlyTargets =
+      program.target.length > 0 &&
+      program.target.every((target) => ["청년", "대학생", "취업준비생"].includes(target));
+    if (
+      profile.age > 39 &&
+      (youthOnlyTargets || /청년형|청년\s*(?:매입|협동|주택)|청년혁신타운|자립준비청년/.test(text))
+    ) {
+      return true;
+    }
+  }
+
+  if (profile.homeless === false && program.homeless_required === true) return true;
+  if (hasChildren(profile) && /1인\s*(?:단독거주|가구)|타인\s*거주\s*불가/.test(text)) {
+    return true;
+  }
+  if (profile.childrenCount !== undefined && profile.childrenCount < 2 && /다자녀/.test(text)) {
+    return true;
+  }
+
+  const specializedTargets = [
+    { notice: /공공기숙사|희망하우징/, user: /대학|대학생|대학원|재학|복학|입학/ },
+    { notice: /도전숙/, user: /창업|사업자|스타트업/ },
+    { notice: /자립준비청년/, user: /자립준비|보호종료|시설퇴소/ },
+    { notice: /부상제대군인|위국헌신청년/, user: /제대군인|부상군인|군복무/ },
+    { notice: /연극인두레주택/, user: /연극|배우|공연예술/ }
+  ];
+  return specializedTargets.some(({ notice, user }) => notice.test(text) && !user.test(raw));
+}
+
 function matchesInterest(profile: UserProfile, program: HousingProgram) {
   return profile.interests.some((interest) => {
     return program.housing_type.includes(interest) || program.target.includes(interest);
@@ -51,6 +108,9 @@ export function matchProgram(
   if (profile.district && program.district === profile.district) {
     score += 18;
     reasons.push(`${profile.district} 세부 지역과 일치합니다.`);
+  } else if (profile.district && mentionsDistrict(program, profile.district)) {
+    score += 18;
+    reasons.push(`공고문 공급지역에 ${profile.district}가 포함됩니다.`);
   }
 
   if (profile.homeless === true && program.homeless_required === true) {

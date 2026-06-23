@@ -1,7 +1,7 @@
 import type { UserProfile } from "../types";
 
 const REGIONS = ["서울", "경기", "인천", "부산", "대구", "광주", "대전", "울산", "세종"];
-const SEOUL_DISTRICTS = [
+export const SEOUL_DISTRICTS = [
   "강남구",
   "강동구",
   "강북구",
@@ -28,12 +28,19 @@ const SEOUL_DISTRICTS = [
   "중구",
   "중랑구"
 ];
-const GYEONGGI_DISTRICTS = [
+export const GYEONGGI_DISTRICTS = [
   "수원시", "성남시", "고양시", "용인시", "부천시", "안산시", "남양주시", "안양시",
   "화성시", "평택시", "의정부시", "시흥시", "파주시", "김포시", "광명시", "광주시",
   "군포시", "오산시", "이천시", "양주시", "구리시", "안성시", "포천시", "의왕시",
   "하남시", "여주시", "동두천시", "과천시", "가평군", "양평군", "연천군"
 ];
+
+export function regionForDistrict(district?: string) {
+  if (!district) return undefined;
+  if (SEOUL_DISTRICTS.includes(district)) return "서울";
+  if (GYEONGGI_DISTRICTS.includes(district)) return "경기";
+  return undefined;
+}
 
 export function parseUserInput(text: string): UserProfile {
   const normalized = text.trim();
@@ -41,11 +48,18 @@ export function parseUserInput(text: string): UserProfile {
   const childAgeMatch =
     normalized.match(/(\d{1,2})\s*(?:세|살)\s*(?:아기|아이|자녀)/) ??
     normalized.match(/(?:아기|아이|자녀)\s*(\d{1,2})\s*(?:세|살)/);
+  const childAgeMaxMatch = /아기|아이|자녀/.test(normalized)
+    ? normalized.match(/(\d{1,2})\s*(?:세|살)\s*이하/)
+    : null;
+  const childCountMatch =
+    normalized.match(/(\d{1,2})\s*자녀/) ??
+    normalized.match(/자녀\s*(\d{1,2})\s*명/) ??
+    normalized.match(/(\d{1,2})\s*명(?:의)?\s*자녀/);
   const incomeMatch = normalized.match(/(?:월소득|월급|소득|수입)\s*(\d{2,4})\s*(만\s*원|만원|원)?/);
-  const region = REGIONS.find((item) => normalized.includes(item));
   const district = [...SEOUL_DISTRICTS, ...GYEONGGI_DISTRICTS].find((item) =>
     normalized.includes(item)
   );
+  const region = REGIONS.find((item) => normalized.includes(item)) ?? regionForDistrict(district);
   const homeless = /무주택|집\s*없|자가\s*없/.test(normalized)
     ? true
     : /1주택|자가|주택\s*보유/.test(normalized)
@@ -75,6 +89,18 @@ export function parseUserInput(text: string): UserProfile {
       : ""
   ].filter(Boolean);
 
+  const childrenCount = childCountMatch ? Number(childCountMatch[1]) : undefined;
+  const childAge = childAgeMatch
+    ? Number(childAgeMatch[1])
+    : childAgeMaxMatch
+      ? Number(childAgeMaxMatch[1])
+      : undefined;
+  const children = childAge !== undefined
+    ? Array.from({ length: childrenCount ?? 1 }, () => ({ age: childAge }))
+    : childrenCount
+      ? Array.from({ length: childrenCount }, () => ({ age: 0 }))
+      : undefined;
+
   return {
     region,
     district,
@@ -82,7 +108,9 @@ export function parseUserInput(text: string): UserProfile {
     homeless,
     incomeLevel,
     householdType,
-    children: childAgeMatch ? [{ age: Number(childAgeMatch[1]) }] : undefined,
+    children,
+    childrenCount,
+    youngestChildAgeMax: childAgeMaxMatch ? Number(childAgeMaxMatch[1]) : undefined,
     interests,
     rawText: normalized
   };
