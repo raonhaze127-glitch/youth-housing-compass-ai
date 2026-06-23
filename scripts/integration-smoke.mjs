@@ -122,6 +122,9 @@ try {
   ) {
     throw new Error("지역·연령·전용대상과 명백히 맞지 않는 공고가 포함됐습니다.");
   }
+  if (familyResult.recommendations.length !== 1) {
+    throw new Error("고양시 근거가 확인된 공고 외의 지역 후보가 함께 노출됐습니다.");
+  }
   const goyangProgram = familyResult.recommendations.find(
     (item) => item.source_id === "gh_64932"
   );

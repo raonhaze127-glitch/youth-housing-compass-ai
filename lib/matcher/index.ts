@@ -24,7 +24,7 @@ function hasChildren(profile: UserProfile) {
   return Boolean(profile.childrenCount || profile.children?.length);
 }
 
-function mentionsDistrict(program: HousingProgram, district: string) {
+export function matchesProgramDistrict(program: HousingProgram, district: string) {
   if (program.district === district) return true;
   const shortDistrict = district.replace(/(?:시|군|구)$/, "");
   const text = programText(program);
@@ -108,7 +108,7 @@ export function matchProgram(
   if (profile.district && program.district === profile.district) {
     score += 18;
     reasons.push(`${profile.district} 세부 지역과 일치합니다.`);
-  } else if (profile.district && mentionsDistrict(program, profile.district)) {
+  } else if (profile.district && matchesProgramDistrict(program, profile.district)) {
     score += 18;
     reasons.push(`공고문 공급지역에 ${profile.district}가 포함됩니다.`);
   }
