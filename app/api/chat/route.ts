@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { parseUserInput } from "@/lib/parser";
 import { loadHousingPrograms } from "@/lib/programs";
 import { recommendPrograms } from "@/lib/recommender";
-import { createConversationalAnswer } from "@/lib/conversation";
+import { answerWithAgents } from "@/lib/agents";
 import { applyLiveMatches } from "@/lib/live-match";
 import type { UserProfile } from "@/lib/types";
 
@@ -46,15 +46,17 @@ export async function POST(request: Request) {
     if (loaded.dataSource === "live") {
       recommendations = await applyLiveMatches(profile, recommendations);
     }
+    const consultation = answerWithAgents({
+      message,
+      profile,
+      recommendations,
+      contextProgramIds: body.contextProgramIds ?? []
+    });
 
     return NextResponse.json({
       profile,
       recommendations,
-      answer: createConversationalAnswer(
-        message,
-        recommendations,
-        body.contextProgramIds ?? []
-      ),
+      ...consultation,
       dataSource: loaded.dataSource,
       warning: loaded.warning
     });

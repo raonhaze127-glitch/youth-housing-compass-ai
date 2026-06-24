@@ -66,6 +66,32 @@ class DirectInterpretationTests(unittest.TestCase):
                 }
             )
         )
+        self.assertTrue(
+            is_public_recruitment_notice(
+                {
+                    "organization": "청약홈",
+                    "title": "안양 에버포레 자연앤e편한세상",
+                    "housing_type": "분양주택",
+                    "metadata": {
+                        "house_secd": "01",
+                        "house_secd_name": "국민",
+                    },
+                }
+            )
+        )
+        self.assertFalse(
+            is_public_recruitment_notice(
+                {
+                    "organization": "청약홈",
+                    "title": "민영 아파트",
+                    "housing_type": "분양주택",
+                    "metadata": {
+                        "house_secd": "02",
+                        "house_secd_name": "민영",
+                    },
+                }
+            )
+        )
         self.assertFalse(
             is_public_recruitment_notice(
                 {

@@ -2,7 +2,17 @@
 
 ## 현재 구현 수준
 
-현재 MVP의 에이전트 구조는 처리 역할을 설명하기 위한 논리 모델입니다. 실제 구현은 규칙 기반 함수와 샘플 또는 직접 수집 데이터로 동작하며, 서로 독립적으로 판단하는 다중 에이전트 시스템은 아닙니다.
+현재 MVP는 규칙 기반 함수와 저장·직접 수집 데이터로 동작합니다. `agents/`에는 이를 고도화할 내부 대화형 상담 계약을 정의했으며, 플랫폼 전체나 데이터 수집기를 에이전트로 간주하지 않습니다. 아직 서로 독립적으로 실행되는 다중 에이전트 시스템이 완성됐다는 의미는 아닙니다.
+
+상세 역할은 다음 문서를 기준으로 합니다.
+
+- `agents/orchestrator.md`
+- `agents/policy-agent.md`
+- `agents/eligibility-agent.md`
+- `agents/announcement-agent.md`
+- `agents/recommendation-agent.md`
+- `agents/verification-agent.md`
+- `integrations/k-apt-alert.md`
 
 ## 에이전트 1: 청년주거전문상담가
 
@@ -28,6 +38,8 @@
 
 현재는 `lib/matcher`, `lib/status`, `lib/recommender`에 역할을 분리했습니다. 추천은 참고용이며 실제 자격 판정을 대신하지 않습니다.
 
-## 역할 연결
+## 목표 역할 연결
 
-`사용자 입력 → 청년주거전문상담가 → 공고분석 데이터 → 추천 에이전트 → 참고용 결과`
+`사용자 질문 → Orchestrator → Policy / Announcement / Eligibility / Recommendation → Verification → 최종 상담 응답`
+
+k-apt-alert는 공고 수집 파이프라인이며 Announcement Agent의 입력 데이터를 제공한다.

@@ -19,7 +19,11 @@ from ..sources import SourceError
 from ..status import calculate_status, normalize_date
 from .changes import ChangeTracker
 from .http_compat import CurlRequestError, curl_text
-from .interpretation import interpret_notice_text, is_public_recruitment_notice
+from .interpretation import (
+    interpret_notice_text,
+    is_public_applyhome_notice,
+    is_public_recruitment_notice,
+)
 
 APPLYHOME_BASE = "https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1"
 LH_URL = "https://apis.data.go.kr/B552555/lhNoticeInfo1/getNoticeInfo1"
@@ -173,7 +177,13 @@ def _find_announcement_records(payload: Any) -> list[dict[str, Any]]:
     return records
 
 
-def _fetch_applyhome(api_key: str, days_back: int, timeout: int, fetched_at: str) -> list[Announcement]:
+def _fetch_applyhome(
+    api_key: str,
+    days_back: int,
+    timeout: int,
+    fetched_at: str,
+    include_private_housing: bool = False,
+) -> list[Announcement]:
     now = datetime.now()
     params_base = {
         "serviceKey": api_key, "pageNo": "1", "numOfRows": "100",
@@ -182,9 +192,17 @@ def _fetch_applyhome(api_key: str, days_back: int, timeout: int, fetched_at: str
     }
     result: list[Announcement] = []
     for prefix, category, endpoint in APPLYHOME_CHANNELS:
+        if not include_private_housing and prefix != "apt":
+            continue
         response = requests.get(f"{APPLYHOME_BASE}/{endpoint}", params=params_base, timeout=timeout)
         response.raise_for_status()
         for item in _json_items(response.json()):
+            house_code = str(item.get("HOUSE_SECD") or "").strip()
+            house_name = str(item.get("HOUSE_SECD_NM") or "").strip()
+            if not include_private_housing and not (
+                house_code == "01" or house_name == "국민"
+            ):
+                continue
             raw_id = str(item.get("PBLANC_NO") or item.get("HOUSE_MANAGE_NO") or "")
             if not raw_id:
                 continue
@@ -199,7 +217,13 @@ def _fetch_applyhome(api_key: str, days_back: int, timeout: int, fetched_at: str
                 start=str(item.get("RCEPT_BGNDE") or ""), end=str(item.get("RCEPT_ENDDE") or ""),
                 url=str(item.get("PBLANC_URL") or ""), units=_digits(item.get("TOT_SUPLY_HSHLDCO")),
                 fetched_at=fetched_at,
-                metadata={"address": address, "speculative_zone": item.get("SPECLT_RDN_EARTH_AT"), "constructor": item.get("CNSTRCT_ENTRPS_NM")},
+                metadata={
+                    "address": address,
+                    "speculative_zone": item.get("SPECLT_RDN_EARTH_AT"),
+                    "constructor": item.get("CNSTRCT_ENTRPS_NM"),
+                    "house_secd": house_code,
+                    "house_secd_name": house_name,
+                },
             ))
     return result
 
@@ -552,7 +576,11 @@ class DirectAnnouncementSource:
         )
 
     def _is_visible(self, item: Announcement) -> bool:
-        return self.include_private_housing or item.organization in PUBLIC_HOUSING_ORGANIZATIONS
+        return (
+            self.include_private_housing
+            or item.organization in PUBLIC_HOUSING_ORGANIZATIONS
+            or is_public_applyhome_notice(item)
+        )
 
     def _visible_items(self, items: list[Announcement]) -> list[Announcement]:
         return [item for item in items if self._is_visible(item)]
@@ -594,10 +622,13 @@ class DirectAnnouncementSource:
             "gh": lambda: _fetch_gh(self.timeout_seconds, fetched_at, lookback_days),
         }
         if self.api_key:
-            if self.include_private_housing:
-                jobs["applyhome"] = lambda: _fetch_applyhome(
-                    self.api_key, lookback_days, self.timeout_seconds, fetched_at
-                )
+            jobs["applyhome"] = lambda: _fetch_applyhome(
+                self.api_key,
+                lookback_days,
+                self.timeout_seconds,
+                fetched_at,
+                self.include_private_housing,
+            )
             jobs["lh"] = lambda: _fetch_lh(
                 self.api_key, lookback_days, self.timeout_seconds, fetched_at
             )

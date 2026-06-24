@@ -111,22 +111,35 @@ class DirectCollectorTests(unittest.TestCase):
         self.assertNotIn("top-secret-key", warnings)
         self.assertNotIn("serviceKey", warnings)
 
-    def test_public_only_mode_skips_applyhome_collection(self):
+    def test_public_only_mode_collects_applyhome_national_housing(self):
         source = DirectAnnouncementSource("key", 5, 60)
         lh_item = _announcement(
             source_id="lh_1", title="LH 행복주택 입주자 모집공고", organization="LH",
             category="LH 공공주택", region="서울", fetched_at="now",
         )
-        with mock.patch("app.direct.collectors._fetch_applyhome") as applyhome, mock.patch(
+        applyhome_item = _announcement(
+            source_id="apt_2",
+            title="안양 공공분양",
+            organization="청약홈",
+            category="APT",
+            region="경기",
+            fetched_at="now",
+            metadata={"house_secd": "01", "house_secd_name": "국민"},
+        )
+        with mock.patch(
+            "app.direct.collectors._fetch_applyhome", return_value=[applyhome_item]
+        ) as applyhome, mock.patch(
             "app.direct.collectors._fetch_lh", return_value=[lh_item]
         ), mock.patch("app.direct.collectors._fetch_sh", return_value=[]), mock.patch(
             "app.direct.collectors._fetch_gh", return_value=[]
         ):
             result = source.fetch(force_refresh=True)
-        applyhome.assert_not_called()
-        self.assertEqual([item.organization for item in result], ["LH"])
+        applyhome.assert_called_once()
+        self.assertEqual(
+            {item.organization for item in result}, {"LH", "청약홈"}
+        )
 
-    def test_public_only_mode_hides_stored_applyhome_announcements(self):
+    def test_public_only_mode_hides_private_but_keeps_public_applyhome(self):
         with tempfile.TemporaryDirectory() as directory:
             source = DirectAnnouncementSource(
                 "", 5, 60, Path(directory) / "announcements.db"
@@ -139,11 +152,50 @@ class DirectCollectorTests(unittest.TestCase):
                 source_id="apt_1", title="민영 아파트", organization="청약홈",
                 category="APT", region="서울", fetched_at="now",
             )
+            applyhome_public = _announcement(
+                source_id="apt_2",
+                title="국민주택 공공분양",
+                organization="청약홈",
+                category="APT",
+                region="경기",
+                fetched_at="now",
+                metadata={"house_secd": "01", "house_secd_name": "국민"},
+            )
             source.repository.upsert(
-                [public.to_dict(), private.to_dict()], "2026-06-21T00:00:00+00:00"
+                [public.to_dict(), private.to_dict(), applyhome_public.to_dict()],
+                "2026-06-21T00:00:00+00:00",
             )
             result = source._stored_items()
-        self.assertEqual([item.source_id for item in result], ["sh_1"])
+        self.assertEqual(
+            {item.source_id for item in result}, {"sh_1", "apt_2"}
+        )
+
+    def test_applyhome_public_mode_keeps_only_apt_national_housing(self):
+        payload = {
+            "data": [
+                {
+                    "PBLANC_NO": "public-1",
+                    "HOUSE_NM": "안양 공공분양",
+                    "HOUSE_SECD": "01",
+                    "HOUSE_SECD_NM": "국민",
+                    "PBLANC_URL": "https://example.com/public",
+                },
+                {
+                    "PBLANC_NO": "private-1",
+                    "HOUSE_NM": "민영 아파트",
+                    "HOUSE_SECD": "02",
+                    "HOUSE_SECD_NM": "민영",
+                    "PBLANC_URL": "https://example.com/private",
+                },
+            ]
+        }
+        with mock.patch(
+            "app.direct.collectors.requests.get", return_value=FakeResponse(payload)
+        ) as request:
+            result = _fetch_applyhome("key", 2, 5, "now")
+        self.assertEqual([item.source_id for item in result], ["apt_public-1"])
+        self.assertEqual(result[0].metadata["house_secd"], "01")
+        self.assertEqual(request.call_count, 1)
 
     def test_five_applyhome_channels_are_normalized(self):
         payload = {
@@ -159,7 +211,9 @@ class DirectCollectorTests(unittest.TestCase):
             }]
         }
         with mock.patch("app.direct.collectors.requests.get", return_value=FakeResponse(payload)):
-            result = _fetch_applyhome("key", 2, 5, "now")
+            result = _fetch_applyhome(
+                "key", 2, 5, "now", include_private_housing=True
+            )
         self.assertEqual(len(result), 5)
         self.assertEqual(len({item.category for item in result}), 5)
         self.assertTrue(all(item.source_type == "direct_collector" for item in result))

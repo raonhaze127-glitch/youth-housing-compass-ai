@@ -1,17 +1,17 @@
 # 청년주거나침반 AI
 
-사용자가 입력한 주거 조건을 구조화하고 LH·SH·GH 공공주택 모집공고와 비교해 참고할 공고를 추천하는 공모전 출품용 MVP입니다.
+사용자가 입력한 주거 조건을 구조화하고 LH·SH·GH 및 청약홈 국민주택 모집공고와 비교해 참고할 공고를 추천하는 공모전 출품용 MVP입니다.
 
 ## 현재 구현
 
 - 한 번의 자연어 문장을 받는 대화형 입력 UI
 - 규칙 기반 나이, 지역, 무주택 여부, 소득 수준, 관심 유형 추출
-- LH·SH·GH 실제 모집공고 기반 추천과 샘플 최종 폴백
+- LH·SH·GH 및 청약홈 국민주택 실제 모집공고 기반 추천과 샘플 최종 폴백
 - 추천 이유, 신청기간, 지원내용, 원문 링크를 담은 결과 카드
 - 신청기간 기준 접수중, 모집예정, 마감 상태 표시
 - 접수중, 모집예정, 마감 순서의 정렬과 과거 공고 제공
 - 모바일 화면 대응
-- LH 공개 API, SH 기관 게시판, GH 청약센터 임대주택·매입임대 목록 기반 직접 수집 모드
+- LH 공개 API, SH 기관 게시판, GH 청약센터, 청약홈 APT 국민주택 기반 직접 수집 모드
 - 공식 상세 페이지와 PDF·HWPX 첨부파일 자동 수집
 - 접수기간, 대상, 연령, 무주택, 소득·자산, 임대조건, 준비서류 규칙 기반 구조화
 - 공고문 분석 품질 배지와 원문 근거를 반영한 추천 이유
@@ -25,6 +25,35 @@
 기본 `npm run dev`는 저장된 마지막 실공고 스냅샷을 사용하고, 스냅샷도 없을 때만 출품용 샘플 데이터로 동작합니다. `npm run dev:full`은 별도 FastAPI 서비스가 기관 원본을 직접 수집합니다. 추천 카드는 모집 상태·추천 이유·신청기간만 표시하며 원문 추출 내용을 분석 결과나 지원내용으로 표시하지 않습니다. 원문 즉석 해석 버튼과 경쟁률·가점·변동 추적 UI도 신뢰도 검증 전까지 숨깁니다. 문서의 에이전트 구조는 역할을 구분한 설계이며 독립적으로 판단하는 다중 에이전트 시스템을 의미하지 않습니다.
 
 실데이터 통합을 위한 `services/announcement-api`가 현재 화면과 연결돼 있습니다. 기본 설정은 기존 샘플 JSON을 사용하며 `dev:full` 또는 환경변수로 실공고 모드를 명시한 경우에만 외부 공고를 조회합니다.
+
+## 청주나 내부 대화형 에이전트 구조
+
+청주나는 플랫폼 전체가 아니라, 공공주택 상담을 위한 내부 대화형 AI 에이전트 팀으로 설계됩니다. 목표 상담 흐름은 `정책 설명 → 자격 진단 → 공고 해석 → 추천 → 검증`이며, 각 역할의 입력·출력과 안전 규칙은 `agents/`와 `rules/`에 정의합니다.
+
+핵심 흐름:
+
+```text
+사용자 질문
+↓
+Orchestrator
+↓
+Policy / Eligibility / Announcement / Recommendation
+↓
+Verification
+↓
+최종 상담 응답
+```
+
+- Orchestrator는 질문을 분류하고 필요한 역할을 순서대로 연결합니다.
+- Policy Agent는 정책과 용어를 설명합니다.
+- Announcement Agent는 공고 원문을 구조화합니다.
+- Eligibility Agent는 사용자 조건을 항목별로 진단하며, 가점 계산은 내부 Skill로만 수행합니다.
+- Recommendation Agent는 당첨 예측이 아닌 우선 검토 순서를 제시합니다.
+- Verification Agent는 근거, 최신성, 계산과 안전 표현을 최종 검증합니다.
+
+k-apt-alert는 별도 에이전트가 아니라 추후 연결할 공고 데이터 수집 파이프라인입니다. 수집 결과는 announcement database를 거쳐 Announcement Agent가 해석합니다. 현재 저장 실공고·규칙 기반 MVP 위에 이 내부 상담 계약을 단계적으로 연결하며, 완성된 독립 다중 에이전트 시스템으로 과장하지 않습니다.
+
+현재 `/api/chat`은 질문을 정책·자격·공고·추천으로 분류해 담당 Agent의 답변을 만들고 Verification Agent 검사를 거칩니다. 지원 질문과 한계는 [`docs/conversation-capability-matrix.md`](docs/conversation-capability-matrix.md)에 정리되어 있습니다.
 
 ## 향후 고도화
 
@@ -50,7 +79,27 @@ data/
 ├─ sh/
 ├─ gh/
 └─ archive/
+agents/
+├─ orchestrator.md
+├─ policy-agent.md
+├─ eligibility-agent.md
+├─ announcement-agent.md
+├─ recommendation-agent.md
+└─ verification-agent.md
+integrations/
+└─ k-apt-alert.md
+knowledge/
+├─ policy/
+├─ housing-types/
+├─ eligibility/
+└─ glossary/
+rules/
+├─ response-rules.md
+├─ verification-rules.md
+├─ recommendation-rules.json
+└─ eligibility-schema.json
 lib/
+├─ agents/
 ├─ parser/
 ├─ matcher/
 ├─ recommender/
@@ -63,6 +112,7 @@ services/
 docs/
 ├─ project-overview.md
 ├─ agent-structure.md
+├─ conversation-capability-matrix.md
 ├─ integration-architecture.md
 ├─ development-backlog.md
 ├─ verification-report.md
@@ -92,7 +142,7 @@ cd ../..
 npm run dev:full
 ```
 
-`dev:full`은 직접 수집 FastAPI와 Next.js를 함께 연결합니다. 기본 범위는 LH·SH·GH 공공주택이며, 이미 저장된 청약홈 공고도 화면과 API 결과에서 제외합니다. `DATA_GO_KR_API_KEY`가 없으면 키가 필요 없는 SH·GH 채널만 수집하고 LH는 건너뜁니다. 향후 민간주택 영역을 확장할 때만 `INCLUDE_PRIVATE_HOUSING=true`로 청약홈 수집을 다시 활성화할 수 있습니다.
+`dev:full`은 직접 수집 FastAPI와 Next.js를 함께 연결합니다. 기본 범위는 LH·SH·GH 공공주택과 청약홈 APT 국민주택입니다. 청약홈은 `HOUSE_SECD=01` 또는 `HOUSE_SECD_NM=국민`인 공고만 노출하고 민영주택은 저장 이력에 남아 있어도 제외합니다. `DATA_GO_KR_API_KEY`가 없으면 키가 필요 없는 SH·GH 채널만 수집하고 LH·청약홈은 건너뜁니다. `INCLUDE_PRIVATE_HOUSING=true`는 향후 민간주택 영역을 확장할 때만 사용합니다.
 
 ## 검증
 
