@@ -74,6 +74,29 @@ class DirectFeatureTests(unittest.TestCase):
         self.assertEqual(result["count"], 1)
         self.assertEqual(result["changes"][0]["organization"], "SH")
 
+    def test_change_history_keeps_public_applyhome_announcements(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = DirectAnnouncementSource(
+                "", 5, 60, Path(directory) / "announcements.db"
+            )
+            public_applyhome = _announcement(
+                source_id="apt_2",
+                title="안양 공공분양",
+                organization="청약홈",
+                category="APT",
+                region="경기",
+                fetched_at="now",
+                metadata={"house_secd": "01", "house_secd_name": "국민"},
+            )
+            source.repository.upsert(
+                [public_applyhome.to_dict()], "2026-06-21T00:00:00+00:00"
+            )
+            client = DirectFeatureClient(source, 5)
+            with mock.patch.object(source, "fetch", return_value=[public_applyhome]):
+                result = client.changes()
+        self.assertEqual(result["count"], 1)
+        self.assertEqual(result["changes"][0]["organization"], "청약홈")
+
 
 if __name__ == "__main__":
     unittest.main()

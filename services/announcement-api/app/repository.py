@@ -350,6 +350,8 @@ class AnnouncementRepository:
                 "type": row["change_type"],
                 "name": after.get("title"),
                 "organization": after.get("organization"),
+                "housing_type": after.get("housing_type"),
+                "metadata": after.get("metadata") or {},
                 "region": after.get("region"),
                 "detected_at": row["changed_at"],
             }

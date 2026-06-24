@@ -18,6 +18,7 @@ sys.path.insert(0, str(SERVICE_ROOT))
 from app.direct.collectors import DirectAnnouncementSource  # noqa: E402
 from app.direct.interpretation import (  # noqa: E402
     enrich_announcements,
+    is_public_applyhome_notice,
     is_public_recruitment_notice,
 )
 from app.models import Announcement  # noqa: E402
@@ -124,7 +125,10 @@ def _validate(items: list[dict[str, Any]], minimum_count: int) -> None:
         missing = [field for field in REQUIRED_FIELDS if not str(item.get(field) or "").strip()]
         if missing:
             raise ValueError(f"필수 필드가 없는 공고가 있습니다: {item.get('id')} / {missing}")
-        if item["organization"] not in PUBLIC_ORGANIZATIONS:
+        if (
+            item["organization"] not in PUBLIC_ORGANIZATIONS
+            and not is_public_applyhome_notice(item)
+        ):
             raise ValueError(f"공공주택 범위 밖 기관이 포함됐습니다: {item['organization']}")
         source_id = str(item["source_id"])
         if source_id in ids:
@@ -168,7 +172,23 @@ def _deduplicate_snapshot(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
         current_is_apply = str(current.get("source_id") or "").startswith("gh_apply_")
         item_is_apply = str(item.get("source_id") or "").startswith("gh_apply_")
         if item_is_apply and not current_is_apply:
-            unique[key] = _merge_preserving_analysis(current, item)
+            preferred = _merge_preserving_analysis(current, item)
+            previous_metadata = current.get("metadata") or {}
+            preferred_metadata = dict(item.get("metadata") or {})
+            if previous_metadata.get("analysis_source") and not preferred_metadata.get(
+                "analysis_source"
+            ):
+                for field in (
+                    "analysis_quality",
+                    "analysis_source",
+                    "source_char_count",
+                    "sections",
+                    "attachments",
+                ):
+                    if field in previous_metadata:
+                        preferred_metadata[field] = previous_metadata[field]
+            preferred["metadata"] = preferred_metadata
+            unique[key] = preferred
     return list(unique.values())
 
 
@@ -234,13 +254,19 @@ def main() -> None:
         str(item.get("source_id")): item
         for item in existing
         if item.get("source_id")
-        and item.get("organization") in PUBLIC_ORGANIZATIONS
+        and (
+            item.get("organization") in PUBLIC_ORGANIZATIONS
+            or is_public_applyhome_notice(item)
+        )
         and is_public_recruitment_notice(item)
     }
     for item in fetched:
         if (
             item.get("source_id")
-            and item.get("organization") in PUBLIC_ORGANIZATIONS
+            and (
+                item.get("organization") in PUBLIC_ORGANIZATIONS
+                or is_public_applyhome_notice(item)
+            )
             and is_public_recruitment_notice(item)
         ):
             source_id = str(item["source_id"])

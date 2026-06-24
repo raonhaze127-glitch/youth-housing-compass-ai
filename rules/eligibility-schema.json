@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cheongjuna.local/schemas/eligibility-schema.json",
+  "title": "청주나 자격 진단 교환 스키마",
+  "type": "object",
+  "required": ["schema_version", "assessment_context", "applicant", "checks", "result"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "assessment_context": {
+      "type": "object",
+      "required": ["as_of_date"],
+      "properties": {
+        "as_of_date": {"type": "string", "format": "date"},
+        "announcement_id": {"type": ["string", "null"]},
+        "housing_type": {"type": ["string", "null"]},
+        "supply_type": {"type": ["string", "null"]},
+        "selection_method": {
+          "type": ["string", "null"],
+          "enum": ["points", "rank", "rank_then_lottery", "lottery", "priority", "unknown", null]
+        },
+        "official_url": {"type": ["string", "null"], "format": "uri"}
+      },
+      "additionalProperties": false
+    },
+    "applicant": {
+      "type": "object",
+      "properties": {
+        "birth_date": {"type": ["string", "null"], "format": "date"},
+        "region": {"type": ["string", "null"]},
+        "district": {"type": ["string", "null"]},
+        "household_size": {"type": ["integer", "null"], "minimum": 1},
+        "household_members": {"type": "array", "items": {"type": "object"}},
+        "homeless_status": {"type": ["boolean", "null"]},
+        "monthly_income_krw": {"type": ["integer", "null"], "minimum": 0},
+        "annual_income_krw": {"type": ["integer", "null"], "minimum": 0},
+        "total_assets_krw": {"type": ["integer", "null"], "minimum": 0},
+        "vehicle_value_krw": {"type": ["integer", "null"], "minimum": 0},
+        "subscription_account": {
+          "type": ["object", "null"],
+          "properties": {
+            "type": {"type": ["string", "null"]},
+            "opened_at": {"type": ["string", "null"], "format": "date"},
+            "payment_count": {"type": ["integer", "null"], "minimum": 0},
+            "recognized_amount_krw": {"type": ["integer", "null"], "minimum": 0}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["skill", "status", "reason"],
+        "properties": {
+          "skill": {
+            "enum": ["income_check", "asset_check", "homelessness_check", "age_check", "subscription_account_check", "score_calculation"]
+          },
+          "status": {"enum": ["pass", "fail", "unknown", "not_applicable"]},
+          "reason": {"type": "string"},
+          "source_quote": {"type": ["string", "null"]},
+          "missing_fields": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "score": {
+      "type": ["object", "null"],
+      "properties": {
+        "calculated": {"type": "boolean"},
+        "total": {"type": ["number", "null"]},
+        "maximum": {"type": ["number", "null"]},
+        "items": {"type": "array", "items": {"type": "object"}},
+        "not_calculated_reason": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "result": {
+      "type": "object",
+      "required": ["status", "summary", "missing_fields"],
+      "properties": {
+        "status": {"enum": ["likely_eligible", "likely_ineligible", "needs_review"]},
+        "summary": {"type": "string"},
+        "missing_fields": {"type": "array", "items": {"type": "string"}},
+        "verification_status": {"enum": ["pending", "pass", "revise", "block"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

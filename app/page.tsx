@@ -10,6 +10,8 @@ type ApiResult = {
   profile: UserProfile;
   recommendations: Recommendation[];
   answer: string;
+  handledBy: string;
+  handledByLabel: string;
   dataSource: "sample" | "snapshot" | "live";
   warning?: string;
 };
@@ -17,6 +19,7 @@ type ApiResult = {
 type ConversationMessage = {
   role: "user" | "assistant";
   content: string;
+  label?: string;
 };
 
 type ChatResponse = Partial<ApiResult> & { error?: string };
@@ -187,7 +190,11 @@ export default function Home() {
       setConversation((current) => [
         ...current,
         { role: "user", content: message },
-        { role: "assistant", content: nextResult.answer }
+        {
+          role: "assistant",
+          content: nextResult.answer,
+          label: nextResult.handledByLabel
+        }
       ]);
       setMessage(""); // 전송 후 입력 창 비우기 (ChatGPT 스타일)
     } catch (caught) {
@@ -241,7 +248,7 @@ export default function Home() {
           <section className="conversation" aria-label="대화 내용" aria-live="polite">
             {conversation.map((item, index) => (
               <div className={`message ${item.role}`} key={`${item.role}-${index}`}>
-                <span>{item.role === "user" ? "나" : "청나주"}</span>
+                <span>{item.role === "user" ? "나" : item.label ?? "청나주"}</span>
                 <p>{item.content}</p>
               </div>
             ))}

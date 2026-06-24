@@ -110,6 +110,20 @@ USER_AGENT = (
 )
 
 
+def is_public_applyhome_notice(item: Announcement | dict[str, Any]) -> bool:
+    if isinstance(item, Announcement):
+        organization = item.organization
+        metadata = item.metadata
+    else:
+        organization = str(item.get("organization") or "")
+        metadata = item.get("metadata") or {}
+    if organization != "청약홈" or not isinstance(metadata, dict):
+        return False
+    house_code = str(metadata.get("house_secd") or "").strip()
+    house_name = str(metadata.get("house_secd_name") or "").strip()
+    return house_code == "01" or house_name == "국민"
+
+
 def is_public_recruitment_notice(item: Announcement | dict[str, Any]) -> bool:
     if isinstance(item, Announcement):
         title = item.title
@@ -119,11 +133,12 @@ def is_public_recruitment_notice(item: Announcement | dict[str, Any]) -> bool:
         title = str(item.get("title") or item.get("name") or "")
         housing_type = str(item.get("housing_type") or item.get("house_type") or "")
         organization = str(item.get("organization") or "")
-    if organization and organization not in {"LH", "SH", "GH"}:
+    public_applyhome = is_public_applyhome_notice(item)
+    if organization and organization not in {"LH", "SH", "GH"} and not public_applyhome:
         return False
     if any(word in housing_type or word in title for word in NON_HOUSING_TYPES):
         return False
-    if not any(pattern.search(title) for pattern in INCLUDE_NOTICE_PATTERNS):
+    if not public_applyhome and not any(pattern.search(title) for pattern in INCLUDE_NOTICE_PATTERNS):
         return False
     return not any(pattern.search(title) for pattern in EXCLUDE_NOTICE_PATTERNS)
 

@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup
 from ..sources import SourceError
 from ..upstream import BinaryResponse
 from .collectors import DirectAnnouncementSource
+from .interpretation import is_public_applyhome_notice
 from .scoring import competition_estimate, match_payload, score_payload
 
 
@@ -165,6 +166,7 @@ class DirectFeatureClient:
                     change
                     for change in result["changes"]
                     if change.get("organization") in {"LH", "SH", "GH"}
+                    or is_public_applyhome_notice(change)
                 ][:limit]
             result["count"] = len(result["changes"])
             result["tracking_status"] = (
