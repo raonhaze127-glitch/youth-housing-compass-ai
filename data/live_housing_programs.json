@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-25T12:48:40.709621+00:00",
+  "generated_at": "2026-06-25T15:10:25.957618+00:00",
   "source": "github_actions_direct",
   "count": 39,
   "collector_warnings": [],
   "announcements": [
     {
       "id": "direct:sh_306066",
-      "title": "NEW 2026년 만리동 예술인 협동조합주택(막쿱) 잔여세대 입주자 모집공고(2026. 6. 25.)",
+      "title": "2026년 만리동 예술인 협동조합주택(막쿱) 잔여세대 입주자 모집공고(2026. 6. 25.)",
       "organization": "SH",
       "source_id": "sh_306066",
       "source_type": "direct_collector",
@@ -29,7 +29,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자\u0000가구원수별\u0000가구당\u0000월평균소득의\u0000100%",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -79,7 +79,7 @@
       "homeless_required": null,
       "income_condition": "도시근로자\u0000가구원수별\u0000가구당\u0000월평균소득\u000050%",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-24",
@@ -126,7 +126,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자\u0000가구원수별\u0000가구당\u0000월평균소득의\u0000100%",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-23",
@@ -173,13 +173,13 @@
       "homeless_required": true,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-15",
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
-        "source_char_count": 15772,
+        "source_char_count": 15773,
         "sections": {
           "schedule": "접수기간 '25년' → '26년'으로 오타 정정\n※ 2026.06.17. 10:17 기준 수정사항 : 붙임1 공고문 중 3페이지 (임대조건 및 임대기간 정정)\n※ 2026.06.17. 13:00 기준 수정사항 : 붙임1 공고문 중 10페이지(임대조건 정정)\n____________________________________________________________________\n기존주택 등 매입임대주택 입주자 모집공고(자격완화)를 붙임과 같이 게시합니다.\n■",
           "target": "모집대상 : 매입임대주택 입주자 (경기도 20개 시·군, 150호)\n■ 모집지역 : 고양 / 광주 / 김포/ 남양주 / 동두천/ 부천 / 성남 / 수원 / 시흥 / 안산 / 안성 / 양주/ 여주/ 양평/ 오산 / 용인 / 의정부/ 파주 / 평택/ 화성\n■ 접수기간 : 2026.6.30.(화). ~ 2026.7.03.(금).\n※ 신청방법 : 인터넷 접수\n인터넷(https://apply.gh.or.kr) 접수를 원칙으로 합니다. (*모바일 청약 불가)\n* GH청약센터→청약서비스→온라인청약→청약신청→매입임대\n* 장애인, 고령자(만 65세 이상)에 한하여 방문신청 가능하나, 사전에 연락하여 예약후\n진행 바랍니다. (청약신청기간 내에만 가능)\n■",
@@ -256,7 +256,7 @@
     },
     {
       "id": "direct:sh_306032",
-      "title": "NEW [청년형] 특화형 매입임대주택(금천구) 입주자 모집 공고(운영기관 : 한지붕 협동조합)_은행나무B 401호",
+      "title": "[청년형] 특화형 매입임대주택(금천구) 입주자 모집 공고(운영기관 : 한지붕 협동조합)_은행나무B 401호",
       "organization": "SH",
       "source_id": "sh_306032",
       "source_type": "direct_collector",
@@ -283,7 +283,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -308,7 +308,7 @@
     },
     {
       "id": "direct:sh_306031",
-      "title": "NEW [청년형] 특화형 매입임대주택(금천구) 입주자 모집 공고(운영기관 : 한지붕 협동조합)_은행나무C 502호",
+      "title": "[청년형] 특화형 매입임대주택(금천구) 입주자 모집 공고(운영기관 : 한지붕 협동조합)_은행나무C 502호",
       "organization": "SH",
       "source_id": "sh_306031",
       "source_type": "direct_collector",
@@ -335,7 +335,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -386,7 +386,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-18",
@@ -424,7 +424,7 @@
       ],
       "apply_start": "2026-06-17",
       "apply_end": "2026-06-24",
-      "status": "open",
+      "status": "closed",
       "announcement_url": "https://www.i-sh.co.kr/app/lay2/program/S48T1581C563/www/brd/m_247/view.do?seq=305766&multi_itm_seq=2",
       "summary": "공식 공고문을 자동 분석한 신혼부부 대상 공공주택 공고입니다.",
       "eligibility_summary": "신청 자격■ 모집공고일(2026.06.17.) 현재 서울시에 거주하는 무주택자로서 소득, 자산, 자동차가액 기준을 충족하여야 합니다. ※ 서울시에 거주하지 않지만, 서울시에 위치한 학교, 혹은 직장을 다닐 경우 “예비서울시민” 자격으로 추가 서류(재학증명서, 재직증명서, 입사통지서, 합격통지서 등) 제출 후 입주신청이 가능합니다. ※ 1인가구의 경우 공고일 기준 만 19세 이상부터 입주가 가능합니다. ※ 예비 신혼부부 기준 : 임대주택 입주일 전일까지 혼인신고 예정인 사람1) 소득기준 ※ 무주택자로 전년도 도시근로자 가구원수별 가구당 월평균소득의 120% 이하에 해당하는 자 기 준 1인2인3인전년도 도시근로자 가구원수별 가구당 월평균소득의 120% 이하 4,576,000원 이하7,039,000원 이하9,802,000원 이하※ 입주모집 공고일 기준 주민등록등본에 등재된 세대 구성원 전원의 세전소득을 모두 합산하여 산정 - 신혼부부의 경우 부부 각 세전소득을 모두 합산하여 산정, 태아수를 가구원수에 포함하여 산정 - 주민등록등본에 부모님과 함께 등재된 경우 부모님의 소득도 합산해서 산정 ※ 신혼부부의 기준은 공고일 현재 혼인신고일로부터 7년 이내입니다. ※ 위의 월평균 도시근로자 소득기준은 2024년 가구당 월평균소득 금액입니다.※ 월평균소득은 가구원에 해당하는 세대구성원 전원의 근로·사업·재산·기타소득을 합산한 금액의 월평균금액을 말합",
@@ -441,13 +441,13 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균소득의 120% · 총자산가액기준비고청 년2억5,100만원 · 자동차가액 기준 입주자 자동차가액 기준 비고4,542만원",
       "total_units": null,
-      "fetched_at": "2026-06-24T23:03:10.154507+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-17",
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
-        "source_char_count": 17001,
+        "source_char_count": 17166,
         "sections": {
           "rent": "임대 조건* 인근 시세 대비 80% 이하의 임대료 적용 * 임대보증금 및 임대료 인상 제한 (2년 5%이내)※ 임대료 인상은 ⌜민간임대주택에관한특별법⌟ 제44조에 따라 임대보증금과 월임대료 모두에 적용되며, 임대보증금 인상분을 전월세전환율에 따라 월임대료 인상으로 전환할 수 있습니다.※ 계약을 일방적으로 해지하는 경우 위약금이 발생할 수 있습니다.※ 전 세대 입주 완료 후 주택도시보증공사(HUG) “임대보증금보증보험”에 가입예정입니다. 관련 법령에 따라 임차인이 보증료의 25%를 부담하게 됩니다. ※ 관리비 - 공용부 청소비, 공용부 공과금, 각종 수수료 등 실제 발생한 비용을 실비로 청구함 - 세대 공과금(수도, 전기, 가스)은 각 세대가 수납기관에 직접 납부 - 주차장 이용자는 정기주차비 월 40,000원 납부\n03임대 조건\nType E\n\n10\n04입주",
           "eligibility": "신청 자격■ 모집공고일(2026.06.17.) 현재 서울시에 거주하는 무주택자로서 소득, 자산, 자동차가액 기준을 충족하여야 합니다. ※ 서울시에 거주하지 않지만, 서울시에 위치한 학교, 혹은 직장을 다닐 경우 “예비서울시민” 자격으로 추가 서류(재학증명서, 재직증명서, 입사통지서, 합격통지서 등) 제출 후 입주신청이 가능합니다. ※ 1인가구의 경우 공고일 기준 만 19세 이상부터 입주가 가능합니다. ※ 예비 신혼부부 기준 : 임대주택 입주일 전일까지 혼인신고 예정인 사람1) 소득기준 ※ 무주택자로 전년도 도시근로자 가구원수별 가구당 월평균소득의 120% 이하에 해당하는 자 기 준 1인2인3인전년도 도시근로자 가구원수별 가구당 월평균소득의 120% 이하 4,576,000원 이하7,039,000원 이하9,802,000원 이하※ 입주모집 공고일 기준 주민등록등본에 등재된 세대 구성원 전원의 세전소득을 모두 합산하여 산정 - 신혼부부의 경우 부부 각 세전소득을 모두 합산하여 산정, 태아수를 가구원수에 포함하여 산정 - 주민등록등본에 부모님과 함께 등재된 경우 부모님의 소득도 합산해서 산정 ※ 신혼부부의 기준은 공고일 현재 혼인신고일로부터 7년 이내입니다. ※ 위의 월평균 도시근로자 소득기준은 2024년 가구당 월평균소득 금액입니다.※ 월평균소득은 가구원에 해당하는 세대구성원 전원의 근로·사업·재산·기타소득을 합산한 금액의 월평균금액을 말합니다.2) 자산기준 신청유형총자산가액기준비고청 년2억5,100만원 이하* 행복주택(청년) 기준* 청년 : 만19세 이상 ~ 만 39세 이하 미혼신혼부부,고령자, 일반 1인 가구3억4,500만원 이하 * 행복주택 기준* 세대구성원 전원이 보유하고 있는 총자산가액 합산기준3) 자동차가액 기준 입주자 자동차가액 기준 비고4,542만원 이하 행복주택 자동차가액 산정기준 적용※ 주차장 : 총자산가액 기준 내에서 장애인 사용 자동차 및 생업용 자동차에 우선 제공✅ 신청서 제출 전에 신청자격기준을 확인하시기 바랍니다. ✅ 입주자격 부적격사유에 대한 소명의무는 전적으로 입주신청자에게 있습니다.✅ 상기 자격 요건을 충족하여도 선정 심사 결과에 따라 입주가 불가할 수 있습니다.\n11\n05입주모집 절차1)",
@@ -492,7 +492,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-18",
@@ -542,7 +542,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균소득 70% · 총자산가액 : 부동산가액+자동차가액+금융자산가액+일반자산가액-부채 자동차가액 : 현재가치 기준 총자산가액(이하) 자동차가액(이하)24,500만원 · 자동차가액+금융자산가액+일반자산가액-부채 자동차가액 : 현재가치 기준 총자산가액(이하) 자동차가액(이하)24,500만원",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-05",
@@ -599,7 +599,7 @@
       "homeless_required": true,
       "income_condition": "월평균소득 70%",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-05-19",
@@ -660,7 +660,7 @@
       "homeless_required": true,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100%",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-05-26",
@@ -707,7 +707,7 @@
       "homeless_required": true,
       "income_condition": "월평균 소득 50% · 총자산기준 세대구성원 · 자동차, 금융자산(부채반영), 일반자산) 합산기준 (24,500)만원",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-05-14",
@@ -759,7 +759,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구당월평균 소득의 110%",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-05-13",
@@ -869,7 +869,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자\u0000가구당\u0000월평균\u0000소득의\u0000105% · 자동차 보유내역기타☑- 「국민기초생활 보장법」 상 수급자 또는 차상위계층 해당여부- 「장애인복지법」 상 장애인 해당여부- 「한부모가족 지원",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-05-29",
@@ -928,7 +928,7 @@
       "homeless_required": true,
       "income_condition": "월평균 소득의 120%",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-05-29",
@@ -974,12 +974,10 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
-        "notice_date": "2026-05-29",
-        "analysis_quality": "failed",
-        "analysis_error": "DependencyError"
+        "notice_date": "2026-05-29"
       }
     },
     {
@@ -1012,7 +1010,7 @@
       "homeless_required": true,
       "income_condition": "총자산, 자동차 등 자격 기준 산정시점은 입주자 모집 공고일로 판단하는 것을 원 · 자동차 등 자격 기준 산정시점은 입주자 모집 공고일로 판단하는 것을 원",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-05-28",
@@ -1064,7 +1062,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-05-28",
@@ -1107,7 +1105,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균소득의 120% · 총자산가액기준비고청 년2억5,1000만 원 · 자동차가액 기준 입주자 자동차가액 기준 비고4,542만 원",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-05-22",
@@ -1163,7 +1161,7 @@
       "homeless_required": null,
       "income_condition": "도시근로자 1인가구 월평균소득의 100% · 총자산 25,100만원 · 자동차• 신청자 본인이 보유한 모든 자동차가액의 합산금액금융자산• 보통예금, 정기예금, 주식, 채권, 연금저축, 보험증권, 연금보험 등기타자산• 항공기, 선박, 주택·상가 임차보증금, 입목, 어업권, 회원",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-05-15",
@@ -1222,7 +1220,7 @@
       "homeless_required": true,
       "income_condition": "월평균소득이\u0000전년도\u0000도시근로자\u0000가구당\u0000월평균소득의\u0000100% · 총자산,\u0000자동차가액\u0000기준을\u0000충족하는\u0000자정릉\u0000희망하우징공고일\u0000현재(2026.\u00005.\u000011.)\u0000무주택자(본인)이면서\u0000미혼(현재\u0000혼인\u0000상태가\u0000아님)인\u0000서울특별시\u0000소재\u0000대학교\u0000재학생으로서\u0000신청순위별\u0000소득,\u0000총자산,\u0000자동차가액\u0000기준을\u0000충족하는\u0000자연남\u0000공공원 · 자동차가액\u0000기준을\u0000충족하는\u0000자정릉\u0000희망하우징공고일\u0000현재(2026.\u00005.\u000011.)\u0000무주택자(본인)이면서\u0000미혼(현재\u0000혼인\u0000상태가\u0000아님)인\u0000서울특별시\u0000소재\u0000대학교\u0000재학생으로서\u0000신청순위별\u0000소득,\u0000총자산,\u0000자동차가액\u0000기준을\u0000충족하는\u0000자연남\u0000공공원",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-05-11",
@@ -1284,7 +1282,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-05-11",
@@ -1371,7 +1369,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-05-04",
@@ -1426,7 +1424,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득의 50%",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-04-30",
@@ -1525,7 +1523,7 @@
       "homeless_required": true,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-04-29",
@@ -1577,7 +1575,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득 70% · 총자산 66,200만원 · 자동차 4,542만원",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-04-27",
@@ -1628,7 +1626,7 @@
       "homeless_required": true,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-04-27",
@@ -1683,7 +1681,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균소득의 120%",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-04-24",
@@ -1721,7 +1719,7 @@
       "apply_end": "",
       "status": "unknown",
       "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=02&bbsSn=9102431562",
-      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
+      "summary": "공식 공고문을 자동 분석한 신청 대상 확인이 필요한 공공주택 공고입니다.",
       "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
       "benefit_summary": "",
       "required_documents": [],
@@ -1730,10 +1728,23 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-23T04:43:58.198716+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
-        "notice_date": "2026-04-07"
+        "notice_date": "2026-04-07",
+        "analysis_quality": "low",
+        "analysis_source": "official_notice_and_attachments",
+        "source_char_count": 3734,
+        "sections": {
+          "schedule": "청약 접수결과을 첨부파일과 같이\r\n안내해 드리오니 참고하여 주시기 바라며, 금번 모집공고에 관심을 가져주신 고객 여러분께 감사드립니다.\r\n\r\n- 공급단지 : 도산청암, 삼라미주\r\n\r\n- 청약 접수 결과 : 첨부파일 참고\n다운로드\n도산청암,삼라미주최종접수현황(2026.03.23공고-입주자격완화).pdf\n목록\n퀵메뉴 열기/닫기\n로그인\n증명서발급\n예비입주자\n순위 조회\n사전청약\n방문한메뉴\n관심공고 알림\n관심공고 알림 닫기\n청약신청 목록보기\n청약신청 중 임시저장된 목록이며, 당일 임시저장된 내역만 조회됩니다.\n접수중\n일반형공공분양주택\n일반공급(우선)\n사업지구명 : 부천원종(B2)\n저장일시 : 2023-04-17 14:23:15\n불러오기\n삭제\n접수마감\n나눔형(이익공유형) 분양주택\n일반공급(우선)\n사업지구명 : 부천원종(B2) 부천원종(B2) 부천원종(B2)\n저장일시 : 2023-04-17 14:23:15\n불러오기\n삭제\n닫기"
+        },
+        "attachments": [
+          {
+            "url": "http://apply.lh.or.kr/lhapply/apply/bfh/slpa/list.do?mi=1349",
+            "type": "unknown",
+            "extracted": false
+          }
+        ]
       }
     },
     {
@@ -1760,7 +1771,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 85,
-      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "address": "부산광역시 강서구 범방동 2008번지",
@@ -1794,7 +1805,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 30,
-      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "address": "경기도 의왕시 포일동(의왕청계2 공공주택지구 M-1블록)",
@@ -1828,7 +1839,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 193,
-      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "address": "부산광역시 부산진구 부전동 390-1",
@@ -1862,7 +1873,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 626,
-      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "address": "전라남도 여수시 소라면 죽림리 154번지 일원",
@@ -1896,7 +1907,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 27,
-      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
+      "fetched_at": "2026-06-25T15:09:35.543691+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "address": "인천광역시 중구 운서동 3106-1 일원(영종하늘도시 A9BL)",
