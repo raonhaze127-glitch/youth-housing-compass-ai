@@ -11,13 +11,13 @@ class ExportSnapshotTests(unittest.TestCase):
             "title": "안양 공공분양",
             "organization": "청약홈",
             "announcement_url": "https://example.com/public",
-            "metadata": {"house_secd": "01", "house_secd_name": "국민"},
+            "metadata": {"house_secd": "03", "house_secd_name": "국민"},
         }
         private = {
             **public,
             "id": "direct:apt_2",
             "source_id": "apt_2",
-            "metadata": {"house_secd": "02", "house_secd_name": "민영"},
+            "metadata": {"house_secd": "01", "house_secd_name": "민영"},
         }
 
         _validate([public], 1)

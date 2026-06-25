@@ -114,14 +114,27 @@ def is_public_applyhome_notice(item: Announcement | dict[str, Any]) -> bool:
     if isinstance(item, Announcement):
         organization = item.organization
         metadata = item.metadata
+        source_id = item.source_id
+        category = item.category
+        housing_type = item.housing_type
     else:
         organization = str(item.get("organization") or "")
         metadata = item.get("metadata") or {}
+        source_id = str(item.get("source_id") or "")
+        category = str(item.get("category") or item.get("source_category") or "")
+        housing_type = str(item.get("housing_type") or item.get("house_type") or "")
     if organization != "청약홈" or not isinstance(metadata, dict):
         return False
     house_code = str(metadata.get("house_secd") or "").strip()
     house_name = str(metadata.get("house_secd_name") or "").strip()
-    return house_code == "01" or house_name == "국민"
+    searchable = " ".join((house_name, category, housing_type))
+    private_names = ("\ubbfc\uc601", "\uc0ac\uc124", "誘쇱쁺")
+    public_names = ("\uad6d\ubbfc", "\uacf5\uacf5", "\uacf5\uacf5\uc9c0\uc6d0", "援??", "怨듦났")
+    if house_code == "01" or any(name in searchable for name in private_names):
+        return False
+    if source_id.startswith("public_rent_"):
+        return True
+    return house_code in {"03", "04", "06"} or any(name in searchable for name in public_names)
 
 
 def is_public_recruitment_notice(item: Announcement | dict[str, Any]) -> bool:

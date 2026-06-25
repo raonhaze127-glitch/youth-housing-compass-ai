@@ -191,18 +191,28 @@ def _fetch_applyhome(
         "endmonth": now.strftime("%Y%m"),
     }
     result: list[Announcement] = []
+    public_prefixes = {"apt", "public_rent"}
+    private_names = ("\ubbfc\uc601", "\uc0ac\uc124", "誘쇱쁺")
+    public_names = ("\uad6d\ubbfc", "\uacf5\uacf5", "\uacf5\uacf5\uc9c0\uc6d0", "援??", "怨듦났")
     for prefix, category, endpoint in APPLYHOME_CHANNELS:
-        if not include_private_housing and prefix != "apt":
+        if not include_private_housing and prefix not in public_prefixes:
             continue
         response = requests.get(f"{APPLYHOME_BASE}/{endpoint}", params=params_base, timeout=timeout)
         response.raise_for_status()
         for item in _json_items(response.json()):
             house_code = str(item.get("HOUSE_SECD") or "").strip()
             house_name = str(item.get("HOUSE_SECD_NM") or "").strip()
-            if not include_private_housing and not (
-                house_code == "01" or house_name == "국민"
-            ):
-                continue
+            house_detail = str(item.get("HOUSE_DTL_SECD_NM") or "").strip()
+            searchable = " ".join((house_name, house_detail, category))
+            if not include_private_housing:
+                is_private = house_code == "01" or any(name in searchable for name in private_names)
+                is_public = (
+                    prefix == "public_rent"
+                    or house_code in {"03", "04", "06"}
+                    or any(name in searchable for name in public_names)
+                )
+                if is_private or not is_public:
+                    continue
             raw_id = str(item.get("PBLANC_NO") or item.get("HOUSE_MANAGE_NO") or "")
             if not raw_id:
                 continue

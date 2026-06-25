@@ -103,6 +103,30 @@ def _item_properties(item: dict[str, Any], collected_date: str) -> dict[str, Any
     return properties
 
 
+
+
+def _property_text(properties: dict[str, Any], name: str) -> str:
+    value = properties.get(name) or {}
+    if value.get("type") == "rich_text":
+        return "".join(part.get("plain_text", "") for part in value.get("rich_text") or [])
+    if value.get("type") == "title":
+        return "".join(part.get("plain_text", "") for part in value.get("title") or [])
+    if value.get("type") == "select":
+        return str((value.get("select") or {}).get("name") or "")
+    return ""
+
+
+def _is_private_applyhome_page(page: dict[str, Any]) -> bool:
+    properties = page.get("properties") or {}
+    dedup_key = _property_text(properties, "dedup_key")
+    if not dedup_key.startswith("apt_"):
+        return False
+    housing_program = _property_text(properties, "housing_program")
+    source_category = _property_text(properties, "source_category")
+    text = f"{housing_program} {source_category}"
+    return "민영" in text or "誘쇱쁺" in text
+
+
 class NotionClient:
     def __init__(self, token: str) -> None:
         self.session = requests.Session()
@@ -152,6 +176,36 @@ class NotionClient:
             json={"properties": properties},
         )
 
+    def archive_page(self, page_id: str) -> None:
+        self._request(
+            "PATCH",
+            f"https://api.notion.com/v1/pages/{page_id}",
+            json={"archived": True},
+        )
+
+    def list_applyhome_pages(self, database_id: str) -> list[dict[str, Any]]:
+        pages: list[dict[str, Any]] = []
+        cursor = None
+        while True:
+            payload: dict[str, Any] = {
+                "filter": {
+                    "property": "dedup_key",
+                    "rich_text": {"starts_with": "apt_"},
+                },
+                "page_size": 100,
+            }
+            if cursor:
+                payload["start_cursor"] = cursor
+            result = self._request(
+                "POST",
+                f"https://api.notion.com/v1/databases/{database_id}/query",
+                json=payload,
+            )
+            pages.extend(result.get("results") or [])
+            if not result.get("has_more"):
+                return pages
+            cursor = result.get("next_cursor")
+
 
 def _load_snapshot(path: Path) -> tuple[str, list[dict[str, Any]]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
@@ -172,7 +226,16 @@ def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -
     created = 0
     updated = 0
     skipped = 0
+    archived = 0
     errors: list[str] = []
+    for page in client.list_applyhome_pages(database_id):
+        if not _is_private_applyhome_page(page):
+            continue
+        try:
+            client.archive_page(str(page["id"]))
+            archived += 1
+        except Exception as exc:  # noqa: BLE001
+            errors.append(f"archive {page.get('id')}: {exc}")
     for item in items[:limit] if limit else items:
         dedup_key = _clean(item.get("source_id") or item.get("id"))
         if not dedup_key:
@@ -195,6 +258,7 @@ def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -
         "created": created,
         "updated": updated,
         "skipped": skipped,
+        "archived_private_applyhome": archived,
         "errors": errors,
     }
 
