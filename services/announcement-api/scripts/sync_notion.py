@@ -144,6 +144,11 @@ class NotionClient:
             raise RuntimeError(f"Notion API error {response.status_code}: {response.text}")
         return response.json()
 
+    def database_property_names(self, database_id: str) -> set[str]:
+        result = self._request("GET", f"https://api.notion.com/v1/databases/{database_id}")
+        properties = result.get("properties") or {}
+        return set(properties.keys())
+
     def find_page(self, database_id: str, dedup_key: str) -> str | None:
         payload = {
             "filter": {
@@ -223,6 +228,7 @@ def _load_snapshot(path: Path) -> tuple[str, list[dict[str, Any]]]:
 def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -> dict[str, Any]:
     collected_date, items = _load_snapshot(snapshot_path)
     client = NotionClient(token)
+    allowed_properties = client.database_property_names(database_id)
     created = 0
     updated = 0
     skipped = 0
@@ -242,7 +248,11 @@ def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -
             skipped += 1
             continue
         try:
-            properties = _item_properties(item, collected_date)
+            properties = {
+                key: value
+                for key, value in _item_properties(item, collected_date).items()
+                if key in allowed_properties
+            }
             page_id = client.find_page(database_id, dedup_key)
             if page_id:
                 client.update_page(page_id, properties)
