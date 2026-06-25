@@ -258,10 +258,10 @@ def _first_text(item: dict[str, Any], *keys: str) -> str:
 
 def _lh_notice_url(item: dict[str, Any], housing_type: str = "") -> str:
     link_url = _first_text(item, "LINK_URL", "linkUrl", "link_url")
-    if link_url:
+    pan_id = _first_text(item, "PAN_ID", "panId", "PANID", "OTXT_PAN_ID", "otxtPanId")
+    if link_url and (not pan_id or "selectWrtancList.do" not in link_url):
         return link_url
 
-    pan_id = _first_text(item, "PAN_ID", "panId", "PANID", "OTXT_PAN_ID", "otxtPanId")
     if pan_id:
         text = " ".join((housing_type, _first_text(item, "BBS_TL", "TITLE", "title")))
         is_sale = any(keyword in text for keyword in ("분양", "매각", "토지", "상가"))

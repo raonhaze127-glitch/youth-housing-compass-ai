@@ -252,6 +252,19 @@ class DirectCollectorTests(unittest.TestCase):
         url = _lh_notice_url({"LINK_URL": "https://apply.lh.or.kr/custom"}, "행복주택")
         self.assertEqual(url, "https://apply.lh.or.kr/custom")
 
+    def test_lh_list_link_url_is_replaced_when_pan_id_exists(self):
+        url = _lh_notice_url(
+            {
+                "LINK_URL": "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancList.do?mi=1027",
+                "PAN_ID": "SALE123",
+                "BBS_TL": "성남 공공분양 입주자모집공고",
+            },
+            "공공분양",
+        )
+        self.assertIn("selectWrtancInfo.do", url)
+        self.assertIn("mi=1027", url)
+        self.assertIn("panId=SALE123", url)
+
     def test_lh_pan_id_response_is_kept_and_linked_to_wrtanc_detail(self):
         payload = {
             "data": [
