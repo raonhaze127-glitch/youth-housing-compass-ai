@@ -248,6 +248,46 @@ def _infer_region(title: str) -> str:
     return "전국"
 
 
+def _first_text(item: dict[str, Any], *keys: str) -> str:
+    for key in keys:
+        value = item.get(key)
+        if value is not None and str(value).strip():
+            return str(value).strip()
+    return ""
+
+
+def _lh_notice_url(item: dict[str, Any], housing_type: str = "") -> str:
+    link_url = _first_text(item, "LINK_URL", "linkUrl", "link_url")
+    if link_url:
+        return link_url
+
+    pan_id = _first_text(item, "PAN_ID", "panId", "PANID", "OTXT_PAN_ID", "otxtPanId")
+    if pan_id:
+        text = " ".join((housing_type, _first_text(item, "BBS_TL", "TITLE", "title")))
+        is_sale = any(keyword in text for keyword in ("분양", "매각", "토지", "상가"))
+        mi = _first_text(item, "MI", "mi") or ("1027" if is_sale else "1026")
+        upp_ais_tp_cd = _first_text(item, "UPP_AIS_TP_CD", "uppAisTpCd") or ("05" if mi == "1027" else "06")
+        params = {
+            "ccrCnntSysDsCd": _first_text(item, "CCR_CNNT_SYS_DS_CD", "ccrCnntSysDsCd") or "02",
+            "panId": pan_id,
+            "aisTpCd": _first_text(item, "AIS_TP_CD", "aisTpCd"),
+            "uppAisTpCd": upp_ais_tp_cd,
+            "mi": mi,
+            "panKdCd": _first_text(item, "PAN_KD_CD", "panKdCd"),
+            "otxtPanId": _first_text(item, "OTXT_PAN_ID", "otxtPanId"),
+        }
+        return "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancInfo.do?" + urlencode(params)
+
+    bbs_sn = _first_text(item, "BBS_SN", "bbsSn")
+    if bbs_sn:
+        return "https://apply.lh.or.kr/lhapply/apply/noti/an/view.do?" + urlencode({
+            "mi": "1079",
+            "ccrCnntSysDsCd": _first_text(item, "CCR_CNNT_SYS_DS_CD", "ccrCnntSysDsCd") or "02",
+            "bbsSn": bbs_sn,
+        })
+    return "https://apply.lh.or.kr"
+
+
 def _fetch_lh(api_key: str, days_back: int, timeout: int, fetched_at: str) -> list[Announcement]:
     today = datetime.now().date()
     cutoff = today - timedelta(days=days_back)
@@ -271,7 +311,7 @@ def _fetch_lh(api_key: str, days_back: int, timeout: int, fetched_at: str) -> li
             break
         for item in items:
             title = str(item.get("BBS_TL") or "")
-            raw_id = str(item.get("BBS_SN") or "")
+            raw_id = _first_text(item, "BBS_SN", "bbsSn", "PAN_ID", "panId", "PANID")
             housing_type = str(item.get("AIS_TP_CD_NM") or "공공임대/분양")
             if not raw_id or not is_public_recruitment_notice(
                 {"title": title, "housing_type": housing_type, "organization": "LH"}
@@ -287,7 +327,7 @@ def _fetch_lh(api_key: str, days_back: int, timeout: int, fetched_at: str) -> li
             result.append(_announcement(
                 source_id=f"lh_{raw_id}", title=title, organization="LH", category="LH 공공주택",
                 region=_infer_region(title), housing_type=housing_type,
-                url=str(item.get("LINK_URL") or "https://apply.lh.or.kr"), fetched_at=fetched_at,
+                url=_lh_notice_url(item, housing_type), fetched_at=fetched_at,
                 metadata={"notice_date": registered},
             ))
         if len(items) < page_size:

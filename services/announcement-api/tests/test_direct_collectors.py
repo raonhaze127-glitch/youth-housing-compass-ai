@@ -12,6 +12,7 @@ from app.direct.collectors import (
     _fetch_applyhome,
     _fetch_lh,
     _json_items,
+    _lh_notice_url,
     _gh_detail_district,
     _parse_gh_apply_list,
 )
@@ -217,6 +218,57 @@ class DirectCollectorTests(unittest.TestCase):
         self.assertEqual(len(result), 5)
         self.assertEqual(len({item.category for item in result}), 5)
         self.assertTrue(all(item.source_type == "direct_collector" for item in result))
+
+    def test_lh_rental_wrtanc_detail_url_is_built_from_pan_id(self):
+        url = _lh_notice_url(
+            {
+                "BBS_TL": "서울 행복주택 입주자 모집공고",
+                "PAN_ID": "PAN123",
+                "AIS_TP_CD": "061339",
+                "PAN_KD_CD": "01",
+            },
+            "행복주택",
+        )
+        self.assertIn("selectWrtancInfo.do", url)
+        self.assertIn("mi=1026", url)
+        self.assertIn("uppAisTpCd=06", url)
+        self.assertIn("panId=PAN123", url)
+
+    def test_lh_sale_wrtanc_detail_url_is_built_from_pan_id(self):
+        url = _lh_notice_url(
+            {
+                "BBS_TL": "인천 공공분양 입주자 모집공고",
+                "PAN_ID": "SALE123",
+                "AIS_TP_CD": "050000",
+            },
+            "공공분양",
+        )
+        self.assertIn("selectWrtancInfo.do", url)
+        self.assertIn("mi=1027", url)
+        self.assertIn("uppAisTpCd=05", url)
+        self.assertIn("panId=SALE123", url)
+
+    def test_lh_existing_link_url_is_preserved(self):
+        url = _lh_notice_url({"LINK_URL": "https://apply.lh.or.kr/custom"}, "행복주택")
+        self.assertEqual(url, "https://apply.lh.or.kr/custom")
+
+    def test_lh_pan_id_response_is_kept_and_linked_to_wrtanc_detail(self):
+        payload = {
+            "data": [
+                {
+                    "PAN_ID": "PAN123",
+                    "BBS_TL": "서울 행복주택 입주자 모집공고",
+                    "BBS_WOU_DTTM": date.today().isoformat(),
+                    "AIS_TP_CD_NM": "행복주택",
+                    "AIS_TP_CD": "061339",
+                }
+            ]
+        }
+        with mock.patch("app.direct.collectors.requests.get", return_value=FakeResponse(payload)):
+            result = _fetch_lh("key", 2, 5, "now")
+        self.assertEqual([item.source_id for item in result], ["lh_PAN123"])
+        self.assertIn("selectWrtancInfo.do", result[0].announcement_url)
+        self.assertIn("panId=PAN123", result[0].announcement_url)
 
     def test_lh_standard_response_is_normalized(self):
         payload = {
