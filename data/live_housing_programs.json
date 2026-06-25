@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-25T12:16:17.984543+00:00",
+  "generated_at": "2026-06-25T12:48:40.709621+00:00",
   "source": "github_actions_direct",
   "count": 39,
   "collector_warnings": [],
@@ -29,7 +29,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자\u0000가구원수별\u0000가구당\u0000월평균소득의\u0000100%",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:15:44.828327+00:00",
+      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -79,7 +79,7 @@
       "homeless_required": null,
       "income_condition": "도시근로자\u0000가구원수별\u0000가구당\u0000월평균소득\u000050%",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:15:44.828327+00:00",
+      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-24",
@@ -126,7 +126,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자\u0000가구원수별\u0000가구당\u0000월평균소득의\u0000100%",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:15:44.828327+00:00",
+      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-23",
@@ -283,7 +283,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:15:44.828327+00:00",
+      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -335,7 +335,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:15:44.828327+00:00",
+      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -386,7 +386,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:15:44.828327+00:00",
+      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-18",
@@ -492,7 +492,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-06-25T12:15:44.828327+00:00",
+      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-18",
@@ -1760,7 +1760,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 85,
-      "fetched_at": "2026-06-25T12:15:44.828327+00:00",
+      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "address": "부산광역시 강서구 범방동 2008번지",
@@ -1794,7 +1794,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 30,
-      "fetched_at": "2026-06-25T12:15:44.828327+00:00",
+      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "address": "경기도 의왕시 포일동(의왕청계2 공공주택지구 M-1블록)",
@@ -1828,7 +1828,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 193,
-      "fetched_at": "2026-06-25T12:15:44.828327+00:00",
+      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "address": "부산광역시 부산진구 부전동 390-1",
@@ -1862,7 +1862,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 626,
-      "fetched_at": "2026-06-25T12:15:44.828327+00:00",
+      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "address": "전라남도 여수시 소라면 죽림리 154번지 일원",
@@ -1896,7 +1896,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 27,
-      "fetched_at": "2026-06-25T12:15:44.828327+00:00",
+      "fetched_at": "2026-06-25T12:48:01.868525+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "address": "인천광역시 중구 운서동 3106-1 일원(영종하늘도시 A9BL)",
