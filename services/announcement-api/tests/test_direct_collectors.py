@@ -1,4 +1,4 @@
-import unittest
+﻿import unittest
 import tempfile
 from datetime import date
 from pathlib import Path
@@ -11,6 +11,7 @@ from app.direct.collectors import (
     _announcement,
     _fetch_applyhome,
     _fetch_lh,
+    _fetch_lh_wrtanc_boards,
     _json_items,
     _lh_notice_url,
     _gh_detail_district,
@@ -283,6 +284,26 @@ class DirectCollectorTests(unittest.TestCase):
         self.assertIn("selectWrtancInfo.do", result[0].announcement_url)
         self.assertIn("panId=PAN123", result[0].announcement_url)
 
+    def test_lh_wrtanc_board_rows_are_collected_with_detail_url(self):
+        html = """
+        <table class="bbs_ListA"><tbody><tr>
+          <td>1</td><td>공공분양(신혼희망)</td>
+          <td class="bbs_tit"><a class="wrtancInfoBtn" data-id1="0000061094" data-id2="02" data-id3="39" data-id4="39">
+            <span>e편한세상 분당 퍼스트빌리지 입주자모집공고 <em class="day">1일전</em></span>
+          </a></td>
+          <td>경기도</td><td></td><td>2026.05.29</td><td>2026.07.21</td><td>공고중</td><td>1</td>
+        </tr></tbody></table>
+        """
+        with mock.patch("app.direct.collectors.requests.get", return_value=FakeResponse({})) as request:
+            request.return_value.text = html
+            request.return_value.encoding = "utf-8"
+            request.return_value.apparent_encoding = "utf-8"
+            result = _fetch_lh_wrtanc_boards(90, 5, "now")
+        self.assertEqual([item.source_id for item in result], ["lh_0000061094"])
+        self.assertEqual(result[0].region, "경기")
+        self.assertIn("selectWrtancInfo.do", result[0].announcement_url)
+        self.assertIn("panId=0000061094", result[0].announcement_url)
+
     def test_lh_standard_response_is_normalized(self):
         payload = {
             "response": {
@@ -304,7 +325,7 @@ class DirectCollectorTests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0].organization, "LH")
         self.assertEqual(result[0].region, "서울")
-        params = request.call_args.kwargs["params"]
+        params = request.call_args_list[0].kwargs["params"]
         self.assertEqual(params["ServiceKey"], "key")
         self.assertEqual(params["PG_SZ"], "100")
         self.assertEqual(params["PAGE"], "1")

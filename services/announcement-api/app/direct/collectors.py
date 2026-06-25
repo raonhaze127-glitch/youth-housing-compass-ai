@@ -27,6 +27,10 @@ from .interpretation import (
 
 APPLYHOME_BASE = "https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1"
 LH_URL = "https://apis.data.go.kr/B552555/lhNoticeInfo1/getNoticeInfo1"
+LH_WRTANC_BOARDS = (
+    ("1026", "06", "공공임대"),
+    ("1027", "05", "공공분양"),
+)
 SH_BOARDS = {
     "공공분양": "https://www.i-sh.co.kr/app/lay2/program/S48T1581C563/www/brd/m_247/list.do?multi_itm_seq=1",
     "공공임대": "https://www.i-sh.co.kr/app/lay2/program/S48T1581C563/www/brd/m_247/list.do?multi_itm_seq=2",
@@ -288,6 +292,77 @@ def _lh_notice_url(item: dict[str, Any], housing_type: str = "") -> str:
     return "https://apply.lh.or.kr"
 
 
+def _lh_region(value: str, title: str) -> str:
+    if "서울" in value:
+        return "서울"
+    if "경기" in value:
+        return "경기"
+    if "인천" in value:
+        return "인천"
+    return _infer_region(title)
+
+
+def _fetch_lh_wrtanc_boards(days_back: int, timeout: int, fetched_at: str) -> list[Announcement]:
+    cutoff = datetime.now().date() - timedelta(days=days_back)
+    result: list[Announcement] = []
+    headers = {"User-Agent": "Mozilla/5.0 youth-housing-compass"}
+    for mi, default_upp_ais_tp_cd, fallback_type in LH_WRTANC_BOARDS:
+        response = requests.get(
+            "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancList.do",
+            params={"mi": mi},
+            timeout=timeout,
+            headers=headers,
+        )
+        response.raise_for_status()
+        response.encoding = getattr(response, "apparent_encoding", None) or getattr(response, "encoding", None)
+        soup = BeautifulSoup(getattr(response, "text", ""), "html.parser")
+        for row in soup.select(".bbs_ListA tbody tr"):
+            cells = row.find_all("td")
+            link = row.select_one(".wrtancInfoBtn")
+            if len(cells) < 8 or not link:
+                continue
+            title_node = BeautifulSoup(str(link), "html.parser")
+            for extra in title_node.select("em"):
+                extra.decompose()
+            title = title_node.get_text(" ", strip=True)
+            pan_id = str(link.get("data-id1") or "").strip()
+            if not title or not pan_id:
+                continue
+            registered = normalize_date(cells[5].get_text(" ", strip=True))
+            if registered:
+                try:
+                    if date.fromisoformat(registered) < cutoff:
+                        continue
+                except ValueError:
+                    pass
+            housing_type = cells[1].get_text(" ", strip=True) or fallback_type
+            if not is_public_recruitment_notice(
+                {"title": title, "housing_type": housing_type, "organization": "LH"}
+            ):
+                continue
+            item = {
+                "PAN_ID": pan_id,
+                "CCR_CNNT_SYS_DS_CD": str(link.get("data-id2") or "").strip(),
+                "UPP_AIS_TP_CD": str(link.get("data-id3") or default_upp_ais_tp_cd).strip(),
+                "AIS_TP_CD": str(link.get("data-id4") or "").strip(),
+                "MI": mi,
+                "BBS_TL": title,
+            }
+            result.append(_announcement(
+                source_id=f"lh_{pan_id}",
+                title=title,
+                organization="LH",
+                category="LH 공공주택",
+                region=_lh_region(cells[3].get_text(" ", strip=True), title),
+                housing_type=housing_type,
+                end=cells[6].get_text(" ", strip=True),
+                url=_lh_notice_url(item, housing_type),
+                fetched_at=fetched_at,
+                metadata={"notice_date": registered},
+            ))
+    return list({item.source_id: item for item in result}.values())
+
+
 def _fetch_lh(api_key: str, days_back: int, timeout: int, fetched_at: str) -> list[Announcement]:
     today = datetime.now().date()
     cutoff = today - timedelta(days=days_back)
@@ -332,7 +407,10 @@ def _fetch_lh(api_key: str, days_back: int, timeout: int, fetched_at: str) -> li
             ))
         if len(items) < page_size:
             break
-    return result
+    by_source_id = {item.source_id: item for item in result}
+    for item in _fetch_lh_wrtanc_boards(days_back, timeout, fetched_at):
+        by_source_id[item.source_id] = item
+    return list(by_source_id.values())
 
 
 def _recent(raw: str, formats: tuple[str, ...], days: int = 100) -> str:
