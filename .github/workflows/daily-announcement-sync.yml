@@ -60,6 +60,17 @@ jobs:
           --minimum-count 3
           --enrich-limit 12
 
+      - name: Sync snapshot to Notion
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ vars.NOTION_DATABASE_ID }}
+        run: |
+          if [ -z "$NOTION_TOKEN" ]; then
+            echo "NOTION_TOKEN is not set. Skipping Notion sync."
+            exit 0
+          fi
+          python services/announcement-api/scripts/sync_notion.py
+
       - name: Commit updated snapshot
         shell: bash
         run: |
