@@ -103,7 +103,7 @@ def _item_properties(item: dict[str, Any], collected_date: str) -> dict[str, Any
     }
     organization = _select(item.get("organization"))
     if organization:
-        properties["기관"] = organization
+        properties["청약"] = organization
     url = _clean(item.get("announcement_url"))
     if url:
         properties["원문URL"] = {"url": url}
