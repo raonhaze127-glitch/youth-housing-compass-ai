@@ -8,7 +8,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import replace
 from datetime import date
 from typing import Any
-from urllib.parse import urlencode, urljoin, urlparse
+from urllib.parse import parse_qs, urlencode, urljoin, urlparse
 from xml.etree import ElementTree
 
 import requests
@@ -340,6 +340,28 @@ def fetch_notice_text(
             },
         )
         response_base_url = detail_url
+    elif "i-sh.co.kr" in announcement.announcement_url:
+        parsed = urlparse(announcement.announcement_url)
+        query = parse_qs(parsed.query)
+        response = requests.post(
+            announcement.announcement_url.split("?", 1)[0],
+            data={
+                "page": "1",
+                "seq": (query.get("seq") or [""])[0],
+                "multi_itm_seq": (query.get("multi_itm_seq") or [""])[0],
+                "multi_itm_seqsStr": "",
+            },
+            timeout=timeout,
+            headers={
+                "User-Agent": USER_AGENT,
+                "Accept-Language": "ko-KR,ko;q=0.9",
+                "Referer": announcement.announcement_url.replace("view.do", "list.do"),
+            },
+        )
+        response.raise_for_status()
+        response.encoding = response.apparent_encoding or response.encoding
+        response_text = response.text
+        response_base_url = announcement.announcement_url
     else:
         response = requests.get(
             announcement.announcement_url,

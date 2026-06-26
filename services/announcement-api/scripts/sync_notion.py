@@ -196,6 +196,28 @@ class NotionClient:
             return None
         return str(results[0]["id"])
 
+    def find_page_by_title_source(
+        self, database_id: str, title: str, organization: str
+    ) -> str | None:
+        payload = {
+            "filter": {
+                "and": [
+                    {"property": "제목", "title": {"equals": title}},
+                    {"property": "청약", "select": {"equals": organization}},
+                ]
+            },
+            "page_size": 1,
+        }
+        result = self._request(
+            "POST",
+            f"https://api.notion.com/v1/databases/{database_id}/query",
+            json=payload,
+        )
+        results = result.get("results") or []
+        if not results:
+            return None
+        return str(results[0]["id"])
+
     def create_page(self, database_id: str, properties: dict[str, Any]) -> None:
         self._request(
             "POST",
@@ -280,6 +302,16 @@ def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -
                 if key in allowed_properties
             }
             page_id = client.find_page(database_id, dedup_key)
+            if (
+                not page_id
+                and "제목" in allowed_properties
+                and "청약" in allowed_properties
+            ):
+                page_id = client.find_page_by_title_source(
+                    database_id,
+                    _clean(item.get("title")),
+                    _clean(item.get("organization")),
+                )
             if page_id:
                 client.update_page(page_id, properties)
                 updated += 1

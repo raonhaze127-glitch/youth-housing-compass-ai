@@ -169,6 +169,9 @@ def _deduplicate_snapshot(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if not current:
             unique[key] = item
             continue
+        if _snapshot_preference_score(item) > _snapshot_preference_score(current):
+            unique[key] = _merge_preserving_analysis(current, item)
+            continue
         current_is_apply = str(current.get("source_id") or "").startswith("gh_apply_")
         item_is_apply = str(item.get("source_id") or "").startswith("gh_apply_")
         if item_is_apply and not current_is_apply:
@@ -190,6 +193,17 @@ def _deduplicate_snapshot(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
             preferred["metadata"] = preferred_metadata
             unique[key] = preferred
     return list(unique.values())
+
+
+def _snapshot_preference_score(item: dict[str, Any]) -> tuple[int, str, str]:
+    source_id = str(item.get("source_id") or "")
+    metadata = item.get("metadata") or {}
+    return (
+        int(bool(item.get("apply_start") and item.get("apply_end")))
+        + int(bool(metadata.get("analysis_source"))),
+        str(metadata.get("notice_date") or ""),
+        source_id,
+    )
 
 
 def main() -> None:
