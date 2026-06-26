@@ -24,6 +24,7 @@ ALLOWED_NOTICE_HOSTS = (
     "lh.or.kr",
     "i-sh.co.kr",
     "gh.or.kr",
+    "applyhome.co.kr",
 )
 INCLUDE_NOTICE_PATTERNS = (
     re.compile(r"입주자\s*모집"),
@@ -165,7 +166,7 @@ def _select_enrichment_candidates(
     if offset > 0:
         return candidates[offset : offset + limit]
 
-    organizations = ("LH", "SH", "GH")
+    organizations = ("LH", "SH", "GH", "청약홈")
     groups = {
         organization: sorted(
             [item for item in candidates if item.organization == organization],
