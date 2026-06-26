@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import json
 import os
 from pathlib import Path
@@ -14,6 +14,19 @@ PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_INPUT = PROJECT_ROOT / "data" / "live_housing_programs.json"
 DEFAULT_DATABASE_ID = "a0cdb11747fd41698ee53dc8f6a86e9f"
 NOTION_VERSION = "2022-06-28"
+KST = timezone(timedelta(hours=9))
+
+
+def _collected_date_from_generated_at(value: str) -> str:
+    if value:
+        try:
+            parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+            if parsed.tzinfo is None:
+                parsed = parsed.replace(tzinfo=timezone.utc)
+            return parsed.astimezone(KST).date().isoformat()
+        except ValueError:
+            return value[:10]
+    return datetime.now(KST).date().isoformat()
 
 STATUS_LABELS = {
     "open": "진행 중",
@@ -215,10 +228,7 @@ class NotionClient:
 def _load_snapshot(path: Path) -> tuple[str, list[dict[str, Any]]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     generated_at = _clean(payload.get("generated_at"))
-    if generated_at:
-        collected_date = generated_at[:10]
-    else:
-        collected_date = datetime.now(timezone.utc).date().isoformat()
+    collected_date = _collected_date_from_generated_at(generated_at)
     items = payload.get("announcements") or []
     if not isinstance(items, list):
         raise ValueError("snapshot announcements must be a list")

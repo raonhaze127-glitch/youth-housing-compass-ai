@@ -25,6 +25,16 @@ from .interpretation import (
     is_public_recruitment_notice,
 )
 
+KST = timezone(timedelta(hours=9))
+
+
+def _now_kst() -> datetime:
+    return datetime.now(KST)
+
+
+def _today_kst() -> date:
+    return _now_kst().date()
+
 APPLYHOME_BASE = "https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1"
 LH_URL = "https://apis.data.go.kr/B552555/lhNoticeInfo1/getNoticeInfo1"
 LH_WRTANC_BOARDS = (
@@ -188,7 +198,7 @@ def _fetch_applyhome(
     fetched_at: str,
     include_private_housing: bool = False,
 ) -> list[Announcement]:
-    now = datetime.now()
+    now = _now_kst()
     params_base = {
         "serviceKey": api_key, "pageNo": "1", "numOfRows": "100",
         "startmonth": (now - timedelta(days=days_back)).strftime("%Y%m"),
@@ -303,7 +313,7 @@ def _lh_region(value: str, title: str) -> str:
 
 
 def _fetch_lh_wrtanc_boards(days_back: int, timeout: int, fetched_at: str) -> list[Announcement]:
-    cutoff = datetime.now().date() - timedelta(days=days_back)
+    cutoff = _today_kst() - timedelta(days=days_back)
     result: list[Announcement] = []
     headers = {"User-Agent": "Mozilla/5.0 youth-housing-compass"}
     for mi, default_upp_ais_tp_cd, fallback_type in LH_WRTANC_BOARDS:
@@ -364,7 +374,7 @@ def _fetch_lh_wrtanc_boards(days_back: int, timeout: int, fetched_at: str) -> li
 
 
 def _fetch_lh(api_key: str, days_back: int, timeout: int, fetched_at: str) -> list[Announcement]:
-    today = datetime.now().date()
+    today = _today_kst()
     cutoff = today - timedelta(days=days_back)
     result = []
     page_size = 100
@@ -417,7 +427,7 @@ def _recent(raw: str, formats: tuple[str, ...], days: int = 100) -> str:
     for fmt in formats:
         try:
             parsed = datetime.strptime(raw.strip(), fmt).date()
-            return parsed.isoformat() if (datetime.now().date() - parsed).days <= days else ""
+            return parsed.isoformat() if (_today_kst() - parsed).days <= days else ""
         except ValueError:
             continue
     return ""
@@ -493,7 +503,7 @@ def _parse_gh_apply_list(
     days_back: int,
 ) -> list[Announcement]:
     config = GH_APPLY_CHANNELS[channel]
-    cutoff = datetime.now().date() - timedelta(days=days_back)
+    cutoff = _today_kst() - timedelta(days=days_back)
     result: list[Announcement] = []
     soup = BeautifulSoup(html, "html.parser")
     for row in soup.select("table tbody tr"):
@@ -781,7 +791,7 @@ class DirectAnnouncementSource:
         items = sorted(unique.values(), key=lambda item: (item.apply_end or item.metadata.get("notice_date") or ""), reverse=True)
         if self.repository and items:
             self.repository.upsert([item.to_dict() for item in items], fetched_at)
-            window_end = datetime.now().date()
+            window_end = _today_kst()
             self.repository.record_sync(
                 self.name,
                 (window_end - timedelta(days=lookback_days)).isoformat(),

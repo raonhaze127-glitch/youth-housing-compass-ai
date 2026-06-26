@@ -43,7 +43,7 @@ jobs:
         id: window
         shell: bash
         run: |
-          if [[ "${{ inputs.full }}" == "true" || "$(date -u +%u)" == "6" ]]; then
+          if [[ "${{ inputs.full }}" == "true" || "$(TZ=Asia/Seoul date +%u)" == "6" ]]; then
             echo 'days_back=90' >> "$GITHUB_OUTPUT"
           else
             echo 'days_back=7' >> "$GITHUB_OUTPUT"
