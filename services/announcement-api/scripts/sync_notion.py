@@ -88,6 +88,16 @@ def _notice_type(item: dict[str, Any]) -> str:
     return "unknown"
 
 
+def _metadata_date(item: dict[str, Any], *keys: str) -> dict[str, Any] | None:
+    metadata = item.get("metadata") if isinstance(item.get("metadata"), dict) else {}
+    for key in keys:
+        value = metadata.get(key) or item.get(key)
+        date_value = _date(value)
+        if date_value:
+            return date_value
+    return None
+
+
 def _item_properties(item: dict[str, Any], collected_date: str) -> dict[str, Any]:
     source_id = _clean(item.get("source_id") or item.get("id"))
     properties: dict[str, Any] = {
@@ -113,6 +123,12 @@ def _item_properties(item: dict[str, Any], collected_date: str) -> dict[str, Any
     apply_end = _date(item.get("apply_end"))
     if apply_end:
         properties["청약마감일"] = apply_end
+    notice_date = _metadata_date(item, "notice_date", "posted_date", "announcement_date")
+    if notice_date:
+        properties["공고일"] = notice_date
+    created_date = _metadata_date(item, "created_date", "written_date", "notice_date", "posted_date", "announcement_date")
+    if created_date:
+        properties["작성일"] = created_date
     return properties
 
 
