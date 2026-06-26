@@ -98,10 +98,11 @@ DATE_TOKEN = (
     r"(?:(?:20)?\d{2}[.\-/]\s*\d{1,2}[.\-/]\s*\d{1,2}|"
     r"20\d{2}\s*년\s*\d{1,2}\s*월\s*\d{1,2}\s*일)"
 )
+SHORT_DATE_TOKEN = r"\d{1,2}[.\-/]\s*\d{1,2}"
 DATE_RANGE_PATTERN = re.compile(
-    rf"(?:접수\s*기간|온라인\s*접수\s*기간|신청\s*기간|청약\s*접수|인터넷\s*접수|서류\s*접수|신청\s*접수)"
-    rf"[\s\S]{{0,100}}?({DATE_TOKEN})(?:\s+\d{{1,2}}:\d{{2}})?[.\s]*(?:\([^)]{{1,5}}\))?[.\s]*"
-    rf"(?:~|∼|부터|－|–|—|-)[^\d]{{0,12}}({DATE_TOKEN})"
+    rf"(?:접수\s*기간|온라인\s*접수\s*기간|신청\s*기간|청약\s*접수|청약\s*신청|인터넷\s*청약\s*신청|인터넷\s*접수|서류\s*접수|신청\s*접수)"
+    rf"[\s\S]{{0,100}}?({DATE_TOKEN})(?:\s+\d{{1,2}}:\d{{2}})?[.\s]*(?:\([^)]{{1,5}}\))?[.\s]*(?:\d{{1,2}}:\d{{2}})?[.\s]*"
+    rf"(?:~|∼|부터|－|–|—|-)[^\d]{{0,12}}({DATE_TOKEN}|{SHORT_DATE_TOKEN})"
 )
 
 USER_AGENT = (
@@ -444,8 +445,10 @@ def _extract_sections(text: str, maximum: int = 1400) -> dict[str, str]:
     return sections
 
 
-def _normalize_date_token(value: str) -> str:
+def _normalize_date_token(value: str, default_year: int | None = None) -> str:
     numbers = [int(number) for number in re.findall(r"\d+", value)]
+    if len(numbers) == 2 and default_year:
+        numbers.insert(0, default_year)
     if len(numbers) < 3:
         return ""
     year = numbers[0] + 2000 if numbers[0] < 100 else numbers[0]
@@ -459,7 +462,8 @@ def _application_period(text: str) -> tuple[str, str]:
     candidates: list[tuple[int, str, str]] = []
     for match in DATE_RANGE_PATTERN.finditer(text):
         start = _normalize_date_token(match.group(1))
-        end = _normalize_date_token(match.group(2))
+        start_year = int(start[:4]) if start else None
+        end = _normalize_date_token(match.group(2), start_year)
         if not start or not end or start > end:
             continue
         label = match.group(0)[: match.start(1) - match.start()]

@@ -54,6 +54,16 @@ class DirectInterpretationTests(unittest.TestCase):
             ["lh_missing", "sh_missing", "gh_missing"],
         )
 
+    def test_interprets_schedule_when_end_year_is_omitted(self):
+        result = interpret_notice_text(
+            "공급일정\n"
+            "인터넷 청약신청 : 2026. 7. 13.(월) 10:00 ~ 7. 15.(수) 17:00\n"
+            "서류심사대상자 발표 : 2026. 7. 20.(월) 16:00 예정"
+        )
+
+        self.assertEqual(result["apply_start"], "2026-07-13")
+        self.assertEqual(result["apply_end"], "2026-07-15")
+
     @patch("app.direct.interpretation.curl_text")
     def test_fetches_gh_apply_detail_with_post(self, curl):
         curl.return_value = "<html><body>신청자격 무주택세대구성원 접수기간 2026.07.01 ~ 2026.07.03</body></html>"
