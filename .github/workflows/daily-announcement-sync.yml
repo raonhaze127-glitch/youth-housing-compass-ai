@@ -58,7 +58,7 @@ jobs:
           python services/announcement-api/scripts/export_snapshot.py
           --days-back "${{ steps.window.outputs.days_back }}"
           --minimum-count 3
-          --enrich-limit 12
+          --enrich-limit 24
 
       - name: Sync snapshot to Notion
         env:

@@ -166,9 +166,13 @@ def _select_enrichment_candidates(
 
     organizations = ("LH", "SH", "GH")
     groups = {
-        organization: [
-            item for item in candidates if item.organization == organization
-        ]
+        organization: sorted(
+            [item for item in candidates if item.organization == organization],
+            key=lambda item: (
+                bool(item.apply_start and item.apply_end),
+                bool(item.metadata.get("analysis_source")),
+            ),
+        )
         for organization in organizations
     }
     positions = {organization: 0 for organization in organizations}

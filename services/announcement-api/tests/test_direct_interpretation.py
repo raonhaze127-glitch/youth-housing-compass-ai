@@ -13,6 +13,47 @@ from app.models import Announcement
 
 
 class DirectInterpretationTests(unittest.TestCase):
+    def test_enrichment_candidates_prioritize_missing_schedule(self):
+        def announcement(source_id, organization, apply_start="", apply_end="", metadata=None):
+            return Announcement(
+                id=f"direct:{source_id}",
+                source_id=source_id,
+                source_type="direct_collector",
+                title="?됰났二쇳깮 ?낆＜??紐⑥쭛怨듦퀬",
+                organization=organization,
+                category="怨듦났二쇳깮",
+                region="",
+                district="",
+                housing_type="怨듦났二쇳깮",
+                target=(),
+                apply_start=apply_start,
+                apply_end=apply_end,
+                status="unknown",
+                announcement_url="https://apply.lh.or.kr/view.do?id=1",
+                summary="",
+                eligibility_summary="",
+                benefit_summary="",
+                required_documents=(),
+                metadata=metadata or {},
+            )
+
+        selected = _select_enrichment_candidates(
+            [
+                announcement("lh_has_dates", "LH", "2026-07-01", "2026-07-03"),
+                announcement("sh_has_dates", "SH", "2026-07-01", "2026-07-03"),
+                announcement("gh_has_dates", "GH", "2026-07-01", "2026-07-03"),
+                announcement("lh_missing", "LH"),
+                announcement("sh_missing", "SH"),
+                announcement("gh_missing", "GH"),
+            ],
+            limit=3,
+        )
+
+        self.assertEqual(
+            [item.source_id for item in selected],
+            ["lh_missing", "sh_missing", "gh_missing"],
+        )
+
     @patch("app.direct.interpretation.curl_text")
     def test_fetches_gh_apply_detail_with_post(self, curl):
         curl.return_value = "<html><body>신청자격 무주택세대구성원 접수기간 2026.07.01 ~ 2026.07.03</body></html>"
