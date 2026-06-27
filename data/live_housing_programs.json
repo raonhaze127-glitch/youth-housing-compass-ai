@@ -1,11 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-26T23:07:15.934032+00:00",
+  "generated_at": "2026-06-27T23:03:31.721593+00:00",
   "source": "github_actions_direct",
-  "count": 95,
-  "collector_warnings": [
-    "lh 수집 실패: 요청 오류 (JSONDecodeError)"
-  ],
+  "count": 96,
+  "collector_warnings": [],
   "announcements": [
     {
       "id": "direct:lh_0000061079",
@@ -72,7 +70,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -118,7 +116,7 @@
       "homeless_required": true,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -166,7 +164,7 @@
       "homeless_required": true,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -214,7 +212,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득)을 초과할 경우 갱신 시점의 표준임대보증금 및 표준임대료에 아래의 할증비율로 산출된 금액이 적용됨 소득기준 초과 비율할증비율최초 갱신계약 시2회차 이상 갱신계약 시10% · 자동차를 공유(지분소유)하고 있는 경우에도 ‘자동차가액’ 전체를 산출함)을 초과하는 차량의 단지 내 차량등록은 허용되지 않음을 유의하시기 바랍니다.(국세청 홈택스 차량가액은 부가세 미포함 금액으로 1.1을 곱한 금액이 차량가액이 됩니다.) • 국세청 홈택스와 보험개발원",
       "total_units": null,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-26",
@@ -248,6 +246,52 @@
       }
     },
     {
+      "id": "direct:lh_0000061118",
+      "title": "[정정공고]역곡지구 하우스토리(부천역곡 A-2블록) 신혼희망타운(공공분양) 입주자모집공고",
+      "organization": "LH",
+      "source_id": "lh_0000061118",
+      "source_type": "direct_collector",
+      "category": "LH 공공주택",
+      "region": "경기",
+      "district": "",
+      "housing_type": "공공분양(신혼희망)",
+      "target": [],
+      "apply_start": "2026-07-22",
+      "apply_end": "2026-07-23",
+      "status": "planned",
+      "announcement_url": "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancInfo.do?ccrCnntSysDsCd=02&panId=0000061118&aisTpCd=39&uppAisTpCd=39&mi=1027&panKdCd=&otxtPanId=",
+      "summary": "공식 공고문을 자동 분석한 신청 대상 확인이 필요한 공공주택 공고입니다.",
+      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
+      "benefit_summary": "분양가격 공시표 및 건축비 가산비 수정\n\n-------------------------------------------------------------------------------\n* 해당 주택은 LH와 남광토건 컨소시엄이 공동으로 시행하는 민간참여 공공분양주택으로서 청약신청은 LH청약플러스(https://apply.lh.or.kr)를 통하여 진행하나, 청약 및 계약 등 공급 관련 일체문의는 역곡지구 하우스토리 신혼희망타운(공공분양) 상담센터(032-860-0976)를 통하여 이루어집니다. 보다 자세한 내용은 붙임의 입주자 모집공고문을 확인하시기 바랍니다.\n\n* 부천역곡지구 A-2블록 역곡지구 하우스토리 신혼희망타운(공공분양)은 '21년 12월 사전청약공고 후 본청약 공고하는 단지입니다.\n\n* 역곡지구 하우스토리 홈페이지(http://www.역곡지구하우스토리.com)\n\n* 청약접수의 경우 인터넷 접수만 가능하오니 신청접수일 전에 인증서를 미리 발급받으시길 바랍니다.(방문접수 불가)\n공급정보\n부천역곡 A2\n사이버모델하우스\n소재지 : 경기도 부천시 원미구 역곡동 부천역곡 공공주택지구 내 A-2블록\n전용면적(㎡) : 55.92 ~ 55.96\n총 세대수 : 1,464\n난방방식 : 지역난방\n입주예정월 : 2029년 06월\n단지 관련 이미지 정보\n다운로드 버튼을 클릭하여 이미지 파일 다운로드가 가능합니다.\n다운로드\n단지조감도\n지역위치도\n토지",
+      "required_documents": [
+        "주민등록등본"
+      ],
+      "age_min": null,
+      "age_max": null,
+      "homeless_required": null,
+      "income_condition": "",
+      "total_units": null,
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
+      "schedule_confirmed": true,
+      "metadata": {
+        "notice_date": "2026-06-26",
+        "analysis_quality": "medium",
+        "analysis_source": "official_notice_and_attachments",
+        "source_char_count": 7094,
+        "sections": {
+          "rent": "분양가격 공시표 및 건축비 가산비 수정\n\n-------------------------------------------------------------------------------\n* 해당 주택은 LH와 남광토건 컨소시엄이 공동으로 시행하는 민간참여 공공분양주택으로서 청약신청은 LH청약플러스(https://apply.lh.or.kr)를 통하여 진행하나, 청약 및 계약 등 공급 관련 일체문의는 역곡지구 하우스토리 신혼희망타운(공공분양) 상담센터(032-860-0976)를 통하여 이루어집니다. 보다 자세한 내용은 붙임의 입주자 모집공고문을 확인하시기 바랍니다.\n\n* 부천역곡지구 A-2블록 역곡지구 하우스토리 신혼희망타운(공공분양)은 '21년 12월 사전청약공고 후 본청약 공고하는 단지입니다.\n\n* 역곡지구 하우스토리 홈페이지(http://www.역곡지구하우스토리.com)\n\n* 청약접수의 경우 인터넷 접수만 가능하오니 신청접수일 전에 인증서를 미리 발급받으시길 바랍니다.(방문접수 불가)\n공급정보\n부천역곡 A2\n사이버모델하우스\n소재지 : 경기도 부천시 원미구 역곡동 부천역곡 공공주택지구 내 A-2블록\n전용면적(㎡) : 55.92 ~ 55.96\n총 세대수 : 1,464\n난방방식 : 지역난방\n입주예정월 : 2029년 06월\n단지 관련 이미지 정보\n다운로드 버튼을 클릭하여 이미지 파일 다운로드가 가능합니다.\n다운로드\n단지조감도\n지역위치도\n토지이용계획도\n단지배치도\n동호배치도\n상기 이미지는 소비자의 이해를 돕기 위해 제작된 것으로 실제와 다를 수 있습니다.\n단지 관련 위치 정보\n단지 특장점\n단지 특장점 : 교통여건, 교육환경, 편의시설, 부대시설에 대한 정보를 제공합니다\n교통여건\n입주자모집공고문 및 팸플릿 참고\n교육환경\n입주자모집공고문 및 팸플릿 참고\n편의시설\n입주자모집공고문 및 팸플릿 참고\n부대시설\n입주자모집공고문 및 팸플릿 참고\n주택형 안내(신혼희망타운)\n청약자격 사전확인 바로가기\n정정공고 바로가기\n취소공고 바로가기\n주택형 안내 : 주택형, 전용면적(㎡), 세대수, 금회공급 세대수, 평균분양가격(원), 인터넷청약, 주택형안내에 대한 정보를 제공합니다\n주택형\n전용면적(㎡)\n세대수\n금회공급 세대수\n평균분양가격(원)\n인터넷청약\n주택형안내\n55.9200A\n55.92\n642\n417\n504,850,000\n청약신청전\n상세보기\n55.9500B\n55.95\n120\n82\n504,337,000\n청약신청전\n상세보기\n55.9500C\n55.95\n470\n320\n505,400,000\n청약신청전\n상세보기\n55.9500D\n55.95\n44\n30\n505,433,000\n청약신청전\n상세보기\n55.9500E\n55.95\n138\n92\n504,861,000\n청약신청전\n상세보기\n55.9600F\n55.96\n50\n35\n504,554,000\n청약신청전\n상세보기\n안내사항\n※ 사전청약당첨자의 경우 사전청약으로 당첨된 주택형을 기",
+          "schedule": "공급일정\n공급일정 : 구분, 신청일시, 신청방법에 대한 정보 제공\n구분\n신청일시\n신청방법\n사전청약당첨자\n2026.07.13 10:00 ~ 2026.07.14 17:00\n인터넷접수\n예비신혼부부\n2026.07.22 10:00 ~ 2026.07.23 17:00\n인터넷접수\n신혼부부\n2026.07.22 10:00 ~ 2026.07.23 17:00\n인터넷접수\n한부모가족\n2026.07.22 10:00 ~ 2026.07.23 17:00\n인터넷접수\n당첨자발표일자\n:\n2026.08.04\n당첨자 서류제출기간\n:\n2026.08.17 ~ 2026.08.23\n계약체결기간\n:\n2026.11.12 ~ 2026.11.15\n안내사항\n접수처정보\n소재지 : 경기도 부천시 원미구 길주로 1 (상동) 역곡지구 하우스토리 주택전시관\n전화번호 : 032-860-0976\n운영기간 :\n접수처 관련 위치 정보\n안내사항\n- 방문 청약접수는 불가하며, 인터넷 청약접수만 가능합니다.\n관심공고등록\n목록\n소득계산방법 살펴보기\n소득 심사 대상\n세대주 본인 + 배우자 + 만 19세 이상의 세대원(세대주의 직계존비속) 소득 합산\n세대주와 동일한 주민등록등본상 등재되어 있지 아니한 배우자와 배우자와 동일한 주민등록등본상 등재되어 있는 세대주의 직계존비속 포함\n소득조사 항목\n근호소득(상시근로·일용근로·자활근로·공공일자리), 사업소득(농업·임업·어업·기타사업), 재산소득(임대·이자·연금), 기타소득(공적이전소득)\n자세한 사항은 공고문을 확인하시기 바랍니다.\n소득금액 조사방법\n사회보장정보시스템에서 제공되는 국가 또는 공공기관이 보유한 공적 소득자료를 근거로 월평균 소득을 산정함\n사회보장정보시스템이란?\n사회보장수급권자 선정 및 급여 관리 등에 관한 정보를 통합·연계하여 처리·기록 및 관리하는 시스템(사회보장기본법 제37조)\n닫기\n평면도 동영상보기 -\n닫기\n한국부동산원 청약홈 안내\nLH에서 공급하는 주택에 대한 고객님의\n주택소유여부 및 청약제한사항\n등의 청약자격은 한국부동산원 \"청약Home\"하단\n청약자격확인\n메뉴를 통해 본인의\n공동인증서 등을 이용\n하여 직접 조회해볼 수 있습니다.\n주택소유여부는 참고용 정보로서 실제 사실과는 다를 수 있으며, 소득·자산은 당첨자 선정 이후 사회보장정보시스템을 통해 검증합니다.\n모바일기기 이용자는 \"청약홈\"앱을 설치하시면 더욱 편리하게 이용할 수 있습니다.\n한국부동산원 청약홈 바로가기\n닫기\n지도 상세보기\n닫기\n이미지 확대보기\n닫기\n평면도 동영상보기 -\n닫기\n한국부동산원 청약홈 안내\nLH에서 공급하는 주택에 대한 고객님의\n주택소유여부 및 청약제한사항\n등의 청약자격은 한국부동산원 \"청약Home\"하단\n청약자격확인\n메뉴를 통해 본인의\n공동인증서 등을 이용\n하여 직접 조회해볼 수 있습니다.\n주택소유여부는 참고용 정보로서 실제 사실과는 다를 수 있으며, 소득·자산은 당첨자 선정 이후 사회보장정보시스템을 통해 검증"
+        },
+        "attachments": [
+          {
+            "url": "https://apply.lh.or.kr/lhapply/apply/bfh/slpa/list.do?mi=1349",
+            "type": "unknown",
+            "extracted": false
+          }
+        ]
+      }
+    },
+    {
       "id": "direct:apt_2026820005",
       "title": "역곡지구 하우스토리(부천역곡지구 A-2BL) 신혼희망타운(공공분양)(본청약)",
       "organization": "청약홈",
@@ -271,7 +315,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 976,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "address": "경기도 부천시 부천역곡 공공주택지구 내 A-2블록",
@@ -353,7 +397,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-22",
@@ -400,13 +444,13 @@
       "homeless_required": true,
       "income_condition": "월평균 소득이 전년도 도시근로자 가구당 월평균 소득의 100%",
       "total_units": null,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-26",
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
-        "source_char_count": 40723,
+        "source_char_count": 40725,
         "sections": {
           "target": "공급호수 : 총 56호\n(신규공급 56호)\r\n\r\n□ 신청자격 : 모집공고일(2026.6.26.) 현재 무주택자(본인)이면서 미혼(현재 혼인상태가 아님)인 대학생, 대학원생, 청년으로서 각 순위 별 기준을 충족하는 자\r\n ※ 신청순위(1~3순위) 별 상세 자격기준은 모집공고문 참조\r\n\r\n□ 공급일정\r\n ○ 인터넷 청약신청\n:\n2026. 7. 13.(월) 10:00 ~ 7. 15.(수) 17:00\n○ 서류심사대상자 발표 :\n2026. 7. 20.(월) 16:00 예정\n○ 서류심사대상자 입주자격 심사 :\n~ 2026. 11월\r\n ○ 당첨자 및 예비자 발표 : 2026. 11. 20.(금) 16:00 예정\r\n ※ 범정부 사회보장정보시스템 소득 및 자산 조회 결과 회신 시기에 따라 발표일은 변경 가능하며, 변경 시 별도 안내 예정\r\n ○ 당첨자 계약 : 2026. 12. 7.(월) ~ 12. 10.(목)\r\n - 온라인(전자)계약 기간: 2026. 12. 7.(월) ~ 12. 9.(수)\r\n - 방문 계약 기간: 2026. 12. 10.(목)\r\n ○ 입주기간 : 2026. 12. 28.(월) ~ 2027. 2. 26.(금)\r\n\r\n ※ 상기 공급일정은 변경될 수 있으며, 변경 시 별도 안내 예정입니다.\n※ 기숙사형 청년주택과 청년 매입임대주택은 별도의 입주자 모집공고로 중복 신청 가능합니다. \r\n (중복 당첨 시, 한 곳만 입주 가능)\n□ 유의사항\r\n ○ 문의전화 : 1600-3456(서울주택도시개발공사 콜센터)\r\n ○ 공사에서는 입주자 모집공고의 내용과 관련한 상담을 진행하고 있으나 신청자 개인의 다양한 정보나 상황에 대한 자료없이 상담을 진행하오니,\n상담 정보는 참고자료로만 활용해 주시기 바라며 입주자 모집공고문을 직접 숙지하신 후 신청해주시기 바랍니다.\r\n ○ 1인 1주택만 신청가능하며 복수주택을 중복신청할 경우 전부 무효처리 합니다.\r\n ○ 신청자 본인이 선택한 순위 및 유형에 대해 자격심사를 진행하며 신청 시 오기입 등의 이유로 신청기간 종료 이후 자격사항 변동은 절대 불가하오니 유의하시기 바랍니다.\r\n ○ 개별 주택의 임대보증금, 월임대료, 면적 등은 [주택목록]을 참고하여 주시기 바랍니다.\r\n ※ 월임대료에 부가가치세가 부과됩니다.\r\n ○ 관리업무(공용부분청소, 공과금 배분 등)는 외부위탁기관에서 담당하고 있으며, 별도의 관리비를 부담하셔야 합니다.\r\n ○ 공급주택 별 사진 및 도면 등 참고자료는 [첨부] 도면 및 사진을 참고하여 주시기 바랍니다.\r\n ○ 청약신청 접수는 인터넷으로만 진행하오니 이점 유의하시기 바랍니다.(우편접수, 방문접수 불가)\r\n ○ 입주자 모집공고일(2026.06.26.) 기준 신청자격에 의거하여 입주자 선정 절차를 진행하며, 입주자 모집공고문의 내용을 정확히 숙지하시어,\n신청과정에서 불이익(신청순위를 실제보다 낮게 기재, 신청유형을 잘못 선",
           "documents": "제출서류, 공급주택 목록 등 기타 자세한 사항은 첨부파일 [공고문], [주택목록] 등을 참고하시기 바랍니다.\n2026. 6. 26.\r\n서울주택도시개발공사 매입주택공급부\n다음, 이전글의 제목을 확인하고 이동할 수 있는 버튼이 있는 표\n이전글\n홍은동 청년협동조합주택 잔여세대 입주자 모집공고(2026. 06. 05.) 인터넷 청약신청 최종 경쟁률 게시\n2026-06-26\n다음글\n2026년 1차 행복주택 서류심사 대상자 발표 및 서류 제출 안내\n2026-06-26\n목록\n담당부서\n: 매입주택공급부\n전화번호\n: 02-3410-8584\n개인정보처리방침\n이용약관\n청약시스템 이용안내\n스마트폰으로 인증서 보내기\n이메일 무단수집 거부\n찾아오시는 길\n패밀리사이트\n서울주택도시개발공사\nSH주택정보\n도시정비포털\n마곡도시개발\n영구임대주택\nSH도시연구원\n재개발임대주택\n보상정보\n주거안심종합센터\n단지별커뮤니티\n시민참여예산\n서울시정책수출사업단\n서울주거상담\n06336 서울특별시 강남구 개포로621 (대표전화 : 1600-3456)\nCopyright 2017. Seoul Housing & Urban Development Corporation. All rights reserved.\n우편번호 검색\n팝업 닫기\n청약시스템 이용안내\n사전준비사항\n동영상 매뉴얼(모바일)\nFAQ(모바일)\n동영상 매뉴얼(PC)\nFAQ(PC)\n사전준비사항\n사전준비사항\n정보 보기\n고객님께서 인터넷을 통하여 주택을 신청하기 위해서는 다음과 같은 사항들을 사전에 준비하셔서 입력된 자료가 착오 또는 사실과 다르게 신청되어 불이익을 받는 일이 없도록 해주시기 바랍니다.(개인용 공동인증서 또는 간편인증 또은 금융인증서를 인터넷 청약신청 접수일 이전에 미리 발급 완료)\n준비사항, 비고 항목으로 구성된 사전준비사항 표\n준비사항\n비고\n공동인증서, 금융인증서, 간편인증 사전발급\n공사는 본인 확인에 대한 절차로서 공동인증서, 금융인증서, 간편인증을 사용합니다.\n※ 아래 공동인증서 발급안내 참고\n도로명주소 숙지\n새로운 주소(도로명 주소)로만 청약을 받습니다.\n도로명주소 안내시스템 바로가기\n참고사항\n※ 공동인증서가 안되시는 분께서는 간편인증 혹은 금융인증서를 이용하시기 바랍니다.\n※ 간편인증 로그인 후 실명확인이 안되시는 분께서는 공동인증서 혹은 금융인증서를 이용하시기 바랍니다.\n공동인증서 발급 안내\n정보 보기\n은행에서 발급\n인터넷 뱅킹 신청 : 가까운 은행에서 인터넷 뱅킹을 신청하셔서 신원확인 절차를 하시면 됩니다.\n금융거래인증서 발급 : 인터넷 뱅킹을 신청한 은행의 홈페이지에서 공동인증서를 발급 받으시면 됩니다.\n인증기관에서 발급(유료)\n공동인증서는 반드시 개인용 공동인증서여야 합니다.\n만료일이 지난 인증서는 사용이 불가하니, 반드시 만료일을 확인하시기 바랍니다.\n인증서 창이 뜨지 않을 경우 '수동설치 프로그램' 설치하기\n1. 시작-제어판-프로그램 및",
@@ -461,7 +505,7 @@
       "homeless_required": true,
       "income_condition": "월평균소득\u0000100%",
       "total_units": null,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-26",
@@ -518,7 +562,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자 월평균소득 70% · 총자산 34,500만원 · 자동차 현재가치 기준 4,542만원",
       "total_units": null,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-26",
@@ -565,7 +609,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자\u0000가구원수별\u0000가구당\u0000월평균소득의\u0000100%",
       "total_units": null,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -614,7 +658,7 @@
       "homeless_required": true,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-22",
@@ -661,7 +705,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -705,7 +749,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-24"
@@ -735,7 +779,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-24"
@@ -765,7 +809,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -795,7 +839,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -825,7 +869,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -855,7 +899,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -885,7 +929,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -915,7 +959,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -945,7 +989,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -975,7 +1019,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1005,7 +1049,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1035,7 +1079,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1065,7 +1109,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1095,7 +1139,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1125,7 +1169,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1155,7 +1199,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1185,7 +1229,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1215,7 +1259,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1245,7 +1289,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1275,7 +1319,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1305,7 +1349,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1335,7 +1379,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1365,7 +1409,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1395,7 +1439,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1425,7 +1469,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1458,7 +1502,7 @@
       "homeless_required": null,
       "income_condition": "도시근로자\u0000가구원수별\u0000가구당\u0000월평균소득\u000050%",
       "total_units": null,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-24",
@@ -1505,7 +1549,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-24"
@@ -1535,7 +1579,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-24"
@@ -1565,7 +1609,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-24"
@@ -1595,7 +1639,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-24"
@@ -1625,7 +1669,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자\u0000가구원수별\u0000가구당\u0000월평균소득의\u0000100%",
       "total_units": null,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-23",
@@ -1672,7 +1716,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-23"
@@ -1702,7 +1746,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-23"
@@ -1732,7 +1776,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-23"
@@ -1762,7 +1806,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-23"
@@ -1792,17 +1836,17 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-22"
       }
     },
     {
-      "id": "direct:lh_2015122300020226",
-      "title": "[인천지역본부]26년 4차 신혼·신생아Ⅱ(전세형) 예비입주자 모집공고(인천,부천)",
+      "id": "direct:lh_2015122300020230",
+      "title": "[정정공고][인천지역본부]26년 4차 신혼·신생아Ⅱ(전세형) 예비입주자 모집공고(인천,부천)",
       "organization": "LH",
-      "source_id": "lh_2015122300020226",
+      "source_id": "lh_2015122300020230",
       "source_type": "direct_collector",
       "category": "LH 공공주택",
       "region": "인천",
@@ -1812,7 +1856,7 @@
       "apply_start": "",
       "apply_end": "2026-07-07",
       "status": "unknown",
-      "announcement_url": "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancInfo.do?ccrCnntSysDsCd=03&panId=2015122300020226&aisTpCd=26&uppAisTpCd=13&mi=1026&panKdCd=&otxtPanId=",
+      "announcement_url": "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancInfo.do?ccrCnntSysDsCd=03&panId=2015122300020230&aisTpCd=26&uppAisTpCd=13&mi=1026&panKdCd=&otxtPanId=",
       "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
       "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
       "benefit_summary": "",
@@ -1822,17 +1866,17 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
-        "notice_date": "2026-06-25"
+        "notice_date": "2026-06-26"
       }
     },
     {
-      "id": "direct:lh_2015122300020225",
-      "title": "[인천지역본부]26년 4차 신혼·신생아Ⅰ 예비입주자 모집공고(인천,부천)",
+      "id": "direct:lh_2015122300020229",
+      "title": "[정정공고][인천지역본부]26년 4차 신혼·신생아Ⅰ 예비입주자 모집공고(인천,부천)",
       "organization": "LH",
-      "source_id": "lh_2015122300020225",
+      "source_id": "lh_2015122300020229",
       "source_type": "direct_collector",
       "category": "LH 공공주택",
       "region": "인천",
@@ -1842,7 +1886,7 @@
       "apply_start": "",
       "apply_end": "2026-07-07",
       "status": "unknown",
-      "announcement_url": "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancInfo.do?ccrCnntSysDsCd=03&panId=2015122300020225&aisTpCd=26&uppAisTpCd=13&mi=1026&panKdCd=&otxtPanId=",
+      "announcement_url": "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancInfo.do?ccrCnntSysDsCd=03&panId=2015122300020229&aisTpCd=26&uppAisTpCd=13&mi=1026&panKdCd=&otxtPanId=",
       "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
       "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
       "benefit_summary": "",
@@ -1852,10 +1896,10 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
-        "notice_date": "2026-06-25"
+        "notice_date": "2026-06-26"
       }
     },
     {
@@ -1882,7 +1926,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-25"
@@ -1912,7 +1956,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-23"
@@ -1998,7 +2042,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-22"
@@ -2034,7 +2078,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득요건 순위에 따라 선정하며 같은 순위에서 경쟁이 있을 경우 추첨(전산추첨)의 방법으로 선정합니다. - 1순위: 소득요건이 전년도 도시근로자 가구원수별 가구당 월 평균소득의 100%",
       "total_units": 414,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "address": "경기도 의왕시 백운밸리 도시개발사업 A1BL",
@@ -2089,7 +2133,7 @@
       "homeless_required": true,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원(태아를 포함한다)수별 가구당 월평균소득(이하 \"전년도 도시근로자 가구원수별 가구당 월평균소득\"이라 한다)의 120%",
       "total_units": 178,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "address": "울산광역시 중구 반구동 447-19번지 외 1필지",
@@ -2140,7 +2184,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-23"
@@ -2170,7 +2214,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-06-26T07:58:25.851455+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-06-22"
@@ -2240,7 +2284,7 @@
       ],
       "apply_start": "2026-06-25",
       "apply_end": "2026-06-26",
-      "status": "open",
+      "status": "closed",
       "announcement_url": "https://www.i-sh.co.kr/app/lay2/program/S48T1581C563/www/brd/m_247/view.do?seq=306032&multi_itm_seq=2",
       "summary": "공식 공고문을 자동 분석한 청년 대상 공공주택 공고입니다.",
       "eligibility_summary": "신청자격은 입주자 모집공고일부터 계약 시까지 유지해야 하며, 당첨 후 주택소유 등으로 자격요건 상실 시 당첨이 취소되거나 계약이 거절될 수 있습니다.□ 특화형 매입임대주택의 입주자격(무주택·소득·자산 등 법령에 따른 자격요건 제외)·예비입주자·상호전환·주거이동 등에 관한 내용은 각 운영기관 자체운영규정에 따른 기준으로 적용됩니다.\n- 3 -\n2. 자격요건□ 입주자모집공고일(2026.06.25.)현재 세대구성원으로서 아래의 요건을 모두 갖춘 자\n□ 소득 및 자산 기준\n Ⅳ. 입주자 선정기준□ 선정기준 (Ⅲ. 입주대상자 자격요건을 충족한 자 중 아래의 선정기준에 따라 입주자 선정)\n-입주자 최종선정의 세부사항은 공개하지 않으며, 입주신청 서류는 일체 반환하지 않음.-평가항목 중 한지붕 공동체 교육은 유튜브 영상 시청으로 대체함.\n① 신청자 본인이 만 19세 이상 만 39세 이하인 자(출생일 1986.06.26.~2007.06.25.)② 신청자 본인이 혼인 중이 아닐 것③ 해당 세대의 월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% 이하일 것④ 해당 세대의 자산이 행복주택 자산기준을 충족할 것구분 소득 및 자산보유 기준소득기 준1인2인3인4인5인전년도 도시근로자가구원수별 가구당 월평균소득의 100% 이하(원)4,576,036(20% 가산금액)6,452,897(10% 가산금액)8,168,4298,802,2029,326,",
@@ -2254,7 +2298,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -2292,7 +2336,7 @@
       ],
       "apply_start": "2026-06-25",
       "apply_end": "2026-06-26",
-      "status": "open",
+      "status": "closed",
       "announcement_url": "https://www.i-sh.co.kr/app/lay2/program/S48T1581C563/www/brd/m_247/view.do?seq=306031&multi_itm_seq=2",
       "summary": "공식 공고문을 자동 분석한 청년 대상 공공주택 공고입니다.",
       "eligibility_summary": "신청자격은 입주자 모집공고일부터 계약 시까지 유지해야 하며, 당첨 후 주택소유 등으로 자격요건 상실 시 당첨이 취소되거나 계약이 거절될 수 있습니다.□ 특화형 매입임대주택의 입주자격(무주택·소득·자산 등 법령에 따른 자격요건 제외)·예비입주자·상호전환·주거이동 등에 관한 내용은 각 운영기관 자체운영규정에 따른 기준으로 적용됩니다.\n- 3 -\n2. 자격요건□ 입주자모집공고일(2026.06.25.)현재 세대구성원으로서 아래의 요건을 모두 갖춘 자\n□ 소득 및 자산 기준\n Ⅳ. 입주자 선정기준□ 선정기준 (Ⅲ. 입주대상자 자격요건을 충족한 자 중 아래의 선정기준에 따라 입주자 선정)\n-입주자 최종선정의 세부사항은 공개하지 않으며, 입주신청 서류는 일체 반환하지 않음.-평가항목 중 한지붕 공동체 교육은 유튜브 영상 시청으로 대체함.\n① 신청자 본인이 만 19세 이상 만 39세 이하인 자(출생일 1986.06.26.~2007.06.25.)② 신청자 본인이 혼인 중이 아닐 것③ 해당 세대의 월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% 이하일 것④ 해당 세대의 자산이 행복주택 자산기준을 충족할 것구분 소득 및 자산보유 기준소득기 준1인2인3인4인5인전년도 도시근로자가구원수별 가구당 월평균소득의 100% 이하(원)4,576,036(20% 가산금액)6,452,897(10% 가산금액)8,168,4298,802,2029,326,",
@@ -2306,7 +2350,7 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-06-25",
@@ -2357,7 +2401,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 85,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "address": "부산광역시 강서구 범방동 2008번지",
@@ -2517,7 +2561,7 @@
       "homeless_required": true,
       "income_condition": "",
       "total_units": 30,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "address": "경기도 의왕시 포일동(의왕청계2 공공주택지구 M-1블록)",
@@ -2624,7 +2668,7 @@
       "homeless_required": true,
       "income_condition": "월평균소득 이 전년도 도시근로자 가구원수별 가구당 월평균 소득의 120퍼센트 이하일 것 - 1 순위 : 소득요건이 전년도 도시근로자 가구원수별 가구당 월 평균소득의 100%",
       "total_units": 193,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "address": "부산광역시 부산진구 부전동 390-1",
@@ -2796,7 +2840,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자월평균소득기준2025년도 도시근로자 가구원수별 가구당 월평균소득1인2인3인4인5인6인7인8인100%",
       "total_units": 626,
-      "fetched_at": "2026-06-26T23:05:19.006454+00:00",
+      "fetched_at": "2026-06-27T23:02:19.316633+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "address": "전라남도 여수시 소라면 죽림리 154번지 일원",
