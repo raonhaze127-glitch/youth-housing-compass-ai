@@ -18,10 +18,12 @@ sys.path.insert(0, str(SERVICE_ROOT))
 from app.direct.collectors import DirectAnnouncementSource  # noqa: E402
 from app.direct.interpretation import (  # noqa: E402
     enrich_announcements,
+    interpret_notice_text,
     is_public_applyhome_notice,
     is_public_recruitment_notice,
 )
 from app.models import Announcement  # noqa: E402
+from app.status import calculate_status  # noqa: E402
 
 
 PUBLIC_ORGANIZATIONS = {"LH", "SH", "GH"}
@@ -152,9 +154,35 @@ def _merge_preserving_analysis(
     return merged
 
 
+def _recover_schedule_from_analysis(item: dict[str, Any]) -> dict[str, Any]:
+    if item.get("apply_start") and item.get("apply_end"):
+        return item
+    metadata = item.get("metadata")
+    if not isinstance(metadata, dict):
+        return item
+    sections = metadata.get("sections")
+    if not isinstance(sections, dict):
+        return item
+    text = "\n".join(str(value) for value in sections.values() if value)
+    if not text:
+        return item
+    interpreted = interpret_notice_text(text)
+    start = interpreted.get("apply_start") or item.get("apply_start") or ""
+    end = interpreted.get("apply_end") or item.get("apply_end") or ""
+    if not start or not end:
+        return item
+    recovered = dict(item)
+    recovered["apply_start"] = start
+    recovered["apply_end"] = end
+    recovered["status"] = calculate_status(start, end)
+    recovered["schedule_confirmed"] = True
+    return recovered
+
+
 def _deduplicate_snapshot(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     unique: dict[tuple[str, str], dict[str, Any]] = {}
     for item in items:
+        item = _recover_schedule_from_analysis(item)
         normalized_title = re.sub(
             r"[^0-9A-Za-z가-힣]",
             "",
