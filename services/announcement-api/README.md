@@ -81,6 +81,12 @@ python -m venv .venv
 python services/announcement-api/scripts/archive_notice_pdfs.py
 ```
 
+블로그 콘텐츠화를 위한 주거 정책 보도자료는 대한민국 정책브리핑의 부처별 RSS를 수집해 Notion `정책 DB`에 저장합니다. 대상 RSS는 국무조정실, 국토교통부, 기획예산처이며 주거·주택·임대·청약·전월세·부동산시장 관련 항목만 남깁니다. `.github/workflows/daily-policy-rss-sync.yml`은 매일 오전 1시(KST)에 최근 1일치를 수집하고, 수동 실행 시 `days_back`으로 조회 기간을 조정할 수 있습니다.
+
+```powershell
+python services/announcement-api/scripts/sync_policy_rss.py --days-back 10
+```
+
 무료 인스턴스에서는 SQLite 경로가 `/tmp/compass.db`이므로 서버 재시작·재배포 시 공고, 프로필, 관심 공고가 초기화될 수 있습니다. 정적 실공고 스냅샷은 Git에 남으므로 추천 화면은 마지막 성공 데이터를 계속 표시합니다. 예약 워크플로는 기본 브랜치에 병합된 후 실행됩니다. `DATA_GO_KR_API_KEY`를 GitHub Actions secret으로 추가하면 Render를 거치지 않고 직접 수집하며, 키가 없을 때는 Render API 내보내기를 대체 경로로 사용합니다. 공모전 이후 실제 영속성을 보장하려면 외부 영속 데이터베이스 또는 Render 영구 디스크로 교체해야 합니다.
 
 ## 테스트

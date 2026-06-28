@@ -1,0 +1,61 @@
+name: Daily policy RSS sync
+
+on:
+  schedule:
+    # GitHub Actions cron uses UTC. 16:00 UTC is 01:00 KST the next day.
+    - cron: "0 16 * * *"
+  workflow_dispatch:
+    inputs:
+      days_back:
+        description: "RSS lookback days"
+        required: false
+        default: "1"
+
+concurrency:
+  group: daily-policy-rss-sync
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: services/announcement-api/requirements.txt
+
+      - name: Install collector dependencies
+        run: pip install -r services/announcement-api/requirements.txt
+
+      - name: Collect housing policy RSS and sync Notion
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_POLICY_DATABASE_ID: ${{ vars.NOTION_POLICY_DATABASE_ID }}
+        run: >-
+          python services/announcement-api/scripts/sync_policy_rss.py
+          --days-back "${{ inputs.days_back || '1' }}"
+
+      - name: Commit updated policy RSS snapshot
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/policy_rss_items.json
+          if git diff --cached --quiet; then
+            echo "Policy RSS snapshot is unchanged."
+            exit 0
+          fi
+          git commit -m "Update policy RSS snapshot"
+          git pull --rebase origin main
+          git push origin HEAD:main
