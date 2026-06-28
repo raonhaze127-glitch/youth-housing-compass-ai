@@ -81,6 +81,12 @@ python -m venv .venv
 python services/announcement-api/scripts/archive_notice_pdfs.py
 ```
 
+정책 RSS로 수집된 정책뉴스·보도자료의 첨부 PDF도 같은 폴더에 보관할 수 있습니다. 이 경우 `.policy_pdf_archive_state.json`으로 별도 중복 관리를 하며 이미 처리한 정책 항목은 다시 내려받지 않습니다.
+
+```powershell
+python services/announcement-api/scripts/archive_notice_pdfs.py --policy
+```
+
 블로그 콘텐츠화를 위한 주거 정책 보도자료는 대한민국 정책브리핑의 부처별 RSS를 수집해 Notion `정책 DB`에 저장합니다. 대상 RSS는 국무조정실, 국토교통부, 기획예산처이며 주거·주택·임대·청약·전월세·부동산시장 관련 항목만 남깁니다. `.github/workflows/daily-policy-rss-sync.yml`은 매일 오전 1시(KST)에 최근 1일치를 수집하고, 수동 실행 시 `days_back`으로 조회 기간을 조정할 수 있습니다.
 
 ```powershell

@@ -8,7 +8,9 @@ from pathlib import Path
 import re
 import sys
 from typing import Any
+from urllib.parse import urljoin
 
+from bs4 import BeautifulSoup
 import requests
 
 SERVICE_ROOT = Path(__file__).resolve().parents[1]
@@ -29,10 +31,18 @@ USER_AGENT = "Mozilla/5.0 youth-housing-compass"
 
 def _read_snapshot(path: Path) -> list[dict[str, Any]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    announcements = payload.get("announcements", []) if isinstance(payload, dict) else []
-    if not isinstance(announcements, list):
+    items = payload.get("announcements", []) if isinstance(payload, dict) else []
+    if not isinstance(items, list):
         raise ValueError("snapshot announcements must be a list")
-    return [item for item in announcements if isinstance(item, dict)]
+    return [item for item in items if isinstance(item, dict)]
+
+
+def _read_policy_snapshot(path: Path) -> list[dict[str, Any]]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    items = payload.get("items", []) if isinstance(payload, dict) else []
+    if not isinstance(items, list):
+        raise ValueError("policy snapshot items must be a list")
+    return [item for item in items if isinstance(item, dict)]
 
 
 def _read_state(path: Path) -> dict[str, Any]:
@@ -72,6 +82,31 @@ def _pdf_attachments(item: dict[str, Any]) -> list[str]:
         if url and (kind == "pdf" or ".pdf" in url.lower()):
             urls.append(url)
     return list(dict.fromkeys(urls))
+
+
+def _policy_pdf_attachments(item: dict[str, Any], timeout: int) -> list[str]:
+    url = str(item.get("url") or "").strip()
+    if not url:
+        return []
+    response = requests.get(
+        url,
+        timeout=timeout,
+        headers={"User-Agent": USER_AGENT, "Accept": "text/html,*/*"},
+        allow_redirects=True,
+    )
+    response.raise_for_status()
+    response.encoding = response.apparent_encoding or response.encoding
+    soup = BeautifulSoup(response.text, "html.parser")
+    urls: list[str] = []
+    for link in soup.find_all("a", href=True):
+        label = link.get_text(" ", strip=True).lower()
+        href = str(link.get("href") or "")
+        lowered = href.lower()
+        if ".pdf" in label or "download.do" in lowered:
+            target = urljoin(url, href)
+            if target not in urls:
+                urls.append(target)
+    return urls[:6]
 
 
 def _download(url: str, timeout: int) -> bytes:
@@ -115,6 +150,39 @@ def _archive_item(
     return saved
 
 
+def _archive_policy_item(
+    item: dict[str, Any],
+    archive_dir: Path,
+    timeout: int,
+) -> list[dict[str, str]]:
+    source_id = str(item.get("dedup_key") or item.get("source_id") or item.get("id") or "").strip()
+    title = str(item.get("title") or source_id).strip()
+    department = str(item.get("department") or "정책").strip()
+    saved: list[dict[str, str]] = []
+    if not source_id:
+        return saved
+    try:
+        urls = _policy_pdf_attachments(item, timeout)
+    except requests.RequestException:
+        return saved
+    if not urls:
+        return saved
+    archive_dir.mkdir(parents=True, exist_ok=True)
+    for index, url in enumerate(urls, start=1):
+        try:
+            content = _download(url, timeout)
+        except (CurlRequestError, requests.RequestException, OSError):
+            continue
+        if not content.startswith(b"%PDF"):
+            continue
+        suffix = "" if len(urls) == 1 else f"_{index}"
+        filename = f"정책_{_safe_name(department, 12)}_{_safe_name(source_id, 40)}_{_safe_name(title)}{suffix}.pdf"
+        target = archive_dir / filename
+        target.write_bytes(content)
+        saved.append({"source_id": source_id, "title": title, "url": url, "path": str(target)})
+    return saved
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -122,9 +190,19 @@ def main() -> None:
         type=Path,
         default=PROJECT_ROOT / "data" / "live_housing_programs.json",
     )
+    parser.add_argument(
+        "--policy-snapshot",
+        type=Path,
+        default=PROJECT_ROOT / "data" / "policy_rss_items.json",
+    )
     parser.add_argument("--archive-dir", type=Path, default=DEFAULT_ARCHIVE_DIR)
     parser.add_argument("--state", type=Path)
     parser.add_argument("--timeout", type=int, default=45)
+    parser.add_argument(
+        "--policy",
+        action="store_true",
+        help="정책 RSS 스냅샷의 보도자료 첨부 PDF를 저장합니다.",
+    )
     parser.add_argument(
         "--initialize-baseline",
         action="store_true",
@@ -133,14 +211,16 @@ def main() -> None:
     args = parser.parse_args()
 
     archive_dir = args.archive_dir
-    state_path = args.state or archive_dir / ".notice_pdf_archive_state.json"
-    announcements = _read_snapshot(args.snapshot)
+    state_path = args.state or archive_dir / (
+        ".policy_pdf_archive_state.json" if args.policy else ".notice_pdf_archive_state.json"
+    )
+    announcements = _read_policy_snapshot(args.policy_snapshot) if args.policy else _read_snapshot(args.snapshot)
     state = _read_state(state_path)
     processed = {str(value) for value in state.get("processed_source_ids", []) if value}
     current_ids = {
-        str(item.get("source_id") or item.get("id") or "")
+        str(item.get("dedup_key") or item.get("source_id") or item.get("id") or "")
         for item in announcements
-        if item.get("source_id") or item.get("id")
+        if item.get("dedup_key") or item.get("source_id") or item.get("id")
     }
 
     if args.initialize_baseline:
@@ -164,12 +244,15 @@ def main() -> None:
     new_items = [
         item
         for item in announcements
-        if str(item.get("source_id") or item.get("id") or "") not in processed
+        if str(item.get("dedup_key") or item.get("source_id") or item.get("id") or "") not in processed
     ]
     saved_files: list[dict[str, str]] = []
     for item in new_items:
-        saved_files.extend(_archive_item(item, archive_dir, max(5, args.timeout)))
-        source_id = str(item.get("source_id") or item.get("id") or "")
+        if args.policy:
+            saved_files.extend(_archive_policy_item(item, archive_dir, max(5, args.timeout)))
+        else:
+            saved_files.extend(_archive_item(item, archive_dir, max(5, args.timeout)))
+        source_id = str(item.get("dedup_key") or item.get("source_id") or item.get("id") or "")
         if source_id:
             processed.add(source_id)
 
@@ -181,6 +264,7 @@ def main() -> None:
         json.dumps(
             {
                 "status": "ok",
+                "mode": "policy" if args.policy else "notice",
                 "new_announcements": len(new_items),
                 "saved_pdfs": len(saved_files),
                 "archive_dir": str(archive_dir),
