@@ -192,9 +192,10 @@ def _fetch_feed(feed: dict[str, str], timeout: int) -> list[dict[str, Any]]:
     return parsed
 
 
-def collect(days_back: int, timeout: int) -> list[dict[str, Any]]:
+def collect(days_back: int, timeout: int) -> tuple[list[dict[str, Any]], int]:
     start_date = (datetime.now(KST).date() - timedelta(days=max(0, days_back)))
     items: dict[str, dict[str, Any]] = {}
+    successful_feeds = 0
     for feed in POLICY_FEEDS:
         try:
             feed_items = _fetch_feed(feed, timeout)
@@ -204,15 +205,19 @@ def collect(days_back: int, timeout: int) -> list[dict[str, Any]]:
                 file=sys.stderr,
             )
             continue
+        successful_feeds += 1
         for item in feed_items:
             published_date = item.get("published_date")
             if published_date and published_date < start_date.isoformat():
                 continue
             items[item["dedup_key"]] = item
-    return sorted(
-        items.values(),
-        key=lambda item: (item.get("published_at") or "", item.get("dedup_key") or ""),
-        reverse=True,
+    return (
+        sorted(
+            items.values(),
+            key=lambda item: (item.get("published_at") or "", item.get("dedup_key") or ""),
+            reverse=True,
+        ),
+        successful_feeds,
     )
 
 
@@ -273,7 +278,15 @@ def _notion_create_page(database_id: str, token: str, item: dict[str, Any]) -> N
 
 
 def sync_notion(items: list[dict[str, Any]], database_id: str, token: str) -> int:
-    existing = _notion_query_existing(database_id, token)
+    try:
+        existing = _notion_query_existing(database_id, token)
+    except requests.HTTPError as error:
+        status = error.response.status_code if error.response is not None else "unknown"
+        print(
+            f"warning: skipped Notion sync: database access failed ({status})",
+            file=sys.stderr,
+        )
+        return 0
     created = 0
     for item in items:
         if item["dedup_key"] in existing:
@@ -315,7 +328,23 @@ def main() -> None:
     parser.add_argument("--database-id", default=_env("NOTION_POLICY_DATABASE_ID"))
     args = parser.parse_args()
 
-    items = collect(args.days_back, max(5, args.timeout))
+    items, successful_feeds = collect(args.days_back, max(5, args.timeout))
+    if successful_feeds == 0:
+        print(
+            json.dumps(
+                {
+                    "status": "skipped",
+                    "reason": "all RSS feeds failed",
+                    "days_back": args.days_back,
+                    "collected": 0,
+                    "created": 0,
+                    "output": str(args.output),
+                    "departments": [feed["department"] for feed in POLICY_FEEDS],
+                },
+                ensure_ascii=False,
+            )
+        )
+        return
     _write_output(args.output, items)
     created = 0
     if not args.no_notion:
@@ -330,6 +359,7 @@ def main() -> None:
             {
                 "status": "ok",
                 "days_back": args.days_back,
+                "successful_feeds": successful_feeds,
                 "collected": len(items),
                 "created": created,
                 "output": str(args.output),
