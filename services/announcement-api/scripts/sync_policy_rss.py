@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 import hashlib
 import html
+import io
 import json
 import os
 from pathlib import Path
@@ -12,9 +13,10 @@ import re
 import sys
 import time
 from typing import Any
-from urllib.parse import urlparse
+from urllib.parse import urljoin
 import xml.etree.ElementTree as ET
 
+from bs4 import BeautifulSoup
 import requests
 
 
@@ -145,6 +147,71 @@ def _is_housing_related(text: str) -> bool:
     return any(keyword in text for keyword in HOUSING_KEYWORDS)
 
 
+def _extract_pdf_text(content: bytes) -> str:
+    if not content.startswith(b"%PDF"):
+        return ""
+    from pypdf import PdfReader
+
+    reader = PdfReader(io.BytesIO(content))
+    pages: list[str] = []
+    for page in reader.pages[:12]:
+        try:
+            pages.append(page.extract_text() or "")
+        except (KeyError, TypeError, ValueError):
+            continue
+    return _clean_text("\n".join(pages))
+
+
+def _korea_attachment_urls(html_text: str, base_url: str) -> list[str]:
+    soup = BeautifulSoup(html_text, "html.parser")
+    urls: list[str] = []
+    for link in soup.find_all("a", href=True):
+        label = link.get_text(" ", strip=True).lower()
+        href = str(link.get("href") or "")
+        lowered = href.lower()
+        if ".pdf" in label or "download.do" in lowered:
+            url = urljoin(base_url, href)
+            if url not in urls:
+                urls.append(url)
+    return urls[:4]
+
+
+def _fetch_article_text(url: str, timeout: int) -> str:
+    if not url:
+        return ""
+    response = requests.get(
+        url,
+        timeout=timeout,
+        headers={"User-Agent": "Mozilla/5.0 youth-housing-compass-policy-rss"},
+    )
+    response.raise_for_status()
+    response.encoding = response.apparent_encoding or response.encoding
+    soup = BeautifulSoup(response.text, "html.parser")
+    meta_parts = [
+        tag.get("content", "")
+        for tag in soup.find_all("meta")
+        if str(tag.get("name") or tag.get("property") or "").lower()
+        in {"description", "og:description", "twitter:description"}
+    ]
+    for tag in soup(["script", "style", "nav", "header", "footer", "form"]):
+        tag.decompose()
+    parts = [_clean_text(" ".join(meta_parts)), _clean_text(soup.get_text(" ", strip=True))]
+    for attachment_url in _korea_attachment_urls(response.text, url):
+        try:
+            attachment = requests.get(
+                attachment_url,
+                timeout=timeout,
+                headers={"User-Agent": "Mozilla/5.0 youth-housing-compass-policy-rss"},
+            )
+            attachment.raise_for_status()
+            text = _extract_pdf_text(attachment.content)
+            if text:
+                parts.append(text)
+        except (requests.RequestException, OSError, KeyError, TypeError, ValueError):
+            continue
+    return _clean_text(" ".join(part for part in parts if part))
+
+
 def _fetch_feed(feed: dict[str, str], timeout: int) -> list[dict[str, Any]]:
     response = requests.get(
         feed["rss"],
@@ -162,17 +229,23 @@ def _fetch_feed(feed: dict[str, str], timeout: int) -> list[dict[str, Any]]:
         description = _child_text(item, "description")
         published = _parse_date(_child_text(item, "pubDate") or _child_text(item, "dc:date"))
         text = " ".join(part for part in (title, description) if part)
+        detail_text = ""
         title_related = _is_housing_related(title)
         text_related = _is_housing_related(text)
-        if not title or not text_related:
-            continue
         if any(keyword in title for keyword in EXCLUDE_TITLE_KEYWORDS):
             continue
-        if feed["department"] != "국토교통부" and not title_related:
+        if title and not text_related and link:
+            detail_text = _fetch_article_text(link, timeout)
+            text = " ".join(part for part in (text, detail_text) if part)
+            text_related = _is_housing_related(text)
+        if not title or not text_related:
+            continue
+        if feed["department"] != "국토교통부" and not (title_related or _is_housing_related(detail_text)):
             continue
         topics, targets, relevance = _classify(text)
         if not topics:
             topics = ["주거안정"]
+        summary = description or detail_text[:900]
         parsed.append(
             {
                 "dedup_key": _dedup_key(feed["department"], link, guid, title),
@@ -183,7 +256,7 @@ def _fetch_feed(feed: dict[str, str], timeout: int) -> list[dict[str, Any]]:
                 "collected_date": datetime.now(KST).date().isoformat(),
                 "url": link,
                 "rss": feed["rss"],
-                "summary": description[:900],
+                "summary": summary[:900],
                 "topics": topics,
                 "targets": targets,
                 "relevance": relevance,
