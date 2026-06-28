@@ -196,7 +196,15 @@ def collect(days_back: int, timeout: int) -> list[dict[str, Any]]:
     start_date = (datetime.now(KST).date() - timedelta(days=max(0, days_back)))
     items: dict[str, dict[str, Any]] = {}
     for feed in POLICY_FEEDS:
-        for item in _fetch_feed(feed, timeout):
+        try:
+            feed_items = _fetch_feed(feed, timeout)
+        except (requests.RequestException, ET.ParseError) as error:
+            print(
+                f"warning: skipped {feed['department']} RSS: {type(error).__name__}",
+                file=sys.stderr,
+            )
+            continue
+        for item in feed_items:
             published_date = item.get("published_date")
             if published_date and published_date < start_date.isoformat():
                 continue
