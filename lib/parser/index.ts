@@ -35,6 +35,22 @@ export const GYEONGGI_DISTRICTS = [
   "하남시", "여주시", "동두천시", "과천시", "가평군", "양평군", "연천군"
 ];
 
+const DISTRICT_SHORT_NAME_BLOCKLIST = new Set(["광주", "중"]);
+
+function findDistrict(text: string) {
+  const districts = [...SEOUL_DISTRICTS, ...GYEONGGI_DISTRICTS];
+  const exact = districts.find((item) => text.includes(item));
+  if (exact) return exact;
+
+  return districts.find((item) => {
+    const shortName = item.replace(/(?:시|군|구)$/, "");
+    if (shortName.length < 2 || DISTRICT_SHORT_NAME_BLOCKLIST.has(shortName)) {
+      return false;
+    }
+    return text.includes(shortName);
+  });
+}
+
 export function regionForDistrict(district?: string) {
   if (!district) return undefined;
   if (SEOUL_DISTRICTS.includes(district)) return "서울";
@@ -56,9 +72,7 @@ export function parseUserInput(text: string): UserProfile {
     normalized.match(/자녀\s*(\d{1,2})\s*명/) ??
     normalized.match(/(\d{1,2})\s*명(?:의)?\s*자녀/);
   const incomeMatch = normalized.match(/(?:월소득|월급|소득|수입)\s*(\d{2,4})\s*(만\s*원|만원|원)?/);
-  const district = [...SEOUL_DISTRICTS, ...GYEONGGI_DISTRICTS].find((item) =>
-    normalized.includes(item)
-  );
+  const district = findDistrict(normalized);
   const region = REGIONS.find((item) => normalized.includes(item)) ?? regionForDistrict(district);
   const homeless = /무주택|집\s*없|자가\s*없/.test(normalized)
     ? true

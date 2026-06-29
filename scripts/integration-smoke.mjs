@@ -190,6 +190,39 @@ try {
     throw new Error("공고문 안의 고양시 공급지역을 추천 근거로 사용하지 못했습니다.");
   }
 
+  const shortDistrictResponse = await fetch("http://127.0.0.1:3010/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message: "수원 40세 무주택 2세이하 1자녀"
+    })
+  });
+  const shortDistrictResult = await shortDistrictResponse.json();
+  if (
+    !shortDistrictResponse.ok ||
+    shortDistrictResult.profile?.region !== "경기" ||
+    shortDistrictResult.profile?.district !== "수원시" ||
+    !shortDistrictResult.recommendations?.[0]?.reasons?.some((reason) => reason.includes("수원시"))
+  ) {
+    throw new Error("경기도 시 이름을 줄여 입력한 경우 표준 시 단위로 해석하지 못했습니다.");
+  }
+
+  const seoulDistrictResponse = await fetch("http://127.0.0.1:3010/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message: "강남 28세 무주택 청년"
+    })
+  });
+  const seoulDistrictResult = await seoulDistrictResponse.json();
+  if (
+    !seoulDistrictResponse.ok ||
+    seoulDistrictResult.profile?.region !== "서울" ||
+    seoulDistrictResult.profile?.district !== "강남구"
+  ) {
+    throw new Error("서울 구 이름을 줄여 입력한 경우 표준 구 단위로 해석하지 못했습니다.");
+  }
+
   process.stdout.write(
     JSON.stringify(
       {
@@ -201,6 +234,8 @@ try {
         first_status: result.recommendations[0].status,
         family_recommendation_count: familyResult.recommendations.length,
         family_first_id: familyResult.recommendations[0]?.id,
+        short_district: shortDistrictResult.profile?.district,
+        seoul_district: seoulDistrictResult.profile?.district,
         follow_up: followUp.answer,
         agents: {
           recommendation: result.handledBy,
