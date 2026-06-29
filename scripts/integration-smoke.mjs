@@ -146,7 +146,8 @@ try {
   if (
     !unsupportedResponse.ok ||
     unsupported.intent !== "unsupported" ||
-    !unsupported.answer?.includes("지원하지 않습니다")
+    !unsupported.answer?.includes("제가 잘 이해하지 못했어요") ||
+    !unsupported.answer?.includes("행복주택과 국민임대의 차이가 뭐야?")
   ) {
     throw new Error("상담 범위 밖 질문의 경계 응답이 올바르지 않습니다.");
   }
