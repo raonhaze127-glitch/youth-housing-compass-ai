@@ -34,6 +34,7 @@
 - 개인 조건이 포함되면 Eligibility Agent를 호출한다.
 - 특정 공고나 URL이 포함되면 Announcement Agent를 먼저 호출한다.
 - 둘 이상의 후보 비교나 우선순위 요청이면 Recommendation Agent를 호출한다.
+- 지역·나이·무주택 여부 등 사용자 조건만 입력되고 명시적인 자격 질문이 없으면 Recommendation Agent를 호출해 우선 검토 공고와 다음 행동을 안내한다.
 
 ## 금지 표현
 
