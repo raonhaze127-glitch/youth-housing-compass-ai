@@ -5,10 +5,12 @@ from datetime import datetime, timedelta, timezone
 import json
 import os
 from pathlib import Path
+import re
 import sys
 import time
 from typing import Any
 
+from bs4 import BeautifulSoup
 import requests
 
 
@@ -16,8 +18,10 @@ KST = timezone(timedelta(hours=9))
 NOTION_VERSION = "2022-06-28"
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_OUTPUT = PROJECT_ROOT / "data" / "seoul_redevelopment_progress.json"
+DEFAULT_SITE_OUTPUT = PROJECT_ROOT / "data" / "seoul_redevelopment_sites.json"
 SERVICE_NAME = "CleanupBussinessProgress"
 SOURCE_NAME = "서울시 정비사업 추진경과"
+CLEANUP_SITE_URL = "https://cleanup.seoul.go.kr/cleanup/bsnssttus/lscrMainIndx.do"
 
 SEOUL_GU_BY_CODE = {
     "11110": "종로구",
@@ -57,9 +61,6 @@ STAGE_ALIASES = (
     ("준공", "준공"),
 )
 
-SUPPLY_INSIGHT_STAGES = {"사업시행인가", "관리처분인가", "착공"}
-MILESTONE_STAGES = ("사업시행인가", "관리처분인가", "착공", "준공")
-
 
 def _env(name: str, default: str = "") -> str:
     return os.getenv(name, default).strip()
@@ -93,7 +94,6 @@ def _normalize_event(row: dict[str, Any]) -> dict[str, Any]:
     stage = _stage_name(_clean(row.get("SE_NM")))
     detail = _clean(row.get("DTL_PRCD_NM"))
     day = _parse_day(_clean(row.get("DAY")))
-    title = _clean(row.get("TTL"))
     district = SEOUL_GU_BY_CODE.get(biz_no.split("-", 1)[0], "")
     return {
         "biz_no": biz_no,
@@ -103,7 +103,7 @@ def _normalize_event(row: dict[str, Any]) -> dict[str, Any]:
         "detail_code": _clean(row.get("DTL_PRCS_CD")),
         "detail_name": detail,
         "day": day,
-        "title": title,
+        "title": _clean(row.get("TTL")),
         "detail": _clean(row.get("DTL_CN")),
     }
 
@@ -138,6 +138,42 @@ def _collect_events(api_key: str, max_events: int, timeout: int) -> list[dict[st
     return events
 
 
+def _site_url(cafe_url: str) -> str:
+    return f"https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl={cafe_url}" if cafe_url else ""
+
+
+def _collect_site_rows(timeout: int) -> list[dict[str, Any]]:
+    response = requests.get(CLEANUP_SITE_URL, params={"cpage": 1, "pageSize": 2000}, timeout=timeout)
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, "html.parser")
+    rows: list[dict[str, Any]] = []
+    for tr in soup.select("table.board-list-tbl tbody tr"):
+        cells = [td.get_text(" ", strip=True) for td in tr.select("td")]
+        if len(cells) < 10:
+            continue
+        row_html = str(tr)
+        cafe_match = re.search(r"cafeOpenPopup\('([^']+)'\)", row_html)
+        map_match = re.search(r"mapOpenPopup\('([^']+)'\)", row_html)
+        stage = _stage_name(cells[5])
+        rows.append(
+            {
+                "district": cells[1],
+                "business_type": cells[2],
+                "project_name": cells[3],
+                "address_lot": cells[4],
+                "site_stage": cells[5],
+                "stage": stage,
+                "public_item_count": cells[6],
+                "timeliness_rate": cells[7],
+                "completeness_rate": cells[8],
+                "cafe_url": cafe_match.group(1) if cafe_match else "",
+                "site_url": _site_url(cafe_match.group(1) if cafe_match else ""),
+                "map_id": map_match.group(1) if map_match else "",
+            }
+        )
+    return rows
+
+
 def _pick_date(events: list[dict[str, Any]], stage: str, approval_only: bool = False) -> str:
     candidates = [item for item in events if item.get("stage") == stage and item.get("day")]
     if approval_only:
@@ -170,7 +206,50 @@ def _schedule_summary(item: dict[str, Any]) -> str:
     return "; ".join(parts)
 
 
-def _group_supply_candidates(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _site_candidate_text(site_rows: list[dict[str, Any]]) -> str:
+    return " | ".join(
+        f"{row['project_name']} ({row['address_lot']}, {row['site_stage']})"
+        for row in site_rows[:10]
+    )
+
+
+def _enrich_with_site(item: dict[str, Any], site_rows: list[dict[str, Any]]) -> None:
+    matches = [
+        row
+        for row in site_rows
+        if row.get("district") == item.get("district") and row.get("stage") == item.get("stage")
+    ]
+    if len(matches) == 1:
+        site = matches[0]
+        item.update(
+            {
+                "project_name": site["project_name"],
+                "address_lot": site["address_lot"],
+                "business_type": site["business_type"],
+                "site_url": site["site_url"],
+                "map_id": site["map_id"],
+                "site_match_status": "확정",
+                "site_candidates": site["project_name"],
+                "title": f"{site['project_name']} ({item['stage']})",
+            }
+        )
+        return
+    item.update(
+        {
+            "project_name": "",
+            "address_lot": "",
+            "business_type": "",
+            "site_url": "",
+            "map_id": "",
+            "site_match_status": "후보복수" if matches else "후보없음",
+            "site_candidates": _site_candidate_text(matches),
+        }
+    )
+
+
+def _group_supply_candidates(
+    events: list[dict[str, Any]], site_rows: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
     by_biz: dict[str, list[dict[str, Any]]] = {}
     for event in events:
         biz_no = event.get("biz_no")
@@ -193,7 +272,6 @@ def _group_supply_candidates(events: list[dict[str, Any]]) -> list[dict[str, Any
         supply_stage = "착공" if construction_start_date else "관리처분인가" if management_disposal_date else "사업시행인가"
         district = latest.get("district") or SEOUL_GU_BY_CODE.get(biz_no.split("-", 1)[0], "")
         latest_title = latest.get("title") or latest.get("detail_name") or ""
-        page_title = f"{district or '서울'} {biz_no} 공급예정지 ({supply_stage})"
         item = {
             "dedup_key": f"redevelop_{biz_no.replace('-', '_')}",
             "biz_no": biz_no,
@@ -207,7 +285,7 @@ def _group_supply_candidates(events: list[dict[str, Any]]) -> list[dict[str, Any
             "latest_stage": latest.get("stage", ""),
             "latest_detail": latest.get("detail_name", ""),
             "latest_title": latest_title,
-            "title": page_title,
+            "title": f"{district or '서울'} {biz_no} 공급예정지 ({supply_stage})",
             "detail": latest.get("detail", ""),
             "source": SOURCE_NAME,
             "supply_review": True,
@@ -226,6 +304,7 @@ def _group_supply_candidates(events: list[dict[str, Any]]) -> list[dict[str, Any
                 key=lambda row: row.get("day", ""),
             ),
         }
+        _enrich_with_site(item, site_rows)
         item["schedule_summary"] = _schedule_summary(item)
         candidates.append(item)
 
@@ -240,10 +319,11 @@ def _group_supply_candidates(events: list[dict[str, Any]]) -> list[dict[str, Any
     )
 
 
-def collect(api_key: str, max_events: int, max_items: int, timeout: int) -> list[dict[str, Any]]:
+def collect(api_key: str, max_events: int, max_items: int, timeout: int) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     events = _collect_events(api_key, max_events=max(0, max_events), timeout=max(5, timeout))
-    items = _group_supply_candidates(events)
-    return items[:max_items] if max_items else items
+    site_rows = _collect_site_rows(timeout=max(5, timeout))
+    items = _group_supply_candidates(events, site_rows)
+    return (items[:max_items] if max_items else items), site_rows
 
 
 def _notion_headers(token: str) -> dict[str, str]:
@@ -280,20 +360,32 @@ def _date_prop(value: str) -> dict[str, Any] | None:
     return {"date": {"start": value}} if value else None
 
 
+def _rich(value: str) -> dict[str, Any]:
+    return {"rich_text": [{"text": {"content": value[:2000]}}]} if value else {"rich_text": []}
+
+
 def _notion_properties(item: dict[str, Any]) -> dict[str, Any]:
     properties: dict[str, Any] = {
         "항목명": {"title": [{"text": {"content": item["title"][:2000]}}]},
-        "사업번호": {"rich_text": [{"text": {"content": item["biz_no"]}}]},
+        "사업번호": _rich(item["biz_no"]),
         "진행단계": {"select": {"name": item["stage"]}},
-        "세부절차": {"rich_text": [{"text": {"content": item["latest_detail"][:2000]}}]},
-        "제목": {"rich_text": [{"text": {"content": item["latest_title"][:2000]}}]},
-        "상세내용": {"rich_text": [{"text": {"content": item["detail"][:2000]}}]},
-        "주요일정": {"rich_text": [{"text": {"content": item["schedule_summary"][:2000]}}]},
+        "세부절차": _rich(item["latest_detail"]),
+        "제목": _rich(item["latest_title"]),
+        "상세내용": _rich(item["detail"]),
+        "주요일정": _rich(item["schedule_summary"]),
         "콘텐츠상태": {"status": {"name": item["content_status"]}},
         "공급예정지검토": {"checkbox": True},
-        "dedup_key": {"rich_text": [{"text": {"content": item["dedup_key"]}}]},
+        "dedup_key": _rich(item["dedup_key"]),
         "source": {"select": {"name": SOURCE_NAME}},
+        "사업장명": _rich(item.get("project_name", "")),
+        "대표지번": _rich(item.get("address_lot", "")),
+        "사업유형": _rich(item.get("business_type", "")),
+        "지도ID": _rich(item.get("map_id", "")),
+        "매칭상태": {"select": {"name": item.get("site_match_status", "후보없음")}},
+        "사업장후보": _rich(item.get("site_candidates", "")),
     }
+    if item.get("site_url"):
+        properties["사업장URL"] = {"url": item["site_url"]}
     if item.get("district"):
         properties["자치구"] = {"select": {"name": item["district"]}}
     for notion_name, key in (
@@ -350,27 +442,40 @@ def sync_notion(items: list[dict[str, Any]], database_id: str, token: str) -> tu
     return created, updated
 
 
-def _write_output(path: Path, items: list[dict[str, Any]], max_events: int) -> None:
+def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
-    temporary.write_text(
-        json.dumps(
-            {
-                "schema_version": 2,
-                "generated_at": datetime.now(timezone.utc).isoformat(),
-                "source": SOURCE_NAME,
-                "criteria": "사업시행인가 이상 포함, 준공 완료 사업 제외",
-                "max_events": max_events,
-                "count": len(items),
-                "items": items,
-            },
-            ensure_ascii=False,
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     temporary.replace(path)
+
+
+def _write_outputs(
+    output: Path, site_output: Path, items: list[dict[str, Any]], site_rows: list[dict[str, Any]], max_events: int
+) -> None:
+    generated_at = datetime.now(timezone.utc).isoformat()
+    _write_json(
+        output,
+        {
+            "schema_version": 3,
+            "generated_at": generated_at,
+            "source": SOURCE_NAME,
+            "criteria": "사업시행인가 이상 포함, 준공 완료 사업 제외",
+            "site_match_note": "정비사업 추진경과 API의 BIZ_NO와 사업장검색 목록 사이에 공개 공통키가 없어 자치구+진행단계가 단일 후보일 때만 확정 매칭합니다.",
+            "max_events": max_events,
+            "count": len(items),
+            "items": items,
+        },
+    )
+    _write_json(
+        site_output,
+        {
+            "schema_version": 1,
+            "generated_at": generated_at,
+            "source": "서울시 정비사업 정보몽땅 사업장검색",
+            "count": len(site_rows),
+            "items": site_rows,
+        },
+    )
 
 
 def main() -> None:
@@ -379,6 +484,7 @@ def main() -> None:
     parser.add_argument("--max-items", type=int, default=0)
     parser.add_argument("--timeout", type=int, default=30)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--site-output", type=Path, default=DEFAULT_SITE_OUTPUT)
     parser.add_argument("--api-key", default=_env("SEOUL_OPEN_API_KEY"))
     parser.add_argument("--database-id", default=_env("NOTION_REDEVELOPMENT_DATABASE_ID"))
     parser.add_argument("--no-notion", action="store_true")
@@ -386,8 +492,8 @@ def main() -> None:
 
     if not args.api_key:
         raise SystemExit("SEOUL_OPEN_API_KEY is required.")
-    items = collect(args.api_key, max(0, args.max_events), max(0, args.max_items), max(5, args.timeout))
-    _write_output(args.output, items, max(0, args.max_events))
+    items, site_rows = collect(args.api_key, max(0, args.max_events), max(0, args.max_items), max(5, args.timeout))
+    _write_outputs(args.output, args.site_output, items, site_rows, max(0, args.max_events))
     created = 0
     updated = 0
     if not args.no_notion:
@@ -402,9 +508,11 @@ def main() -> None:
             {
                 "status": "ok",
                 "collected": len(items),
+                "site_rows": len(site_rows),
                 "created": created,
                 "updated": updated,
                 "output": str(args.output),
+                "site_output": str(args.site_output),
             },
             ensure_ascii=False,
         )
