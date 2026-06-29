@@ -1,9 +1,6 @@
 name: Daily policy RSS sync
 
 on:
-  schedule:
-    # GitHub Actions cron uses UTC. 16:00 UTC is 01:00 KST the next day.
-    - cron: "0 16 * * *"
   workflow_dispatch:
     inputs:
       days_back:
