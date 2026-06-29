@@ -73,7 +73,8 @@ export function parseUserInput(text: string): UserProfile {
     normalized.match(/(\d{1,2})\s*명(?:의)?\s*자녀/);
   const incomeMatch = normalized.match(/(?:월소득|월급|소득|수입)\s*(\d{2,4})\s*(만\s*원|만원|원)?/);
   const district = findDistrict(normalized);
-  const region = REGIONS.find((item) => normalized.includes(item)) ?? regionForDistrict(district);
+  const districtRegion = regionForDistrict(district);
+  const region = districtRegion ?? REGIONS.find((item) => normalized.includes(item));
   const homeless = /무주택|집\s*없|자가\s*없/.test(normalized)
     ? true
     : /1주택|자가|주택\s*보유/.test(normalized)

@@ -46,10 +46,12 @@ export function classifyConsultationIntent(message: string): ConsultationIntent 
   const hasPolicyForm = /뜻|의미|정의|종류|차이|뭐야|무엇|설명|알려줘/.test(normalized);
   const hasExplicitEligibilityQuestion =
     /자격|신청\s*가능|가능해|될까|소득|자산|청약통장|가점|순위/.test(normalized);
+  const hasProfileConditions =
+    /무주택|청년|신혼|자녀/.test(normalized) && /\d{2}\s*(?:세|살|만)/.test(normalized);
   const looksLikeProfileSearch =
     /(서울|경기|인천|부산|대구|광주|대전|울산|세종|강원|충북|충남|전북|전남|경북|경남|제주|[가-힣]+시|[가-힣]+군|[가-힣]+구).*(무주택|청년|신혼|자녀|[0-9]{2}\s*세)|무주택.*(서울|경기|[가-힣]+시|[가-힣]+군|[가-힣]+구)/.test(
       normalized
-    );
+    ) || hasProfileConditions;
 
   if (HOUSING_TERMS.test(normalized) && hasPolicyForm && !/\d+\s*번/.test(normalized)) {
     return "policy";
