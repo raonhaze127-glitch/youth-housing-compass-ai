@@ -1,8 +1,8 @@
-# k-apt-alert Integration
+# Announcement Pipeline Integration
 
 ## 위치와 역할
 
-k-apt-alert는 Data Agent가 아니라 추후 연결할 공고 데이터 수집 파이프라인이다. 상담 판단이나 추천을 수행하지 않고 기관별 공고를 수집·정규화해 announcement database에 전달한다.
+기관별 공고 데이터 수집 파이프라인은 Data Agent가 아니라 상담 에이전트가 사용할 입력 데이터를 만드는 수집 계층이다. 상담 판단이나 추천을 수행하지 않고 기관별 공고를 수집·정규화해 announcement database에 전달한다.
 
 ## 수집 범위
 
@@ -22,7 +22,7 @@ k-apt-alert는 Data Agent가 아니라 추후 연결할 공고 데이터 수집 
 ## 연결 흐름
 
 ```text
-k-apt-alert
+기관별 공고 수집 파이프라인
 ↓
 announcement database
 ↓

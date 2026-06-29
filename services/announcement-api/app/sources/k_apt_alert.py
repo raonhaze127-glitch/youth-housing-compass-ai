@@ -102,11 +102,11 @@ class KAptAlertSource:
             with urlopen(request, timeout=self.timeout_seconds) as response:
                 payload = json.loads(response.read().decode("utf-8"))
         except (HTTPError, URLError, TimeoutError, json.JSONDecodeError) as error:
-            raise SourceError(f"k-apt-alert 공고 조회에 실패했습니다: {error}") from error
+            raise SourceError(f"외부 공고 API 공고 조회에 실패했습니다: {error}") from error
 
         items = payload.get("announcements")
         if not isinstance(items, list):
-            raise SourceError("k-apt-alert 응답에 announcements 배열이 없습니다.")
+            raise SourceError("외부 공고 API 응답에 announcements 배열이 없습니다.")
 
         fetched_at = str(payload.get("fetched_at") or datetime.now(timezone.utc).isoformat())
         normalized = [

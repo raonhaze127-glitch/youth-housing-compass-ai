@@ -58,10 +58,10 @@ class KAptAlertClient:
         except HTTPError as error:
             detail = error.read().decode("utf-8", errors="replace")
             raise SourceError(
-                f"k-apt-alert가 {error.code} 상태로 응답했습니다: {detail[:300]}"
+                f"외부 공고 API가 {error.code} 상태로 응답했습니다: {detail[:300]}"
             ) from error
         except (URLError, TimeoutError) as error:
-            raise SourceError(f"k-apt-alert 요청에 실패했습니다: {error}") from error
+            raise SourceError(f"외부 공고 API 요청에 실패했습니다: {error}") from error
 
     def json_request(
         self,
@@ -74,9 +74,9 @@ class KAptAlertClient:
         try:
             result = json.loads(response.content.decode("utf-8"))
         except (UnicodeDecodeError, json.JSONDecodeError) as error:
-            raise SourceError("k-apt-alert JSON 응답을 해석하지 못했습니다.") from error
+            raise SourceError("외부 공고 API JSON 응답을 해석하지 못했습니다.") from error
         if not isinstance(result, dict):
-            raise SourceError("k-apt-alert 응답이 JSON 객체가 아닙니다.")
+            raise SourceError("외부 공고 API 응답이 JSON 객체가 아닙니다.")
         return result
 
     def score(self, payload: dict[str, Any]) -> dict[str, Any]:
