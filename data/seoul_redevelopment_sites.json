@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-29T02:23:15.453392+00:00",
+  "generated_at": "2026-06-29T02:25:37.885355+00:00",
   "source": "서울시 정비사업 정보몽땅 사업장검색",
   "count": 1127,
   "items": [
@@ -1901,7 +1901,7 @@
       "address_lot": "번동 441-3",
       "site_stage": "추진위원회승인",
       "stage": "추진위원회",
-      "public_item_count": "18건",
+      "public_item_count": "19건",
       "timeliness_rate": "100.0%",
       "completeness_rate": "100.0%",
       "cafe_url": "bundong4413",
