@@ -39,7 +39,7 @@
 - 원문에 없는 자격·금액·일정을 생성하는 표현
 - 모집공고가 아닌 결과·마감·서류안내를 신청 가능한 공고로 분류하는 행위
 - 추출 실패를 조건 없음으로 해석하는 행위
-- k-apt-alert를 Agent로 부르는 표현
+- 공고 데이터 수집 파이프라인을 Agent로 부르는 표현
 
 ## fallback 규칙
 
@@ -50,7 +50,7 @@
 
 ## 다른 에이전트와의 연결 방식
 
-- k-apt-alert 또는 기관 수집기가 저장한 announcement database를 읽는다.
+- 기관별 공고 수집기가 저장한 announcement database를 읽는다.
 - Policy Agent의 표준 용어를 사용해 공고를 분류한다.
 - 구조화한 조건을 Eligibility Agent에 전달한다.
 - 비교용 공고 요약을 Recommendation Agent에 전달한다.

@@ -12,7 +12,7 @@
 - `agents/announcement-agent.md`
 - `agents/recommendation-agent.md`
 - `agents/verification-agent.md`
-- `integrations/k-apt-alert.md`
+- `integrations/announcement-pipeline.md`
 
 ## 에이전트 1: 청년주거전문상담가
 
@@ -42,4 +42,4 @@
 
 `사용자 질문 → Orchestrator → Policy / Announcement / Eligibility / Recommendation → Verification → 최종 상담 응답`
 
-k-apt-alert는 공고 수집 파이프라인이며 Announcement Agent의 입력 데이터를 제공한다.
+기관별 공고 데이터 수집 파이프라인은 Announcement Agent의 입력 데이터를 제공한다.

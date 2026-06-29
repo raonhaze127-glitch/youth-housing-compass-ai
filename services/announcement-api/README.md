@@ -6,7 +6,7 @@
 
 - `sample`: 루트의 `data/housing_programs.json`을 읽는 기본 모드
 - `direct`: LH 공개 API, SH 게시판, GH 청약센터와 청약홈 APT 국민주택에서 공공주택을 직접 수집하는 모드
-- `k_apt_alert`: `K_APT_ALERT_API_BASE_URL`로 지정한 k-apt-alert 호환 API를 호출해 공통 모델로 정규화하는 모드
+- `k_apt_alert`: `K_APT_ALERT_API_BASE_URL`로 지정한 외부 공고 호환 API를 호출해 공통 모델로 정규화하는 내부 호환 모드
 
 Next.js 화면과 API 프록시로 연결되어 있습니다. 외부 API 환경변수를 설정하지 않으면 네트워크 요청 없이 샘플 모드로 동작합니다.
 
@@ -26,7 +26,7 @@ python -m venv .venv
 | 이름 | 기본값 | 설명 |
 |---|---|---|
 | `ANNOUNCEMENT_SOURCE` | `sample` | `sample`, `direct`, `k_apt_alert` |
-| `K_APT_ALERT_API_BASE_URL` | 없음 | k-apt-alert 호환 API 기본 URL |
+| `K_APT_ALERT_API_BASE_URL` | 없음 | 외부 공고 호환 API 기본 URL |
 | `DATA_GO_KR_API_KEY` | 없음 | LH·청약홈 직접 수집용 공공데이터 키 |
 | `DIRECT_CACHE_TTL_SECONDS` | `900` | 직접 수집 메모리 캐시 시간 |
 | `DIRECT_SYNC_INTERVAL_SECONDS` | `86400` | 일반 조회가 자동 증분 동기화를 다시 허용하는 최소 간격 |

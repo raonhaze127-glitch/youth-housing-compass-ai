@@ -51,7 +51,7 @@ Verification
 - Recommendation Agent는 당첨 예측이 아닌 우선 검토 순서를 제시합니다.
 - Verification Agent는 근거, 최신성, 계산과 안전 표현을 최종 검증합니다.
 
-k-apt-alert는 별도 에이전트가 아니라 추후 연결할 공고 데이터 수집 파이프라인입니다. 수집 결과는 announcement database를 거쳐 Announcement Agent가 해석합니다. 현재 저장 실공고·규칙 기반 MVP 위에 이 내부 상담 계약을 단계적으로 연결하며, 완성된 독립 다중 에이전트 시스템으로 과장하지 않습니다.
+기관별 공고 데이터 수집 파이프라인은 별도 에이전트가 아니라 추후 연결할 데이터 계층입니다. 수집 결과는 announcement database를 거쳐 Announcement Agent가 해석합니다. 현재 저장 실공고·규칙 기반 MVP 위에 이 내부 상담 계약을 단계적으로 연결하며, 완성된 독립 다중 에이전트 시스템으로 과장하지 않습니다.
 
 현재 `/api/chat`은 질문을 정책·자격·공고·추천으로 분류해 담당 Agent의 답변을 만들고 Verification Agent 검사를 거칩니다. 지원 질문과 한계는 [`docs/conversation-capability-matrix.md`](docs/conversation-capability-matrix.md)에 정리되어 있습니다.
 
@@ -87,7 +87,7 @@ agents/
 ├─ recommendation-agent.md
 └─ verification-agent.md
 integrations/
-└─ k-apt-alert.md
+└─ announcement-pipeline.md
 knowledge/
 ├─ policy/
 ├─ housing-types/
@@ -170,4 +170,4 @@ cd services/announcement-api
 
 출품용 MVP는 과거 공고를 포함한 저장 실공고를 사용하며 모집 상태를 구분 표시합니다. 수집 실패 시에만 샘플 데이터로 후퇴합니다. 자동 추출 결과는 정보 탐색을 위한 참고용이며 실제 신청 자격을 확정하지 않습니다. 신청 전 반드시 해당 기관의 최신 공고 원문을 확인해야 합니다.
 
-자세한 구현 범위는 `docs/project-overview.md`, k-apt-alert 통합 설계는 `docs/integration-architecture.md`, 단계별 작업은 `docs/development-backlog.md`, 검증 결과는 `docs/verification-report.md`에서 확인할 수 있습니다.
+자세한 구현 범위는 `docs/project-overview.md`, 공고 수집 파이프라인 통합 설계는 `docs/integration-architecture.md`, 단계별 작업은 `docs/development-backlog.md`, 검증 결과는 `docs/verification-report.md`에서 확인할 수 있습니다.
