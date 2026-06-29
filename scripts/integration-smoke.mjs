@@ -182,7 +182,9 @@ try {
     throw new Error("고양시 근거가 확인된 공고 외의 지역 후보가 함께 노출됐습니다.");
   }
   const goyangProgram = familyResult.recommendations.find(
-    (item) => item.source_id === "gh_64932"
+    (item) =>
+      item.organization === "GH" &&
+      item.reasons?.some((reason) => reason.includes("고양시"))
   );
   if (!goyangProgram?.reasons?.some((reason) => reason.includes("고양시"))) {
     throw new Error("공고문 안의 고양시 공급지역을 추천 근거로 사용하지 못했습니다.");
