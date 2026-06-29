@@ -176,12 +176,24 @@ def _korea_attachment_urls(html_text: str, base_url: str) -> list[str]:
     return urls[:4]
 
 
-def _fetch_article_text(url: str, timeout: int) -> str:
+def _request_get(url: str, timeout: int, retries: int = 3, **kwargs: Any) -> requests.Response:
+    for attempt in range(max(1, retries)):
+        try:
+            return requests.get(url, timeout=timeout, **kwargs)
+        except (requests.ConnectTimeout, requests.ReadTimeout, requests.ConnectionError):
+            if attempt >= max(1, retries) - 1:
+                raise
+            time.sleep(2 * (attempt + 1))
+    raise requests.RequestException(f"failed to fetch {url}")
+
+
+def _fetch_article_text(url: str, timeout: int, retries: int) -> str:
     if not url:
         return ""
-    response = requests.get(
+    response = _request_get(
         url,
         timeout=timeout,
+        retries=retries,
         headers={"User-Agent": "Mozilla/5.0 youth-housing-compass-policy-rss"},
     )
     response.raise_for_status()
@@ -198,9 +210,10 @@ def _fetch_article_text(url: str, timeout: int) -> str:
     parts = [_clean_text(" ".join(meta_parts)), _clean_text(soup.get_text(" ", strip=True))]
     for attachment_url in _korea_attachment_urls(response.text, url):
         try:
-            attachment = requests.get(
+            attachment = _request_get(
                 attachment_url,
                 timeout=timeout,
+                retries=retries,
                 headers={"User-Agent": "Mozilla/5.0 youth-housing-compass-policy-rss"},
             )
             attachment.raise_for_status()
@@ -212,10 +225,11 @@ def _fetch_article_text(url: str, timeout: int) -> str:
     return _clean_text(" ".join(part for part in parts if part))
 
 
-def _fetch_feed(feed: dict[str, str], timeout: int) -> list[dict[str, Any]]:
-    response = requests.get(
+def _fetch_feed(feed: dict[str, str], timeout: int, retries: int) -> list[dict[str, Any]]:
+    response = _request_get(
         feed["rss"],
         timeout=timeout,
+        retries=retries,
         headers={"User-Agent": "Mozilla/5.0 youth-housing-compass-policy-rss"},
     )
     response.raise_for_status()
@@ -235,7 +249,7 @@ def _fetch_feed(feed: dict[str, str], timeout: int) -> list[dict[str, Any]]:
         if any(keyword in title for keyword in EXCLUDE_TITLE_KEYWORDS):
             continue
         if title and not text_related and link:
-            detail_text = _fetch_article_text(link, timeout)
+            detail_text = _fetch_article_text(link, timeout, retries)
             text = " ".join(part for part in (text, detail_text) if part)
             text_related = _is_housing_related(text)
         if not title or not text_related:
@@ -265,13 +279,13 @@ def _fetch_feed(feed: dict[str, str], timeout: int) -> list[dict[str, Any]]:
     return parsed
 
 
-def collect(days_back: int, timeout: int) -> tuple[list[dict[str, Any]], int]:
+def collect(days_back: int, timeout: int, retries: int) -> tuple[list[dict[str, Any]], int]:
     start_date = (datetime.now(KST).date() - timedelta(days=max(0, days_back)))
     items: dict[str, dict[str, Any]] = {}
     successful_feeds = 0
     for feed in POLICY_FEEDS:
         try:
-            feed_items = _fetch_feed(feed, timeout)
+            feed_items = _fetch_feed(feed, timeout, retries)
         except (requests.RequestException, ET.ParseError) as error:
             print(
                 f"warning: skipped {feed['department']} RSS: {type(error).__name__}",
@@ -395,13 +409,14 @@ def _write_output(path: Path, items: list[dict[str, Any]]) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--days-back", type=int, default=1)
-    parser.add_argument("--timeout", type=int, default=30)
+    parser.add_argument("--timeout", type=int, default=60)
+    parser.add_argument("--retries", type=int, default=3)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--no-notion", action="store_true")
     parser.add_argument("--database-id", default=_env("NOTION_POLICY_DATABASE_ID"))
     args = parser.parse_args()
 
-    items, successful_feeds = collect(args.days_back, max(5, args.timeout))
+    items, successful_feeds = collect(args.days_back, max(5, args.timeout), max(1, args.retries))
     if successful_feeds == 0:
         print(
             json.dumps(

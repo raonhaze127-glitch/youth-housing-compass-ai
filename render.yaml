@@ -21,3 +21,17 @@ services:
         value: "false"
       - key: ANNOUNCEMENT_DATABASE_PATH
         value: /tmp/compass.db
+
+  - type: cron
+    name: youth-housing-compass-policy-rss-sync
+    runtime: python
+    plan: starter
+    rootDir: services/announcement-api
+    buildCommand: pip install -r requirements.txt
+    startCommand: python scripts/sync_policy_rss.py --days-back 1 --timeout 60 --retries 3
+    schedule: "10 16 * * *"
+    envVars:
+      - key: NOTION_TOKEN
+        sync: false
+      - key: NOTION_POLICY_DATABASE_ID
+        sync: false

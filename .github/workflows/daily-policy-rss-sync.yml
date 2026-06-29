@@ -45,7 +45,8 @@ jobs:
         run: >-
           python services/announcement-api/scripts/sync_policy_rss.py
           --days-back "${{ inputs.days_back || '1' }}"
-          --timeout 15
+          --timeout 60
+          --retries 3
 
       - name: Commit updated policy RSS snapshot
         shell: bash
