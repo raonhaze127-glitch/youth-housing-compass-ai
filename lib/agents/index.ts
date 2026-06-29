@@ -179,7 +179,14 @@ function recommendationAnswer(recommendations: Recommendation[]) {
 }
 
 function unsupportedAnswer() {
-  return "현재 청주나는 공공주택 정책 설명, 사용자 조건 기반 사전 자격 진단, 모집공고 해석, 공고 추천과 근거 검증까지 답변할 수 있습니다. 날씨·일반 뉴스·민간 매매 상담, 법률 분쟁의 최종 판단, 실제 청약 접수 대행과 당첨 확률 예측은 지원하지 않습니다.";
+  return `제가 잘 이해하지 못했어요. 아래 예시처럼 질문해 주세요.
+
+- 정책 설명: “행복주택과 국민임대의 차이가 뭐야?”
+- 자격 진단: “만 29세 무주택 청년인데 신청할 수 있어?”
+- 공고 해석: “2번 공고의 신청 기간과 준비 서류를 알려줘.”
+- 공고 추천: “경기도에 거주하는 30세 무주택 청년에게 맞는 공고를 찾아줘.”
+
+맞춤 추천을 원한다면 거주 지역, 나이, 무주택 여부, 가구원 수, 소득을 알려주세요.`;
 }
 
 function verifyAnswer(answer: string, intent: ConsultationIntent, selected?: Recommendation) {
