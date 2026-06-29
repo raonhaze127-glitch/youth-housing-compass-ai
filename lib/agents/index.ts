@@ -44,6 +44,12 @@ const HOUSING_TERMS =
 export function classifyConsultationIntent(message: string): ConsultationIntent {
   const normalized = message.trim();
   const hasPolicyForm = /뜻|의미|정의|종류|차이|뭐야|무엇|설명|알려줘/.test(normalized);
+  const hasExplicitEligibilityQuestion =
+    /자격|신청\s*가능|가능해|될까|소득|자산|청약통장|가점|순위/.test(normalized);
+  const looksLikeProfileSearch =
+    /(서울|경기|인천|부산|대구|광주|대전|울산|세종|강원|충북|충남|전북|전남|경북|경남|제주|[가-힣]+시|[가-힣]+군|[가-힣]+구).*(무주택|청년|신혼|자녀|[0-9]{2}\s*세)|무주택.*(서울|경기|[가-힣]+시|[가-힣]+군|[가-힣]+구)/.test(
+      normalized
+    );
 
   if (HOUSING_TERMS.test(normalized) && hasPolicyForm && !/\d+\s*번/.test(normalized)) {
     return "policy";
@@ -55,6 +61,9 @@ export function classifyConsultationIntent(message: string): ConsultationIntent 
     return "announcement";
   }
   if (/추천|찾아|찾고|공고\s*(?:알려|추천|검색)|어떤\s*(?:집|주택)|우선\s*검토|주택을\s*알아|지원.*찾/.test(normalized)) {
+    return "recommendation";
+  }
+  if (looksLikeProfileSearch && !hasExplicitEligibilityQuestion) {
     return "recommendation";
   }
   if (/자격|신청\s*가능|소득|자산|무주택|나이|연령|청약통장|가점|순위/.test(normalized)) {
@@ -165,17 +174,36 @@ function announcementAnswer(message: string, selected?: Recommendation) {
   return `${selected.title}은 ${selected.organization}의 ${selected.housing_type} 공고입니다. ${selected.summary} 자격, 준비서류, 신청기간, 임대조건 또는 원문 링크를 이어서 물어보실 수 있습니다.`;
 }
 
-function recommendationAnswer(recommendations: Recommendation[]) {
+function recommendationAnswer(recommendations: Recommendation[], profile: UserProfile) {
   if (!recommendations.length) {
     return "현재 조건으로 확인된 공고가 없습니다. 지역, 만 나이, 무주택 여부, 가구 유형과 원하는 주택 유형을 알려주시면 검색 범위를 다시 정리하겠습니다.";
   }
   const active = recommendations.filter((item) => item.status === "open").length;
   const planned = recommendations.filter((item) => item.status === "planned").length;
   const top = recommendations[0];
+  const profileSummary = [
+    profile.region ? `${profile.region}${profile.district ? ` ${profile.district}` : ""}` : "",
+    profile.age !== undefined ? `만 ${profile.age}세` : "",
+    profile.homeless === true ? "무주택" : profile.homeless === false ? "주택 보유" : "",
+    profile.childrenCount ? `자녀 ${profile.childrenCount}명` : ""
+  ].filter(Boolean);
+  const reasons = top.reasons.slice(0, 3);
+  const confirmationItems = [
+    profile.incomeLevel === "unknown" ? "가구 월평균소득" : "",
+    "총자산·자동차 가액",
+    top.required_documents.length ? "" : "공식 공고문의 제출서류 표",
+    top.apply_start && top.apply_end ? "" : "정확한 신청기간"
+  ].filter(Boolean);
   const schedule = top.apply_start && top.apply_end
     ? `신청기간은 ${top.apply_start}부터 ${top.apply_end}까지입니다.`
     : "신청기간은 공식 원문에서 추가 확인이 필요합니다.";
-  return `입력 조건으로 우선 검토할 공고 ${recommendations.length}개를 찾았습니다. 접수중 ${active}개, 모집예정 ${planned}개입니다. 먼저 볼 공고는 “${top.title}”이며, ${top.reasons[0] ?? "입력 조건과의 관련성이 확인됐습니다."} ${schedule} 이는 당첨 예측이 아니라 검토 순서입니다.`;
+  return `입력 조건${profileSummary.length ? `(${profileSummary.join(", ")})` : ""} 기준으로 우선 검토할 공고 ${recommendations.length}개를 찾았습니다. 접수중 ${active}개, 모집예정 ${planned}개입니다.
+
+1순위로 볼 공고는 “${top.title}”입니다. ${schedule}
+
+추천 근거는 ${reasons.length ? reasons.join(" ") : "입력 조건과 공고 조건의 관련성이 확인됐다는 점입니다."}
+
+다음 확인이 필요합니다: ${confirmationItems.join(", ")}. 원문 확인 후에는 신청기간, 신청방법, 제출서류, 소득·자산 기준 순서로 점검하는 것이 좋습니다. 이는 당첨 예측이 아니라 검토 순서입니다.`;
 }
 
 function unsupportedAnswer() {
@@ -241,7 +269,7 @@ export function answerWithAgents(input: {
         : intent === "announcement"
           ? announcementAnswer(input.message, selected)
           : intent === "recommendation"
-            ? recommendationAnswer(input.recommendations)
+            ? recommendationAnswer(input.recommendations, input.profile)
             : unsupportedAnswer();
   const checked = verifyAnswer(draft, intent, selected);
 
