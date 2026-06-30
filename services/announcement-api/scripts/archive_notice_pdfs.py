@@ -23,7 +23,7 @@ from app.direct.http_compat import CurlRequestError, curl_bytes  # noqa: E402
 DEFAULT_ARCHIVE_DIR = Path(
     os.getenv(
         "NOTICE_PDF_ARCHIVE_DIR",
-        r"C:\Users\nahah\Documents\Housing-Journey-P\공고문",
+        str(PROJECT_ROOT.parent / "\uacf5\uace0\ubb38"),
     )
 )
 USER_AGENT = "Mozilla/5.0 youth-housing-compass"
@@ -248,12 +248,15 @@ def main() -> None:
     ]
     saved_files: list[dict[str, str]] = []
     for item in new_items:
+        source_id = str(item.get("dedup_key") or item.get("source_id") or item.get("id") or "")
+        before_count = len(saved_files)
+        has_pdf_candidates = True if args.policy else bool(_pdf_attachments(item))
         if args.policy:
             saved_files.extend(_archive_policy_item(item, archive_dir, max(5, args.timeout)))
         else:
             saved_files.extend(_archive_item(item, archive_dir, max(5, args.timeout)))
-        source_id = str(item.get("dedup_key") or item.get("source_id") or item.get("id") or "")
-        if source_id:
+        saved_count = len(saved_files) - before_count
+        if source_id and (saved_count > 0 or not has_pdf_candidates):
             processed.add(source_id)
 
     state["processed_source_ids"] = sorted(processed)
