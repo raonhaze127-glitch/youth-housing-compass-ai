@@ -508,6 +508,37 @@ p {
   height: 100%;
 }
 
+.program-card.is-closed {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.closed-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: -4px 0 12px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.closed-notice span {
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.closed-notice small {
+  min-width: 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.35;
+  text-align: right;
+}
+
 .program-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 16px -4px rgba(13, 148, 136, 0.08), var(--shadow-md);

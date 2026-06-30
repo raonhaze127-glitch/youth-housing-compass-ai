@@ -51,6 +51,13 @@ const SAMPLE_PROMPTS = [
 const ENABLE_DECISION_TOOLS =
   process.env.NEXT_PUBLIC_ENABLE_DECISION_TOOLS === "true";
 
+const STATUS_ORDER = {
+  open: 0,
+  planned: 1,
+  unknown: 2,
+  closed: 3
+} as const;
+
 // 로고 3번: 아늑한 집 & 부드러운 길잡이 (SVG)
 function CompassLogo({ className = "w-12 h-12", style }: { className?: string; style?: React.CSSProperties }) {
   return (
@@ -160,6 +167,12 @@ export default function Home() {
       profile.interests.length ? `관심: ${profile.interests.join(", ")}` : ""
     ].filter(Boolean);
   }, [result]);
+
+  const sortedRecommendations = useMemo(() => {
+    return [...(result?.recommendations ?? [])].sort(
+      (a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status] || b.score - a.score
+    );
+  }, [result?.recommendations]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -286,7 +299,7 @@ export default function Home() {
             </div>
 
             <div className="cards">
-              {result.recommendations.map((program, index) => (
+              {sortedRecommendations.map((program, index) => (
                 <ProgramCard program={program} index={index} key={program.id} />
               ))}
             </div>

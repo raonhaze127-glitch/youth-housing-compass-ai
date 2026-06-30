@@ -56,6 +56,7 @@ export function ProgramCard({ program, index }: { program: Recommendation; index
   const [loadingAction, setLoadingAction] = useState<"raw" | "competition" | null>(null);
   const sourceId = program.source_id ?? program.id;
   const hasLiveFeatures = ["k_apt_alert_proxy", "direct_collector"].includes(program.source_type);
+  const isClosed = program.status === "closed";
 
   useEffect(() => {
     if (!hasLiveFeatures) {
@@ -124,7 +125,13 @@ export function ProgramCard({ program, index }: { program: Recommendation; index
   }
 
   return (
-    <article className="program-card">
+    <article className={`program-card${isClosed ? " is-closed" : ""}`}>
+      {isClosed ? (
+        <div className="closed-notice" aria-label={"\ub9c8\uac10\ub41c \uacf5\uace0"}>
+          <span>{"\ub9c8\uac10 \uacf5\uace0"}</span>
+          <small>{"\uccad\uc57d\uc774 \ub05d\ub09c \ucc38\uace0\uc6a9 \uacf5\uace0\uc785\ub2c8\ub2e4."}</small>
+        </div>
+      ) : null}
       <div className="card-head">
         <span className="rank">{index + 1}</span>
         <div>
