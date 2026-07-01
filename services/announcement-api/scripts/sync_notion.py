@@ -40,6 +40,21 @@ def _env(name: str, default: str = "") -> str:
     return os.getenv(name, default).strip() or default
 
 
+APPLICATION_STATUS_LABELS = {
+    "open": "\uc811\uc218\uc911",
+    "planned": "\ubaa8\uc9d1\uc608\uc815",
+    "closed": "\ub9c8\uac10",
+    "unknown": "\uc77c\uc815\ud655\uc778",
+}
+
+APPLICATION_STATUS_ORDER = {
+    "open": 0,
+    "planned": 1,
+    "unknown": 2,
+    "closed": 9,
+}
+
+
 def _clean(value: Any, limit: int | None = None) -> str:
     if value is None:
         return ""
@@ -76,6 +91,15 @@ def _status(value: Any) -> dict[str, Any]:
     return {"status": {"name": text}}
 
 
+def _application_status(value: Any) -> dict[str, Any]:
+    text = APPLICATION_STATUS_LABELS.get(_clean(value), "\uc77c\uc815\ud655\uc778")
+    return {"select": {"name": text}}
+
+
+def _application_status_order(value: Any) -> dict[str, Any]:
+    return {"number": APPLICATION_STATUS_ORDER.get(_clean(value), 2)}
+
+
 def _notice_type(item: dict[str, Any]) -> str:
     text = " ".join(
         _clean(item.get(key)).lower()
@@ -108,6 +132,8 @@ def _item_properties(item: dict[str, Any], collected_date: str) -> dict[str, Any
         "dedup_key": _rich_text(source_id),
         "notice_type": {"select": {"name": _notice_type(item)}},
         "raw_status": _status(item.get("status")),
+        "\uccad\uc57d\uc0c1\ud0dc": _application_status(item.get("status")),
+        "\uccad\uc57d\uc815\ub82c": _application_status_order(item.get("status")),
         "처리상태": {"status": {"name": "시작 전"}},
         "수집일": {"date": {"start": collected_date}},
     }
