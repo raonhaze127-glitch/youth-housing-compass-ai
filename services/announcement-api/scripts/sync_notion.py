@@ -136,6 +136,7 @@ def _item_properties(item: dict[str, Any], collected_date: str) -> dict[str, Any
         "\uccad\uc57d\uc815\ub82c": _application_status_order(item.get("status")),
         "처리상태": {"status": {"name": "시작 전"}},
         "수집일": {"date": {"start": collected_date}},
+        "\ub9c8\uc9c0\ub9c9\ud655\uc778\uc77c": {"date": {"start": collected_date}},
     }
     organization = _select(item.get("organization"))
     if organization:
@@ -339,6 +340,8 @@ def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -
                     _clean(item.get("organization")),
                 )
             if page_id:
+                properties.pop("\uc218\uc9d1\uc77c", None)
+                properties.pop("\ucc98\ub9ac\uc0c1\ud0dc", None)
                 client.update_page(page_id, properties)
                 updated += 1
             else:
