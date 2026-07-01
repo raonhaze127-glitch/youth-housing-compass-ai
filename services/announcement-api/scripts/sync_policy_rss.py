@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import re
+import subprocess
 import sys
 import time
 from typing import Any
@@ -176,15 +177,42 @@ def _korea_attachment_urls(html_text: str, base_url: str) -> list[str]:
     return urls[:4]
 
 
+def _curl_get(url: str, timeout: int, headers: dict[str, str] | None = None) -> requests.Response:
+    command = [
+        "curl",
+        "-fsSL",
+        "--connect-timeout",
+        str(min(20, max(5, timeout // 2))),
+        "--max-time",
+        str(timeout),
+    ]
+    for key, value in (headers or {}).items():
+        command.extend(["-H", f"{key}: {value}"])
+    command.append(url)
+    completed = subprocess.run(command, check=True, capture_output=True)
+    response = requests.Response()
+    response.status_code = 200
+    response.url = url
+    response._content = completed.stdout
+    response.encoding = response.apparent_encoding or "utf-8"
+    return response
+
+
 def _request_get(url: str, timeout: int, retries: int = 3, **kwargs: Any) -> requests.Response:
+    last_error: Exception | None = None
     for attempt in range(max(1, retries)):
         try:
             return requests.get(url, timeout=timeout, **kwargs)
-        except (requests.ConnectTimeout, requests.ReadTimeout, requests.ConnectionError):
-            if attempt >= max(1, retries) - 1:
-                raise
-            time.sleep(2 * (attempt + 1))
-    raise requests.RequestException(f"failed to fetch {url}")
+        except (requests.ConnectTimeout, requests.ReadTimeout, requests.ConnectionError) as error:
+            last_error = error
+            if attempt < max(1, retries) - 1:
+                time.sleep(2 * (attempt + 1))
+    try:
+        return _curl_get(url, timeout, kwargs.get("headers"))
+    except (subprocess.SubprocessError, OSError) as curl_error:
+        if last_error:
+            raise last_error
+        raise requests.RequestException(f"failed to fetch {url}") from curl_error
 
 
 def _fetch_article_text(url: str, timeout: int, retries: int) -> str:
@@ -225,7 +253,7 @@ def _fetch_article_text(url: str, timeout: int, retries: int) -> str:
     return _clean_text(" ".join(part for part in parts if part))
 
 
-def _fetch_feed(feed: dict[str, str], timeout: int, retries: int) -> list[dict[str, Any]]:
+def _fetch_feed(feed: dict[str, str], timeout: int, retries: int, start_date: str = "") -> list[dict[str, Any]]:
     response = _request_get(
         feed["rss"],
         timeout=timeout,
@@ -242,6 +270,9 @@ def _fetch_feed(feed: dict[str, str], timeout: int, retries: int) -> list[dict[s
         guid = _child_text(item, "guid")
         description = _child_text(item, "description")
         published = _parse_date(_child_text(item, "pubDate") or _child_text(item, "dc:date"))
+        published_date = published.date().isoformat() if published else ""
+        if start_date and published_date and published_date < start_date:
+            continue
         text = " ".join(part for part in (title, description) if part)
         detail_text = ""
         title_related = _is_housing_related(title)
@@ -266,7 +297,7 @@ def _fetch_feed(feed: dict[str, str], timeout: int, retries: int) -> list[dict[s
                 "title": title,
                 "department": feed["department"],
                 "published_at": published.isoformat() if published else "",
-                "published_date": published.date().isoformat() if published else "",
+                "published_date": published_date,
                 "collected_date": datetime.now(KST).date().isoformat(),
                 "url": link,
                 "rss": feed["rss"],
@@ -285,7 +316,7 @@ def collect(days_back: int, timeout: int, retries: int) -> tuple[list[dict[str, 
     successful_feeds = 0
     for feed in POLICY_FEEDS:
         try:
-            feed_items = _fetch_feed(feed, timeout, retries)
+            feed_items = _fetch_feed(feed, timeout, retries, start_date.isoformat())
         except (requests.RequestException, ET.ParseError) as error:
             print(
                 f"warning: skipped {feed['department']} RSS: {type(error).__name__}",
@@ -421,7 +452,7 @@ def main() -> None:
         print(
             json.dumps(
                 {
-                    "status": "skipped",
+                    "status": "failed",
                     "reason": "all RSS feeds failed",
                     "days_back": args.days_back,
                     "collected": 0,
@@ -432,7 +463,7 @@ def main() -> None:
                 ensure_ascii=False,
             )
         )
-        return
+        raise SystemExit(2)
     _write_output(args.output, items)
     created = 0
     if not args.no_notion:
