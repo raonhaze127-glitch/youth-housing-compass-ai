@@ -14,7 +14,7 @@ import subprocess
 import sys
 import time
 from typing import Any
-from urllib.parse import urljoin
+from urllib.parse import urlencode, urljoin
 import xml.etree.ElementTree as ET
 
 from bs4 import BeautifulSoup
@@ -26,18 +26,31 @@ NOTION_VERSION = "2022-06-28"
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_OUTPUT = PROJECT_ROOT / "data" / "policy_rss_items.json"
 
+DEFAULT_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/126.0 Safari/537.36"
+    ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+}
+
 POLICY_FEEDS = [
     {
         "department": "국무조정실",
         "rss": "https://www.korea.kr/rss/dept_opm.xml",
+        "code": "A00004",
     },
     {
         "department": "국토교통부",
         "rss": "https://www.korea.kr/rss/dept_molit.xml",
+        "code": "A00006",
     },
     {
         "department": "기획예산처",
         "rss": "https://www.korea.kr/rss/dept_mpb.xml",
+        "code": "A00040",
     },
 ]
 
@@ -202,8 +215,15 @@ def _request_get(url: str, timeout: int, retries: int = 3, **kwargs: Any) -> req
     last_error: Exception | None = None
     for attempt in range(max(1, retries)):
         try:
-            return requests.get(url, timeout=timeout, **kwargs)
-        except (requests.ConnectTimeout, requests.ReadTimeout, requests.ConnectionError) as error:
+            response = requests.get(url, timeout=timeout, **kwargs)
+            response.raise_for_status()
+            return response
+        except (
+            requests.ConnectTimeout,
+            requests.ReadTimeout,
+            requests.ConnectionError,
+            requests.HTTPError,
+        ) as error:
             last_error = error
             if attempt < max(1, retries) - 1:
                 time.sleep(2 * (attempt + 1))
@@ -222,7 +242,7 @@ def _fetch_article_text(url: str, timeout: int, retries: int) -> str:
         url,
         timeout=timeout,
         retries=retries,
-        headers={"User-Agent": "Mozilla/5.0 youth-housing-compass-policy-rss"},
+        headers=DEFAULT_HEADERS,
     )
     response.raise_for_status()
     response.encoding = response.apparent_encoding or response.encoding
@@ -242,7 +262,7 @@ def _fetch_article_text(url: str, timeout: int, retries: int) -> str:
                 attachment_url,
                 timeout=timeout,
                 retries=retries,
-                headers={"User-Agent": "Mozilla/5.0 youth-housing-compass-policy-rss"},
+                headers=DEFAULT_HEADERS,
             )
             attachment.raise_for_status()
             text = _extract_pdf_text(attachment.content)
@@ -253,12 +273,58 @@ def _fetch_article_text(url: str, timeout: int, retries: int) -> str:
     return _clean_text(" ".join(part for part in parts if part))
 
 
+
+
+def _policy_item_from_parts(
+    feed: dict[str, str],
+    title: str,
+    link: str,
+    guid: str,
+    description: str,
+    published: datetime | None,
+    timeout: int,
+    retries: int,
+) -> dict[str, Any] | None:
+    text = " ".join(part for part in (title, description) if part)
+    detail_text = ""
+    title_related = _is_housing_related(title)
+    text_related = _is_housing_related(text)
+    if any(keyword in title for keyword in EXCLUDE_TITLE_KEYWORDS):
+        return None
+    if title and not text_related and link:
+        detail_text = _fetch_article_text(link, timeout, retries)
+        text = " ".join(part for part in (text, detail_text) if part)
+        text_related = _is_housing_related(text)
+    if not title or not text_related:
+        return None
+    if feed["department"] != "국토교통부" and not (title_related or _is_housing_related(detail_text)):
+        return None
+    topics, targets, relevance = _classify(text)
+    if not topics:
+        topics = ["주거안정"]
+    summary = description or detail_text[:900]
+    published_date = published.date().isoformat() if published else ""
+    return {
+        "dedup_key": _dedup_key(feed["department"], link, guid, title),
+        "title": title,
+        "department": feed["department"],
+        "published_at": published.isoformat() if published else "",
+        "published_date": published_date,
+        "collected_date": datetime.now(KST).date().isoformat(),
+        "url": link,
+        "rss": feed["rss"],
+        "summary": summary[:900],
+        "topics": topics,
+        "targets": targets,
+        "relevance": relevance,
+    }
+
 def _fetch_feed(feed: dict[str, str], timeout: int, retries: int, start_date: str = "") -> list[dict[str, Any]]:
     response = _request_get(
         feed["rss"],
         timeout=timeout,
         retries=retries,
-        headers={"User-Agent": "Mozilla/5.0 youth-housing-compass-policy-rss"},
+        headers=DEFAULT_HEADERS,
     )
     response.raise_for_status()
     root = ET.fromstring(response.content)
@@ -273,42 +339,51 @@ def _fetch_feed(feed: dict[str, str], timeout: int, retries: int, start_date: st
         published_date = published.date().isoformat() if published else ""
         if start_date and published_date and published_date < start_date:
             continue
-        text = " ".join(part for part in (title, description) if part)
-        detail_text = ""
-        title_related = _is_housing_related(title)
-        text_related = _is_housing_related(text)
-        if any(keyword in title for keyword in EXCLUDE_TITLE_KEYWORDS):
-            continue
-        if title and not text_related and link:
-            detail_text = _fetch_article_text(link, timeout, retries)
-            text = " ".join(part for part in (text, detail_text) if part)
-            text_related = _is_housing_related(text)
-        if not title or not text_related:
-            continue
-        if feed["department"] != "국토교통부" and not (title_related or _is_housing_related(detail_text)):
-            continue
-        topics, targets, relevance = _classify(text)
-        if not topics:
-            topics = ["주거안정"]
-        summary = description or detail_text[:900]
-        parsed.append(
-            {
-                "dedup_key": _dedup_key(feed["department"], link, guid, title),
-                "title": title,
-                "department": feed["department"],
-                "published_at": published.isoformat() if published else "",
-                "published_date": published_date,
-                "collected_date": datetime.now(KST).date().isoformat(),
-                "url": link,
-                "rss": feed["rss"],
-                "summary": summary[:900],
-                "topics": topics,
-                "targets": targets,
-                "relevance": relevance,
-            }
+        parsed_item = _policy_item_from_parts(
+            feed, title, link, guid, description, published, timeout, retries
         )
+        if parsed_item:
+            parsed.append(parsed_item)
     return parsed
 
+
+
+
+def _fetch_press_release_list(
+    feed: dict[str, str], start_date: str, end_date: str, timeout: int, retries: int
+) -> list[dict[str, Any]]:
+    query = urlencode(
+        {
+            "period": "day",
+            "startDate": start_date,
+            "endDate": end_date,
+            "repCode": feed.get("code", ""),
+        }
+    )
+    url = f"https://www.korea.kr/briefing/pressReleaseList.do?{query}"
+    response = _request_get(url, timeout=timeout, retries=retries, headers=DEFAULT_HEADERS)
+    soup = BeautifulSoup(response.text, "html.parser")
+    parsed: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for link in soup.select('a[href*="pressReleaseView.do?newsId="]'):
+        href = str(link.get("href") or "")
+        article_url = urljoin(url, href)
+        if article_url in seen:
+            continue
+        seen.add(article_url)
+        strong = link.find("strong")
+        title = _clean_text(strong.get_text(" ", strip=True) if strong else link.get_text(" ", strip=True))
+        text = _clean_text(link.get_text(" ", strip=True))
+        published = None
+        match = re.search(r"20\d{2}[.-]\d{2}[.-]\d{2}", text)
+        if match:
+            published = _parse_date(match.group(0).replace(".", "-"))
+        parsed_item = _policy_item_from_parts(
+            feed, title, article_url, article_url, "", published, timeout, retries
+        )
+        if parsed_item:
+            parsed.append(parsed_item)
+    return parsed
 
 def collect(days_back: int, timeout: int, retries: int) -> tuple[list[dict[str, Any]], int]:
     start_date = (datetime.now(KST).date() - timedelta(days=max(0, days_back)))
@@ -319,10 +394,19 @@ def collect(days_back: int, timeout: int, retries: int) -> tuple[list[dict[str, 
             feed_items = _fetch_feed(feed, timeout, retries, start_date.isoformat())
         except (requests.RequestException, ET.ParseError) as error:
             print(
-                f"warning: skipped {feed['department']} RSS: {type(error).__name__}",
+                f"warning: skipped {feed['department']} RSS: {type(error).__name__}; trying list fallback",
                 file=sys.stderr,
             )
-            continue
+            try:
+                feed_items = _fetch_press_release_list(
+                    feed, start_date.isoformat(), datetime.now(KST).date().isoformat(), timeout, retries
+                )
+            except requests.RequestException as fallback_error:
+                print(
+                    f"warning: skipped {feed['department']} list fallback: {type(fallback_error).__name__}",
+                    file=sys.stderr,
+                )
+                continue
         successful_feeds += 1
         for item in feed_items:
             published_date = item.get("published_date")
