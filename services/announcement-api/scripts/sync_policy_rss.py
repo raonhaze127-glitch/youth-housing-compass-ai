@@ -87,6 +87,9 @@ HOUSING_KEYWORDS = tuple(
             "전입가능",
             "입주자",
             "무주택",
+            "집",
+            "입주",
+            "매물",
         },
         key=len,
         reverse=True,
@@ -384,6 +387,8 @@ def _fetch_press_release_list(
         match = re.search(r"20\d{2}[.-]\d{2}[.-]\d{2}", text)
         if match:
             published = _parse_date(match.group(0).replace(".", "-"))
+        if not _is_housing_related(title):
+            continue
         parsed_item = _policy_item_from_parts(
             feed, title, article_url, article_url, "", published, timeout, retries
         )
