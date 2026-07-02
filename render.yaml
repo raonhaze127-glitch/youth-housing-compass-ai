@@ -28,7 +28,7 @@ services:
     plan: starter
     rootDir: services/announcement-api
     buildCommand: pip install -r requirements.txt
-    startCommand: python scripts/sync_policy_rss.py --days-back 1 --timeout 60 --retries 3
+    startCommand: python scripts/sync_policy_rss.py --days-back 1 --timeout 20 --retries 1
     schedule: "10 2 * * *"
     envVars:
       - key: NOTION_TOKEN
