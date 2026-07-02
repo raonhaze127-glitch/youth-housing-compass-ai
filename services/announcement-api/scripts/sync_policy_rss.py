@@ -193,6 +193,7 @@ def _korea_attachment_urls(html_text: str, base_url: str) -> list[str]:
 def _curl_get(url: str, timeout: int, headers: dict[str, str] | None = None) -> requests.Response:
     command = [
         "curl",
+        "-4",
         "-fsSL",
         "--connect-timeout",
         str(min(20, max(5, timeout // 2))),
@@ -213,6 +214,11 @@ def _curl_get(url: str, timeout: int, headers: dict[str, str] | None = None) -> 
 
 def _request_get(url: str, timeout: int, retries: int = 3, **kwargs: Any) -> requests.Response:
     last_error: Exception | None = None
+    if "korea.kr" in url:
+        try:
+            return _curl_get(url, timeout, kwargs.get("headers"))
+        except (subprocess.SubprocessError, OSError) as error:
+            last_error = error
     for attempt in range(max(1, retries)):
         try:
             response = requests.get(url, timeout=timeout, **kwargs)
