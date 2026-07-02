@@ -122,6 +122,24 @@ def _metadata_date(item: dict[str, Any], *keys: str) -> dict[str, Any] | None:
     return None
 
 
+def _number(value: Any) -> dict[str, Any] | None:
+    if value is None or value == "":
+        return None
+    digits = "".join(character for character in str(value) if character.isdigit())
+    if not digits:
+        return None
+    return {"number": int(digits)}
+
+
+def _metadata_number(item: dict[str, Any], *keys: str) -> dict[str, Any] | None:
+    metadata = item.get("metadata") if isinstance(item.get("metadata"), dict) else {}
+    for key in keys:
+        number_value = _number(metadata.get(key) if key in metadata else item.get(key))
+        if number_value:
+            return number_value
+    return None
+
+
 def _item_properties(item: dict[str, Any], collected_date: str) -> dict[str, Any]:
     source_id = _clean(item.get("source_id") or item.get("id"))
     properties: dict[str, Any] = {
@@ -156,6 +174,9 @@ def _item_properties(item: dict[str, Any], collected_date: str) -> dict[str, Any
     created_date = _metadata_date(item, "created_date", "written_date", "notice_date", "posted_date", "announcement_date")
     if created_date:
         properties["작성일"] = created_date
+    view_count = _metadata_number(item, "view_count", "views", "hit_count")
+    if view_count:
+        properties["조회수"] = view_count
     return properties
 
 

@@ -119,6 +119,22 @@ def _digits(value: Any) -> int | None:
     return int(text) if text else None
 
 
+def _view_count(value: Any) -> int | None:
+    return _digits(value)
+
+
+def _first_view_count(item: dict[str, Any]) -> int | None:
+    for key in (
+        "VIEW_CNT", "viewCnt", "view_count",
+        "INQ_CNT", "inqCnt", "RDCNT", "rdcnt",
+        "HIT", "hit", "HIT_CNT", "hitCnt",
+    ):
+        count = _view_count(item.get(key))
+        if count is not None:
+            return count
+    return None
+
+
 def _housing_type(title: str, fallback: str) -> str:
     return next((keyword for keyword in HOUSING_TYPE_KEYWORDS if keyword in title), fallback)
 
@@ -205,7 +221,8 @@ def _fetch_applyhome(
         "endmonth": now.strftime("%Y%m"),
     }
     result: list[Announcement] = []
-    public_prefixes = {"apt", "public_rent"}
+    seen_raw_ids: set[str] = set()
+    public_prefixes = {"apt"}
     private_names = ("\ubbfc\uc601", "\uc0ac\uc124", "誘쇱쁺")
     public_names = ("\uad6d\ubbfc", "\uacf5\uacf5", "\uacf5\uacf5\uc9c0\uc6d0", "援??", "怨듦났")
     for prefix, category, endpoint in APPLYHOME_CHANNELS:
@@ -219,17 +236,19 @@ def _fetch_applyhome(
             house_detail = str(item.get("HOUSE_DTL_SECD_NM") or "").strip()
             searchable = " ".join((house_name, house_detail, category))
             if not include_private_housing:
-                is_private = house_code == "01" or any(name in searchable for name in private_names)
                 is_public = (
                     prefix == "public_rent"
                     or house_code in {"03", "04", "06"}
                     or any(name in searchable for name in public_names)
                 )
+                is_private = (house_code == "01" and not is_public) or any(name in searchable for name in private_names)
                 if is_private or not is_public:
                     continue
             raw_id = str(item.get("PBLANC_NO") or item.get("HOUSE_MANAGE_NO") or "")
-            if not raw_id:
+            if not raw_id or (not include_private_housing and raw_id in seen_raw_ids):
                 continue
+            if not include_private_housing:
+                seen_raw_ids.add(raw_id)
             address = str(item.get("HSSPLY_ADRES") or "")
             area_code = str(item.get("SUBSCRPT_AREA_CODE") or "")
             result.append(_announcement(
@@ -245,6 +264,7 @@ def _fetch_applyhome(
                     "address": address,
                     "speculative_zone": item.get("SPECLT_RDN_EARTH_AT"),
                     "constructor": item.get("CNSTRCT_ENTRPS_NM"),
+                    "view_count": _first_view_count(item),
                     "house_secd": house_code,
                     "house_secd_name": house_name,
                 },
@@ -368,7 +388,7 @@ def _fetch_lh_wrtanc_boards(days_back: int, timeout: int, fetched_at: str) -> li
                 end=cells[6].get_text(" ", strip=True),
                 url=_lh_notice_url(item, housing_type),
                 fetched_at=fetched_at,
-                metadata={"notice_date": registered},
+                metadata={"notice_date": registered, "view_count": _view_count(cells[8].get_text(" ", strip=True))},
             ))
     return list({item.source_id: item for item in result}.values())
 
@@ -413,7 +433,7 @@ def _fetch_lh(api_key: str, days_back: int, timeout: int, fetched_at: str) -> li
                 source_id=f"lh_{raw_id}", title=title, organization="LH", category="LH 공공주택",
                 region=_infer_region(title), housing_type=housing_type,
                 url=_lh_notice_url(item, housing_type), fetched_at=fetched_at,
-                metadata={"notice_date": registered},
+                metadata={"notice_date": registered, "view_count": _first_view_count(item)},
             ))
         if len(items) < page_size:
             break
@@ -466,7 +486,7 @@ def _fetch_sh(timeout: int, fetched_at: str, days_back: int = 100) -> list[Annou
                     source_id=source_id, title=title, organization="SH", category="SH 공공주택",
                     region="서울", district=district, housing_type=_housing_type(title, housing_type),
                     url=SH_DETAIL.format(seq=match.group(1), board=board), fetched_at=fetched_at,
-                    metadata={"notice_date": notice_date},
+                    metadata={"notice_date": notice_date, "view_count": _view_count(cells[4].get_text(" ", strip=True))},
                 ))
             if not saw_recent_row:
                 break
@@ -518,6 +538,7 @@ def _parse_gh_apply_list(
         notice_date = normalize_date(cells[5].get_text(" ", strip=True))
         apply_end = normalize_date(cells[6].get_text(" ", strip=True))
         listed_status = cells[7].get_text(" ", strip=True)
+        view_count = _view_count(cells[9].get_text(" ", strip=True)) if len(cells) > 9 else None
         is_active = listed_status in {"공고중", "접수중"}
         if notice_date:
             try:
@@ -551,6 +572,7 @@ def _parse_gh_apply_list(
                     "pbanc_kind_code": pbanc_kind,
                     "business_type_name": business_type,
                     "detail_url": config["detail_url"],
+                    "view_count": view_count,
                 },
             )
         )
@@ -637,7 +659,7 @@ def _fetch_gh_legacy(timeout: int, fetched_at: str, days_back: int = 100) -> lis
                 source_id=f"gh_{article}", title=title, organization="GH", category="GH 공공주택",
                 region="경기", district=f"{city}시" if city else "", housing_type=_housing_type(title, "공공임대/분양"),
                 url=f"{GH_URL}?mode=view&articleNo={article}", fetched_at=fetched_at,
-                metadata={"notice_date": notice_date},
+                metadata={"notice_date": notice_date, "view_count": _view_count(cells[5].get_text(" ", strip=True))},
             ))
     return result
 

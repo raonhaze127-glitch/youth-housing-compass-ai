@@ -51,6 +51,7 @@ class DirectCollectorTests(unittest.TestCase):
         self.assertEqual(result[0].district, "고양시")
         self.assertEqual(result[0].apply_end, "2026-07-10")
         self.assertEqual(result[0].metadata["pbanc_no"], "800")
+        self.assertEqual(result[0].metadata["view_count"], 10)
         self.assertIn("searchTitle=", result[0].announcement_url)
 
     def test_gh_detail_district_ignores_footer_office_address(self):
@@ -181,6 +182,7 @@ class DirectCollectorTests(unittest.TestCase):
                     "HOUSE_SECD": "01",
                     "HOUSE_SECD_NM": "국민",
                     "PBLANC_URL": "https://example.com/public",
+                    "VIEW_CNT": "123",
                 },
                 {
                     "PBLANC_NO": "private-1",
@@ -197,6 +199,7 @@ class DirectCollectorTests(unittest.TestCase):
             result = _fetch_applyhome("key", 2, 5, "now")
         self.assertEqual([item.source_id for item in result], ["apt_public-1"])
         self.assertEqual(result[0].metadata["house_secd"], "01")
+        self.assertEqual(result[0].metadata["view_count"], 123)
         self.assertEqual(request.call_count, 1)
 
     def test_five_applyhome_channels_are_normalized(self):
@@ -301,6 +304,7 @@ class DirectCollectorTests(unittest.TestCase):
             result = _fetch_lh_wrtanc_boards(90, 5, "now")
         self.assertEqual([item.source_id for item in result], ["lh_0000061094"])
         self.assertEqual(result[0].region, "경기")
+        self.assertEqual(result[0].metadata["view_count"], 1)
         self.assertIn("selectWrtancInfo.do", result[0].announcement_url)
         self.assertIn("panId=0000061094", result[0].announcement_url)
 

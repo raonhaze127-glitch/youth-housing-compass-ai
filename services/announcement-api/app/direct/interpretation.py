@@ -132,11 +132,11 @@ def is_public_applyhome_notice(item: Announcement | dict[str, Any]) -> bool:
     searchable = " ".join((house_name, category, housing_type))
     private_names = ("\ubbfc\uc601", "\uc0ac\uc124", "誘쇱쁺")
     public_names = ("\uad6d\ubbfc", "\uacf5\uacf5", "\uacf5\uacf5\uc9c0\uc6d0", "援??", "怨듦났")
-    if house_code == "01" or any(name in searchable for name in private_names):
-        return False
     if source_id.startswith("public_rent_"):
         return True
-    return house_code in {"03", "04", "06"} or any(name in searchable for name in public_names)
+    is_public = house_code in {"03", "04", "06"} or any(name in searchable for name in public_names)
+    is_private = (house_code == "01" and not is_public) or any(name in searchable for name in private_names)
+    return is_public and not is_private
 
 
 def is_public_recruitment_notice(item: Announcement | dict[str, Any]) -> bool:
