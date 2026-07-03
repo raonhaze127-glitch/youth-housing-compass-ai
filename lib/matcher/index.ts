@@ -20,6 +20,10 @@ function programText(program: HousingProgram) {
   ].join(" ");
 }
 
+function districtMatchText(program: HousingProgram) {
+  return [program.title, program.summary, ...program.target].join(" ");
+}
+
 function hasChildren(profile: UserProfile) {
   return Boolean(profile.childrenCount || profile.children?.length);
 }
@@ -27,7 +31,7 @@ function hasChildren(profile: UserProfile) {
 export function matchesProgramDistrict(program: HousingProgram, district: string) {
   if (program.district === district) return true;
   const shortDistrict = district.replace(/(?:시|군|구)$/, "");
-  const text = programText(program);
+  const text = districtMatchText(program);
   return text.includes(district) || (shortDistrict.length >= 2 && text.includes(shortDistrict));
 }
 

@@ -40,6 +40,8 @@ const AGENT_LABELS: Record<AgentId, string> = {
 
 const HOUSING_TERMS =
   /공공주택|공공임대|공공분양|통합공공임대|영구임대|국민임대|행복주택|장기전세|매입임대|전세임대|분양전환/;
+const HOUSING_TYPE_DEFINITION_QUESTION =
+  /^\s*[“"'‘’]?(?:공공주택|공공임대|공공분양|통합공공임대|영구임대|국민임대|행복주택|장기전세|매입임대|전세임대|분양전환공공임대|분양전환)(?:은|는|이란|란|이|가)?\s*(?:뭐야|무엇|뜻|의미|설명)?\s*[?？]?\s*[”"'‘’]?\s*$/;
 
 export function classifyConsultationIntent(message: string): ConsultationIntent {
   const normalized = message.trim();
@@ -53,7 +55,10 @@ export function classifyConsultationIntent(message: string): ConsultationIntent 
       normalized
     ) || hasProfileConditions;
 
-  if (HOUSING_TERMS.test(normalized) && hasPolicyForm && !/\d+\s*번/.test(normalized)) {
+  if (
+    HOUSING_TYPE_DEFINITION_QUESTION.test(normalized) ||
+    (HOUSING_TERMS.test(normalized) && hasPolicyForm && !/\d+\s*번/.test(normalized))
+  ) {
     return "policy";
   }
   if (/\d+\s*번/.test(normalized) || /서류|준비물|신청기간|일정|언제|마감|임대료|보증금|원문|링크|경쟁률/.test(normalized)) {

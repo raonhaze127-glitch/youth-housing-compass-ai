@@ -137,6 +137,20 @@ try {
     throw new Error("정책 설명 질문이 Policy Agent로 전달되지 않았습니다.");
   }
 
+  const housingTypePolicyResponse = await fetch("http://127.0.0.1:3010/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: "장기전세는?" })
+  });
+  const housingTypePolicy = await housingTypePolicyResponse.json();
+  if (
+    !housingTypePolicyResponse.ok ||
+    housingTypePolicy.handledBy !== "policy-agent" ||
+    housingTypePolicy.intent !== "policy"
+  ) {
+    throw new Error("주택 유형 단독 질문이 Policy Agent로 고정되지 않았습니다.");
+  }
+
   const unsupportedResponse = await fetch("http://127.0.0.1:3010/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -178,7 +192,13 @@ try {
   ) {
     throw new Error("지역·연령·전용대상과 명백히 맞지 않는 공고가 포함됐습니다.");
   }
-  if (familyResult.recommendations.length !== 1) {
+  if (
+    familyResult.recommendations.some(
+      (item) =>
+        !item.title.includes("고양") &&
+        !item.reasons?.some((reason) => reason.includes("고양시"))
+    )
+  ) {
     throw new Error("고양시 근거가 확인된 공고 외의 지역 후보가 함께 노출됐습니다.");
   }
   const goyangProgram = familyResult.recommendations.find(
