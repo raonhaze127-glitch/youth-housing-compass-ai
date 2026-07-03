@@ -101,9 +101,14 @@ DATE_TOKEN = (
 )
 SHORT_DATE_TOKEN = r"\d{1,2}[.\-/]\s*\d{1,2}"
 DATE_RANGE_PATTERN = re.compile(
-    rf"(?:접수\s*기간|온라인\s*접수\s*기간|신청\s*기간|청약\s*접수|청약\s*신청|인터넷\s*청약\s*신청|인터넷\s*접수|서류\s*접수|신청\s*접수)"
+    rf"(?:접수\s*기간|온라인\s*접수\s*기간|신청\s*기간|청약\s*접수|청약\s*신청|인터넷\s*청약\s*신청|인터넷\s*접수|신청\s*접수)"
     rf"[\s\S]{{0,100}}?({DATE_TOKEN})(?:\s+\d{{1,2}}:\d{{2}})?[.\s]*(?:\([^)]{{1,5}}\))?[.\s]*(?:\d{{1,2}}:\d{{2}})?[.\s]*"
     rf"(?:~|∼|부터|－|–|—|-)[^\d]{{0,12}}({DATE_TOKEN}|{SHORT_DATE_TOKEN})"
+)
+SHORT_DATE_RANGE_PATTERN = re.compile(
+    rf"(?:접수\s*기간|온라인\s*접수\s*기간|신청\s*기간|청약\s*접수|청약\s*신청|청약신청|인터넷\s*청약\s*신청|인터넷\s*접수|신청\s*접수|신청접수)"
+    rf"[\s\S]{{0,80}}?({SHORT_DATE_TOKEN})(?:\s+\d{{1,2}}:\d{{2}})?[.\s]*(?:\([^)]{{0,5}}\))?[.\s]*(?:\d{{1,2}}:\d{{2}})?[.\s]*"
+    rf"(?:~|∼|부터|－|–|—|-)[^\d]{{0,12}}({SHORT_DATE_TOKEN})"
 )
 
 USER_AGENT = (
@@ -235,10 +240,19 @@ def _attachment_urls(soup: BeautifulSoup, base_url: str) -> list[str]:
         href = str(link.get("href") or "")
         label = link.get_text(" ", strip=True)
         lowered = href.lower()
+        lh_file = re.search(r"fileDownLoad\('([^']+)'\)", href)
+        if lh_file and label.lower().endswith((".pdf", ".hwp", ".hwpx")):
+            candidate = urljoin(base_url, f"/lhapply/lhFile.do?{urlencode({'fileid': lh_file.group(1)})}")
+            if _allowed_url(candidate) and candidate not in candidates:
+                candidates.append(candidate)
+            continue
         if any(signal in lowered for signal in signals) or any(
             keyword in label for keyword in ("모집공고문", "공고문 보기", "첨부파일")
         ):
             candidate = urljoin(base_url, href)
+            path = urlparse(candidate).path
+            if path.endswith("list.do") and not any(signal in lowered for signal in signals):
+                continue
             if _allowed_url(candidate) and candidate not in candidates:
                 candidates.append(candidate)
     return candidates[:3]
@@ -288,7 +302,7 @@ def _extract_hwpx(content: bytes) -> str:
 
 
 def _extract_attachment(url: str, timeout: int) -> tuple[str, str]:
-    maximum = 25 * 1024 * 1024
+    maximum = 80 * 1024 * 1024
     if "apply.gh.or.kr" in url:
         content = curl_bytes(url, timeout)
         declared = len(content)
@@ -306,13 +320,18 @@ def _extract_attachment(url: str, timeout: int) -> tuple[str, str]:
         return "", "too_large"
     if content.startswith(b"%PDF"):
         from pypdf import PdfReader
+        from pypdf.errors import DependencyError, PdfReadError
 
-        reader = PdfReader(io.BytesIO(content))
+        try:
+            reader = PdfReader(io.BytesIO(content))
+            page_count = len(reader.pages)
+        except (DependencyError, PdfReadError, KeyError, TypeError, ValueError):
+            return "", "pdf_failed"
         pages: list[str] = []
-        for index in range(min(len(reader.pages), 20)):
+        for index in range(min(page_count, 20)):
             try:
                 pages.append(reader.pages[index].extract_text() or "")
-            except (KeyError, TypeError, ValueError):
+            except (DependencyError, PdfReadError, KeyError, TypeError, ValueError):
                 continue
         text = "\n".join(pages)
         return _normalize_text(text), "pdf"
@@ -483,23 +502,26 @@ def _normalize_date_token(value: str, default_year: int | None = None) -> str:
 
 def _application_period(text: str) -> tuple[str, str]:
     candidates: list[tuple[int, str, str]] = []
-    for match in DATE_RANGE_PATTERN.finditer(text):
-        start = _normalize_date_token(match.group(1))
-        start_year = int(start[:4]) if start else None
-        end = _normalize_date_token(match.group(2), start_year)
-        if not start or not end or start > end:
-            continue
-        label = match.group(0)[: match.start(1) - match.start()]
-        score = 0
-        if re.search(r"온라인\s*접수|인터넷\s*접수|청약\s*접수", label):
-            score += 8
-        elif re.search(r"접수\s*기간|신청\s*기간|신청\s*접수", label):
-            score += 5
-        if "서류" in label:
-            score -= 4
-        if start != end:
-            score += 2
-        candidates.append((score, start, end))
+    default_year_match = re.search(r"20\d{2}", text)
+    default_year = int(default_year_match.group(0)) if default_year_match else None
+    for pattern in (DATE_RANGE_PATTERN, SHORT_DATE_RANGE_PATTERN):
+        for match in pattern.finditer(text):
+            start = _normalize_date_token(match.group(1), default_year)
+            start_year = int(start[:4]) if start else default_year
+            end = _normalize_date_token(match.group(2), start_year)
+            if not start or not end or start > end:
+                continue
+            label = match.group(0)[: match.start(1) - match.start()]
+            if "서류" in label:
+                continue
+            score = 0
+            if re.search(r"온라인\s*접수|인터넷\s*접수|청약\s*접수|청약신청", label):
+                score += 8
+            elif re.search(r"접수\s*기간|신청\s*기간|신청\s*접수|신청접수", label):
+                score += 5
+            if start != end:
+                score += 2
+            candidates.append((score, start, end))
     if not candidates:
         return "", ""
     _, start, end = max(candidates, key=lambda candidate: (candidate[0], candidate[2]))

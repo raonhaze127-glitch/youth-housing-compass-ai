@@ -1,7 +1,10 @@
 import unittest
 from unittest.mock import patch
 
+from bs4 import BeautifulSoup
+
 from app.direct.interpretation import (
+    _attachment_urls,
     _select_enrichment_candidates,
     enrich_announcement,
     fetch_notice_text,
@@ -250,9 +253,27 @@ class DirectInterpretationTests(unittest.TestCase):
         self.assertEqual(result["apply_start"], "2026-06-30")
         self.assertEqual(result["apply_end"], "2026-07-02")
 
+    def test_ignores_document_submission_period_as_application_period(self):
+        result = interpret_notice_text(
+            "공급일정 접수기간 : 서류제출대상자 발표일 : 2026.07.09 "
+            "서류접수기간 : 2026.07.10 ~ 2026.07.15 당첨자발표일 : 2026.09.10"
+        )
+
+        self.assertEqual(result["apply_start"], "")
+        self.assertEqual(result["apply_end"], "")
+
+    def test_extracts_lh_compact_schedule_table_dates(self):
+        result = interpret_notice_text(
+            "2026-06-25 모집일정 입주자 모집 공고 신청접수 모바일(PC,) "
+            "목6.25( ) 월7.6( )~화7.7( ) 목7.9( ) 금7.10( )~수7.15( )"
+        )
+
+        self.assertEqual(result["apply_start"], "2026-07-06")
+        self.assertEqual(result["apply_end"], "2026-07-07")
+
     def test_extracts_two_digit_year_from_schedule_table(self):
         result = interpret_notice_text(
-            "모집일정 서류접수 26.06.18 ~ 26.06.19 자격심사 개별안내"
+            "모집일정 신청접수 26.06.18 ~ 26.06.19 자격심사 개별안내"
         )
         self.assertEqual(result["apply_start"], "2026-06-18")
         self.assertEqual(result["apply_end"], "2026-06-19")
@@ -268,6 +289,29 @@ class DirectInterpretationTests(unittest.TestCase):
         self.assertEqual(len(urls), 1)
         self.assertIn("innoFD.do", urls[0])
         self.assertIn("seq=305759", urls[0])
+
+    def test_builds_lh_file_download_url(self):
+        soup = BeautifulSoup(
+            """
+            <a href="javascript:fileDownLoad('67446179');">
+              26-4차입주자모집공고문.pdf
+            </a>
+            <a href="javascript:fileDownLoad('67446188');">
+              공급주택목록.xlsx
+            </a>
+            """,
+            "html.parser",
+        )
+
+        urls = _attachment_urls(
+            soup,
+            "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancInfo.do",
+        )
+
+        self.assertEqual(
+            urls,
+            ["https://apply.lh.or.kr/lhapply/lhFile.do?fileid=67446179"],
+        )
 
     @patch("app.direct.interpretation.fetch_notice_text")
     def test_enrichment_updates_persisted_announcement(self, fetch_notice_text):
@@ -299,7 +343,7 @@ class DirectInterpretationTests(unittest.TestCase):
         enriched = enrich_announcement(announcement)
         self.assertEqual(enriched.apply_start, "2026-07-01")
         self.assertEqual(enriched.apply_end, "2026-07-03")
-        self.assertEqual(enriched.status, "planned")
+        self.assertEqual(enriched.status, "open")
         self.assertIn("청년", enriched.target)
         self.assertIn("주민등록등본", enriched.required_documents)
         self.assertEqual(enriched.metadata["analysis_source"], "official_notice_and_attachments")
