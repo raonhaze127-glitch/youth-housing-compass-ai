@@ -150,7 +150,7 @@ def _merge_preserving_analysis(
     merged = dict(current)
     for field in ANALYSIS_FIELDS:
         merged[field] = previous.get(field)
-    merged["metadata"] = {**current_metadata, **previous_metadata}
+    merged["metadata"] = {**previous_metadata, **current_metadata}
     return merged
 
 

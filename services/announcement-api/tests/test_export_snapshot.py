@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.export_snapshot import _deduplicate_snapshot, _validate
+from scripts.export_snapshot import _deduplicate_snapshot, _merge_preserving_analysis, _validate
 
 
 class ExportSnapshotTests(unittest.TestCase):
@@ -96,6 +96,38 @@ class ExportSnapshotTests(unittest.TestCase):
         self.assertEqual(preferred["summary"], "apply summary")
         self.assertEqual(preferred["metadata"]["analysis_source"], "apply_analysis")
         self.assertEqual(preferred["metadata"]["sections"]["eligibility"], "apply")
+
+    def test_preserves_analysis_but_keeps_fresh_collector_metadata(self):
+        analyzed = {
+            "source_id": "lh_1",
+            "title": "LH youth rental notice",
+            "organization": "LH",
+            "summary": "analyzed summary",
+            "metadata": {
+                "analysis_source": "official_notice_and_attachments",
+                "sections": {"eligibility": "legacy"},
+                "view_count": 10,
+            },
+        }
+        fresh = {
+            "source_id": "lh_1",
+            "title": "LH youth rental notice",
+            "organization": "LH",
+            "summary": "collector summary",
+            "metadata": {
+                "notice_date": "2026-06-26",
+                "view_count": 1234,
+            },
+        }
+
+        preferred = _merge_preserving_analysis(analyzed, fresh)
+
+        self.assertEqual(preferred["summary"], "analyzed summary")
+        self.assertEqual(
+            preferred["metadata"]["analysis_source"],
+            "official_notice_and_attachments",
+        )
+        self.assertEqual(preferred["metadata"]["view_count"], 1234)
 
 
 if __name__ == "__main__":
