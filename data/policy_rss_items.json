@@ -1,130 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-01T11:38:35.960346+00:00",
+  "generated_at": "2026-07-03T06:02:10.087714+00:00",
   "feeds": [
     {
       "department": "국무조정실",
-      "rss": "https://www.korea.kr/rss/dept_opm.xml"
+      "rss": "https://www.korea.kr/rss/dept_opm.xml",
+      "code": "A00004"
     },
     {
       "department": "국토교통부",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml"
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "code": "A00006"
     },
     {
       "department": "기획예산처",
-      "rss": "https://www.korea.kr/rss/dept_mpb.xml"
+      "rss": "https://www.korea.kr/rss/dept_mpb.xml",
+      "code": "A00040"
     }
   ],
-  "count": 10,
+  "count": 5,
   "items": [
     {
-      "dedup_key": "policy_e24b9bb40d4705ca",
-      "title": "(보도설명) 통합 재정사업 평가의 사업별 감액 판정은 집행 적정성, 재정지원 성과 등을 종합적으로 고려한 결과입니다.",
-      "department": "기획예산처",
-      "published_at": "2026-07-01T11:07:45+09:00",
-      "published_date": "2026-07-01",
-      "collected_date": "2026-07-01",
-      "url": "https://www.korea.kr/briefing/actuallyView.do?newsId=148967421&call_from=rsslink",
-      "rss": "https://www.korea.kr/rss/dept_mpb.xml",
-      "summary": "통합 재정사업 평가의 사업별 감액 판정은 집행 적정성, 재정지원 성과 등을 종합적으로 고려한 결과입니다. 자세한 내용은 첨부된 보도설명자료를 참고하시기 바랍니다. [자료제공 : (www.korea.kr) ]",
+      "dedup_key": "policy_286ff62d850c0263",
+      "title": "계약된 집 광고, 하루 늦게 내렸다고 과태료? 단순 실수 부담은 줄이고 허위매물은 엄정 대응",
+      "department": "국토교통부",
+      "published_at": "2026-07-02T00:00:00+09:00",
+      "published_date": "2026-07-02",
+      "collected_date": "2026-07-03",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769273&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-02&endDate=2026-07-03&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
       "topics": [
         "주거안정"
-      ],
-      "targets": [
-        "청년",
-        "고령자"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_fe26c0bac90c6ba1",
-      "title": "청년 의견 반영하면 '마일리지' … 국토교통 정책에 청년 감수성 높인다",
-      "department": "국토교통부",
-      "published_at": "2026-07-01T06:00:00+09:00",
-      "published_date": "2026-07-01",
-      "collected_date": "2026-07-01",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156768949&call_from=rsslink",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "청년 의견 반영하면 '마일리지' … 국토교통 정책에 청년 감수성 높인다 관련 보도자료 내용입니다. 자세한 내용은 첨부파일을 참고하시기 바랍니다. [자료제공 : (www.korea.kr) ]",
-      "topics": [
-        "청년주거",
-        "전월세",
-        "주택공급"
-      ],
-      "targets": [
-        "청년"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_9cd44d6dcad41608",
-      "title": "[참고] 대한민국 산업의 새로운 심장, 서남권에서 시작한다",
-      "department": "국토교통부",
-      "published_at": "2026-06-30T16:17:00+09:00",
-      "published_date": "2026-06-30",
-      "collected_date": "2026-07-01",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156768903&call_from=rsslink",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "[참고] 대한민국 산업의 새로운 심장, 서남권에서 시작한다 관련 보도자료 내용입니다. 자세한 내용은 첨부파일을 참고하시기 바랍니다. [자료제공 : (www.korea.kr) ]",
-      "topics": [
-        "주거안정"
-      ],
-      "targets": [
-        "청년"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_3812dcb5353784f3",
-      "title": "[보도자료] 제16차 부동산 불법행위 대응협의회",
-      "department": "국무조정실",
-      "published_at": "2026-06-30T15:18:20+09:00",
-      "published_date": "2026-06-30",
-      "collected_date": "2026-07-01",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156768886&call_from=rsslink",
-      "rss": "https://www.korea.kr/rss/dept_opm.xml",
-      "summary": "부동산감독추진단, 제16차 부동산 불법행위 대응협의회 개최 - 부처별 부동산 불법행위 대응 현황 점검 및 공조 강화 - 경찰청, 생활형 숙박시설 분양권 전매 사기 중개보조원 등 검거사례 공유 □ 국무조정실 부동산감독추진단(단장 : 김용수 국무2차장겸임)은 6월 30일(화) 정부서울청사에서 제16차 부동산 불법행위 대응협의회를 개최하였다. ㅇ 회의에는 국토교통부, 금융위원회, 국세청, 경찰청 등 관계기관이 참석하여, 각 부처가 추진하고 있는 부동산 불법행위 조사·수사 현황과 향후계획을 공유하고, 기관 간 공조 강화방안을 논의하였다. * (참석) 재정경제부, 법무부, 행정안전부, 국토교통부, 금융위원회, 인사혁신처, 대검찰청, 국세청, 경찰청, 서울특별시, 경기도, 금융감독원, 한국부동산원 등 □ 이 날 회의에서는 국토교통부의 부동산 이상거래 상시·기획조사를 통해 위법의심거래로 관계기관에 통보된 사건의 처리결과와 조치현황을 점검하고, 보다 효율적인 업무수행을 위한 관계기관 간 협력방안을 논의하였다. ㅇ 협의회는 실효성 있는 대응체계 구축을 위해 지방정부와 협력을 강화해 나가고 있으며, 올해 2월부터는 협의회에 서울시, 경기도가 참여하여 현장의 애로사항과 제도개선 의견을 적극 수렴하고 있다. □ 아울러 참석 기관들은 부동산 거래과정에서 발생하는 다양한 유형의 불법행위를 공유하고, 유사범죄 예방을 위한 기관간 협력체계 강화 필요성에 공감하였다. ㅇ 특히, 경찰청은 부동산 범죄 특별단속('26.3.16~10.31) 기간 중 생활형 숙박시설 분양권 전매를 빙자해 가짜 매수인을 내세우는 수법으로 부당이득을 편취한 중개보조원 등 3명을 공인중개사법 위반 등 혐의로 검거한 사례를 공유하였다. □ 김용수 부동산감독추진단장은\"부동산 불법행위 의심사건에 대해서는 관계기관이 긴밀히 협력하여 철저히 조사하고 ",
-      "topics": [
-        "주택공급",
-        "부동산시장"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_2c84fb9fe9567530",
-      "title": "'동탄·기흥·구리' 3곳 투기과열지구·조정대상지역 지정",
-      "department": "국토교통부",
-      "published_at": "2026-06-30T14:58:00+09:00",
-      "published_date": "2026-06-30",
-      "collected_date": "2026-07-01",
-      "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148967354&call_from=rsslink",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "국토교통부는 최근 큰 폭으로 집값이 상승한 경기도 화성시 동탄구, 용인시 기흥구, 구리시 등 3곳을 투기과열지구 및 조정대상지역으로 신규 지정했다. 화성시 동탄구와 용인시 기흥구는 최근 반도체 업계 특수에 따른 집값 상승 기대감과 GTX-A 개통 등 교통 인프라 개선으로, 구리시는 서울과 인접한 역세권 수요로 가격 상승세가 지속되는 상황이다. 경기 화성시 동탄구 일대의 모습. 2026.6.24.(ⓒ뉴스1, 무단 전재-재배포 금지) 이에 국토교통부는 투기적 매수를 차단 실수요자를 보호하고 주택시장 과열에 대응하기 위해, 주거정책심의위원회를 거쳐 투기과열지구와 조정대상지역을 추가 지정했고 7월 1일부터 지정효력이 발생한다. 이번 지정과 함께, 경기도는 시·도 도시계획위원회를 거쳐 3곳을 오는 7월 5일부터 내년 12월 31일까지 토지거래허가구역으로 지정할 계획이라고 밝혔다. 국토교통부는 부동산 시장을 교란하는 불법행위에 엄정 대응하는 등 주택가격 상승 지역 모니터링도 강화할 계획이다. 아울러, 주택시장이 조속히 안정될 수 있도록 9.7 주택공급 확대방안, 1.29 수도권 도심 6만호 공급계획, 5월 말 발표한 매입임대 물량 확대 및 도시형생활주택·오피스텔 등 비(非)아파트 공급 확대 계획 등 주택공급에 총력을 다하기로 했다. '범정부 주택공급 현장 애로해소 지원센터'도 가동하여 주택건설 애로 해소를 지원하는 등 현장의 목소리를 듣고 공급 방안을 지속 보완·발전시켜 나갈 계획이다. 문의: 국토교통부 주택정책과(044-201-3328), 경기도 토지정보과(031-8008-2353) [자료제공 : (www.korea.kr) ]",
-      "topics": [
-        "공공주택",
-        "주택공급",
-        "부동산시장"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_8f6dfb1984e89c6a",
-      "title": "'전세버스'도 유가보조금 지원 「여객자동차법 시행령」 개정안 국무회의 의결",
-      "department": "국토교통부",
-      "published_at": "2026-06-30T12:26:00+09:00",
-      "published_date": "2026-06-30",
-      "collected_date": "2026-07-01",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156768820&call_from=rsslink",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "'전세버스'도 유가보조금 지원 「여객자동차법 시행령」 개정안 국무회의 의결 관련 보도자료 내용입니다. 자세한 내용은 첨부파일을 참고하시기 바랍니다. [자료제공 : (www.korea.kr) ]",
-      "topics": [
-        "전월세"
       ],
       "targets": [
         "일반가구"
@@ -132,80 +39,76 @@
       "relevance": "중간"
     },
     {
-      "dedup_key": "policy_bbec5a56c36c81ad",
-      "title": "'26년 상반기 특화주택 선정결과",
+      "dedup_key": "policy_1db218cec15da035",
+      "title": "김용석 대광위원장,\"인천계양 첫 입주, 교통대책도 입주 시기에 맞춰 준비해야\"",
       "department": "국토교통부",
-      "published_at": "2026-06-30T11:00:00+09:00",
-      "published_date": "2026-06-30",
-      "collected_date": "2026-07-01",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156768784&call_from=rsslink",
+      "published_at": "2026-07-02T00:00:00+09:00",
+      "published_date": "2026-07-02",
+      "collected_date": "2026-07-03",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769358&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-02&endDate=2026-07-03&srchWord=&period=day",
       "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "'26년 상반기 특화주택 선정결과 관련 보도자료 내용입니다. 자세한 내용은 첨부파일을 참고하시기 바랍니다. [자료제공 : (www.korea.kr) ]",
+      "summary": "",
       "topics": [
         "주거안정"
       ],
       "targets": [
         "일반가구"
       ],
-      "relevance": "높음"
+      "relevance": "중간"
     },
     {
-      "dedup_key": "policy_34d830a666997ed7",
-      "title": "\"낙후를 기회로\" … 투자선도지구 공모 5곳 선정 국비 마중물 480억원, 민간투자 7,875억원 이끈다.",
-      "department": "국토교통부",
-      "published_at": "2026-06-30T09:00:00+09:00",
-      "published_date": "2026-06-30",
-      "collected_date": "2026-07-01",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156768722&call_from=rsslink",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "\"낙후를 기회로\" … 투자선도지구 공모 5곳 선정 국비 마중물 480억원, 민간투자 7,875억원 이끈다. 관련 보도자료 내용입니다. 자세한 내용은 첨부파일을 참고하시기 바랍니다. [자료제공 : (www.korea.kr) ]",
-      "topics": [
-        "주거안정"
-      ],
-      "targets": [
-        "청년"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_32e54f5f876bb2e5",
-      "title": "[참고] 투기과열지구 및 조정대상지역 추가 지정",
-      "department": "국토교통부",
-      "published_at": "2026-06-30T08:02:00+09:00",
-      "published_date": "2026-06-30",
-      "collected_date": "2026-07-01",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156768715&call_from=rsslink",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "[참고] 투기과열지구 및 조정대상지역 추가 지정 관련 보도자료 내용입니다. 자세한 내용은 첨부파일을 참고하시기 바랍니다. [자료제공 : (www.korea.kr) ]",
-      "topics": [
-        "공공주택",
-        "전월세",
-        "주택공급",
-        "부동산시장"
-      ],
-      "targets": [
-        "청년",
-        "무주택자"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_c4a4ee04dffd9097",
-      "title": "'26년 5월 주택통계",
-      "department": "국토교통부",
-      "published_at": "2026-06-30T06:00:00+09:00",
-      "published_date": "2026-06-30",
-      "collected_date": "2026-07-01",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156768697&call_from=rsslink",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "'26년 5월 주택통계 관련 보도자료 내용입니다. 자세한 내용은 첨부파일을 참고하시기 바랍니다. [자료제공 : (www.korea.kr) ]",
+      "dedup_key": "policy_e3f02e2159e3ed81",
+      "title": "새만금청, 집중호우 대비 현장 점검 실시",
+      "department": "국무조정실",
+      "published_at": "",
+      "published_date": "",
+      "collected_date": "2026-07-03",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769493&pWise=sub&pWiseSub=C3",
+      "rss": "https://www.korea.kr/rss/dept_opm.xml",
+      "summary": "",
       "topics": [
         "주거안정"
       ],
       "targets": [
         "일반가구"
       ],
-      "relevance": "높음"
+      "relevance": "중간"
+    },
+    {
+      "dedup_key": "policy_b16dc05e8c9cb90a",
+      "title": "새만금청, 집중호우 대비 현장 점검 실시",
+      "department": "기획예산처",
+      "published_at": "",
+      "published_date": "",
+      "collected_date": "2026-07-03",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769493&pWise=sub&pWiseSub=C3",
+      "rss": "https://www.korea.kr/rss/dept_mpb.xml",
+      "summary": "",
+      "topics": [
+        "주거안정"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "중간"
+    },
+    {
+      "dedup_key": "policy_25c5e88c4fbec033",
+      "title": "새만금청, 집중호우 대비 현장 점검 실시",
+      "department": "국토교통부",
+      "published_at": "",
+      "published_date": "",
+      "collected_date": "2026-07-03",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769493&pWise=sub&pWiseSub=C3",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "주거안정"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "중간"
     }
   ]
 }
