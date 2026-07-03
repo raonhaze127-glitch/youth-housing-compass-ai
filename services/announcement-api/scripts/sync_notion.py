@@ -11,10 +11,15 @@ from typing import Any
 import requests
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
+SERVICE_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = PROJECT_ROOT / "data" / "live_housing_programs.json"
 DEFAULT_DATABASE_ID = "a0cdb11747fd41698ee53dc8f6a86e9f"
 NOTION_VERSION = "2022-06-28"
 KST = timezone(timedelta(hours=9))
+
+sys.path.insert(0, str(SERVICE_ROOT))
+
+from app.direct.collectors import _fetch_lh_wrtanc_boards  # noqa: E402
 
 
 def _collected_date_from_generated_at(value: str) -> str:
@@ -383,6 +388,20 @@ def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -
                 created += 1
         except Exception as exc:  # noqa: BLE001
             errors.append(f"{dedup_key}: {exc}")
+    backfilled_lh_view_counts = 0
+    if "조회수" in allowed_properties:
+        try:
+            for announcement in _fetch_lh_wrtanc_boards(90, 30, datetime.now(KST).isoformat()):
+                view_count = _metadata_number(announcement.to_dict(), "view_count")
+                if not view_count:
+                    continue
+                page_id = client.find_page(database_id, announcement.source_id)
+                if not page_id:
+                    continue
+                client.update_page(page_id, {"조회수": view_count})
+                backfilled_lh_view_counts += 1
+        except Exception as exc:  # noqa: BLE001
+            errors.append(f"lh_view_count_backfill: {exc}")
     return {
         "status": "ok" if not errors else "partial",
         "collected_date": collected_date,
@@ -390,6 +409,7 @@ def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -
         "updated": updated,
         "skipped": skipped,
         "archived_private_applyhome": archived,
+        "backfilled_lh_view_counts": backfilled_lh_view_counts,
         "errors": errors,
     }
 
