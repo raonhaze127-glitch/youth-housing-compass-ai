@@ -166,6 +166,33 @@ try {
     throw new Error("통합공공임대 가이드 답변이 Policy Agent에 반영되지 않았습니다.");
   }
 
+  const typePolicyCases = [
+    { message: "국민임대는?", expected: "30년" },
+    { message: "행복주택은?", expected: "최대 거주기간" },
+    { message: "공공임대는?", expected: "분양전환" },
+    { message: "영구임대는?", expected: "기초생활수급자" },
+    { message: "장기전세는?", expected: "보증금" },
+    { message: "매입임대는?", expected: "기존 주택을 매입" },
+    { message: "전세임대는?", expected: "전세계약" },
+    { message: "주거지원사업은?", expected: "주거위기" }
+  ];
+  for (const typePolicyCase of typePolicyCases) {
+    const typePolicyResponse = await fetch("http://127.0.0.1:3010/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: typePolicyCase.message })
+    });
+    const typePolicy = await typePolicyResponse.json();
+    if (
+      !typePolicyResponse.ok ||
+      typePolicy.handledBy !== "policy-agent" ||
+      typePolicy.intent !== "policy" ||
+      !typePolicy.answer?.includes(typePolicyCase.expected)
+    ) {
+      throw new Error(`${typePolicyCase.message} 유형별 정책 답변이 올바르지 않습니다.`);
+    }
+  }
+
   const unsupportedResponse = await fetch("http://127.0.0.1:3010/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
