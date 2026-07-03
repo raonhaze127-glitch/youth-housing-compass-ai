@@ -337,59 +337,79 @@ def _fetch_lh_wrtanc_boards(days_back: int, timeout: int, fetched_at: str) -> li
     result: list[Announcement] = []
     headers = {"User-Agent": "Mozilla/5.0 youth-housing-compass"}
     for mi, default_upp_ais_tp_cd, fallback_type in LH_WRTANC_BOARDS:
-        response = requests.get(
-            "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancList.do",
-            params={"mi": mi},
-            timeout=timeout,
-            headers=headers,
-        )
+        session = requests.Session()
+        url = "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancList.do"
+        response = session.get(url, params={"mi": mi}, timeout=timeout, headers=headers)
         response.raise_for_status()
         response.encoding = getattr(response, "apparent_encoding", None) or getattr(response, "encoding", None)
         soup = BeautifulSoup(getattr(response, "text", ""), "html.parser")
-        for row in soup.select(".bbs_ListA tbody tr"):
-            cells = row.find_all("td")
-            link = row.select_one(".wrtancInfoBtn")
-            if len(cells) < 8 or not link:
-                continue
-            title_node = BeautifulSoup(str(link), "html.parser")
-            for extra in title_node.select("em"):
-                extra.decompose()
-            title = title_node.get_text(" ", strip=True)
-            pan_id = str(link.get("data-id1") or "").strip()
-            if not title or not pan_id:
-                continue
-            registered = normalize_date(cells[5].get_text(" ", strip=True))
-            if registered:
-                try:
-                    if date.fromisoformat(registered) < cutoff:
-                        continue
-                except ValueError:
-                    pass
-            housing_type = cells[1].get_text(" ", strip=True) or fallback_type
-            if not is_public_recruitment_notice(
-                {"title": title, "housing_type": housing_type, "organization": "LH"}
-            ):
-                continue
-            item = {
-                "PAN_ID": pan_id,
-                "CCR_CNNT_SYS_DS_CD": str(link.get("data-id2") or "").strip(),
-                "UPP_AIS_TP_CD": str(link.get("data-id3") or default_upp_ais_tp_cd).strip(),
-                "AIS_TP_CD": str(link.get("data-id4") or "").strip(),
-                "MI": mi,
-                "BBS_TL": title,
-            }
-            result.append(_announcement(
-                source_id=f"lh_{pan_id}",
-                title=title,
-                organization="LH",
-                category="LH 공공주택",
-                region=_lh_region(cells[3].get_text(" ", strip=True), title),
-                housing_type=housing_type,
-                end=cells[6].get_text(" ", strip=True),
-                url=_lh_notice_url(item, housing_type),
-                fetched_at=fetched_at,
-                metadata={"notice_date": registered, "view_count": _view_count(cells[8].get_text(" ", strip=True))},
-            ))
+        page_numbers = [
+            int(match.group(1))
+            for match in re.finditer(r"goPaging\((\d+)\)", getattr(response, "text", ""))
+        ]
+        last_page = max(page_numbers, default=1)
+
+        for page in range(1, min(last_page, 10) + 1):
+            if page > 1:
+                data = {
+                    field.get("name"): field.get("value", "")
+                    for field in soup.select("input[name]")
+                    if field.get("name")
+                }
+                data.update({"currPage": str(page), "mi": mi, "listCo": data.get("listCo") or "50"})
+                response = session.post(url, data=data, timeout=timeout, headers=headers)
+                response.raise_for_status()
+                response.encoding = getattr(response, "apparent_encoding", None) or getattr(response, "encoding", None)
+                soup = BeautifulSoup(getattr(response, "text", ""), "html.parser")
+
+            saw_recent_row = False
+            for row in soup.select(".bbs_ListA tbody tr"):
+                cells = row.find_all("td")
+                link = row.select_one(".wrtancInfoBtn")
+                if len(cells) < 8 or not link:
+                    continue
+                title_node = BeautifulSoup(str(link), "html.parser")
+                for extra in title_node.select("em"):
+                    extra.decompose()
+                title = title_node.get_text(" ", strip=True)
+                pan_id = str(link.get("data-id1") or "").strip()
+                if not title or not pan_id:
+                    continue
+                registered = normalize_date(cells[5].get_text(" ", strip=True))
+                if registered:
+                    try:
+                        if date.fromisoformat(registered) < cutoff:
+                            continue
+                    except ValueError:
+                        pass
+                    saw_recent_row = True
+                housing_type = cells[1].get_text(" ", strip=True) or fallback_type
+                if not is_public_recruitment_notice(
+                    {"title": title, "housing_type": housing_type, "organization": "LH"}
+                ):
+                    continue
+                item = {
+                    "PAN_ID": pan_id,
+                    "CCR_CNNT_SYS_DS_CD": str(link.get("data-id2") or "").strip(),
+                    "UPP_AIS_TP_CD": str(link.get("data-id3") or default_upp_ais_tp_cd).strip(),
+                    "AIS_TP_CD": str(link.get("data-id4") or "").strip(),
+                    "MI": mi,
+                    "BBS_TL": title,
+                }
+                result.append(_announcement(
+                    source_id=f"lh_{pan_id}",
+                    title=title,
+                    organization="LH",
+                    category="LH 공공주택",
+                    region=_lh_region(cells[3].get_text(" ", strip=True), title),
+                    housing_type=housing_type,
+                    end=cells[6].get_text(" ", strip=True),
+                    url=_lh_notice_url(item, housing_type),
+                    fetched_at=fetched_at,
+                    metadata={"notice_date": registered, "view_count": _view_count(cells[8].get_text(" ", strip=True))},
+                ))
+            if page > 1 and not saw_recent_row:
+                break
     return list({item.source_id: item for item in result}.values())
 
 

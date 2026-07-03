@@ -30,6 +30,19 @@ class FakeResponse:
         return self.payload
 
 
+class FakeSession:
+    def __init__(self, pages):
+        self.pages = list(pages)
+        self.posts = []
+
+    def get(self, *args, **kwargs):
+        return self.pages.pop(0)
+
+    def post(self, *args, **kwargs):
+        self.posts.append(kwargs.get("data") or {})
+        return self.pages.pop(0)
+
+
 class DirectCollectorTests(unittest.TestCase):
     def test_gh_apply_rental_list_is_normalized(self):
         today = date.today().isoformat()
@@ -281,7 +294,8 @@ class DirectCollectorTests(unittest.TestCase):
                 }
             ]
         }
-        with mock.patch("app.direct.collectors.requests.get", return_value=FakeResponse(payload)):
+        with mock.patch("app.direct.collectors.requests.get", return_value=FakeResponse(payload)), \
+             mock.patch("app.direct.collectors._fetch_lh_wrtanc_boards", return_value=[]):
             result = _fetch_lh("key", 2, 5, "now")
         self.assertEqual([item.source_id for item in result], ["lh_PAN123"])
         self.assertIn("selectWrtancInfo.do", result[0].announcement_url)
@@ -297,16 +311,55 @@ class DirectCollectorTests(unittest.TestCase):
           <td>경기도</td><td></td><td>2026.05.29</td><td>2026.07.21</td><td>공고중</td><td>1</td>
         </tr></tbody></table>
         """
-        with mock.patch("app.direct.collectors.requests.get", return_value=FakeResponse({})) as request:
-            request.return_value.text = html
-            request.return_value.encoding = "utf-8"
-            request.return_value.apparent_encoding = "utf-8"
+        response = FakeResponse({})
+        response.text = html
+        response.encoding = "utf-8"
+        response.apparent_encoding = "utf-8"
+        with mock.patch(
+            "app.direct.collectors.requests.Session",
+            return_value=FakeSession([response, response]),
+        ):
             result = _fetch_lh_wrtanc_boards(90, 5, "now")
         self.assertEqual([item.source_id for item in result], ["lh_0000061094"])
         self.assertEqual(result[0].region, "경기")
         self.assertEqual(result[0].metadata["view_count"], 1)
         self.assertIn("selectWrtancInfo.do", result[0].announcement_url)
         self.assertIn("panId=0000061094", result[0].announcement_url)
+
+    def test_lh_wrtanc_board_paginates_with_hidden_form_values(self):
+        today = date.today().strftime("%Y.%m.%d")
+        first_page = FakeResponse({})
+        first_page.text = """
+        <input type="hidden" name="csrfToken" value="TOKEN" />
+        <form name="pagingForm">
+          <input type="hidden" name="currPage" value="1" />
+          <input type="hidden" name="listCo" value="50" />
+        </form>
+        <table class="bbs_ListA"><tbody></tbody></table>
+        <a onclick="goPaging(2)">2</a>
+        """
+        first_page.encoding = "utf-8"
+        first_page.apparent_encoding = "utf-8"
+        second_page = FakeResponse({})
+        second_page.text = f"""
+        <table class="bbs_ListA"><tbody><tr>
+          <td>51</td><td>매입임대</td>
+          <td class="bbs_tit"><a class="wrtancInfoBtn" data-id1="2015122300020192" data-id2="03" data-id3="13" data-id4="26">
+            <span>청년 매입임대주택 예비입주자 모집 공고</span>
+          </a></td>
+          <td>충북</td><td></td><td>{today}</td><td>2026.07.08</td><td>공고중</td><td>1234</td>
+        </tr></tbody></table>
+        """
+        second_page.encoding = "utf-8"
+        second_page.apparent_encoding = "utf-8"
+        session = FakeSession([first_page, second_page, first_page, second_page])
+        with mock.patch("app.direct.collectors.requests.Session", return_value=session):
+            result = _fetch_lh_wrtanc_boards(90, 5, "now")
+        matched = [item for item in result if item.source_id == "lh_2015122300020192"]
+        self.assertEqual(len(matched), 1)
+        self.assertEqual(matched[0].metadata["view_count"], 1234)
+        self.assertEqual(session.posts[0]["currPage"], "2")
+        self.assertEqual(session.posts[0]["csrfToken"], "TOKEN")
 
     def test_lh_standard_response_is_normalized(self):
         payload = {
@@ -324,7 +377,8 @@ class DirectCollectorTests(unittest.TestCase):
                 }
             }
         }
-        with mock.patch("app.direct.collectors.requests.get", return_value=FakeResponse(payload)) as request:
+        with mock.patch("app.direct.collectors.requests.get", return_value=FakeResponse(payload)) as request, \
+             mock.patch("app.direct.collectors._fetch_lh_wrtanc_boards", return_value=[]):
             result = _fetch_lh("key", 2, 5, "now")
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0].organization, "LH")
