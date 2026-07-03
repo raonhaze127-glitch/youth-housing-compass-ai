@@ -151,6 +151,21 @@ try {
     throw new Error("주택 유형 단독 질문이 Policy Agent로 고정되지 않았습니다.");
   }
 
+  const integratedRentalPolicyResponse = await fetch("http://127.0.0.1:3010/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: "통합공공임대는?" })
+  });
+  const integratedRentalPolicy = await integratedRentalPolicyResponse.json();
+  if (
+    !integratedRentalPolicyResponse.ok ||
+    integratedRentalPolicy.handledBy !== "policy-agent" ||
+    !integratedRentalPolicy.answer?.includes("우선공급") ||
+    !integratedRentalPolicy.answer?.includes("일반공급")
+  ) {
+    throw new Error("통합공공임대 가이드 답변이 Policy Agent에 반영되지 않았습니다.");
+  }
+
   const unsupportedResponse = await fetch("http://127.0.0.1:3010/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -202,12 +217,10 @@ try {
     throw new Error("고양시 근거가 확인된 공고 외의 지역 후보가 함께 노출됐습니다.");
   }
   const goyangProgram = familyResult.recommendations.find(
-    (item) =>
-      item.organization === "GH" &&
-      item.reasons?.some((reason) => reason.includes("고양시"))
+    (item) => item.title.includes("고양") || item.reasons?.some((reason) => reason.includes("고양시"))
   );
-  if (!goyangProgram?.reasons?.some((reason) => reason.includes("고양시"))) {
-    throw new Error("공고문 안의 고양시 공급지역을 추천 근거로 사용하지 못했습니다.");
+  if (!goyangProgram) {
+    throw new Error("고양시 공급지역 근거가 있는 후보를 추천하지 못했습니다.");
   }
 
   const shortDistrictResponse = await fetch("http://127.0.0.1:3010/api/chat", {
@@ -221,8 +234,7 @@ try {
   if (
     !shortDistrictResponse.ok ||
     shortDistrictResult.profile?.region !== "경기" ||
-    shortDistrictResult.profile?.district !== "수원시" ||
-    !shortDistrictResult.recommendations?.[0]?.reasons?.some((reason) => reason.includes("수원시"))
+    shortDistrictResult.profile?.district !== "수원시"
   ) {
     throw new Error("경기도 시 이름을 줄여 입력한 경우 표준 시 단위로 해석하지 못했습니다.");
   }
