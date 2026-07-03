@@ -11,6 +11,19 @@ on:
         required: false
         default: false
         type: boolean
+      existing_only:
+        description: "Re-enrich the stored snapshot without collecting new lists"
+        required: false
+        default: false
+        type: boolean
+      enrich_limit:
+        description: "Number of announcements to enrich"
+        required: false
+        default: "24"
+      enrich_offset:
+        description: "Offset for stored snapshot re-enrichment"
+        required: false
+        default: "0"
 
 concurrency:
   group: daily-announcement-sync
@@ -22,7 +35,7 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
@@ -54,11 +67,18 @@ jobs:
           DATA_GO_KR_API_KEY: ${{ secrets.DATA_GO_KR_API_KEY }}
           ANNOUNCEMENT_SYNC_TOKEN: ${{ secrets.ANNOUNCEMENT_SYNC_TOKEN }}
           ANNOUNCEMENT_API_BASE_URL: https://youth-housing-compass-announcement-api.onrender.com
-        run: >-
-          python services/announcement-api/scripts/export_snapshot.py
-          --days-back "${{ steps.window.outputs.days_back }}"
-          --minimum-count 3
-          --enrich-limit 24
+        shell: bash
+        run: |
+          args=(
+            --days-back "${{ steps.window.outputs.days_back }}"
+            --minimum-count 3
+            --enrich-limit "${{ inputs.enrich_limit || '24' }}"
+            --enrich-offset "${{ inputs.enrich_offset || '0' }}"
+          )
+          if [[ "${{ inputs.existing_only }}" == "true" ]]; then
+            args+=(--existing-only)
+          fi
+          python services/announcement-api/scripts/export_snapshot.py "${args[@]}"
 
       - name: Sync snapshot to Notion
         env:
