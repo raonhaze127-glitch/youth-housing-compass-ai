@@ -18,6 +18,7 @@
 - **자산기준:** 공공주택 자산·자동차 기준 적용 여부와 금액을 공고에서 확인한다.
 - **선정방식:** 우선공급 자격·배점·추천과 일반공급 추첨 등이 함께 사용될 수 있다.
 - **청주나 쉬운 설명:** 여러 공공임대 유형을 하나의 틀로 묶어 다양한 소득·생애계층이 함께 신청하도록 만든 장기 임대주택이다.
+- **상세 가이드:** [KB-003 통합공공임대 가이드](kb-003-integrated-public-rental-guide.md)를 우선 참고한다.
 
 ## 영구임대
 
@@ -102,5 +103,6 @@
 - 국토교통부·LH 마이홈포털, [임대주택소개 및 공공임대주택 유형별 특징](https://www.myhome.go.kr/hws/portal/cont/selectContRentalHouseView.do)
 - 국토교통부·LH 마이홈포털, [통합공공임대주택](https://www.myhome.go.kr/hws/portal/cont/selectIntegratedPubRentalHouseView.do)
 - 국토교통부·LH 마이홈포털, [국민임대주택 입주자격 및 소득·자산기준](https://www.myhome.go.kr/hws/portal/cont/selectNationalRentalHouseView.do)
+- LH 청약플러스, [통합공공임대 가이드](https://apply.lh.or.kr/lhapply/cm/cntnts/cntntsView.do?mi=1201583&cntntsId=1201331)
 
 마이홈포털에서 인쇄·PDF 저장할 수 있는 공식 임대주택 유형표를 기준으로 상담용 요약을 작성했다. 세부 기준은 개정될 수 있으므로 최신 모집공고를 우선한다.
