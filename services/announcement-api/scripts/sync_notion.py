@@ -100,6 +100,18 @@ def _application_status_order(value: Any) -> dict[str, Any]:
     return {"number": APPLICATION_STATUS_ORDER.get(_clean(value), 2)}
 
 
+def _application_state(item: dict[str, Any]) -> str:
+    status = _clean(item.get("status"))
+    apply_end = _clean(item.get("apply_end"))[:10]
+    if apply_end:
+        try:
+            if datetime.fromisoformat(apply_end).date() < datetime.now(KST).date():
+                return "closed"
+        except ValueError:
+            pass
+    return status
+
+
 def _notice_type(item: dict[str, Any]) -> str:
     text = " ".join(
         _clean(item.get(key)).lower()
@@ -142,6 +154,7 @@ def _metadata_number(item: dict[str, Any], *keys: str) -> dict[str, Any] | None:
 
 def _item_properties(item: dict[str, Any], collected_date: str) -> dict[str, Any]:
     source_id = _clean(item.get("source_id") or item.get("id"))
+    application_state = _application_state(item)
     properties: dict[str, Any] = {
         "제목": _title(item.get("title")),
         "지역": _rich_text(item.get("region")),
@@ -149,9 +162,9 @@ def _item_properties(item: dict[str, Any], collected_date: str) -> dict[str, Any
         "housing_program": _rich_text(item.get("housing_type")),
         "dedup_key": _rich_text(source_id),
         "notice_type": {"select": {"name": _notice_type(item)}},
-        "raw_status": _status(item.get("status")),
-        "\uccad\uc57d\uc0c1\ud0dc": _application_status(item.get("status")),
-        "\uccad\uc57d\uc815\ub82c": _application_status_order(item.get("status")),
+        "raw_status": _status(application_state),
+        "\uccad\uc57d\uc0c1\ud0dc": _application_status(application_state),
+        "\uccad\uc57d\uc815\ub82c": _application_status_order(application_state),
         "처리상태": {"status": {"name": "시작 전"}},
         "수집일": {"date": {"start": collected_date}},
         "\ub9c8\uc9c0\ub9c9\ud655\uc778\uc77c": {"date": {"start": collected_date}},
