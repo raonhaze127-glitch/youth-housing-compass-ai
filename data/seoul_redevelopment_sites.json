@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-04T12:44:26.436396+00:00",
+  "generated_at": "2026-07-04T18:08:09.563941+00:00",
   "source": "서울시 정비사업 정보몽땅 사업장검색",
   "count": 1131,
   "items": [
@@ -16161,8 +16161,8 @@
       "address_lot": "원효로1가 82-1",
       "site_stage": "추진위원회승인",
       "stage": "추진위원회",
-      "public_item_count": "13건",
-      "timeliness_rate": "-",
+      "public_item_count": "14건",
+      "timeliness_rate": "100.0%",
       "completeness_rate": "100.0%",
       "cafe_url": "Wonhyoro1-station",
       "site_url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=Wonhyoro1-station",
