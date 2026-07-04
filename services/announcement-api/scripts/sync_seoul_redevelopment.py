@@ -363,6 +363,60 @@ def _group_supply_candidates(
     )
 
 
+def _site_row_key(row: dict[str, Any]) -> str:
+    raw = row.get("cafe_url") or row.get("map_id") or row.get("project_name") or row.get("address_lot")
+    normalized = re.sub(r"[^0-9A-Za-z가-힣]+", "_", _clean(raw)).strip("_")
+    return normalized or "unknown"
+
+
+def _public_site_items(site_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    items: list[dict[str, Any]] = []
+    for row in site_rows:
+        if not row.get("is_public_program"):
+            continue
+        item = {
+            "dedup_key": f"redevelop_site_{_site_row_key(row)}",
+            "biz_no": "",
+            "district": row.get("district", ""),
+            "stage": row.get("stage") or "기타",
+            "project_approval_date": "",
+            "management_disposal_date": "",
+            "construction_start_date": "",
+            "completion_date": "",
+            "latest_progress_date": "",
+            "latest_stage": row.get("site_stage", ""),
+            "latest_detail": row.get("site_stage", ""),
+            "latest_title": row.get("project_name", ""),
+            "title": f"{row.get('project_name') or row.get('district') or '서울'} (원본 공공사업장)",
+            "detail": "서울시 정비사업 정보몽땅 사업장검색 원본 기준 공공사업 분류 항목입니다.",
+            "source": SOURCE_NAME,
+            "supply_review": False,
+            "content_status": "시작 전",
+            "history_count": 0,
+            "history": [],
+            "project_name": row.get("project_name", ""),
+            "address_lot": row.get("address_lot", ""),
+            "business_type": row.get("business_type", ""),
+            "site_url": row.get("site_url", ""),
+            "map_id": row.get("map_id", ""),
+            "site_match_status": "확정",
+            "site_candidates": row.get("project_name", ""),
+            "is_public_program": True,
+            "public_program_type": row.get("public_program_type", "미분류"),
+            "public_program_reason": row.get("public_program_reason", ""),
+        }
+        item["schedule_summary"] = f"원본 진행단계: {row.get('site_stage', '')}".strip()
+        items.append(item)
+    return sorted(
+        items,
+        key=lambda item: (
+            item.get("public_program_type", ""),
+            item.get("district", ""),
+            item.get("project_name", ""),
+        ),
+    )
+
+
 def collect(api_key: str, max_events: int, max_items: int, timeout: int) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     events = _collect_events(api_key, max_events=max(0, max_events), timeout=max(5, timeout))
     site_rows = _collect_site_rows(timeout=max(5, timeout))
@@ -418,7 +472,7 @@ def _notion_properties(item: dict[str, Any]) -> dict[str, Any]:
         "상세내용": _rich(item["detail"]),
         "주요일정": _rich(item["schedule_summary"]),
         "콘텐츠상태": {"status": {"name": item["content_status"]}},
-        "공급예정지검토": {"checkbox": True},
+        "공급예정지검토": {"checkbox": bool(item.get("supply_review"))},
         "dedup_key": _rich(item["dedup_key"]),
         "source": {"select": {"name": SOURCE_NAME}},
         "사업장명": _rich(item.get("project_name", "")),
@@ -534,6 +588,7 @@ def main() -> None:
     parser.add_argument("--site-output", type=Path, default=DEFAULT_SITE_OUTPUT)
     parser.add_argument("--api-key", default=_env("SEOUL_OPEN_API_KEY"))
     parser.add_argument("--database-id", default=_env("NOTION_REDEVELOPMENT_DATABASE_ID"))
+    parser.add_argument("--sync-public-sites", action="store_true")
     parser.add_argument("--no-notion", action="store_true")
     args = parser.parse_args()
 
@@ -549,13 +604,15 @@ def main() -> None:
             raise SystemExit("NOTION_TOKEN is required.")
         if not args.database_id:
             raise SystemExit("NOTION_REDEVELOPMENT_DATABASE_ID is required.")
-        created, updated = sync_notion(items, args.database_id, token)
+        notion_items = items + (_public_site_items(site_rows) if args.sync_public_sites else [])
+        created, updated = sync_notion(notion_items, args.database_id, token)
     print(
         json.dumps(
             {
                 "status": "ok",
                 "collected": len(items),
                 "site_rows": len(site_rows),
+                "public_site_rows": len(_public_site_items(site_rows)),
                 "created": created,
                 "updated": updated,
                 "output": str(args.output),

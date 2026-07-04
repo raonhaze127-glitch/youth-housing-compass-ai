@@ -46,6 +46,7 @@ jobs:
         run: >-
           python services/announcement-api/scripts/sync_seoul_redevelopment.py
           --max-items "${{ inputs.max_items || '0' }}"
+          --sync-public-sites
           --timeout 20
 
       - name: Commit updated redevelopment snapshot
