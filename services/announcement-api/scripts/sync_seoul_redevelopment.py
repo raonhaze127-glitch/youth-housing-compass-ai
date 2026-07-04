@@ -61,6 +61,13 @@ STAGE_ALIASES = (
     ("준공", "준공"),
 )
 
+PUBLIC_PROGRAM_PATTERNS = (
+    ("공공재개발", re.compile(r"공공\s*재개발|공공재개발")),
+    ("공공재건축", re.compile(r"공공\s*재건축|공공재건축")),
+    ("신속통합기획", re.compile(r"신속\s*통합\s*기획|신속통합기획|신통기획")),
+    ("모아타운", re.compile(r"모아\s*타운|모아타운|모아\s*주택|모아주택")),
+)
+
 
 def _env(name: str, default: str = "") -> str:
     return os.getenv(name, default).strip()
@@ -82,6 +89,39 @@ def _stage_name(value: str) -> str:
         if needle in value:
             return stage
     return "기타"
+
+
+def _public_program_classification(item: dict[str, Any]) -> tuple[bool, str, str]:
+    text = " ".join(
+        _clean(item.get(key))
+        for key in (
+            "project_name",
+            "business_type",
+            "site_stage",
+            "stage",
+            "district",
+            "address_lot",
+            "cafe_url",
+            "site_url",
+            "site_candidates",
+            "latest_title",
+            "detail",
+        )
+    )
+    for label, pattern in PUBLIC_PROGRAM_PATTERNS:
+        match = pattern.search(text)
+        if match:
+            return True, label, f"사업장/진행 정보에 '{match.group(0)}' 키워드 포함"
+    if item.get("project_name") or item.get("business_type"):
+        return False, "민간/일반", "공공사업 키워드 없음"
+    return False, "미분류", "사업장명/사업유형 매칭 부족"
+
+
+def _apply_public_program_classification(item: dict[str, Any]) -> None:
+    is_public, program_type, reason = _public_program_classification(item)
+    item["is_public_program"] = is_public
+    item["public_program_type"] = program_type
+    item["public_program_reason"] = reason
 
 
 def _is_actual_approval(item: dict[str, Any]) -> bool:
@@ -171,6 +211,7 @@ def _collect_site_rows(timeout: int) -> list[dict[str, Any]]:
                 "map_id": map_match.group(1) if map_match else "",
             }
         )
+        _apply_public_program_classification(rows[-1])
     return rows
 
 
@@ -233,6 +274,7 @@ def _enrich_with_site(item: dict[str, Any], site_rows: list[dict[str, Any]]) -> 
                 "title": f"{site['project_name']} ({item['stage']})",
             }
         )
+        _apply_public_program_classification(item)
         return
     item.update(
         {
@@ -245,6 +287,7 @@ def _enrich_with_site(item: dict[str, Any], site_rows: list[dict[str, Any]]) -> 
             "site_candidates": _site_candidate_text(matches),
         }
     )
+    _apply_public_program_classification(item)
 
 
 def _group_supply_candidates(
@@ -305,6 +348,7 @@ def _group_supply_candidates(
             ),
         }
         _enrich_with_site(item, site_rows)
+        _apply_public_program_classification(item)
         item["schedule_summary"] = _schedule_summary(item)
         candidates.append(item)
 
@@ -383,6 +427,9 @@ def _notion_properties(item: dict[str, Any]) -> dict[str, Any]:
         "지도ID": _rich(item.get("map_id", "")),
         "매칭상태": {"select": {"name": item.get("site_match_status", "후보없음")}},
         "사업장후보": _rich(item.get("site_candidates", "")),
+        "공공사업여부": {"checkbox": bool(item.get("is_public_program"))},
+        "공공사업구분": {"select": {"name": item.get("public_program_type", "미분류")}},
+        "공공사업분류근거": _rich(item.get("public_program_reason", "")),
     }
     if item.get("site_url"):
         properties["사업장URL"] = {"url": item["site_url"]}
