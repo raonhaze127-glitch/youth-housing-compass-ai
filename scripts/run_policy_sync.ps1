@@ -8,6 +8,19 @@ $logFile = Join-Path $logDir ("policy-sync-" + (Get-Date -Format "yyyyMMdd") + "
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 Set-Location $projectRoot
 
+$envFile = Join-Path $projectRoot ".env.local"
+if (Test-Path $envFile) {
+    Get-Content $envFile | ForEach-Object {
+        if ($_ -match '^\s*([^#][^=]+)=(.*)$') {
+            $name = $matches[1].Trim()
+            $value = $matches[2].Trim().Trim('"').Trim("'")
+            if ($name -and -not [Environment]::GetEnvironmentVariable($name, "Process")) {
+                [Environment]::SetEnvironmentVariable($name, $value, "Process")
+            }
+        }
+    }
+}
+
 if (-not $env:NOTION_POLICY_DATABASE_ID) {
     $env:NOTION_POLICY_DATABASE_ID = "398ed42e-2d62-4bfc-ad65-b4a64d082a32"
 }
