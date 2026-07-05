@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-03T06:02:10.087714+00:00",
+  "generated_at": "2026-07-05T06:59:09.485431+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,20 +18,20 @@
       "code": "A00040"
     }
   ],
-  "count": 5,
+  "count": 4,
   "items": [
     {
-      "dedup_key": "policy_286ff62d850c0263",
-      "title": "계약된 집 광고, 하루 늦게 내렸다고 과태료? 단순 실수 부담은 줄이고 허위매물은 엄정 대응",
+      "dedup_key": "policy_c48cfe81d208eec5",
+      "title": "[설명] 정부는 건전한 건축물 분양시장 질서 확립과 수분양자 권익보호를 위해 노력하겠습니다.",
       "department": "국토교통부",
-      "published_at": "2026-07-02T00:00:00+09:00",
-      "published_date": "2026-07-02",
-      "collected_date": "2026-07-03",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769273&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-02&endDate=2026-07-03&srchWord=&period=day",
+      "published_at": "2026-07-03T00:00:00+09:00",
+      "published_date": "2026-07-03",
+      "collected_date": "2026-07-05",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769529&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-03&endDate=2026-07-05&srchWord=&period=day",
       "rss": "https://www.korea.kr/rss/dept_molit.xml",
       "summary": "",
       "topics": [
-        "주거안정"
+        "주택공급"
       ],
       "targets": [
         "일반가구"
@@ -39,74 +39,56 @@
       "relevance": "중간"
     },
     {
-      "dedup_key": "policy_1db218cec15da035",
-      "title": "김용석 대광위원장,\"인천계양 첫 입주, 교통대책도 입주 시기에 맞춰 준비해야\"",
+      "dedup_key": "policy_975f60c3e7549002",
+      "title": "냉방 절실한 쪽방주민에 에어컨 40대, 선풍기 1,610대 공급",
       "department": "국토교통부",
-      "published_at": "2026-07-02T00:00:00+09:00",
-      "published_date": "2026-07-02",
-      "collected_date": "2026-07-03",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769358&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-02&endDate=2026-07-03&srchWord=&period=day",
+      "published_at": "",
+      "published_date": "",
+      "collected_date": "2026-07-05",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769560&pWise=sub&pWiseSub=C2",
       "rss": "https://www.korea.kr/rss/dept_molit.xml",
       "summary": "",
       "topics": [
-        "주거안정"
+        "주거복지"
       ],
       "targets": [
-        "일반가구"
+        "저소득층"
       ],
       "relevance": "중간"
     },
     {
-      "dedup_key": "policy_e3f02e2159e3ed81",
-      "title": "새만금청, 집중호우 대비 현장 점검 실시",
+      "dedup_key": "policy_7ae349fcb192bcd9",
+      "title": "냉방 절실한 쪽방주민에 에어컨 40대, 선풍기 1,610대 공급",
       "department": "국무조정실",
       "published_at": "",
       "published_date": "",
-      "collected_date": "2026-07-03",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769493&pWise=sub&pWiseSub=C3",
+      "collected_date": "2026-07-05",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769560&pWise=sub&pWiseSub=C2",
       "rss": "https://www.korea.kr/rss/dept_opm.xml",
       "summary": "",
       "topics": [
-        "주거안정"
+        "주거복지"
       ],
       "targets": [
-        "일반가구"
+        "저소득층"
       ],
       "relevance": "중간"
     },
     {
-      "dedup_key": "policy_b16dc05e8c9cb90a",
-      "title": "새만금청, 집중호우 대비 현장 점검 실시",
+      "dedup_key": "policy_3b623084ddb905d6",
+      "title": "냉방 절실한 쪽방주민에 에어컨 40대, 선풍기 1,610대 공급",
       "department": "기획예산처",
       "published_at": "",
       "published_date": "",
-      "collected_date": "2026-07-03",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769493&pWise=sub&pWiseSub=C3",
+      "collected_date": "2026-07-05",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769560&pWise=sub&pWiseSub=C2",
       "rss": "https://www.korea.kr/rss/dept_mpb.xml",
       "summary": "",
       "topics": [
-        "주거안정"
+        "주거복지"
       ],
       "targets": [
-        "일반가구"
-      ],
-      "relevance": "중간"
-    },
-    {
-      "dedup_key": "policy_25c5e88c4fbec033",
-      "title": "새만금청, 집중호우 대비 현장 점검 실시",
-      "department": "국토교통부",
-      "published_at": "",
-      "published_date": "",
-      "collected_date": "2026-07-03",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156769493&pWise=sub&pWiseSub=C3",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "",
-      "topics": [
-        "주거안정"
-      ],
-      "targets": [
-        "일반가구"
+        "저소득층"
       ],
       "relevance": "중간"
     }

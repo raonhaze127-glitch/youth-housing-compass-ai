@@ -22,7 +22,15 @@ if (Test-Path $envFile) {
 }
 
 if (-not $env:NOTION_POLICY_DATABASE_ID) {
-    $env:NOTION_POLICY_DATABASE_ID = "398ed42e-2d62-4bfc-ad65-b4a64d082a32"
+    $userDatabaseId = [Environment]::GetEnvironmentVariable("NOTION_POLICY_DATABASE_ID", "User")
+    $env:NOTION_POLICY_DATABASE_ID = if ($userDatabaseId) { $userDatabaseId } else { "398ed42e-2d62-4bfc-ad65-b4a64d082a32" }
+}
+
+if (-not $env:NOTION_TOKEN) {
+    $userToken = [Environment]::GetEnvironmentVariable("NOTION_TOKEN", "User")
+    if ($userToken) {
+        $env:NOTION_TOKEN = $userToken
+    }
 }
 
 "[$(Get-Date -Format o)] policy sync started" | Tee-Object -FilePath $logFile -Append
@@ -33,6 +41,7 @@ if (-not $env:NOTION_TOKEN) {
     exit 2
 }
 
+$ErrorActionPreference = "Continue"
 & $python services/announcement-api/scripts/sync_policy_rss.py --days-back 2 --timeout 20 --retries 1 2>&1 |
     Tee-Object -FilePath $logFile -Append
 
