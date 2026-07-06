@@ -814,7 +814,10 @@ class DirectAnnouncementSource:
             )
             self._errors = []
         else:
-            self._errors = ["DATA_GO_KR_API_KEY가 없어 LH 채널을 건너뜁니다."]
+            jobs["lh"] = lambda: _fetch_lh_wrtanc_boards(
+                lookback_days, self.timeout_seconds, fetched_at
+            )
+            self._errors = ["DATA_GO_KR_API_KEY가 없어 청약홈 채널을 건너뜁니다."]
         collected: list[Announcement] = []
         errors = list(self._errors)
         with ThreadPoolExecutor(max_workers=len(jobs)) as executor:

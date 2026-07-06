@@ -89,7 +89,9 @@ class DirectCollectorTests(unittest.TestCase):
             )
             with mock.patch(
                 "app.direct.collectors._fetch_sh", side_effect=[[first], [second]]
-            ), mock.patch("app.direct.collectors._fetch_gh", return_value=[]):
+            ), mock.patch("app.direct.collectors._fetch_gh", return_value=[]), mock.patch(
+                "app.direct.collectors._fetch_lh_wrtanc_boards", return_value=[]
+            ):
                 source.fetch(days_back=90, force_refresh=True)
                 accumulated = source.fetch(days_back=7, force_refresh=True)
             self.assertEqual({item.source_id for item in accumulated}, {"sh_1", "sh_2"})
