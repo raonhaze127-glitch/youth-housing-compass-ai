@@ -26,7 +26,7 @@ from app.models import Announcement  # noqa: E402
 from app.status import calculate_status  # noqa: E402
 
 
-PUBLIC_ORGANIZATIONS = {"LH", "SH", "GH"}
+SOURCE_ORGANIZATIONS = {"LH", "SH", "GH"}
 REQUIRED_FIELDS = {"id", "source_id", "title", "organization", "announcement_url"}
 ANALYSIS_FIELDS = (
     "target",
@@ -128,10 +128,10 @@ def _validate(items: list[dict[str, Any]], minimum_count: int) -> None:
         if missing:
             raise ValueError(f"필수 필드가 없는 공고가 있습니다: {item.get('id')} / {missing}")
         if (
-            item["organization"] not in PUBLIC_ORGANIZATIONS
+            item["organization"] not in SOURCE_ORGANIZATIONS
             and not is_public_applyhome_notice(item)
         ):
-            raise ValueError(f"공공주택 범위 밖 기관이 포함됐습니다: {item['organization']}")
+            raise ValueError(f"수집 대상 범위 밖 공고가 포함됐습니다: {item['organization']}")
         source_id = str(item["source_id"])
         if source_id in ids:
             raise ValueError(f"중복 source_id가 있습니다: {source_id}")
@@ -265,7 +265,7 @@ def main() -> None:
         candidates = [
             Announcement(**item)
             for item in existing
-            if is_public_recruitment_notice(item)
+            if item.get("source_id") and item.get("title")
         ]
         enriched = enrich_announcements(
             candidates,
@@ -295,22 +295,10 @@ def main() -> None:
     merged = {
         str(item.get("source_id")): item
         for item in existing
-        if item.get("source_id")
-        and (
-            item.get("organization") in PUBLIC_ORGANIZATIONS
-            or is_public_applyhome_notice(item)
-        )
-        and is_public_recruitment_notice(item)
+        if item.get("source_id") and item.get("title")
     }
     for item in fetched:
-        if (
-            item.get("source_id")
-            and (
-                item.get("organization") in PUBLIC_ORGANIZATIONS
-                or is_public_applyhome_notice(item)
-            )
-            and is_public_recruitment_notice(item)
-        ):
+        if item.get("source_id") and item.get("title"):
             source_id = str(item["source_id"])
             merged[source_id] = _merge_preserving_analysis(
                 merged.get(source_id),

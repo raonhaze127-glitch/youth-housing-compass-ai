@@ -437,9 +437,7 @@ def _fetch_lh(api_key: str, days_back: int, timeout: int, fetched_at: str) -> li
             title = str(item.get("BBS_TL") or "")
             raw_id = _first_text(item, "BBS_SN", "bbsSn", "PAN_ID", "panId", "PANID")
             housing_type = str(item.get("AIS_TP_CD_NM") or "공공임대/분양")
-            if not raw_id or not is_public_recruitment_notice(
-                {"title": title, "housing_type": housing_type, "organization": "LH"}
-            ):
+            if not raw_id or not title:
                 continue
             registered = normalize_date(str(item.get("BBS_WOU_DTTM") or "")[:10])
             if registered:
@@ -495,9 +493,7 @@ def _fetch_sh(timeout: int, fetched_at: str, days_back: int = 100) -> list[Annou
                 notice_date = _recent(cells[3].get_text(strip=True), ("%Y-%m-%d",), days_back)
                 if notice_date:
                     saw_recent_row = True
-                if not match or not notice_date or not is_public_recruitment_notice(
-                    {"title": title, "housing_type": housing_type, "organization": "SH"}
-                ):
+                if not match or not title or not notice_date:
                     continue
                 district = next((name for name in SEOUL_DISTRICTS if name in title), "")
                 source_id = f"sh_{match.group(1)}"
@@ -566,9 +562,7 @@ def _parse_gh_apply_list(
             except ValueError:
                 pass
         housing_type = _housing_type(title, business_type or str(config["housing_type"]))
-        if not pbanc_no or not is_public_recruitment_notice(
-            {"title": title, "housing_type": housing_type, "organization": "GH"}
-        ):
+        if not pbanc_no or not title:
             continue
         search_url = f"{config['list_url']}?{urlencode({'searchTitle': title})}"
         result.append(
@@ -668,9 +662,7 @@ def _fetch_gh_legacy(timeout: int, fetched_at: str, days_back: int = 100) -> lis
             notice_date = _recent(
                 cells[4].get_text(strip=True), ("%y.%m.%d", "%Y-%m-%d"), days_back
             )
-            if not match or not notice_date or not is_public_recruitment_notice(
-                {"title": title, "housing_type": "공공임대/분양", "organization": "GH"}
-            ):
+            if not match or not title or not notice_date:
                 continue
             city = next((name for name in GYEONGGI_CITIES if name in title), "")
             article = match.group(1)
@@ -756,8 +748,8 @@ class DirectAnnouncementSource:
 
     def _is_visible(self, item: Announcement) -> bool:
         return (
-            self.include_private_housing
-            or item.organization in PUBLIC_HOUSING_ORGANIZATIONS
+            item.organization != "청약홈"
+            or self.include_private_housing
             or is_public_applyhome_notice(item)
         )
 
@@ -806,7 +798,7 @@ class DirectAnnouncementSource:
                 lookback_days,
                 self.timeout_seconds,
                 fetched_at,
-                self.include_private_housing,
+                False,
             )
             jobs["lh"] = lambda: _fetch_lh(
                 self.api_key, lookback_days, self.timeout_seconds, fetched_at
@@ -830,7 +822,7 @@ class DirectAnnouncementSource:
         unique = {
             item.source_id: item
             for item in collected
-            if item.source_id and item.title and is_public_recruitment_notice(item)
+            if item.source_id and item.title
         }
         items = sorted(unique.values(), key=lambda item: (item.apply_end or item.metadata.get("notice_date") or ""), reverse=True)
         if self.repository and items:
