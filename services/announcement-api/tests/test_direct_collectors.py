@@ -328,6 +328,31 @@ class DirectCollectorTests(unittest.TestCase):
         self.assertIn("selectWrtancInfo.do", result[0].announcement_url)
         self.assertIn("panId=0000061094", result[0].announcement_url)
 
+    def test_lh_wrtanc_board_collects_short_notice_titles(self):
+        today = date.today().strftime("%Y.%m.%d")
+        html = f"""
+        <table class="bbs_ListA"><tbody><tr>
+          <td>1</td><td>행복주택(신혼희망)</td>
+          <td class="bbs_tit"><a class="wrtancInfoBtn" data-id1="2015122300020297" data-id2="03" data-id3="39" data-id4="42">
+            <span>[정정공고]서울대방 신혼희망타운 행복주택 <em class="day">1일전</em></span>
+          </a></td>
+          <td>서울특별시</td><td></td><td>{today}</td><td>2026.07.15</td><td>공고중</td><td>25038</td>
+        </tr></tbody></table>
+        """
+        response = FakeResponse({})
+        response.text = html
+        response.encoding = "utf-8"
+        response.apparent_encoding = "utf-8"
+        with mock.patch(
+            "app.direct.collectors.requests.Session",
+            return_value=FakeSession([response, response]),
+        ):
+            result = _fetch_lh_wrtanc_boards(90, 5, "now")
+        self.assertEqual([item.source_id for item in result], ["lh_2015122300020297"])
+        self.assertEqual(result[0].title, "[정정공고]서울대방 신혼희망타운 행복주택")
+        self.assertEqual(result[0].metadata["view_count"], 25038)
+        self.assertIn("panId=2015122300020297", result[0].announcement_url)
+
     def test_lh_wrtanc_board_paginates_with_hidden_form_values(self):
         today = date.today().strftime("%Y.%m.%d")
         first_page = FakeResponse({})

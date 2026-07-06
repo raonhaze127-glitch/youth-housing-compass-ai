@@ -384,10 +384,6 @@ def _fetch_lh_wrtanc_boards(days_back: int, timeout: int, fetched_at: str) -> li
                         pass
                     saw_recent_row = True
                 housing_type = cells[1].get_text(" ", strip=True) or fallback_type
-                if not is_public_recruitment_notice(
-                    {"title": title, "housing_type": housing_type, "organization": "LH"}
-                ):
-                    continue
                 item = {
                     "PAN_ID": pan_id,
                     "CCR_CNNT_SYS_DS_CD": str(link.get("data-id2") or "").strip(),
@@ -406,7 +402,10 @@ def _fetch_lh_wrtanc_boards(days_back: int, timeout: int, fetched_at: str) -> li
                     end=cells[6].get_text(" ", strip=True),
                     url=_lh_notice_url(item, housing_type),
                     fetched_at=fetched_at,
-                    metadata={"notice_date": registered, "view_count": _view_count(cells[8].get_text(" ", strip=True))},
+                    metadata={
+                        "notice_date": registered,
+                        "view_count": _view_count(cells[8].get_text(" ", strip=True)) if len(cells) > 8 else None,
+                    },
                 ))
             if page > 1 and not saw_recent_row:
                 break
