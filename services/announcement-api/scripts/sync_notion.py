@@ -222,6 +222,18 @@ def _is_private_applyhome_page(page: dict[str, Any]) -> bool:
     return "민영" in text or "誘쇱쁺" in text
 
 
+def _preserve_closed_application_status(
+    properties: dict[str, Any], existing_page: dict[str, Any]
+) -> None:
+    existing_status = _property_text(existing_page.get("properties") or {}, "청약상태")
+    incoming_status = str(
+        ((properties.get("청약상태") or {}).get("select") or {}).get("name") or ""
+    )
+    if existing_status == "마감" and incoming_status == "일정확인":
+        properties["청약상태"] = {"select": {"name": "마감"}}
+        properties["청약정렬"] = {"number": APPLICATION_STATUS_ORDER["closed"]}
+
+
 class NotionClient:
     def __init__(self, token: str) -> None:
         self.session = requests.Session()
@@ -245,6 +257,10 @@ class NotionClient:
         return set(properties.keys())
 
     def find_page(self, database_id: str, dedup_key: str) -> str | None:
+        page = self.find_page_record(database_id, dedup_key)
+        return str(page["id"]) if page else None
+
+    def find_page_record(self, database_id: str, dedup_key: str) -> dict[str, Any] | None:
         payload = {
             "filter": {
                 "property": "dedup_key",
@@ -260,11 +276,17 @@ class NotionClient:
         results = result.get("results") or []
         if not results:
             return None
-        return str(results[0]["id"])
+        return results[0]
 
     def find_page_by_title_source(
         self, database_id: str, title: str, organization: str
     ) -> str | None:
+        page = self.find_page_by_title_source_record(database_id, title, organization)
+        return str(page["id"]) if page else None
+
+    def find_page_by_title_source_record(
+        self, database_id: str, title: str, organization: str
+    ) -> dict[str, Any] | None:
         payload = {
             "filter": {
                 "and": [
@@ -282,7 +304,7 @@ class NotionClient:
         results = result.get("results") or []
         if not results:
             return None
-        return str(results[0]["id"])
+        return results[0]
 
     def create_page(self, database_id: str, properties: dict[str, Any]) -> None:
         self._request(
@@ -367,21 +389,22 @@ def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -
                 for key, value in _item_properties(item, collected_date).items()
                 if key in allowed_properties
             }
-            page_id = client.find_page(database_id, dedup_key)
+            page = client.find_page_record(database_id, dedup_key)
             if (
-                not page_id
+                not page
                 and "제목" in allowed_properties
                 and "청약" in allowed_properties
             ):
-                page_id = client.find_page_by_title_source(
+                page = client.find_page_by_title_source_record(
                     database_id,
                     _clean(item.get("title")),
                     _clean(item.get("organization")),
                 )
-            if page_id:
+            if page:
                 properties.pop("\uc218\uc9d1\uc77c", None)
                 properties.pop("\ucc98\ub9ac\uc0c1\ud0dc", None)
-                client.update_page(page_id, properties)
+                _preserve_closed_application_status(properties, page)
+                client.update_page(str(page["id"]), properties)
                 updated += 1
             else:
                 client.create_page(database_id, properties)
