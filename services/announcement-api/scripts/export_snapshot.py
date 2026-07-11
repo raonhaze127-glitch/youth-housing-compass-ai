@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 import json
 import os
 from pathlib import Path
@@ -234,6 +234,40 @@ def _snapshot_preference_score(item: dict[str, Any]) -> tuple[int, str, str]:
     )
 
 
+def _item_date(value: Any) -> date | None:
+    text = str(value or "").strip()[:10]
+    if not text:
+        return None
+    try:
+        return date.fromisoformat(text)
+    except ValueError:
+        return None
+
+
+def _is_current_snapshot_item(
+    item: dict[str, Any], cutoff: date, today: date
+) -> bool:
+    metadata = item.get("metadata") if isinstance(item.get("metadata"), dict) else {}
+    notice_date = _item_date(metadata.get("notice_date"))
+    apply_start = _item_date(item.get("apply_start"))
+    apply_end = _item_date(item.get("apply_end"))
+    return any(
+        (
+            notice_date and notice_date >= cutoff,
+            apply_start and apply_start >= today,
+            apply_end and apply_end >= today,
+        )
+    )
+
+
+def _filter_current_snapshot_items(
+    items: list[dict[str, Any]], days_back: int, today: date | None = None
+) -> list[dict[str, Any]]:
+    today = today or datetime.now(timezone.utc).date()
+    cutoff = today - timedelta(days=days_back)
+    return [item for item in items if _is_current_snapshot_item(item, cutoff, today)]
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -305,7 +339,10 @@ def main() -> None:
                 item,
             )
     announcements = sorted(
-        _deduplicate_snapshot(list(merged.values())),
+        _filter_current_snapshot_items(
+            _deduplicate_snapshot(list(merged.values())),
+            days_back,
+        ),
         key=lambda item: (
             str(item.get("apply_end") or ""),
             str(item.get("metadata", {}).get("notice_date") or ""),

@@ -1,6 +1,12 @@
+from datetime import date
 import unittest
 
-from scripts.export_snapshot import _deduplicate_snapshot, _merge_preserving_analysis, _validate
+from scripts.export_snapshot import (
+    _deduplicate_snapshot,
+    _filter_current_snapshot_items,
+    _merge_preserving_analysis,
+    _validate,
+)
 
 
 class ExportSnapshotTests(unittest.TestCase):
@@ -128,6 +134,38 @@ class ExportSnapshotTests(unittest.TestCase):
             "official_notice_and_attachments",
         )
         self.assertEqual(preferred["metadata"]["view_count"], 1234)
+
+    def test_filters_old_closed_snapshot_items(self):
+        items = [
+            {
+                "source_id": "old_closed",
+                "title": "old closed",
+                "metadata": {"notice_date": "2026-04-01"},
+                "apply_end": "2026-04-15",
+            },
+            {
+                "source_id": "recent_notice",
+                "title": "recent notice",
+                "metadata": {"notice_date": "2026-07-09"},
+            },
+            {
+                "source_id": "old_future_apply",
+                "title": "old future apply",
+                "metadata": {"notice_date": "2026-04-01"},
+                "apply_end": "2026-07-20",
+            },
+        ]
+
+        result = _filter_current_snapshot_items(
+            items,
+            days_back=7,
+            today=date(2026, 7, 11),
+        )
+
+        self.assertEqual(
+            [item["source_id"] for item in result],
+            ["recent_notice", "old_future_apply"],
+        )
 
 
 if __name__ == "__main__":
