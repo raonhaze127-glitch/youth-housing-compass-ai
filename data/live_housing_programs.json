@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-11T22:48:52.385008+00:00",
+  "generated_at": "2026-07-12T22:49:48.522142+00:00",
   "source": "github_actions_direct",
   "count": 136,
   "collector_warnings": [],
@@ -29,11 +29,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-10",
-        "view_count": 797,
+        "view_count": 1199,
         "analysis_quality": "low",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 23664,
@@ -221,11 +221,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 2741
+        "view_count": 2931
       }
     },
     {
@@ -436,11 +436,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-10",
-        "view_count": 1307
+        "view_count": 2116
       }
     },
     {
@@ -531,11 +531,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득 70%",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 7094,
+        "view_count": 8266,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 36254,
@@ -615,11 +615,11 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득(원)70% · 총자산가액 세대구성원 · 자동차가액 세대구성원",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 28924,
+        "view_count": 30817,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 47332,
@@ -730,11 +730,11 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득100%",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-10",
-        "view_count": 1547,
+        "view_count": 2004,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 37923,
@@ -788,11 +788,11 @@
       "homeless_required": null,
       "income_condition": "월평균소득금액(원) + 초과 1인당 소득금액(100%",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 4361,
+        "view_count": 5591,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 141056,
@@ -846,11 +846,11 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구당 월평균소득액의 90%",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 8406,
+        "view_count": 10714,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 132760,
@@ -907,11 +907,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득 70%",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-10",
-        "view_count": 3961,
+        "view_count": 5899,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 64242,
@@ -963,11 +963,11 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득(원)70% · 총자산가액 세대구성원 · 자동차가액 세대구성원",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 30569,
+        "view_count": 32917,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 33554,
@@ -1016,11 +1016,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득기준1인가구90% · 총자산가액 세대구성원 · 자동차가액 세대구성원",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 1806,
+        "view_count": 1978,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 32648,
@@ -1069,11 +1069,11 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득(원)70% · 총자산가액 세대구성원 · 자동차가액 세대구성원",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 18576,
+        "view_count": 20003,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 33689,
@@ -1127,11 +1127,11 @@
       "homeless_required": true,
       "income_condition": "자동차를 표기하지 않습니다. 3. 자산 및 자동차 확인 결과 부적격자로 판명될 경우 입주자격에서 탈락될 수 있습니다. 위와 같이 매입임대주택 공급신청서를 제출합니다.년 월 일 신청인 (인)거창군수 귀하 본인은 매입임대주택 입주자격(갱신계약 포함) 심사 및 입주 후 관리를 위해 무주택세대구성원",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 1035,
+        "view_count": 1159,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 32900,
@@ -1360,11 +1360,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득금액기준월평균소득금액기준2인6,452,897원 이하 110% · 자동차가액이 4,542만원",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 8127,
+        "view_count": 9503,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 60459,
@@ -1418,11 +1418,11 @@
       "homeless_required": true,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 1512,
+        "view_count": 1837,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 27890,
@@ -1473,11 +1473,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100%",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 2441,
+        "view_count": 2771,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 66700,
@@ -1526,11 +1526,11 @@
       "homeless_required": null,
       "income_condition": "도시근로자 가구원수별 가구당 월평균소득 기준”을 충족하여야 합니다. <표4> 전년도 도시근로자 가구원수별 가구당 월평균소득 기준 (표4-1) 전년도 도시근로자 가구원수별 가구당 월평균소득 기준 (1인) (단위 : 원) 공급유형가구원수별 가구당 월평균소득 비율1인일반공급도시근로자 가구원수별 가구당 월평균소득액의 120%",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 10606,
+        "view_count": 12411,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 84801,
@@ -1584,11 +1584,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 7543
+        "view_count": 9154
       }
     },
     {
@@ -1617,11 +1617,11 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득(원)70%",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 2796,
+        "view_count": 3021,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 32176,
@@ -1670,11 +1670,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 18469
+        "view_count": 19684
       }
     },
     {
@@ -1701,11 +1701,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 22441
+        "view_count": 23708
       }
     },
     {
@@ -1737,11 +1737,11 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득(원)70% · 총자산가액 세대구성원 · 자동차가액 세대구성원",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 20891,
+        "view_count": 22409,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 32798,
@@ -1790,11 +1790,11 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득(원)70% · 총자산가액 세대구성원 · 자동차가액 세대구성원",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 17198,
+        "view_count": 18455,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 34763,
@@ -1843,11 +1843,11 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득100% · 자동차가액이 4,542만원",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 4091,
+        "view_count": 4398,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 40504,
@@ -2069,11 +2069,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 14542
+        "view_count": 18119
       }
     },
     {
@@ -2100,11 +2100,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 1642
+        "view_count": 1881
       }
     },
     {
@@ -2131,11 +2131,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 1120
+        "view_count": 1334
       }
     },
     {
@@ -2162,11 +2162,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 1000
+        "view_count": 1179
       }
     },
     {
@@ -2195,11 +2195,11 @@
       "homeless_required": true,
       "income_condition": "총자산 기준 세대구성원 · 자동차, 금융자산(부채반영), 일반자산) 가액 합산 기준 ( 24,500 )만원",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 23618,
+        "view_count": 24585,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 33418,
@@ -2247,11 +2247,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 23434
+        "view_count": 25209
       }
     },
     {
@@ -2280,11 +2280,11 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득(원)70%",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 13260,
+        "view_count": 14124,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 34953,
@@ -2338,11 +2338,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 4789
+        "view_count": 5194
       }
     },
     {
@@ -2369,11 +2369,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 21632
+        "view_count": 23212
       }
     },
     {
@@ -2400,11 +2400,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 30319
+        "view_count": 32765
       }
     },
     {
@@ -2475,11 +2475,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득은 무주택세대구성원 전원의 소득을 사회보장정보시스템을 통하여 조사·확인하는 소득으로서 근로소득(상시, 일용, 자활, 공공), 사업소득(농업, 임업, 어업, 기타), 재산소득(임대, 이자, 연금), 기타소득(공적이전소득)을 말합니다. ※ 소득금액은 관련 법령에 따라 1인 가구 20% · 총자산 ○ 사회보장정보시스템을 통해 조사된 해당세대가 보유하고 있는 모든 자산에서 부채를 뺀 가액 합산기준 34,500만원 · 자동차○ 현재가치 기준 4,542만원",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 3650,
+        "view_count": 4414,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 25322,
@@ -2523,11 +2523,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 1314
+        "view_count": 1449
       }
     },
     {
@@ -2554,11 +2554,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 2319
+        "view_count": 2493
       }
     },
     {
@@ -2585,11 +2585,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 25589
+        "view_count": 27690
       }
     },
     {
@@ -2762,11 +2762,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 18870
+        "view_count": 20264
       }
     },
     {
@@ -2871,11 +2871,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 1163
+        "view_count": 1261
       }
     },
     {
@@ -2902,11 +2902,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 1252
+        "view_count": 1321
       }
     },
     {
@@ -4158,11 +4158,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-10",
-        "view_count": 6641
+        "view_count": 10373
       }
     },
     {
@@ -4189,11 +4189,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-10",
-        "view_count": 84
+        "view_count": 127
       }
     },
     {
@@ -4220,11 +4220,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-10",
-        "view_count": 80
+        "view_count": 97
       }
     },
     {
@@ -4251,11 +4251,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-10",
-        "view_count": 77
+        "view_count": 92
       }
     },
     {
@@ -4282,11 +4282,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-10",
-        "view_count": 26
+        "view_count": 37
       }
     },
     {
@@ -4313,11 +4313,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-10",
-        "view_count": 585
+        "view_count": 700
       }
     },
     {
@@ -4344,11 +4344,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-10",
-        "view_count": 717
+        "view_count": 1075
       }
     },
     {
@@ -4375,11 +4375,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 4510
+        "view_count": 5313
       }
     },
     {
@@ -4406,11 +4406,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 270
+        "view_count": 306
       }
     },
     {
@@ -4437,11 +4437,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 198
+        "view_count": 229
       }
     },
     {
@@ -4468,11 +4468,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 30
+        "view_count": 32
       }
     },
     {
@@ -4499,11 +4499,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 94
+        "view_count": 115
       }
     },
     {
@@ -4530,11 +4530,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 292
+        "view_count": 330
       }
     },
     {
@@ -4561,11 +4561,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 370
+        "view_count": 382
       }
     },
     {
@@ -4592,11 +4592,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 298
+        "view_count": 327
       }
     },
     {
@@ -4623,11 +4623,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 19
+        "view_count": 21
       }
     },
     {
@@ -4654,11 +4654,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 30
+        "view_count": 36
       }
     },
     {
@@ -4685,11 +4685,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 21
+        "view_count": 22
       }
     },
     {
@@ -4716,11 +4716,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 46
+        "view_count": 54
       }
     },
     {
@@ -4747,11 +4747,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-09",
-        "view_count": 51
+        "view_count": 55
       }
     },
     {
@@ -4783,11 +4783,11 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 6535,
+        "view_count": 7449,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 30080,
@@ -4833,11 +4833,11 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100%",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 4098,
+        "view_count": 4623,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 29987,
@@ -4881,11 +4881,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 77
+        "view_count": 80
       }
     },
     {
@@ -4912,11 +4912,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 71
+        "view_count": 75
       }
     },
     {
@@ -4943,11 +4943,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 72
+        "view_count": 77
       }
     },
     {
@@ -4974,11 +4974,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 311
+        "view_count": 336
       }
     },
     {
@@ -5005,11 +5005,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 397
+        "view_count": 423
       }
     },
     {
@@ -5036,11 +5036,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 162
+        "view_count": 184
       }
     },
     {
@@ -5067,11 +5067,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 128
+        "view_count": 142
       }
     },
     {
@@ -5098,11 +5098,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
-        "view_count": 283
+        "view_count": 309
       }
     },
     {
@@ -5129,7 +5129,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-08",
@@ -5160,11 +5160,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-07",
-        "view_count": 3474
+        "view_count": 3917
       }
     },
     {
@@ -5191,11 +5191,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-07",
-        "view_count": 7172
+        "view_count": 7804
       }
     },
     {
@@ -5222,11 +5222,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-07",
-        "view_count": 320
+        "view_count": 325
       }
     },
     {
@@ -5253,11 +5253,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-07",
-        "view_count": 524
+        "view_count": 554
       }
     },
     {
@@ -5284,11 +5284,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-07",
-        "view_count": 168
+        "view_count": 179
       }
     },
     {
@@ -5315,11 +5315,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-07",
-        "view_count": 1029
+        "view_count": 1052
       }
     },
     {
@@ -5346,7 +5346,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-07",
@@ -5377,11 +5377,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-07",
-        "view_count": 82
+        "view_count": 91
       }
     },
     {
@@ -5408,11 +5408,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 6367
+        "view_count": 6562
       }
     },
     {
@@ -5439,11 +5439,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 84
+        "view_count": 86
       }
     },
     {
@@ -5470,11 +5470,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 36
+        "view_count": 39
       }
     },
     {
@@ -5501,11 +5501,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 846
+        "view_count": 884
       }
     },
     {
@@ -5532,11 +5532,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 217
+        "view_count": 225
       }
     },
     {
@@ -5563,7 +5563,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
@@ -5594,11 +5594,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-07-11T22:46:52.665261+00:00",
+      "fetched_at": "2026-07-12T22:47:29.179500+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-07-06",
-        "view_count": 30
+        "view_count": 31
       }
     }
   ]
