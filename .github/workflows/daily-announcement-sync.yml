@@ -59,7 +59,7 @@ jobs:
           if [[ "${{ inputs.full }}" == "true" ]]; then
             echo 'days_back=90' >> "$GITHUB_OUTPUT"
           else
-            echo 'days_back=7' >> "$GITHUB_OUTPUT"
+            echo 'days_back=3' >> "$GITHUB_OUTPUT"
           fi
 
       - name: Collect and validate public housing snapshot

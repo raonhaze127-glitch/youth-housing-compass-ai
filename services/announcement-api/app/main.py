@@ -102,7 +102,7 @@ def sync_announcements(
     if settings.sync_token and x_sync_token != settings.sync_token:
         raise HTTPException(status_code=401, detail="동기화 인증값이 올바르지 않습니다.")
     full = bool(payload.get("full", False))
-    requested_days = int(payload.get("days_back") or 7)
+    requested_days = int(payload.get("days_back") or 3)
     days_back = 90 if full else max(1, min(requested_days, 31))
     try:
         items = source.fetch(days_back=days_back, force_refresh=True)

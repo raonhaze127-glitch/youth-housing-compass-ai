@@ -786,7 +786,7 @@ class DirectAnnouncementSource:
             return stored
 
         bootstrap = not stored
-        lookback_days = days_back or (max(90, months_back * 31) if bootstrap else 7)
+        lookback_days = days_back or (max(90, months_back * 31) if bootstrap else 3)
         fetched_at = datetime.now(timezone.utc).isoformat()
         jobs: dict[str, Callable[[], list[Announcement]]] = {
             "sh": lambda: _fetch_sh(self.timeout_seconds, fetched_at, lookback_days),

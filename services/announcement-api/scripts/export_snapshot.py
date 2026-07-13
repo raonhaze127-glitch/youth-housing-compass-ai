@@ -275,7 +275,7 @@ def main() -> None:
         type=Path,
         default=PROJECT_ROOT / "data" / "live_housing_programs.json",
     )
-    parser.add_argument("--days-back", type=int, default=7)
+    parser.add_argument("--days-back", type=int, default=3)
     parser.add_argument("--minimum-count", type=int, default=10)
     parser.add_argument("--enrich-limit", type=int, default=12)
     parser.add_argument("--enrich-offset", type=int, default=0)
