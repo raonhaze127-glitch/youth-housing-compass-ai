@@ -13,8 +13,8 @@ import re
 import subprocess
 import sys
 import time
-from typing import Any
-from urllib.parse import urlencode, urljoin
+from typing import Any, NamedTuple
+from urllib.parse import parse_qs, urlencode, urljoin, urlparse
 import xml.etree.ElementTree as ET
 
 from bs4 import BeautifulSoup
@@ -97,6 +97,12 @@ HOUSING_KEYWORDS = tuple(
 EXCLUDE_TITLE_KEYWORDS = ("후보자", "인사청문", "임명", "방문", "회담")
 
 
+class NotionSyncResult(NamedTuple):
+    created: int
+    ok: bool
+    error: str = ""
+
+
 def _env(name: str, default: str = "") -> str:
     return os.getenv(name, default).strip()
 
@@ -138,7 +144,14 @@ def _parse_date(value: str) -> datetime | None:
 
 
 def _dedup_key(department: str, link: str, guid: str, title: str) -> str:
-    raw = "|".join([department, link or guid or title])
+    parsed = urlparse(link or "")
+    query = parse_qs(parsed.query)
+    news_id = (query.get("newsId") or [""])[0]
+    if parsed.netloc.endswith("korea.kr") and news_id:
+        identity = f"korea.kr:{news_id}"
+    else:
+        identity = link or guid or title
+    raw = "|".join([department, identity])
     return "policy_" + hashlib.sha1(raw.encode("utf-8")).hexdigest()[:16]
 
 
@@ -489,16 +502,23 @@ def _notion_create_page(database_id: str, token: str, item: dict[str, Any]) -> N
     response.raise_for_status()
 
 
-def sync_notion(items: list[dict[str, Any]], database_id: str, token: str) -> int:
+def sync_notion(items: list[dict[str, Any]], database_id: str, token: str) -> NotionSyncResult:
     try:
         existing = _notion_query_existing(database_id, token)
     except requests.HTTPError as error:
         status = error.response.status_code if error.response is not None else "unknown"
+        code = ""
+        if error.response is not None:
+            try:
+                code = str(error.response.json().get("code") or "")
+            except (requests.JSONDecodeError, ValueError):
+                code = ""
+        detail = f"database access failed ({status}{', ' + code if code else ''})"
         print(
-            f"warning: skipped Notion sync: database access failed ({status})",
+            f"warning: skipped Notion sync: {detail}",
             file=sys.stderr,
         )
-        return 0
+        return NotionSyncResult(0, False, detail)
     created = 0
     for item in items:
         if item["dedup_key"] in existing:
@@ -507,7 +527,18 @@ def sync_notion(items: list[dict[str, Any]], database_id: str, token: str) -> in
         existing.add(item["dedup_key"])
         created += 1
         time.sleep(0.35)
-    return created
+    return NotionSyncResult(created, True)
+
+
+def _read_existing_output(path: Path) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+    items = payload.get("items", []) if isinstance(payload, dict) else []
+    return items if isinstance(items, list) else []
 
 
 def _write_output(path: Path, items: list[dict[str, Any]]) -> None:
@@ -543,6 +574,25 @@ def main() -> None:
 
     items, successful_feeds = collect(args.days_back, max(5, args.timeout), max(1, args.retries))
     if successful_feeds == 0:
+        fallback_items = _read_existing_output(args.output)
+        if fallback_items:
+            print(
+                json.dumps(
+                    {
+                        "status": "degraded",
+                        "reason": "all RSS feeds failed; kept existing snapshot",
+                        "days_back": args.days_back,
+                        "successful_feeds": 0,
+                        "collected": len(fallback_items),
+                        "created": 0,
+                        "notion_ok": False,
+                        "output": str(args.output),
+                        "departments": [feed["department"] for feed in POLICY_FEEDS],
+                    },
+                    ensure_ascii=False,
+                )
+            )
+            return
         print(
             json.dumps(
                 {
@@ -559,14 +609,14 @@ def main() -> None:
         )
         raise SystemExit(2)
     _write_output(args.output, items)
-    created = 0
+    notion_result = NotionSyncResult(0, True)
     if not args.no_notion:
         token = _env("NOTION_TOKEN")
         if not token:
             raise SystemExit("NOTION_TOKEN is required.")
         if not args.database_id:
             raise SystemExit("NOTION_POLICY_DATABASE_ID is required.")
-        created = sync_notion(items, args.database_id, token)
+        notion_result = sync_notion(items, args.database_id, token)
     print(
         json.dumps(
             {
@@ -574,7 +624,9 @@ def main() -> None:
                 "days_back": args.days_back,
                 "successful_feeds": successful_feeds,
                 "collected": len(items),
-                "created": created,
+                "created": notion_result.created,
+                "notion_ok": notion_result.ok,
+                "notion_error": notion_result.error,
                 "output": str(args.output),
                 "departments": [feed["department"] for feed in POLICY_FEEDS],
             },
