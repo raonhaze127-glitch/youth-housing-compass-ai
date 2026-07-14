@@ -222,6 +222,13 @@ export default function Home() {
     }
   }
 
+  function handleReset() {
+    setMessage("");
+    setResult(null);
+    setConversation([]);
+    setError("");
+  }
+
   const isChatActive = conversation.length > 0;
 
   return (
@@ -235,13 +242,18 @@ export default function Home() {
               <CompassLogo style={{ width: 24, height: 24 }} />
               <h1>청주나 AI</h1>
             </div>
-            <span className="status">
-              {result?.dataSource === "live"
-                ? "실시간 실공고"
-                : result?.dataSource === "snapshot"
-                  ? "저장 실공고"
-                  : "규칙 기반 추천"}
-            </span>
+            <div className="topbar-actions">
+              <span className="status">
+                {result?.dataSource === "live"
+                  ? "실시간 실공고"
+                  : result?.dataSource === "snapshot"
+                    ? "저장 실공고"
+                    : "규칙 기반 추천"}
+              </span>
+              <button className="home-button" type="button" onClick={handleReset} disabled={isLoading}>
+                처음으로
+              </button>
+            </div>
           </header>
         )}
 
