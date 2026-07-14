@@ -213,24 +213,6 @@ p {
   box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12), var(--shadow-md);
 }
 
-.input-plus-btn {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  border-radius: 50%;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.input-plus-btn:hover {
-  background-color: #f1f5f9;
-  color: var(--text-main);
-}
-
 .search-form textarea {
   flex: 1;
   border: none;
@@ -261,23 +243,6 @@ p {
   display: flex;
   align-items: center;
   gap: 6px;
-}
-
-.mic-btn {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s;
-}
-
-.mic-btn:hover {
-  background-color: #f1f5f9;
 }
 
 .primary-button {

@@ -118,7 +118,8 @@ try {
   if (
     !eligibilityResponse.ok ||
     eligibility.handledBy !== "eligibility-agent" ||
-    !eligibility.answer?.includes("모집공고문 원문 기준")
+    !eligibility.answer?.includes("모집공고문 원문 기준") ||
+    eligibility.answer.length > 700
   ) {
     throw new Error("자격 질문의 담당 Agent 또는 검증 안내가 올바르지 않습니다.");
   }
@@ -132,7 +133,9 @@ try {
   if (
     !policyResponse.ok ||
     policy.handledBy !== "policy-agent" ||
-    !policy.answer?.includes("소유권")
+    !policy.answer?.includes("소유권") ||
+    !policy.answer?.includes("참고 출처") ||
+    policy.showRecommendations !== false
   ) {
     throw new Error("정책 설명 질문이 Policy Agent로 전달되지 않았습니다.");
   }
@@ -193,6 +196,29 @@ try {
     }
   }
 
+  const comparisonPolicyCases = [
+    { message: "행복주택과 국민임대 차이가 뭐야?", expected: ["30년", "최대 거주기간"] },
+    { message: "매입임대와 전세임대 차이 알려줘", expected: ["기존 주택을 매입", "전세계약"] },
+    { message: "장기전세와 전세임대 차이는?", expected: ["장기 거주", "집을 찾"] },
+    { message: "통합공공임대와 국민임대 차이는?", expected: ["하나의 틀로 통합", "모집공고"] }
+  ];
+  for (const comparison of comparisonPolicyCases) {
+    const comparisonResponse = await fetch("http://127.0.0.1:3010/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: comparison.message })
+    });
+    const comparisonResult = await comparisonResponse.json();
+    if (
+      !comparisonResponse.ok ||
+      comparisonResult.handledBy !== "policy-agent" ||
+      comparisonResult.showRecommendations !== false ||
+      comparison.expected.some((text) => !comparisonResult.answer?.includes(text))
+    ) {
+      throw new Error(`${comparison.message} 비교 답변이 올바르지 않습니다.`);
+    }
+  }
+
   const unsupportedResponse = await fetch("http://127.0.0.1:3010/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -202,10 +228,26 @@ try {
   if (
     !unsupportedResponse.ok ||
     unsupported.intent !== "unsupported" ||
+    unsupported.showRecommendations !== false ||
     !unsupported.answer?.includes("제가 잘 이해하지 못했어요") ||
     !unsupported.answer?.includes("행복주택과 국민임대의 차이가 뭐야?")
   ) {
     throw new Error("상담 범위 밖 질문의 경계 응답이 올바르지 않습니다.");
+  }
+
+
+  const generalEligibilityResponse = await fetch("http://127.0.0.1:3010/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: "만 29세 무주택 청년인데 신청할 수 있어?" })
+  });
+  const generalEligibility = await generalEligibilityResponse.json();
+  if (
+    !generalEligibilityResponse.ok ||
+    generalEligibility.handledBy !== "eligibility-agent" ||
+    generalEligibility.showRecommendations !== false
+  ) {
+    throw new Error("특정 공고가 없는 일반 자격 질문에서 추천 카드가 숨겨지지 않았습니다.");
   }
 
   const familyResponse = await fetch("http://127.0.0.1:3010/api/chat", {
@@ -266,6 +308,24 @@ try {
     throw new Error("경기도 시 이름을 줄여 입력한 경우 표준 시 단위로 해석하지 못했습니다.");
   }
 
+
+  const gwangjuDistrictResponse = await fetch("http://127.0.0.1:3010/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: "광주시 40세 무주택 1자녀" })
+  });
+  const gwangjuDistrictResult = await gwangjuDistrictResponse.json();
+  if (
+    !gwangjuDistrictResponse.ok ||
+    gwangjuDistrictResult.profile?.region !== "경기" ||
+    gwangjuDistrictResult.profile?.district !== "광주시" ||
+    gwangjuDistrictResult.recommendations.some(
+      (item) => !item.reasons?.some((reason) => /광주시|전국 단위/.test(reason))
+    )
+  ) {
+    throw new Error("경기 광주시와 무관한 지역 공고가 추천에 포함됐습니다.");
+  }
+
   const seoulDistrictResponse = await fetch("http://127.0.0.1:3010/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -280,6 +340,56 @@ try {
     seoulDistrictResult.profile?.district !== "강남구"
   ) {
     throw new Error("서울 구 이름을 줄여 입력한 경우 표준 구 단위로 해석하지 못했습니다.");
+  }
+
+  const exampleCases = [
+    {
+      message: "서울 사는 28세 무주택 직장인인데 월세 부담이 커요",
+      validate: (value) => value.recommendations.every(
+        (item) => item.region === "서울" || /전국|전\s*지역/.test(item.title)
+      )
+    },
+    {
+      message: "경기 거주 31세 무주택 청년이고 월소득 230만원이라 전세보증금 지원을 찾고 있어요",
+      validate: (value) => value.recommendations.every(
+        (item) => !/신혼|신생아/.test(item.title)
+      )
+    },
+    {
+      message: "서울 강서구 33세 신혼부부인데 공공임대주택을 알아보고 싶어요",
+      allowEmpty: true,
+      validate: (value) => value.recommendations.every(
+        (item) =>
+          !/기숙사형|청년\s*매입/.test(item.title) &&
+          (item.region === "서울" || /전국|전\s*지역/.test(item.title))
+      )
+    }
+  ];
+  for (const exampleCase of exampleCases) {
+    const exampleResponse = await fetch("http://127.0.0.1:3010/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: exampleCase.message })
+    });
+    const exampleResult = await exampleResponse.json();
+    if (
+      !exampleResponse.ok ||
+      exampleResult.handledBy !== "recommendation-agent" ||
+      (!exampleCase.allowEmpty && !exampleResult.recommendations.length) ||
+      exampleResult.recommendations.length > 6 ||
+      !exampleCase.validate(exampleResult)
+    ) {
+      throw new Error(
+        `${exampleCase.message} 예시 질문의 분류 또는 추천 필터가 올바르지 않습니다: ${JSON.stringify({
+          handledBy: exampleResult.handledBy,
+          recommendations: exampleResult.recommendations?.map((item) => ({
+            title: item.title,
+            region: item.region,
+            target: item.target
+          }))
+        })}`
+      );
+    }
   }
 
   process.stdout.write(

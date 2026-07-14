@@ -30,7 +30,7 @@ feature_client = direct_features or upstream
 app = FastAPI(
     title="청년주거나침반 Announcement API",
     version="0.1.0",
-    description="공고 소스와 청나주 웹앱 사이의 수집·정규화 경계",
+    description="공고 소스와 청주나 웹앱 사이의 수집·정규화 경계",
 )
 
 

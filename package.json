@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "test:integration": "node scripts/integration-smoke.mjs",
+    "test:conversation": "node scripts/conversation-chain-smoke.mjs",
     "test:live": "node scripts/integration-live-smoke.mjs"
   },
   "dependencies": {

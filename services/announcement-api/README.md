@@ -55,7 +55,7 @@ python -m venv .venv
   - `days_back`: 직접 수집 증분 조회 일수
   - `force_refresh`: 저장소를 무시하고 즉시 동기화
 - `POST /v1/announcements/sync`: 예약 증분 동기화
-  - 기본 최근 7일 중복 조회
+  - 기본 최근 3일 중복 조회
   - `{ "full": true }`는 최근 90일 재대조
   - `ANNOUNCEMENT_SYNC_TOKEN`을 설정하면 `X-Sync-Token` 헤더가 필요
 - `POST /v1/eligibility/score`: 청약 가점·1순위·특별공급 사전 점검
@@ -73,7 +73,7 @@ python -m venv .venv
 
 ## Render 배포
 
-루트 `render.yaml`의 Blueprint로 배포할 수 있습니다. `.github/workflows/daily-announcement-sync.yml`은 매일 오전 7시(KST)에 최근 7일을 중복 조회하고, 일요일에는 최근 90일을 재대조합니다. 공고는 `source_id` 기준으로 SQLite에 upsert하며 최초 발견·마지막 확인·변경 시각과 내용 해시를 저장합니다. 검증된 결과는 `data/live_housing_programs.json`에도 병합 저장해 Render 장애 시 웹앱의 실공고 폴백으로 사용합니다.
+루트 `render.yaml`의 Blueprint로 배포할 수 있습니다. `.github/workflows/daily-announcement-sync.yml`은 매일 오전 7시(KST)에 최근 3일을 중복 조회하고, 필요하면 수동 실행으로 최근 90일을 재대조합니다. 공고는 `source_id` 기준으로 SQLite에 upsert하며 최초 발견·마지막 확인·변경 시각과 내용 해시를 저장합니다. 검증된 결과는 `data/live_housing_programs.json`에도 병합 저장해 Render 장애 시 웹앱의 실공고 폴백으로 사용합니다.
 
 로컬 PC에 새 공고의 원문 PDF만 보관하려면 스냅샷 갱신 후 아래 스크립트를 실행합니다. 기본 저장 위치는 `C:\Users\nahah\Documents\Housing-Journey-P\공고문`이며, `.notice_pdf_archive_state.json`에 기록된 기존 `source_id`는 다시 받지 않습니다.
 
