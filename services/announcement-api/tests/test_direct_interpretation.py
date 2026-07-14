@@ -1,4 +1,5 @@
 import unittest
+from datetime import date, timedelta
 from unittest.mock import patch
 
 from bs4 import BeautifulSoup
@@ -315,8 +316,10 @@ class DirectInterpretationTests(unittest.TestCase):
 
     @patch("app.direct.interpretation.fetch_notice_text")
     def test_enrichment_updates_persisted_announcement(self, fetch_notice_text):
+        apply_start = date.today() - timedelta(days=1)
+        apply_end = date.today() + timedelta(days=1)
         fetch_notice_text.return_value = (
-            "신청자격 무주택세대구성원 청년 접수기간 2026-07-01 ~ 2026-07-03 "
+            f"신청자격 무주택세대구성원 청년 접수기간 {apply_start:%Y-%m-%d} ~ {apply_end:%Y-%m-%d} "
             "제출서류 주민등록등본 임대조건 월 임대료 20만원",
             [{"url": "https://apply.lh.or.kr/file.pdf", "type": "pdf", "extracted": True}],
         )
@@ -341,8 +344,8 @@ class DirectInterpretationTests(unittest.TestCase):
             required_documents=(),
         )
         enriched = enrich_announcement(announcement)
-        self.assertEqual(enriched.apply_start, "2026-07-01")
-        self.assertEqual(enriched.apply_end, "2026-07-03")
+        self.assertEqual(enriched.apply_start, apply_start.isoformat())
+        self.assertEqual(enriched.apply_end, apply_end.isoformat())
         self.assertEqual(enriched.status, "open")
         self.assertIn("청년", enriched.target)
         self.assertIn("주민등록등본", enriched.required_documents)

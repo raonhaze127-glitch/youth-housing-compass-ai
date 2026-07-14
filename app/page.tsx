@@ -10,8 +10,10 @@ type ApiResult = {
   profile: UserProfile;
   recommendations: Recommendation[];
   answer: string;
+  intent: string;
   handledBy: string;
   handledByLabel: string;
+  showRecommendations: boolean;
   dataSource: "sample" | "snapshot" | "live";
   warning?: string;
 };
@@ -199,6 +201,9 @@ export default function Home() {
       }
 
       const nextResult = payload as ApiResult;
+      if (!nextResult.showRecommendations) {
+        nextResult.recommendations = result?.recommendations ?? [];
+      }
       setResult(nextResult);
       setConversation((current) => [
         ...current,
@@ -221,14 +226,14 @@ export default function Home() {
 
   return (
     <main className="shell">
-      <section className="workspace" aria-label="청년주거나침반 AI 추천 화면">
+      <section className="workspace" aria-label="청주나 AI 추천 화면">
 
         {/* 상단바: 대화가 시작된 후에만 헤더를 노출하여 몰입감을 높임 */}
         {isChatActive && (
           <header className="topbar">
             <div className="topbar-branding">
               <CompassLogo style={{ width: 24, height: 24 }} />
-              <h1>청년주거나침반 AI</h1>
+              <h1>청주나 AI</h1>
             </div>
             <span className="status">
               {result?.dataSource === "live"
@@ -246,7 +251,7 @@ export default function Home() {
             <div className="logo-wrapper" style={{ display: "flex", alignItems: "center", gap: "10px", color: "var(--accent)", marginBottom: "20px" }}>
               <CompassLogo style={{ width: 38, height: 38 }} />
               <span style={{ fontSize: "26px", fontWeight: 850, letterSpacing: "-0.03em", color: "var(--accent)" }}>
-                청년주거나침반
+                청주나
               </span>
             </div>
             <h1>안녕하세요, 어떤 집을 찾으시나요?</h1>
@@ -261,7 +266,7 @@ export default function Home() {
           <section className="conversation" aria-label="대화 내용" aria-live="polite">
             {conversation.map((item, index) => (
               <div className={`message ${item.role}`} key={`${item.role}-${index}`}>
-                <span>{item.role === "user" ? "나" : item.label ?? "청나주"}</span>
+                <span>{item.role === "user" ? "나" : item.label ?? "청주나"}</span>
                 <p>{item.content}</p>
               </div>
             ))}
@@ -269,7 +274,7 @@ export default function Home() {
         )}
 
         {/* 결과 분석 및 추천 리스트 출력 영역 */}
-        {result && isChatActive && (
+        {result && result.showRecommendations && isChatActive && (
           <section className="results">
             {result.warning ? <p className="data-warning">{result.warning}</p> : null}
 
@@ -317,14 +322,6 @@ export default function Home() {
         <section className={`input-panel ${isChatActive ? "fixed-bottom" : ""}`}>
           <form onSubmit={handleSubmit} className="search-form">
 
-            {/* 좌측 플러스 버튼 */}
-            <button type="button" className="input-plus-btn" title="추가 기능" aria-label="추가 기능">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </button>
-
             {/* 검색 에어리어 */}
             <textarea
               ref={textareaRef}
@@ -344,15 +341,6 @@ export default function Home() {
 
             {/* 우측 도구 바 */}
             <div className="form-actions">
-              {/* 마이크 아이콘 */}
-              <button type="button" className="mic-btn" title="음성 입력" aria-label="음성 입력">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
-                  <path d="M19 10v1a7 7 0 0 1-14 0v-1"></path>
-                  <line x1="12" y1="19" x2="12" y2="22"></line>
-                </svg>
-              </button>
-
               {/* 전송 버튼 */}
               <button className="primary-button" type="submit" disabled={isLoading || !message.trim()} title="전송" aria-label="전송">
                 {isLoading ? (

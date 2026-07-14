@@ -25,6 +25,7 @@ export type AgentAnswer = {
   intent: ConsultationIntent;
   handledBy: AgentId;
   handledByLabel: string;
+  showRecommendations: boolean;
   agentTrace: AgentId[];
   verification: VerificationResult;
 };
@@ -47,7 +48,7 @@ export function classifyConsultationIntent(message: string): ConsultationIntent 
   const normalized = message.trim();
   const hasPolicyForm = /뜻|의미|정의|종류|차이|뭐야|무엇|설명|알려줘/.test(normalized);
   const hasExplicitEligibilityQuestion =
-    /자격|신청\s*가능|가능해|될까|소득|자산|청약통장|가점|순위/.test(normalized);
+    /자격|신청\s*(?:가능|할\s*수)|가능해|될까|소득|자산|청약통장|가점|순위/.test(normalized);
   const hasProfileConditions =
     /무주택|청년|신혼|자녀/.test(normalized) && /\d{2}\s*(?:세|살|만)/.test(normalized);
   const looksLikeProfileSearch =
@@ -61,8 +62,8 @@ export function classifyConsultationIntent(message: string): ConsultationIntent 
   ) {
     return "policy";
   }
-  if (/\d+\s*번/.test(normalized) || /서류|준비물|신청기간|일정|언제|마감|임대료|보증금|원문|링크|경쟁률/.test(normalized)) {
-    if (/자격|신청\s*가능|소득|자산|무주택|나이|연령|청약통장|가점|순위/.test(normalized)) {
+  if (/\d+\s*번/.test(normalized)) {
+    if (/자격|신청\s*(?:가능|할\s*수)|소득|자산|무주택|나이|연령|청약통장|가점|순위/.test(normalized)) {
       return "eligibility";
     }
     return "announcement";
@@ -70,10 +71,16 @@ export function classifyConsultationIntent(message: string): ConsultationIntent 
   if (/추천|찾아|찾고|공고\s*(?:알려|추천|검색)|어떤\s*(?:집|주택)|우선\s*검토|주택을\s*알아|지원.*찾/.test(normalized)) {
     return "recommendation";
   }
+  if (/서류|준비물|신청기간|일정|언제|마감|임대료|보증금|원문|링크|경쟁률/.test(normalized)) {
+    if (/자격|신청\s*(?:가능|할\s*수)|소득|자산|무주택|나이|연령|청약통장|가점|순위/.test(normalized)) {
+      return "eligibility";
+    }
+    return "announcement";
+  }
   if (looksLikeProfileSearch && !hasExplicitEligibilityQuestion) {
     return "recommendation";
   }
-  if (/자격|신청\s*가능|소득|자산|무주택|나이|연령|청약통장|가점|순위/.test(normalized)) {
+  if (/자격|신청\s*(?:가능|할\s*수)|소득|자산|무주택|나이|연령|청약통장|가점|순위/.test(normalized)) {
     return "eligibility";
   }
   if (/거주|살고|월세|전세/.test(normalized)) return "recommendation";
@@ -96,6 +103,18 @@ function selectProgram(
 }
 
 function policyAnswer(message: string) {
+  if (/국민임대/.test(message) && /행복주택/.test(message)) {
+    return "국민임대는 무주택 저소득 가구의 장기 거주 안정이 중심으로, 대표 임대기간은 30년이고 분양전환되지 않습니다. 행복주택은 대학생·청년·신혼부부 등 생애 초기 계층의 직장·학교 접근성과 주거비 부담 완화가 중심이며 계층별 최대 거주기간이 다릅니다. 두 유형 모두 무주택과 소득·자산 기준을 확인하지만, 장기 안정이 중요하면 국민임대, 청년·신혼 계층과 입지가 중요하면 행복주택을 먼저 비교해볼 만합니다. 최종 판단은 모집공고문 원문 기준으로 확인해야 합니다.";
+  }
+  if (/매입임대/.test(message) && /전세임대/.test(message)) {
+    return "매입임대는 공공기관이 기존 주택을 매입해 입주자에게 직접 임대하는 방식이라 모집공고에 제시된 주택 중에서 선택합니다. 전세임대는 입주자가 조건에 맞는 집을 찾으면 공공기관이 집주인과 전세계약을 맺고 다시 임대하는 방식입니다. 매입임대는 공급주택 확인이, 전세임대는 지원한도와 입주 가능한 주택을 직접 찾는 절차가 핵심입니다. 최종 판단은 모집공고문 원문 기준으로 확인해야 합니다.";
+  }
+  if (/장기전세/.test(message) && /전세임대/.test(message)) {
+    return "장기전세는 공공기관이 공급하는 주택에 장기간 전세 방식으로 거주하며 공고에 정해진 주택과 보증금 조건을 확인하는 유형입니다. 전세임대는 입주자가 집을 찾고 공공기관이 집주인과 전세계약을 체결한 뒤 재임대하는 방식입니다. 정해진 공공주택에 장기 거주하려면 장기전세, 지원한도 안에서 거주할 집을 직접 찾으려면 전세임대를 우선 비교할 만합니다. 최종 판단은 모집공고문 원문 기준으로 확인해야 합니다.";
+  }
+  if (/통합공공임대/.test(message) && /국민임대|행복주택|영구임대/.test(message)) {
+    return "통합공공임대는 기존 영구임대·국민임대·행복주택처럼 계층별로 나뉜 공급체계를 하나의 틀로 통합해 청년, 신혼부부, 고령자, 저소득층 등이 함께 신청할 수 있게 한 유형입니다. 기존 유형과 비교할 때 입주자격·임대료 체계를 통합적으로 운영한다는 점이 핵심이며, 실제 공급계층과 우선·일반공급 기준은 각 모집공고에서 확인해야 합니다.";
+  }
   if (/통합공공임대/.test(message)) {
     return "통합공공임대는 청년, 신혼부부, 고령자, 저소득층 등 여러 계층이 하나의 공공임대 틀 안에서 신청할 수 있도록 만든 장기 임대주택입니다. 보통 무주택, 소득, 자산 기준을 함께 보고, 우선공급인지 일반공급인지에 따라 선정 방식이 달라집니다. 최종 판단은 해당 모집공고문 기준으로 확인해야 합니다.";
   }
@@ -148,6 +167,11 @@ function missingProfileFields(profile: UserProfile) {
   ].filter(Boolean);
 }
 
+function summarizeEvidence(value: string) {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  return normalized.length > 260 ? `${normalized.slice(0, 257)}…` : normalized;
+}
+
 function eligibilityAnswer(
   message: string,
   profile: UserProfile,
@@ -164,8 +188,8 @@ function eligibilityAnswer(
   }
 
   if (selected) {
-    const known = selected.eligibility_summary || selected.reasons.join(" ");
-    return `${selected.title}의 사전 자격 진단입니다. ${known} 현재 입력값 기준으로는 참고 판정만 가능하며, 소득·자산·세대구성의 정확한 값과 공고 원문 예외조항을 추가 확인해야 합니다.`;
+    const known = summarizeEvidence(selected.eligibility_summary || selected.reasons.join(" "));
+    return `${selected.title}의 사전 자격 진단입니다. 공고에서 확인된 조건 요약: ${known} 현재 입력값 기준으로는 참고 판정만 가능하며, 소득·자산·세대구성의 정확한 값과 공고 원문 예외조항을 추가 확인해야 합니다.`;
   }
 
   const missing = missingProfileFields(profile);
@@ -207,7 +231,8 @@ function announcementAnswer(message: string, selected?: Recommendation) {
 
 function recommendationAnswer(recommendations: Recommendation[], profile: UserProfile) {
   if (!recommendations.length) {
-    return "현재 조건으로 확인된 공고가 없습니다. 지역, 만 나이, 무주택 여부, 가구 유형과 원하는 주택 유형을 알려주시면 검색 범위를 다시 정리하겠습니다.";
+    const area = [profile.region, profile.district].filter(Boolean).join(" ");
+    return `현재 ${area ? `${area} ` : ""}조건으로 확인된 공고가 없습니다. 지역, 만 나이, 무주택 여부, 가구 유형과 원하는 주택 유형을 알려주시면 검색 범위를 다시 정리하겠습니다.`;
   }
   const active = recommendations.filter((item) => item.status === "open").length;
   const planned = recommendations.filter((item) => item.status === "planned").length;
@@ -302,13 +327,17 @@ export function answerWithAgents(input: {
           : intent === "recommendation"
             ? recommendationAnswer(input.recommendations, input.profile)
             : unsupportedAnswer();
-  const checked = verifyAnswer(draft, intent, selected);
+  const sourcedDraft = intent === "policy"
+    ? `${draft}\n\n참고 출처: LH 청약플러스 유형별 안내 및 청주나 정책 지식베이스.`
+    : draft;
+  const checked = verifyAnswer(sourcedDraft, intent, selected);
 
   return {
     answer: checked.answer,
     intent,
     handledBy,
     handledByLabel: AGENT_LABELS[handledBy],
+    showRecommendations: intent === "recommendation" || Boolean(selected),
     agentTrace: ["orchestrator", handledBy, "verification-agent"].filter(
       (agent, index, agents) => agents.indexOf(agent) === index
     ) as AgentId[],

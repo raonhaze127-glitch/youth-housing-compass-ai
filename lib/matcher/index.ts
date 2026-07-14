@@ -28,6 +28,22 @@ function hasChildren(profile: UserProfile) {
   return Boolean(profile.childrenCount || profile.children?.length);
 }
 
+function hasClearlyDifferentTarget(profile: UserProfile, program: HousingProgram) {
+  const target = [program.title, ...program.target].join(" ");
+  const youth = /청년|대학생|취업준비생/.test(target);
+  const newlywed = /신혼|신생아|한부모|혼인가구/.test(target);
+
+  if (profile.householdType === "newlywed" && youth && !newlywed) return true;
+  if (profile.householdType === "youth" && newlywed && !youth) return true;
+  return Boolean(
+    profile.age !== undefined &&
+      profile.age < 65 &&
+      /고령자(?:복지)?주택|고령자\s*(?:전용|대상)/.test(target) &&
+      !youth &&
+      !newlywed
+  );
+}
+
 export function matchesProgramDistrict(program: HousingProgram, district: string) {
   if (program.district === district) return true;
   const shortDistrict = district.replace(/(?:시|군|구)$/, "");
@@ -38,6 +54,8 @@ export function matchesProgramDistrict(program: HousingProgram, district: string
 export function isClearlyIneligible(profile: UserProfile, program: HousingProgram) {
   const text = programText(program);
   const raw = profile.rawText;
+
+  if (hasClearlyDifferentTarget(profile, program)) return true;
 
   if (profile.age !== undefined) {
     if (program.age_min !== null && profile.age < program.age_min) return true;

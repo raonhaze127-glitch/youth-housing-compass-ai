@@ -46,6 +46,7 @@ export async function POST(request: Request) {
     if (loaded.dataSource === "live") {
       recommendations = await applyLiveMatches(profile, recommendations);
     }
+    recommendations = recommendations.slice(0, 6);
     const consultation = answerWithAgents({
       message,
       profile,
