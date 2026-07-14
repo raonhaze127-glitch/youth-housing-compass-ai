@@ -346,13 +346,20 @@ try {
     {
       message: "서울 사는 28세 무주택 직장인인데 월세 부담이 커요",
       validate: (value) => value.recommendations.every(
-        (item) => item.region === "서울" || /전국|전\s*지역/.test(item.title)
+        (item) =>
+          (item.region === "서울" || /전국|전\s*지역/.test(item.title)) &&
+          !/창업인의\s*집|연극인(?:두레)?주택/.test(item.title)
       )
     },
     {
       message: "경기 거주 31세 무주택 청년이고 월소득 230만원이라 전세보증금 지원을 찾고 있어요",
+      allowEmpty: true,
       validate: (value) => value.recommendations.every(
-        (item) => !/신혼|신생아/.test(item.title)
+        (item) =>
+          !/신혼|신생아/.test(item.title) &&
+          /전세임대|전세지원|전세형|든든전세|보증금\s*(?:지원|대출|보증료)/.test(
+            `${item.title} ${item.housing_type} ${item.summary}`
+          )
       )
     },
     {
