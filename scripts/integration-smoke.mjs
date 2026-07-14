@@ -370,6 +370,18 @@ try {
           !/기숙사형|청년\s*매입/.test(item.title) &&
           (item.region === "서울" || /전국|전\s*지역/.test(item.title))
       )
+    },
+    {
+      message: "김포시 31세 무주택 직장인인데 국민임대주택을 찾고 있어요",
+      validate: (value) => value.recommendations.every(
+        (item) => item.reasons?.some((reason) => reason.includes("김포시"))
+      )
+    },
+    {
+      message: "부천시 28세 무주택 창업 청년인데 매입임대주택을 찾고 있어요",
+      validate: (value) => value.recommendations.every(
+        (item) => item.reasons?.some((reason) => reason.includes("부천시"))
+      )
     }
   ];
   for (const exampleCase of exampleCases) {
