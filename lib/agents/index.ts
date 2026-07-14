@@ -231,8 +231,8 @@ function announcementAnswer(message: string, selected?: Recommendation) {
 
 function recommendationAnswer(recommendations: Recommendation[], profile: UserProfile) {
   if (!recommendations.length) {
-    const area = [profile.region, profile.district].filter(Boolean).join(" ");
-    return `현재 ${area ? `${area} ` : ""}조건으로 확인된 공고가 없습니다. 지역, 만 나이, 무주택 여부, 가구 유형과 원하는 주택 유형을 알려주시면 검색 범위를 다시 정리하겠습니다.`;
+    const conditions = [profile.region, profile.district, ...profile.interests].filter(Boolean).join(" ");
+    return `현재 ${conditions ? `${conditions} ` : ""}조건으로 확인된 공고가 없습니다. 지역, 만 나이, 무주택 여부, 가구 유형과 원하는 주택 유형을 알려주시면 검색 범위를 다시 정리하겠습니다.`;
   }
   const active = recommendations.filter((item) => item.status === "open").length;
   const planned = recommendations.filter((item) => item.status === "planned").length;

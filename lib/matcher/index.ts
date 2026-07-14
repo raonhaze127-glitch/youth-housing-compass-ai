@@ -56,6 +56,14 @@ export function isClearlyIneligible(profile: UserProfile, program: HousingProgra
   const raw = profile.rawText;
 
   if (hasClearlyDifferentTarget(profile, program)) return true;
+  if (
+    /전세\s*보증금.*(?:지원|찾)|보증금\s*(?:지원|대출|보증료)/.test(raw) &&
+    !/전세임대|전세지원|전세형|든든전세|보증금\s*(?:지원|대출|보증료)/.test(
+      [program.title, program.housing_type, program.summary, ...program.target].join(" ")
+    )
+  ) {
+    return true;
+  }
 
   if (profile.age !== undefined) {
     if (program.age_min !== null && profile.age < program.age_min) return true;
@@ -81,10 +89,10 @@ export function isClearlyIneligible(profile: UserProfile, program: HousingProgra
 
   const specializedTargets = [
     { notice: /공공기숙사|희망하우징/, user: /대학|대학생|대학원|재학|복학|입학/ },
-    { notice: /도전숙/, user: /창업|사업자|스타트업/ },
+    { notice: /도전숙|창업인의\s*집/, user: /창업|사업자|스타트업/ },
     { notice: /자립준비청년/, user: /자립준비|보호종료|시설퇴소/ },
     { notice: /부상제대군인|위국헌신청년/, user: /제대군인|부상군인|군복무/ },
-    { notice: /연극인두레주택/, user: /연극|배우|공연예술/ }
+    { notice: /연극인(?:두레)?주택/, user: /연극|배우|공연예술/ }
   ];
   return specializedTargets.some(({ notice, user }) => notice.test(text) && !user.test(raw));
 }
