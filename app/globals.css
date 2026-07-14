@@ -83,6 +83,33 @@ select {
   color: var(--accent); /* 로고 3번의 메인 Cozy Teal 컬러와 색감 통일 */
 }
 
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home-button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 11px;
+  background: var(--surface);
+  color: var(--text-main);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.home-button:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.home-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .eyebrow {
   margin: 0;
   color: var(--accent-strong);
