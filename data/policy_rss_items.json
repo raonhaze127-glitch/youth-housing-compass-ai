@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-13T05:45:06.468267+00:00",
+  "generated_at": "2026-07-15T05:09:09.550319+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,25 +18,97 @@
       "code": "A00040"
     }
   ],
-  "count": 1,
+  "count": 5,
   "items": [
     {
-      "dedup_key": "policy_78fff6c6c772106f",
-      "title": "민간임대주택 관리비 투명성 제고 「민간임대주택법 하위법령」 개정안 입법예고",
+      "dedup_key": "policy_6a8edc6b95028146",
+      "title": "전세버스 경유 유가보조금 7월 16일부터 지급",
       "department": "국토교통부",
-      "published_at": "2026-07-13T00:00:00+09:00",
-      "published_date": "2026-07-13",
-      "collected_date": "2026-07-13",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156770536&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-12&endDate=2026-07-13&srchWord=&period=day",
+      "published_at": "2026-07-15T00:00:00+09:00",
+      "published_date": "2026-07-15",
+      "collected_date": "2026-07-15",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156770880&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-14&endDate=2026-07-15&srchWord=&period=day",
       "rss": "https://www.korea.kr/rss/dept_molit.xml",
       "summary": "",
       "topics": [
-        "주거안정"
+        "전월세"
       ],
       "targets": [
         "일반가구"
       ],
-      "relevance": "높음"
+      "relevance": "중간"
+    },
+    {
+      "dedup_key": "policy_28f436faa9efca03",
+      "title": "분양가상한제 기본형건축비 비정기 고시",
+      "department": "국토교통부",
+      "published_at": "2026-07-15T00:00:00+09:00",
+      "published_date": "2026-07-15",
+      "collected_date": "2026-07-15",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156770832&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-14&endDate=2026-07-15&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "주택공급"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "중간"
+    },
+    {
+      "dedup_key": "policy_6ce3354b66d4cd5e",
+      "title": "[보도자료] 제17차 부동산 불법행위 대응협의회",
+      "department": "국무조정실",
+      "published_at": "2026-07-14T00:00:00+09:00",
+      "published_date": "2026-07-14",
+      "collected_date": "2026-07-15",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156770751&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-07-14&endDate=2026-07-15&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_opm.xml",
+      "summary": "",
+      "topics": [
+        "부동산시장"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "중간"
+    },
+    {
+      "dedup_key": "policy_32acd5f08cb6fc15",
+      "title": "부동산정책, 국민의 목소리를 듣습니다.",
+      "department": "국토교통부",
+      "published_at": "2026-07-14T00:00:00+09:00",
+      "published_date": "2026-07-14",
+      "collected_date": "2026-07-15",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156770781&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-14&endDate=2026-07-15&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "부동산시장"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "중간"
+    },
+    {
+      "dedup_key": "policy_313b802556e11824",
+      "title": "전세 계약 전 '위험신호' 민간플랫폼서도 한눈에…, 정부-민간, 연계구축 첫걸음",
+      "department": "국토교통부",
+      "published_at": "2026-07-14T00:00:00+09:00",
+      "published_date": "2026-07-14",
+      "collected_date": "2026-07-15",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156770708&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-14&endDate=2026-07-15&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "전월세"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "중간"
     }
   ]
 }
