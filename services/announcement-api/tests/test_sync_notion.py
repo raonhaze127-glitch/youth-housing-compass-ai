@@ -15,6 +15,19 @@ SPEC.loader.exec_module(sync_notion)
 
 
 class SyncNotionStatusTests(unittest.TestCase):
+    def test_update_omits_manual_processing_status(self) -> None:
+        properties = {
+            "제목": {"title": [{"text": {"content": "공고"}}]},
+            "수집일": {"date": {"start": "2026-07-19"}},
+            "처리상태": {"status": {"name": "시작 전"}},
+        }
+
+        sync_notion._drop_manual_update_properties(properties)
+
+        self.assertNotIn("수집일", properties)
+        self.assertNotIn("처리상태", properties)
+        self.assertIn("제목", properties)
+
     def test_closed_application_status_is_not_reopened_as_unknown(self) -> None:
         properties = {
             "청약상태": {"select": {"name": "일정확인"}},

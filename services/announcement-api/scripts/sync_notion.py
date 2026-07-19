@@ -234,6 +234,11 @@ def _preserve_closed_application_status(
         properties["청약정렬"] = {"number": APPLICATION_STATUS_ORDER["closed"]}
 
 
+def _drop_manual_update_properties(properties: dict[str, Any]) -> None:
+    properties.pop("수집일", None)
+    properties.pop("처리상태", None)
+
+
 class NotionClient:
     def __init__(self, token: str) -> None:
         self.session = requests.Session()
@@ -401,8 +406,7 @@ def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -
                     _clean(item.get("organization")),
                 )
             if page:
-                properties.pop("\uc218\uc9d1\uc77c", None)
-                properties.pop("\ucc98\ub9ac\uc0c1\ud0dc", None)
+                _drop_manual_update_properties(properties)
                 _preserve_closed_application_status(properties, page)
                 client.update_page(str(page["id"]), properties)
                 updated += 1
