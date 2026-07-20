@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-18T04:56:02.043523+00:00",
+  "generated_at": "2026-07-20T05:48:20.869300+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,6 +18,25 @@
       "code": "A00040"
     }
   ],
-  "count": 0,
-  "items": []
+  "count": 1,
+  "items": [
+    {
+      "dedup_key": "policy_3ddb916a483f2370",
+      "title": "신축매입임대 자금조달 부담 완화 등 전면 시행",
+      "department": "국토교통부",
+      "published_at": "2026-07-20T00:00:00+09:00",
+      "published_date": "2026-07-20",
+      "collected_date": "2026-07-20",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156771274&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-19&endDate=2026-07-20&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "공공주택"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "높음"
+    }
+  ]
 }
