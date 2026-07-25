@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-24T05:28:58.704430+00:00",
+  "generated_at": "2026-07-25T05:22:33.792302+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,6 +18,25 @@
       "code": "A00040"
     }
   ],
-  "count": 0,
-  "items": []
+  "count": 1,
+  "items": [
+    {
+      "dedup_key": "policy_f85a206a0f899d7e",
+      "title": "[설명] 용산국제업무지구 등 주택정책 현안 관련 서울시와 지속적으로 논의하고 있습니다.",
+      "department": "국토교통부",
+      "published_at": "2026-07-24T00:00:00+09:00",
+      "published_date": "2026-07-24",
+      "collected_date": "2026-07-25",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156772122&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-24&endDate=2026-07-25&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "주거안정"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "높음"
+    }
+  ]
 }
