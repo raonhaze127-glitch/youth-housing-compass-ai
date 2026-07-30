@@ -81,6 +81,14 @@ def _rich_text(value: Any, limit: int = 1800) -> dict[str, Any]:
     return {"rich_text": [{"text": {"content": text}}]} if text else {"rich_text": []}
 
 
+def _rich_text_payload_text(value: dict[str, Any]) -> str:
+    return "".join(
+        part.get("text", {}).get("content", "")
+        for part in value.get("rich_text") or []
+        if isinstance(part, dict)
+    )
+
+
 def _title(value: Any) -> dict[str, Any]:
     text = _clean(value, 1800) or "제목 없음"
     return {"title": [{"text": {"content": text}}]}
@@ -239,6 +247,16 @@ def _drop_manual_update_properties(properties: dict[str, Any]) -> None:
     properties.pop("처리상태", None)
 
 
+def _coerce_properties_to_schema(
+    properties: dict[str, Any], property_types: dict[str, str]
+) -> dict[str, Any]:
+    coerced = dict(properties)
+    for name, value in properties.items():
+        if property_types.get(name) == "select" and "rich_text" in value:
+            coerced[name] = _select(_rich_text_payload_text(value)) or {"select": None}
+    return coerced
+
+
 class NotionClient:
     def __init__(self, token: str) -> None:
         self.session = requests.Session()
@@ -257,9 +275,16 @@ class NotionClient:
         return response.json()
 
     def database_property_names(self, database_id: str) -> set[str]:
+        return set(self.database_property_types(database_id))
+
+    def database_property_types(self, database_id: str) -> dict[str, str]:
         result = self._request("GET", f"https://api.notion.com/v1/databases/{database_id}")
         properties = result.get("properties") or {}
-        return set(properties.keys())
+        return {
+            name: str((schema or {}).get("type") or "")
+            for name, schema in properties.items()
+            if isinstance(schema, dict)
+        }
 
     def find_page(self, database_id: str, dedup_key: str) -> str | None:
         page = self.find_page_record(database_id, dedup_key)
@@ -369,7 +394,8 @@ def _load_snapshot(path: Path) -> tuple[str, list[dict[str, Any]]]:
 def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -> dict[str, Any]:
     collected_date, items = _load_snapshot(snapshot_path)
     client = NotionClient(token)
-    allowed_properties = client.database_property_names(database_id)
+    property_types = client.database_property_types(database_id)
+    allowed_properties = set(property_types)
     created = 0
     updated = 0
     skipped = 0
@@ -394,6 +420,7 @@ def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -
                 for key, value in _item_properties(item, collected_date).items()
                 if key in allowed_properties
             }
+            properties = _coerce_properties_to_schema(properties, property_types)
             page = client.find_page_record(database_id, dedup_key)
             if (
                 not page

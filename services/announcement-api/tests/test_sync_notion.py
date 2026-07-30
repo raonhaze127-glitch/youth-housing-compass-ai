@@ -15,6 +15,18 @@ SPEC.loader.exec_module(sync_notion)
 
 
 class SyncNotionStatusTests(unittest.TestCase):
+    def test_rich_text_property_is_sent_as_select_when_schema_changed(self) -> None:
+        properties = {
+            "housing_program": {"rich_text": [{"text": {"content": "행복주택"}}]},
+        }
+
+        result = sync_notion._coerce_properties_to_schema(
+            properties,
+            {"housing_program": "select"},
+        )
+
+        self.assertEqual(result["housing_program"], {"select": {"name": "행복주택"}})
+
     def test_update_omits_manual_processing_status(self) -> None:
         properties = {
             "제목": {"title": [{"text": {"content": "공고"}}]},
