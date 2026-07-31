@@ -15,6 +15,18 @@ SPEC.loader.exec_module(sync_notion)
 
 
 class SyncNotionStatusTests(unittest.TestCase):
+    def test_closed_application_page_is_skipped(self) -> None:
+        page = {
+            "properties": {
+                "청약상태": {
+                    "type": "select",
+                    "select": {"name": "마감"},
+                }
+            }
+        }
+
+        self.assertTrue(sync_notion._is_closed_application_page(page))
+
     def test_rich_text_property_is_sent_as_select_when_schema_changed(self) -> None:
         properties = {
             "housing_program": {"rich_text": [{"text": {"content": "행복주택"}}]},

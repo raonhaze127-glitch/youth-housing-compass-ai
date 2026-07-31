@@ -242,6 +242,10 @@ def _preserve_closed_application_status(
         properties["청약정렬"] = {"number": APPLICATION_STATUS_ORDER["closed"]}
 
 
+def _is_closed_application_page(page: dict[str, Any]) -> bool:
+    return _property_text(page.get("properties") or {}, "청약상태") == "마감"
+
+
 def _drop_manual_update_properties(properties: dict[str, Any]) -> None:
     properties.pop("수집일", None)
     properties.pop("처리상태", None)
@@ -433,6 +437,9 @@ def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -
                     _clean(item.get("organization")),
                 )
             if page:
+                if _is_closed_application_page(page):
+                    skipped += 1
+                    continue
                 _drop_manual_update_properties(properties)
                 _preserve_closed_application_status(properties, page)
                 client.update_page(str(page["id"]), properties)
@@ -449,10 +456,10 @@ def sync(snapshot_path: Path, database_id: str, token: str, limit: int | None) -
                 view_count = _metadata_number(announcement.to_dict(), "view_count")
                 if not view_count:
                     continue
-                page_id = client.find_page(database_id, announcement.source_id)
-                if not page_id:
+                page = client.find_page_record(database_id, announcement.source_id)
+                if not page or _is_closed_application_page(page):
                     continue
-                client.update_page(page_id, {"조회수": view_count})
+                client.update_page(str(page["id"]), {"조회수": view_count})
                 backfilled_lh_view_counts += 1
         except Exception as exc:  # noqa: BLE001
             errors.append(f"lh_view_count_backfill: {exc}")
