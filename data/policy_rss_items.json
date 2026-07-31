@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-30T05:16:51.038400+00:00",
+  "generated_at": "2026-07-31T05:44:06.761262+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,35 +18,16 @@
       "code": "A00040"
     }
   ],
-  "count": 3,
+  "count": 2,
   "items": [
     {
-      "dedup_key": "policy_86f63ae4fb17911c",
-      "title": "1.29 수도권 신규 주택공급 확대 방안 관련 인근 부동산 이상거래 기획조사 결과 ···위법 의심거래 346건 적발 및 통보",
+      "dedup_key": "policy_b0440936de689f13",
+      "title": "'26년 6월 주택통계",
       "department": "국토교통부",
-      "published_at": "2026-07-30T00:00:00+09:00",
-      "published_date": "2026-07-30",
-      "collected_date": "2026-07-30",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156772726&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-29&endDate=2026-07-30&srchWord=&period=day",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "",
-      "topics": [
-        "주택공급",
-        "부동산시장"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_3d8dd7dd4193e454",
-      "title": "도심 내 유휴공간을 주거공간으로 바꾸는 비주택 리모델링 사업자 간담회 개최",
-      "department": "국토교통부",
-      "published_at": "2026-07-29T00:00:00+09:00",
-      "published_date": "2026-07-29",
-      "collected_date": "2026-07-30",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156772529&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-29&endDate=2026-07-30&srchWord=&period=day",
+      "published_at": "2026-07-31T00:00:00+09:00",
+      "published_date": "2026-07-31",
+      "collected_date": "2026-07-31",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156772845&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-30&endDate=2026-07-31&srchWord=&period=day",
       "rss": "https://www.korea.kr/rss/dept_molit.xml",
       "summary": "",
       "topics": [
@@ -58,17 +39,18 @@
       "relevance": "높음"
     },
     {
-      "dedup_key": "policy_1ca1765e55fb609f",
-      "title": "[설명] 다양한 주거수요에 맞는 공공임대주택을 공급해 나갈 계획입니다.",
+      "dedup_key": "policy_86f63ae4fb17911c",
+      "title": "1.29 수도권 신규 주택공급 확대 방안 관련 인근 부동산 이상거래 기획조사 결과 ···위법 의심거래 346건 적발 및 통보",
       "department": "국토교통부",
-      "published_at": "2026-07-29T00:00:00+09:00",
-      "published_date": "2026-07-29",
-      "collected_date": "2026-07-30",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156772587&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-29&endDate=2026-07-30&srchWord=&period=day",
+      "published_at": "2026-07-30T00:00:00+09:00",
+      "published_date": "2026-07-30",
+      "collected_date": "2026-07-31",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156772726&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-07-30&endDate=2026-07-31&srchWord=&period=day",
       "rss": "https://www.korea.kr/rss/dept_molit.xml",
       "summary": "",
       "topics": [
-        "공공주택"
+        "주택공급",
+        "부동산시장"
       ],
       "targets": [
         "일반가구"
