@@ -188,7 +188,7 @@ class DirectCollectorTests(unittest.TestCase):
             {item.source_id for item in result}, {"sh_1", "apt_2"}
         )
 
-    def test_applyhome_public_mode_keeps_only_apt_national_housing(self):
+    def test_applyhome_public_mode_keeps_public_housing_channels(self):
         payload = {
             "data": [
                 {
@@ -209,13 +209,32 @@ class DirectCollectorTests(unittest.TestCase):
             ]
         }
         with mock.patch(
-            "app.direct.collectors.requests.get", return_value=FakeResponse(payload)
+            "app.direct.collectors.requests.get",
+            side_effect=[FakeResponse(payload), FakeResponse({"data": []})],
         ) as request:
             result = _fetch_applyhome("key", 2, 5, "now")
         self.assertEqual([item.source_id for item in result], ["apt_public-1"])
         self.assertEqual(result[0].metadata["house_secd"], "01")
         self.assertEqual(result[0].metadata["view_count"], 123)
-        self.assertEqual(request.call_count, 1)
+        self.assertEqual(request.call_count, 2)
+
+    def test_applyhome_public_mode_collects_public_private_rent(self):
+        payload = {
+            "data": [{
+                "PBLANC_NO": "rent-1",
+                "HOUSE_NM": "공공지원민간임대 공급",
+                "HOUSE_SECD": "01",
+                "HOUSE_SECD_NM": "민영",
+                "PBLANC_URL": "https://example.com/rent",
+            }]
+        }
+        with mock.patch(
+            "app.direct.collectors.requests.get",
+            side_effect=[FakeResponse({"data": []}), FakeResponse(payload)],
+        ):
+            result = _fetch_applyhome("key", 2, 5, "now")
+        self.assertEqual([item.source_id for item in result], ["public_rent_rent-1"])
+        self.assertEqual(result[0].category, "공공지원민간임대")
 
     def test_five_applyhome_channels_are_normalized(self):
         payload = {

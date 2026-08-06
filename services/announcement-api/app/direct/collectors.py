@@ -222,7 +222,7 @@ def _fetch_applyhome(
     }
     result: list[Announcement] = []
     seen_raw_ids: set[str] = set()
-    public_prefixes = {"apt"}
+    public_prefixes = {"apt", "public_rent"}
     private_names = ("\ubbfc\uc601", "\uc0ac\uc124", "誘쇱쁺")
     public_names = ("\uad6d\ubbfc", "\uacf5\uacf5", "\uacf5\uacf5\uc9c0\uc6d0", "援??", "怨듦났")
     for prefix, category, endpoint in APPLYHOME_CHANNELS:
@@ -241,7 +241,9 @@ def _fetch_applyhome(
                     or house_code in {"03", "04", "06"}
                     or any(name in searchable for name in public_names)
                 )
-                is_private = (house_code == "01" and not is_public) or any(name in searchable for name in private_names)
+                is_private = prefix != "public_rent" and (
+                    (house_code == "01" and not is_public) or any(name in searchable for name in private_names)
+                )
                 if is_private or not is_public:
                     continue
             raw_id = str(item.get("PBLANC_NO") or item.get("HOUSE_MANAGE_NO") or "")
