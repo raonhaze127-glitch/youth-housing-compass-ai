@@ -215,10 +215,13 @@ def _fetch_applyhome(
     include_private_housing: bool = False,
 ) -> list[Announcement]:
     now = _now_kst()
+    start_date = (now - timedelta(days=days_back)).date().isoformat()
     params_base = {
-        "serviceKey": api_key, "pageNo": "1", "numOfRows": "100",
-        "startmonth": (now - timedelta(days=days_back)).strftime("%Y%m"),
-        "endmonth": now.strftime("%Y%m"),
+        "serviceKey": api_key,
+        "page": "1",
+        "perPage": "100",
+        "returnType": "JSON",
+        "cond[RCRIT_PBLANC_DE::GTE]": start_date,
     }
     result: list[Announcement] = []
     seen_raw_ids: set[str] = set()

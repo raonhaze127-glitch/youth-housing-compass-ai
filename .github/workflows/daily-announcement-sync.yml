@@ -24,6 +24,10 @@ on:
         description: "Offset for stored snapshot re-enrichment"
         required: false
         default: "0"
+      days_back:
+        description: "Override sync window in days"
+        required: false
+        default: ""
 
 concurrency:
   group: daily-announcement-sync
@@ -56,7 +60,9 @@ jobs:
         id: window
         shell: bash
         run: |
-          if [[ "${{ inputs.full }}" == "true" ]]; then
+          if [[ -n "${{ inputs.days_back }}" ]]; then
+            echo 'days_back=${{ inputs.days_back }}' >> "$GITHUB_OUTPUT"
+          elif [[ "${{ inputs.full }}" == "true" ]]; then
             echo 'days_back=90' >> "$GITHUB_OUTPUT"
           else
             echo 'days_back=3' >> "$GITHUB_OUTPUT"

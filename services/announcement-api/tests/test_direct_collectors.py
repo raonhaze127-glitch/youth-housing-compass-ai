@@ -217,6 +217,11 @@ class DirectCollectorTests(unittest.TestCase):
         self.assertEqual(result[0].metadata["house_secd"], "01")
         self.assertEqual(result[0].metadata["view_count"], 123)
         self.assertEqual(request.call_count, 2)
+        params = request.call_args_list[0].kwargs["params"]
+        self.assertEqual(params["page"], "1")
+        self.assertEqual(params["perPage"], "100")
+        self.assertIn("cond[RCRIT_PBLANC_DE::GTE]", params)
+        self.assertNotIn("startmonth", params)
 
     def test_applyhome_public_mode_collects_public_private_rent(self):
         payload = {
