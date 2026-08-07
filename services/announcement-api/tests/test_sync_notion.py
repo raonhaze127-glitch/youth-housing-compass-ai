@@ -27,6 +27,18 @@ class SyncNotionStatusTests(unittest.TestCase):
 
         self.assertTrue(sync_notion._is_in_progress_processing_page(page))
 
+    def test_pass_processing_page_is_skipped(self) -> None:
+        page = {
+            "properties": {
+                "처리상태": {
+                    "type": "status",
+                    "status": {"name": "PASS"},
+                }
+            }
+        }
+
+        self.assertTrue(sync_notion._is_in_progress_processing_page(page))
+
     def test_closed_application_page_is_skipped(self) -> None:
         page = {
             "properties": {

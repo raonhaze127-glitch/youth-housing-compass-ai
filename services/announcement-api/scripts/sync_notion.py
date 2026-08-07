@@ -249,7 +249,7 @@ def _is_closed_application_page(page: dict[str, Any]) -> bool:
 
 
 def _is_in_progress_processing_page(page: dict[str, Any]) -> bool:
-    return _property_text(page.get("properties") or {}, "처리상태") == "진행 중"
+    return _property_text(page.get("properties") or {}, "처리상태") in {"진행 중", "PASS"}
 
 
 def _drop_manual_update_properties(properties: dict[str, Any]) -> None:
