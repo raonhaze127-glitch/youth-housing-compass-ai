@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-07T04:31:25.230025+00:00",
+  "generated_at": "2026-08-09T03:50:58.802404+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,25 +18,6 @@
       "code": "A00040"
     }
   ],
-  "count": 1,
-  "items": [
-    {
-      "dedup_key": "policy_17bd0d714d04fdf5",
-      "title": "전세사기 피해주택 매입실적 1만호 넘어",
-      "department": "국토교통부",
-      "published_at": "2026-08-07T00:00:00+09:00",
-      "published_date": "2026-08-07",
-      "collected_date": "2026-08-07",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156773631&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-06&endDate=2026-08-07&srchWord=&period=day",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "",
-      "topics": [
-        "전월세"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "높음"
-    }
-  ]
+  "count": 0,
+  "items": []
 }
