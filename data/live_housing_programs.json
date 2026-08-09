@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-08T22:29:47.776619+00:00",
+  "generated_at": "2026-08-09T22:31:11.471358+00:00",
   "source": "github_actions_direct",
-  "count": 145,
+  "count": 135,
   "collector_warnings": [],
   "announcements": [
     {
@@ -643,11 +643,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-07",
-        "view_count": 522,
+        "view_count": 726,
         "analysis_quality": "low",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 29172,
@@ -1408,11 +1408,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득금액기준월평균소득금액기준2인6,452,897원 이하 110% · 자동차가액이 4,542만원",
       "total_units": null,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-07",
-        "view_count": 8862,
+        "view_count": 12940,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 104039,
@@ -1695,11 +1695,11 @@
       "homeless_required": true,
       "income_condition": "도시근로자 월평균소득 50% · 총자산 가액 • 세대구성원 · 자동차 가액 기준을 충족하는 자 구분 내용 소득 가구원",
       "total_units": null,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-07",
-        "view_count": 1695,
+        "view_count": 2653,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 37518,
@@ -2029,11 +2029,11 @@
       "homeless_required": null,
       "income_condition": "도시근로자 가구당 월평균소득 기준”을 충족 하여야 합니다. <표5> 전년도 도시근로자 가구당 월평균소득 기준 (4인 이상인 세대는 가구원수별 가구당 월평균소득을 말함) [단위 : 원] 구분 3인 이하 4인 5인 6인 7인 8인 우선·일반공급 전년도 도시근로자 가구당 월평균소득의 130%",
       "total_units": null,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-07",
-        "view_count": 6002,
+        "view_count": 8145,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 228346,
@@ -2145,7 +2145,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 290,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "address": "경기도 시흥시 거모동, 군자동 일원 시흥거모 공공주택지구 내 A-5블록",
@@ -2614,11 +2614,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-07",
-        "view_count": 4661
+        "view_count": 6752
       }
     },
     {
@@ -3654,25 +3654,54 @@
       "region": "경기",
       "district": "",
       "housing_type": "행복주택",
-      "target": [],
-      "apply_start": "",
+      "target": [
+        "청년",
+        "대학생",
+        "신혼부부",
+        "한부모가족"
+      ],
+      "apply_start": "2026-08-18",
       "apply_end": "2026-08-19",
-      "status": "unknown",
+      "status": "planned",
       "announcement_url": "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancInfo.do?ccrCnntSysDsCd=03&panId=2015122300020512&aisTpCd=10&uppAisTpCd=06&mi=1026&panKdCd=&otxtPanId=",
-      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
-      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
-      "benefit_summary": "",
-      "required_documents": [],
+      "summary": "공식 공고문을 자동 분석한 청년, 대학생, 신혼부부, 한부모가족 대상 공공주택 공고입니다.",
+      "eligibility_summary": "무주택세대구성원(예비신혼부부의 경우 혼인으로 구성될 세대의 세대구성원 모두 무주택자)으로서 아래의 요건(신혼부부는 ➀-㉮와 ②～⑤를, 예비신혼부부는 ➀-㉯와 ③～⑥를, 한부모가족은 ➀-㉰와 ③～⑤를 모두 갖춘 자 ※ 예비신혼부부의 경우 당사자 2인 중 1인을 대표로 지정하여 신청함. 대표신청자는 향후 당첨시 계약자가 될 1인을 말하며 신청 이후에는 변경이 불가함.\n ※ 출산자녀는 ’23.3.28 이후 출산한 자녀(입양자녀 및 태아 포함)를 의미하며, 기준일 이후 출산 자녀가 있는 경우에는 기준일 이전 출생한 기존 미성년자녀도 포함하여 최대 2자녀로 인정 (단, 주택공급 신청자 세대별 주민등록표에 등재되어 있는 경우에 한함, 이하 동일)\n세대원(본인) 1인0인120%251,000,000원45,420,000원2인0인110%251,000,000원45,420,000원1인120%276,000,000원49,960,000원3인 이상0인100%251,000,000원45,420,000원1인110%276,000,000원49,960,000원2인 이상120%301,000,000원54,510,000원\n ➀-㉮ (신혼부부) 혼인중인 자 ➀-㉯ (예비신혼부부) 혼인을 계획 중이며 입주 전까지 혼인사실을 증명할 수 있을 것 ➀-㉰ (한부모가족) 6세이하 자녀를 둔 한부모인 자(태아포함) ② 혼인기간이 7년 이내일 것 또는 6세 이하 자녀(태아포함)를 둔 자 ③ ",
+      "benefit_summary": "임대조건을 적용※ ‘소득’은 「소득세법」제19조제1항에 따른 사업소득 및 같은 법 제20조제1항에 따른 근로소득을 말하며 국민연금 가입증명서 및 건강보험자격득실확인서 등을 통해 소득이 있는 여부를 판단함※ ➀-㉯의 ‘소득이 있는 업무에 종사한 기간’은 국민연금 가입증명서 및 건강보험공단 자격득실확인서 등을 통해 소득이 있었던 기간을 합산함 단, 대학 또는 고등학교 재학(휴학포함) 중 소득이 있는 업무에 종사한 기간과 병역의무 이행을 위하여 연구기관, 기간산업체, 방위산업체, 농업회사법인, 농업기계의 사후관리업체 등에 근무한 기간은 제외※ ➀-㉯2)의 퇴직은 국민연금 가입증명서, 건강보험자격득실확인서 등을 통해 판단함※ ➀-㉯3)의 ‘예술인’이란 「예술인복지법」제2조제2호에 따라 한국예술인복지재단에서 예술활동증명을 받은 자를 말한다.※ ‘청년계층‘의 해당 세대의 범위는 다음과 같음 구분 해당세대 범위• 신청자가 세대원이 있는 세대주인 경우- 신청자 본인- 신청자 직계존속으로 신청자와 같은 세대별 주민등록표에 등재된 사람- 신청자 직계비속 및 신청자 직계비속의 배우자로 신청자와 같은 세대별 주민등록표에 등재된 사람• 신청자가 세대원인 경우• 신청자가 단독세대주인 경우 - 신청자 본인※ 공고일 현재 주택청약저축 미가입자의 경우 입주전까지 청약통장 사본을 제출하지 않을 시 당첨 취소 및 임대차계약이 해지 처리됨■ 경쟁 시 입주자 선정기준구분",
+      "required_documents": [
+        "주민등록등본"
+      ],
       "age_min": null,
       "age_max": null,
-      "homeless_required": null,
-      "income_condition": "",
+      "homeless_required": true,
+      "income_condition": "월평균소득금액기준월평균소득금액기준2인6,452,897원 이하 110% · 자동차가액이 4,542만원",
       "total_units": null,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
-      "schedule_confirmed": false,
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
+      "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-07",
-        "view_count": 7382
+        "view_count": 9998,
+        "analysis_quality": "high",
+        "analysis_source": "official_notice_and_attachments",
+        "source_char_count": 40562,
+        "sections": {
+          "schedule": "공급일정\n(파주운정A21 산내1 행복주택)\n단지별 공급일정은 공고문을 참조하시기 바랍니다.\n접수기간\n:\n2026.08.18 ~ 2026.08.19\n서류제출대상자 발표일\n:\n2026.08.25\n서류접수기간\n:\n2026.08.25 ~ 2026.08.28\n당첨자발표일\n:\n2026.11.30\n계약기간\n:\n~\n기타사항\n접수처정보\n소재지 : 경기도 파주시 경의로1004번길 33(야당동) 월드타워8차 5층\n전화번호 : 1600-1004\n운영기간 :\r\n \r\n 2026.08.18 ~ 2026.08.18\n접수처 관련 위치 정보\n안내사항\n※ 금회 모집은 인터넷/모바일 신청만 가능합니다. 단 장애인, 만65세 고령자에 한하여 현장 방문접수를 병행합니다.\r\nㅇ 현장접수자는",
+          "documents": "구비서류 지참 후 내방하여 주시기 바랍니다. 서류미비 시 접수불가 등 불이익이 있을 수 있습니다.\r\nㅇ 현장 청약신청자 과다 밀집 시 별도 좌석 없이 장시간 대기하실 수 있으니 오후 방문을 권장드립니다.\n관심공고등록\n목록\n소득계산방법 살펴보기\n소득 심사 대상\n세대주 본인 + 배우자 + 만 19세 이상의 세대원(세대주의 직계존비속) 소득 합산\n세대주와 동일한 주민등록등본상 등재되어 있지 아니한 배우자와 배우자와 동일한 주민등록등본상 등재되어 있는 세대주의 직계존비속 포함\n소득조사 항목\n근로소득(상시근로·일용근로·자활근로·공공일자리), 사업소득(농업·임업·어업·기타사업), 재산소득(임대·이자·연금), 기타소득(공적이전소득)\n자세한 사항은 공고문을 확인하시기 바랍니다.\n소득금액 조사방법\n사회보장정보시스템에서 제공되는 국가 또는 공공기관이 보유한 공적 소득자료를 근거로 월평균 소득을 산정함\n사회보장정보시스템이란?\n사회보장수급권자 선정 및 급여 관리 등에 관한 정보를 통합·연계하여 처리·기록 및 관리하는 시스템(사회보장기본법 제37조)\n닫기\n퀵메뉴 열기/닫기\n로그인\n증명서발급\n예비입주자\n순위 조회\n사전청약\n방문한메뉴\n관심공고 알림\n관심공고 알림 닫기\n청약신청 목록보기\n청약신청 중 임시저장된 목록이며, 당일 임시저장된 내역만 조회됩니다.\n접수중\n일반형공공분양주택\n일반공급(우선)\n사업지구명 : 부천원종(B2)\n저장일시 : 2023-04-17 14:23:15\n불러오기\n삭제\n접수마감\n나눔형(이익공유형) 분양주택\n일반공급(우선)\n사업지구명 : 부천원종(B2) 부천원종(B2) 부천원종(B2)\n저장일시 : 2023-04-17 14:23:15\n불러오기\n삭제\n닫기\n파주시 행복주택 예비입주자 모집(모집공고일 : 2026.08.07) • 모집 공고내용과 관련하여 자세한 안내가 이루어질 수 있도록 상담을 실시하고 있으나, 신청자 개별상황 등에 대한 의사소통 오류로 관련사항 착오안내가 이루어지는 경우가 있습니다. 고객 여러분께서는 신청과 관련한 상담은 주택신청의 참고자료로만 활용해 주시기 바라며, 신청자 본인이 입주자 모집공고를 통해 신청자격 등을 숙지하시어 신청하시기 바랍니다. 아울러 신청자격 미숙지, 착오 신청 등에 대해서는 신청자 본인에게 책임이 있으니 유의하여 주시기 바랍니다.• ’19.09.27일 이후 입주자 모집부터 동일유형 공공임대주택의 예비입주자로 중복선정(종전 선정지위 자동탈락)이 되지 않으며, 장기임대주택(통합공공임대, 국민임대, 영구임대, 행복주택) 입주 시 모든 대기자 명부에서 제외 처리되오니 신청 시 유의하시기 바랍니다. 세부적인 사항은 아래 공고문 [4. 신청자격 및 입주자 선정방법] 및 [7. 예비입주자 발표 및 계약 안내]를 참조하시기 바랍니다. • 본 공고는 공공 마이데이터 활용, 온라인 전자서명을 활용하여 간편하게 서류를 제출할 수 있는 “MyMy서비스” 적용",
+          "target": "공급대상을 변경하여 변경된 공급대상의 임대조건으로 새로 계약을 할 수 있으며, 새로 계약을 하는 시점부터 변경된 공급대상의 최대 거주기간을 새로 적용합니다.Ÿ대학생, 청년 등이 거주 중 신혼부부·한부모가족의 입주자격을 갖추는 경우 해당계층에 맞는 주택형의 예비자 중 가장 후순위로 등록할 수 있습니다.ŸŸ“대학생계층”과 “청년계층” 공급 물량은 각 형별로 통합 추첨하여 공급합니다.ŸŸ세대당 계약면적은 동일단지의 주택형별로 대표적인 면적을 공고한 것으로서 실제 입주하는 주택은 같은 주택형이라 하더라도 주거전용면적 등 세대당 계약면적이 다소 다를 수 있습니다.ŸŸ주거전용면적은 주거의 용도로만 쓰이는 면적, 주거공용면적은 계단, 복도, 주현관 등 공동주택의 지상층에 있는 공용면적이며, 그 밖의 공용면적은 주거공용면적을 제외한 관리사무소, 경비초소, 지하층 등의 공용면적입니다.ŸŸ공급물량 중 동일 공급형별로 청약미달인 계층의 공급물량은 타 공급대상 계층으로 전환하여 추첨 및 공급합니다.\n • 상기 행복주택은 공급대상자에 따라 최대 거주기간 제한이 있는 임대주택이며 분양전환되지 않습니다. • 주택청약종합저축 전환 신청자는 입주자모집공고일 전일까지 주택청약종합저축으로의 전환가입이 완료되어야 청약 신청이 가능합니다. • 입주자 선정절차 및 공급일정 (‘26.08.18.∼19.) (’26.08.25) (~‘26.08.28.) (‘26.11.30.) • 상기 공급일정은 추후 변동될 수 있음을 인지하여 주시기 바랍니다.신청(인터넷, 현장)\n 서류제출 대상자 선정 및 발표\n인터넷청약서류제출대상자서류접수\n무주택∙소득∙자산 조사\n무주택∙소득∙자산소명처리(해당자)\n 예비입주자발표\n□ 운정 A21BL 산내1단지공급형별(㎡)공급대상세대 당 계약면적(㎡) 최대거주기간(년)구조및난방건설호수대기중인예비자수총모집대상(10)주거전용주거공용그 밖의공용면적합계기타공용주차장21A(주거약자)고령자21.0213.79331.65329.675946.142420벽식 /지역48610□ 운정 A39BL 가람14단지공급형별(㎡)공급대상세대 당 계약면적(㎡) 최대거주기간(년)구조및난방건설호수대기중인예비자수총모집대상(40)주거전용주거공용그 밖의공용면적합계기타공용주차장36A신혼부부, 한부모36.5119.88683.875116.939177.211010~14벽식 /지역2202340□ 운정3 A34BL 초롱꽃3단지공급형별(㎡)공급대상세대 당 계약면적(㎡) 최대거주기간(년)구조및난방건설호수대기중인예비자수총모집대상(50)주거전용주거공용그 밖의공용면적합계기타공용주차장24A주거급여 수급자24.6814.00862.53468.304849.528020벽식 /지역5052046A신혼부부, 한부모46.9526.64934.821915.798694.219810~142101930□ 운정3 A47BL 물향기7단지\n□ 운정3 A25BL 초롱꽃10단지\n• 1",
+          "rent": "임대조건을 적용※ ‘소득’은 「소득세법」제19조제1항에 따른 사업소득 및 같은 법 제20조제1항에 따른 근로소득을 말하며 국민연금 가입증명서 및 건강보험자격득실확인서 등을 통해 소득이 있는 여부를 판단함※ ➀-㉯의 ‘소득이 있는 업무에 종사한 기간’은 국민연금 가입증명서 및 건강보험공단 자격득실확인서 등을 통해 소득이 있었던 기간을 합산함 단, 대학 또는 고등학교 재학(휴학포함) 중 소득이 있는 업무에 종사한 기간과 병역의무 이행을 위하여 연구기관, 기간산업체, 방위산업체, 농업회사법인, 농업기계의 사후관리업체 등에 근무한 기간은 제외※ ➀-㉯2)의 퇴직은 국민연금 가입증명서, 건강보험자격득실확인서 등을 통해 판단함※ ➀-㉯3)의 ‘예술인’이란 「예술인복지법」제2조제2호에 따라 한국예술인복지재단에서 예술활동증명을 받은 자를 말한다.※ ‘청년계층‘의 해당 세대의 범위는 다음과 같음 구분 해당세대 범위• 신청자가 세대원이 있는 세대주인 경우- 신청자 본인- 신청자 직계존속으로 신청자와 같은 세대별 주민등록표에 등재된 사람- 신청자 직계비속 및 신청자 직계비속의 배우자로 신청자와 같은 세대별 주민등록표에 등재된 사람• 신청자가 세대원인 경우• 신청자가 단독세대주인 경우 - 신청자 본인※ 공고일 현재 주택청약저축 미가입자의 경우 입주전까지 청약통장 사본을 제출하지 않을 시 당첨 취소 및 임대차계약이 해지 처리됨■ 경쟁 시 입주자 선정기준구분 입주자 선정 순서일반공급순위 → 추첨※ “대학생 계층”과 “청년 계층”의 공급물량은 각 형별 통합하여 순위에 따라 추첨함 4-3. 신혼부부·한부모가족 계층예비입주자 모집공고일(2026.08.07) 현재,",
+          "eligibility": "무주택세대구성원(예비신혼부부의 경우 혼인으로 구성될 세대의 세대구성원 모두 무주택자)으로서 아래의 요건(신혼부부는 ➀-㉮와 ②～⑤를, 예비신혼부부는 ➀-㉯와 ③～⑥를, 한부모가족은 ➀-㉰와 ③～⑤를 모두 갖춘 자 ※ 예비신혼부부의 경우 당사자 2인 중 1인을 대표로 지정하여 신청함. 대표신청자는 향후 당첨시 계약자가 될 1인을 말하며 신청 이후에는 변경이 불가함.\n ※ 출산자녀는 ’23.3.28 이후 출산한 자녀(입양자녀 및 태아 포함)를 의미하며, 기준일 이후 출산 자녀가 있는 경우에는 기준일 이전 출생한 기존 미성년자녀도 포함하여 최대 2자녀로 인정 (단, 주택공급 신청자 세대별 주민등록표에 등재되어 있는 경우에 한함, 이하 동일)\n세대원(본인) 1인0인120%251,000,000원45,420,000원2인0인110%251,000,000원45,420,000원1인120%276,000,000원49,960,000원3인 이상0인100%251,000,000원45,420,000원1인110%276,000,000원49,960,000원2인 이상120%301,000,000원54,510,000원\n ➀-㉮ (신혼부부) 혼인중인 자 ➀-㉯ (예비신혼부부) 혼인을 계획 중이며 입주 전까지 혼인사실을 증명할 수 있을 것 ➀-㉰ (한부모가족) 6세이하 자녀를 둔 한부모인 자(태아포함) ② 혼인기간이 7년 이내일 것 또는 6세 이하 자녀(태아포함)를 둔 자 ③ 해당세대(예비신혼부부는 혼인으로 구성될 세대)의 월평균소득이 전년도 도시근로자 가구원수별 가구당 월평\n※ ‘신혼부부, 한부모가족‘의 해당 세대의 범위는 다음과 같음 \n균소득의 100퍼센트 이하(맞벌이 부부 120퍼센트 이하)일 것 ※ 단, 가구원 수가 2인인 경우에는 110퍼센트, 맞벌이 2인 가구의 경우 130퍼센트 이하일 것\n \n가구원수일반 신혼부부맞벌이 신혼부부월평균소득금액기준월평균소득금액기준2인6,452,897원 이하 110%7,626,151원 이하 130%3인8,168,429원 이하 100%9,802,115원 이하 120%4인8,802,202원 이하 100%10,562,642원 이하 120%5인9,326,985원 이하 100%11,192,382원 이하 120%6인9,906,263원 이하 100%11,887,516원 이하 120% * 7인이상의 가구는 6인가구 기준소득금액에 추가 1인당 평균금액 579,278원을 합산하여 산정 ④ 해당 세대(예비신혼부부는 혼인으로 구성될 세대)가 보유하고 있는 총 자산가액 합산기준 34,500만원 이하이고, 총 자산 중 자동차가액이 4,542만원 이하 일 것 ⑤ 본인 또는 배우자(예비신혼부부의 경우는 혼인 예정인 배우자) 중 1인이 입주 전까지 주택청약종합저축(청약저축 포함) 가입사실을 증명할 수 있을 것 (단, 한부모가족은 본인만 해당) ⑥ 혼인으로 구성될 세대의 세대구성원 모두 무주택자일"
+        },
+        "attachments": [
+          {
+            "url": "https://apply.lh.or.kr/lhapply/lhFile.do?fileid=68004280",
+            "type": "hwp_unsupported",
+            "extracted": false
+          },
+          {
+            "url": "https://apply.lh.or.kr/lhapply/lhFile.do?fileid=68004281",
+            "type": "pdf",
+            "extracted": true
+          }
+        ]
       }
     },
     {
@@ -4287,7 +4316,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균소득의 120%",
       "total_units": 40,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "address": "서울특별시 성동구 마장로39길 46(마장동 767-7, 8번지)",
@@ -5498,7 +5527,7 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득요건 순위에 따라 선정하며 같은 순위에서 경쟁이 있을 경우 추첨(전산추첨)의 방법으로 선정합니다. - 1순위: 소득요건이 전년도 도시근로자 가구원수별 가구당 월 평균소득의 100%",
       "total_units": 220,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "address": "경기도 의왕시 백운밸리 도시개발사업 A1BL",
@@ -5841,11 +5870,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-07",
-        "view_count": 3398
+        "view_count": 5268
       }
     },
     {
@@ -5872,11 +5901,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-07",
-        "view_count": 3201
+        "view_count": 5320
       }
     },
     {
@@ -5903,11 +5932,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-07",
-        "view_count": 2587
+        "view_count": 3875
       }
     },
     {
@@ -5934,11 +5963,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-07",
-        "view_count": 875
+        "view_count": 1254
       }
     },
     {
@@ -5965,11 +5994,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-07",
-        "view_count": 1076
+        "view_count": 1484
       }
     },
     {
@@ -5996,11 +6025,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-08T22:27:35.486402+00:00",
+      "fetched_at": "2026-08-09T22:29:29.057742+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-07",
-        "view_count": 497
+        "view_count": 625
       }
     },
     {
@@ -6495,316 +6524,6 @@
       "metadata": {
         "notice_date": "2026-08-06",
         "view_count": 37
-      }
-    },
-    {
-      "id": "direct:sh_307966",
-      "title": "2026년 전세임대형 든든주택 정기모집(2026.4.29.) 입주대상자 발표(계약안내문 첨부)",
-      "organization": "SH",
-      "source_id": "sh_307966",
-      "source_type": "direct_collector",
-      "category": "SH 공공주택",
-      "region": "서울",
-      "district": "",
-      "housing_type": "전세임대",
-      "target": [],
-      "apply_start": "",
-      "apply_end": "",
-      "status": "unknown",
-      "announcement_url": "https://www.i-sh.co.kr/app/lay2/program/S48T1581C563/www/brd/m_247/view.do?seq=307966&multi_itm_seq=2",
-      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
-      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
-      "benefit_summary": "",
-      "required_documents": [],
-      "age_min": null,
-      "age_max": null,
-      "homeless_required": null,
-      "income_condition": "",
-      "total_units": null,
-      "fetched_at": "2026-08-07T22:33:26.821444+00:00",
-      "schedule_confirmed": false,
-      "metadata": {
-        "notice_date": "2026-08-05",
-        "view_count": 8927
-      }
-    },
-    {
-      "id": "direct:lh_9102835534",
-      "title": "[신청현황게시] [26.07.15 공고]괴산동부행복마을 국민임대주택 예비입주자 모집 신청현황(접수일:26.08.04)",
-      "organization": "LH",
-      "source_id": "lh_9102835534",
-      "source_type": "direct_collector",
-      "category": "LH 공공주택",
-      "region": "전국",
-      "district": "",
-      "housing_type": "국민임대",
-      "target": [],
-      "apply_start": "",
-      "apply_end": "",
-      "status": "unknown",
-      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=03&bbsSn=9102835534",
-      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
-      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
-      "benefit_summary": "",
-      "required_documents": [],
-      "age_min": null,
-      "age_max": null,
-      "homeless_required": null,
-      "income_condition": "",
-      "total_units": null,
-      "fetched_at": "2026-08-07T22:33:26.821444+00:00",
-      "schedule_confirmed": false,
-      "metadata": {
-        "notice_date": "2026-08-05",
-        "view_count": 88
-      }
-    },
-    {
-      "id": "direct:lh_9102432115",
-      "title": "광주전남혁신도시 빛가람LH3단지 잔여세대 일반매각 공고('26.06.04.) 일정연기 안내",
-      "organization": "LH",
-      "source_id": "lh_9102432115",
-      "source_type": "direct_collector",
-      "category": "LH 공공주택",
-      "region": "광주",
-      "district": "",
-      "housing_type": "분양주택",
-      "target": [],
-      "apply_start": "",
-      "apply_end": "",
-      "status": "unknown",
-      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=02&bbsSn=9102432115",
-      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
-      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
-      "benefit_summary": "",
-      "required_documents": [],
-      "age_min": null,
-      "age_max": null,
-      "homeless_required": null,
-      "income_condition": "",
-      "total_units": null,
-      "fetched_at": "2026-08-07T22:33:26.821444+00:00",
-      "schedule_confirmed": false,
-      "metadata": {
-        "notice_date": "2026-08-05",
-        "view_count": 58
-      }
-    },
-    {
-      "id": "direct:lh_9102432114",
-      "title": "[신청현황 게시]('26.07.15공고)청주시지역 국민임대주택 예비자 모집 신청현황",
-      "organization": "LH",
-      "source_id": "lh_9102432114",
-      "source_type": "direct_collector",
-      "category": "LH 공공주택",
-      "region": "전국",
-      "district": "",
-      "housing_type": "국민임대",
-      "target": [],
-      "apply_start": "",
-      "apply_end": "",
-      "status": "unknown",
-      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=02&bbsSn=9102432114",
-      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
-      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
-      "benefit_summary": "",
-      "required_documents": [],
-      "age_min": null,
-      "age_max": null,
-      "homeless_required": null,
-      "income_condition": "",
-      "total_units": null,
-      "fetched_at": "2026-08-07T22:33:26.821444+00:00",
-      "schedule_confirmed": false,
-      "metadata": {
-        "notice_date": "2026-08-05",
-        "view_count": 221
-      }
-    },
-    {
-      "id": "direct:lh_9102432113",
-      "title": "영암, 장흥, 해남지역 국민임대주택 예비입주자 모집 최종 접수현황(2026.07.15공고)",
-      "organization": "LH",
-      "source_id": "lh_9102432113",
-      "source_type": "direct_collector",
-      "category": "LH 공공주택",
-      "region": "전국",
-      "district": "",
-      "housing_type": "국민임대",
-      "target": [],
-      "apply_start": "",
-      "apply_end": "",
-      "status": "unknown",
-      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=02&bbsSn=9102432113",
-      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
-      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
-      "benefit_summary": "",
-      "required_documents": [],
-      "age_min": null,
-      "age_max": null,
-      "homeless_required": null,
-      "income_condition": "",
-      "total_units": null,
-      "fetched_at": "2026-08-07T22:33:26.821444+00:00",
-      "schedule_confirmed": false,
-      "metadata": {
-        "notice_date": "2026-08-05",
-        "view_count": 96
-      }
-    },
-    {
-      "id": "direct:lh_9102432110",
-      "title": "[서울지역본부] 다자녀 매입임대주택 예비입주자 모집공고(26.05.27) 발표 일정 변경",
-      "organization": "LH",
-      "source_id": "lh_9102432110",
-      "source_type": "direct_collector",
-      "category": "LH 공공주택",
-      "region": "서울",
-      "district": "",
-      "housing_type": "매입임대",
-      "target": [],
-      "apply_start": "",
-      "apply_end": "",
-      "status": "unknown",
-      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=02&bbsSn=9102432110",
-      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
-      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
-      "benefit_summary": "",
-      "required_documents": [],
-      "age_min": null,
-      "age_max": null,
-      "homeless_required": null,
-      "income_condition": "",
-      "total_units": null,
-      "fetched_at": "2026-08-07T22:33:26.821444+00:00",
-      "schedule_confirmed": false,
-      "metadata": {
-        "notice_date": "2026-08-05",
-        "view_count": 132
-      }
-    },
-    {
-      "id": "direct:lh_9102432103",
-      "title": "[서류제출 대상자 발표] 화성서부권 국민임대주택 서류제출 안내('26.07.06.공고)",
-      "organization": "LH",
-      "source_id": "lh_9102432103",
-      "source_type": "direct_collector",
-      "category": "LH 공공주택",
-      "region": "경기",
-      "district": "",
-      "housing_type": "국민임대",
-      "target": [],
-      "apply_start": "",
-      "apply_end": "",
-      "status": "unknown",
-      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=02&bbsSn=9102432103",
-      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
-      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
-      "benefit_summary": "",
-      "required_documents": [],
-      "age_min": null,
-      "age_max": null,
-      "homeless_required": null,
-      "income_condition": "",
-      "total_units": null,
-      "fetched_at": "2026-08-07T22:33:26.821444+00:00",
-      "schedule_confirmed": false,
-      "metadata": {
-        "notice_date": "2026-08-05",
-        "view_count": 744
-      }
-    },
-    {
-      "id": "direct:lh_9102432101",
-      "title": "[당첨자발표] 홍천북방 고령자복지주택 예비입주자 당첨자 발표 (모집공고 26.03.23)",
-      "organization": "LH",
-      "source_id": "lh_9102432101",
-      "source_type": "direct_collector",
-      "category": "LH 공공주택",
-      "region": "전국",
-      "district": "",
-      "housing_type": "영구임대",
-      "target": [],
-      "apply_start": "",
-      "apply_end": "",
-      "status": "unknown",
-      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=02&bbsSn=9102432101",
-      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
-      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
-      "benefit_summary": "",
-      "required_documents": [],
-      "age_min": null,
-      "age_max": null,
-      "homeless_required": null,
-      "income_condition": "",
-      "total_units": null,
-      "fetched_at": "2026-08-07T22:33:26.821444+00:00",
-      "schedule_confirmed": false,
-      "metadata": {
-        "notice_date": "2026-08-05",
-        "view_count": 86
-      }
-    },
-    {
-      "id": "direct:lh_810085554",
-      "title": "6-4UR2블록(해밀마을행복주택) LH희망상가 일반형 영업업종 게시(26.07.22.공고)",
-      "organization": "LH",
-      "source_id": "lh_810085554",
-      "source_type": "direct_collector",
-      "category": "LH 공공주택",
-      "region": "전국",
-      "district": "",
-      "housing_type": "분양ㆍ임대상가(입찰)",
-      "target": [],
-      "apply_start": "",
-      "apply_end": "",
-      "status": "unknown",
-      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=04&bbsSn=810085554",
-      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
-      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
-      "benefit_summary": "",
-      "required_documents": [],
-      "age_min": null,
-      "age_max": null,
-      "homeless_required": null,
-      "income_condition": "",
-      "total_units": null,
-      "fetched_at": "2026-08-07T22:33:26.821444+00:00",
-      "schedule_confirmed": false,
-      "metadata": {
-        "notice_date": "2026-08-05",
-        "view_count": 48
-      }
-    },
-    {
-      "id": "direct:lh_7000019857",
-      "title": "양주회천 업무시설, 복합, 상업, 주차장용지 재공급공고 개찰결과 게시",
-      "organization": "LH",
-      "source_id": "lh_7000019857",
-      "source_type": "direct_collector",
-      "category": "LH 공공주택",
-      "region": "경기",
-      "district": "",
-      "housing_type": "상가용지",
-      "target": [],
-      "apply_start": "",
-      "apply_end": "",
-      "status": "unknown",
-      "announcement_url": "http://apply.lh.or.kr/lhapply/apply/noti/an/view.do?mi=1079&ccrCnntSysDsCd=01&bbsSn=7000019857",
-      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
-      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
-      "benefit_summary": "",
-      "required_documents": [],
-      "age_min": null,
-      "age_max": null,
-      "homeless_required": null,
-      "income_condition": "",
-      "total_units": null,
-      "fetched_at": "2026-08-07T22:33:26.821444+00:00",
-      "schedule_confirmed": false,
-      "metadata": {
-        "notice_date": "2026-08-05",
-        "view_count": 34
       }
     }
   ]
