@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-12T04:15:32.744758+00:00",
+  "generated_at": "2026-08-13T04:19:38.187898+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,25 +18,98 @@
       "code": "A00040"
     }
   ],
-  "count": 1,
+  "count": 5,
   "items": [
     {
-      "dedup_key": "policy_521e6327bcbba6b1",
-      "title": "[보도자료] 제18차 부동산 불법행위 대응협의회",
+      "dedup_key": "policy_b9d9c2bb9dc05aad",
+      "title": "[보도자료] 전월세 및 매매시장 안정을 위한 주택 신속공급 방안 및 부동산 시장 안정을 위한 금융 종합대책",
       "department": "국무조정실",
-      "published_at": "2026-08-11T00:00:00+09:00",
-      "published_date": "2026-08-11",
-      "collected_date": "2026-08-12",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156774068&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-08-11&endDate=2026-08-12&srchWord=&period=day",
+      "published_at": "2026-08-13T00:00:00+09:00",
+      "published_date": "2026-08-13",
+      "collected_date": "2026-08-13",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156774325&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-08-12&endDate=2026-08-13&srchWord=&period=day",
       "rss": "https://www.korea.kr/rss/dept_opm.xml",
       "summary": "",
       "topics": [
+        "전월세",
         "부동산시장"
       ],
       "targets": [
         "일반가구"
       ],
-      "relevance": "중간"
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_3943c3b4c2296862",
+      "title": "[참고] 미래를 위한 세제지원, 자율주행 혁신은 앞당기고 청년 주거부담은 낮춘다.",
+      "department": "국토교통부",
+      "published_at": "2026-08-12T00:00:00+09:00",
+      "published_date": "2026-08-12",
+      "collected_date": "2026-08-13",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156774178&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-12&endDate=2026-08-13&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "청년주거"
+      ],
+      "targets": [
+        "청년"
+      ],
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_d43cfc2915f09e0c",
+      "title": "수도권 23만호+α 추가 공급, 주택 공급 촉진 및 청년 등 실수요자 금융지원 강화",
+      "department": "기획예산처",
+      "published_at": "",
+      "published_date": "",
+      "collected_date": "2026-08-13",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156774326&pWise=sub&pWiseSub=C2",
+      "rss": "https://www.korea.kr/rss/dept_mpb.xml",
+      "summary": "",
+      "topics": [
+        "주택공급"
+      ],
+      "targets": [
+        "청년"
+      ],
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_a3ec18263d461c7c",
+      "title": "수도권 23만호+α 추가 공급, 주택 공급 촉진 및 청년 등 실수요자 금융지원 강화",
+      "department": "국무조정실",
+      "published_at": "",
+      "published_date": "",
+      "collected_date": "2026-08-13",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156774326&pWise=sub&pWiseSub=C2",
+      "rss": "https://www.korea.kr/rss/dept_opm.xml",
+      "summary": "",
+      "topics": [
+        "주택공급"
+      ],
+      "targets": [
+        "청년"
+      ],
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_6a336696da7601c9",
+      "title": "수도권 23만호+α 추가 공급, 주택 공급 촉진 및 청년 등 실수요자 금융지원 강화",
+      "department": "국토교통부",
+      "published_at": "",
+      "published_date": "",
+      "collected_date": "2026-08-13",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156774326&pWise=sub&pWiseSub=C2",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "주택공급"
+      ],
+      "targets": [
+        "청년"
+      ],
+      "relevance": "높음"
     }
   ]
 }
