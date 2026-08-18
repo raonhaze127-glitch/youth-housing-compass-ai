@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-18T12:20:45.147033+00:00",
-  "source": "github_actions_direct",
-  "count": 134,
+  "generated_at": "2026-08-18T12:29:39.731941+00:00",
+  "source": "github_actions_direct_plus_local_gh",
+  "count": 135,
   "collector_warnings": [],
   "announcements": [
     {
@@ -3833,6 +3833,43 @@
             "extracted": true
           }
         ]
+      }
+    },
+    {
+      "id": "direct:gh_apply_rent_808",
+      "title": "경기리츠1호 다산진건데시앙 장기전세주택 예비입주자 모집공고",
+      "organization": "GH",
+      "source_id": "gh_apply_rent_808",
+      "source_type": "direct_collector",
+      "category": "GH 임대주택",
+      "region": "경기",
+      "district": "남양주시",
+      "housing_type": "장기전세",
+      "target": [],
+      "apply_start": "2026-08-24",
+      "apply_end": "2026-08-26",
+      "status": "planned",
+      "announcement_url": "https://apply.gh.or.kr/sb/sr/sr7150/selectPbancRentHouseList.do?searchTitle=%EA%B2%BD%EA%B8%B0%EB%A6%AC%EC%B8%A01%ED%98%B8+%EB%8B%A4%EC%82%B0%EC%A7%84%EA%B1%B4%EB%8D%B0%EC%8B%9C%EC%95%99+%EC%9E%A5%EA%B8%B0%EC%A0%84%EC%84%B8%EC%A3%BC%ED%83%9D+%EC%98%88%EB%B9%84%EC%9E%85%EC%A3%BC%EC%9E%90+%EB%AA%A8%EC%A7%91%EA%B3%B5%EA%B3%A0",
+      "summary": "기관 원본에서 직접 수집한 공고입니다. 세부 조건은 원문을 확인해주세요.",
+      "eligibility_summary": "자격요건은 공고 원문과 사전 점검 결과를 함께 확인해야 합니다.",
+      "benefit_summary": "",
+      "required_documents": [],
+      "age_min": null,
+      "age_max": null,
+      "homeless_required": null,
+      "income_condition": "",
+      "total_units": null,
+      "fetched_at": "2026-08-18T12:27:26.745259+00:00",
+      "schedule_confirmed": true,
+      "metadata": {
+        "notice_date": "2026-08-13",
+        "listed_status": "공고중 일반공고 15809",
+        "gh_apply_channel": "rent",
+        "pbanc_no": "808",
+        "pbanc_kind_code": "01",
+        "business_type_name": "장기전세",
+        "detail_url": "https://apply.gh.or.kr/sb/sr/sr7150/selectPbancDetailView.do",
+        "view_count": 15809
       }
     },
     {
