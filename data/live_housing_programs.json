@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-18T12:29:39.731941+00:00",
-  "source": "github_actions_direct_plus_local_gh",
+  "generated_at": "2026-08-18T12:30:55.176999+00:00",
+  "source": "existing_snapshot_enrichment",
   "count": 135,
   "collector_warnings": [],
   "announcements": [
