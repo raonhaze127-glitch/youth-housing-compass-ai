@@ -58,4 +58,8 @@ def curl_text(
     params: dict[str, Any] | None = None,
     data: dict[str, Any] | None = None,
 ) -> str:
-    return curl_bytes(url, timeout, params=params, data=data).decode("utf-8", errors="replace")
+    content = curl_bytes(url, timeout, params=params, data=data)
+    try:
+        return content.decode("utf-8")
+    except UnicodeDecodeError:
+        return content.decode("cp949", errors="replace")

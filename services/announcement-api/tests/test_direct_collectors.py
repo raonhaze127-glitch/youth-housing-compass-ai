@@ -67,6 +67,22 @@ class DirectCollectorTests(unittest.TestCase):
         self.assertEqual(result[0].metadata["view_count"], 10)
         self.assertIn("searchTitle=", result[0].announcement_url)
 
+    def test_gh_apply_list_keeps_active_status_with_extra_mobile_text(self):
+        html = """
+        <table><tbody><tr>
+          <td>1</td><td>분양주택</td><td>
+            <a data-pbancno="808" data-pbanckndcd="01" data-biztynm="분양주택">
+              경기리츠1호 분양전환주택 입주자모집공고
+            </a>
+          </td><td>경기도</td><td>PDF</td><td>2026-08-13</td>
+          <td>2026-08-26 공고중 일반공급 15700</td><td>공고중 일반공급 15700</td><td>일반공급</td><td>15700</td>
+        </tr></tbody></table>
+        """
+        result = _parse_gh_apply_list(html, "rent", "now", 3)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].source_id, "gh_apply_rent_808")
+        self.assertEqual(result[0].apply_end, "2026-08-26")
+
     def test_gh_detail_district_ignores_footer_office_address(self):
         text = (
             "공급정보 소재지 경기도 남양주시 다산동 6013 "

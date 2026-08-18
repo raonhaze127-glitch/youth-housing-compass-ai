@@ -559,7 +559,7 @@ def _parse_gh_apply_list(
         apply_end = normalize_date(cells[6].get_text(" ", strip=True))
         listed_status = cells[7].get_text(" ", strip=True)
         view_count = _view_count(cells[9].get_text(" ", strip=True)) if len(cells) > 9 else None
-        is_active = listed_status in {"공고중", "접수중"}
+        is_active = any(status in listed_status for status in ("공고중", "접수중"))
         if notice_date:
             try:
                 if date.fromisoformat(notice_date) < cutoff and not is_active:
