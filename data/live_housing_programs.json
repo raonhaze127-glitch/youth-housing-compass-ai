@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-18T12:30:55.176999+00:00",
-  "source": "existing_snapshot_enrichment",
+  "generated_at": "2026-08-18T22:24:12.490226+00:00",
+  "source": "github_actions_direct",
   "count": 135,
   "collector_warnings": [],
   "announcements": [
@@ -1163,11 +1163,11 @@
       "homeless_required": true,
       "income_condition": "도시근로자 가구원수별 가구당 월평균 소득100% · 총자산가액자동차가액한부모가족X2인0인110%345,000,000원 · 자동차가액한부모가족X2인0인110%345,000,000원",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 1033,
+        "view_count": 1246,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 127524,
@@ -1498,11 +1498,11 @@
       "homeless_required": true,
       "income_condition": "월평균 소득 100% · 총자산 기준 세대구성원 · 자동차, 금융자산(부채반영), 일반자산) 가액 합산 기준 ( 24,500 )만원",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 553,
+        "view_count": 666,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 74894,
@@ -1553,11 +1553,11 @@
       "homeless_required": true,
       "income_condition": "월평균 소득 100% · 총자산 기준 세대구성원 · 자동차, 금융자산(부채반영), 일반자산) 가액 합산 기준 ( 24,500 )만원",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 510,
+        "view_count": 645,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 74877,
@@ -1699,11 +1699,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득금액기준월평균소득금액기준2인6,452,897원 이하 110% · 총자산가액자동차가액한부모가족X2인0인110%345,000,000원 · 자동차가액이 4,542만원",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 676,
+        "view_count": 1221,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 92500,
@@ -1754,11 +1754,11 @@
       "homeless_required": null,
       "income_condition": "월평균소득 70%",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 514,
+        "view_count": 934,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 71467,
@@ -1912,11 +1912,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평 균소득 100% · 자동차가액을 초과하는 경우는 제외) • 두 개 이상의 항목에서 할증을 적용하는 경우에는 가장 높은 할증비율만 적용됩니다. 신청자격 • 이 주택의 입주자(세대구성원",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 977,
+        "view_count": 1334,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 77416,
@@ -1965,11 +1965,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소 득의 100퍼센트 이하(맞벌이 부부 120퍼센트 이하)일 것 ※ 단, 가구원 수가 2인인 경우에는 110퍼센트, 맞벌이 2인 가구의 경우 130퍼센트 이하일 것 가구원수 일반 신혼부부 맞벌이 신혼부부 월평균소득금액 기준 월평균소득금액 기준 2인 6,452,897원 이하 110% · 총자산가액 자동차가액 한부모가족 X 2인 0인 110% 345,000,000원 · 자동차가액이 4,542 만 원",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 619,
+        "view_count": 759,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 89339,
@@ -2020,11 +2020,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소 득의 100퍼센트 이하(맞벌이 부부 120퍼센트 이하)일 것 ※ 단, 가구원 수가 2인인 경우에는 110퍼센트, 맞벌이 2인 가구의 경우 130퍼센트 이하일 것 가구원수 일반 신혼부부 맞벌이 신혼부부 월평균소득금액 기준 월평균소득금액 기준 2인 6,452,897원 이하 110% · 총자산가액 자동차가액 한부모가족 X 2인 0인 110% 345,000,000원 · 자동차가액 이 4,542 만 원",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 295,
+        "view_count": 475,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 97400,
@@ -2078,11 +2078,11 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득 100%",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 346,
+        "view_count": 596,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 97524,
@@ -2244,11 +2244,11 @@
       "homeless_required": true,
       "income_condition": "자동차사용신고필증 1. 신고사항변경내역 - 이륜자동차번호, 성명, 주민등록번호-발급, 주소-발급, 신고일자, 확인기관 2. 제원",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 1033,
+        "view_count": 1481,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 71134,
@@ -2302,11 +2302,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 535
+        "view_count": 760
       }
     },
     {
@@ -2333,11 +2333,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 자동차가액이 4,542만원",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 608,
+        "view_count": 933,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 142702,
@@ -2391,11 +2391,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 1004
+        "view_count": 1414
       }
     },
     {
@@ -2422,11 +2422,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 2119
+        "view_count": 2542
       }
     },
     {
@@ -2453,11 +2453,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 3655
+        "view_count": 4442
       }
     },
     {
@@ -2489,11 +2489,11 @@
       "homeless_required": true,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득 100% · 자동차가액을 초과하는 경우는 제외) • 두 개 이상의 항목에서 할증을 적용하는 경우에는 가장 높은 할증비율만 적용됩니다. 신청자격 • 이 주택의 입주자(세대구성원",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 1921,
+        "view_count": 2790,
         "analysis_quality": "high",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 98112,
@@ -2663,11 +2663,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 417
+        "view_count": 704
       }
     },
     {
@@ -5929,7 +5929,7 @@
       "homeless_required": true,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원(태아를 포함한다)수별 가구당 월평균소득(이하 \"전년도 도시근로자 가구원수별 가구당 월평균소득\"이라 한다)의 120%",
       "total_units": 136,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "address": "울산광역시 중구 반구동 447-19번지 외 1필지",
@@ -5985,7 +5985,7 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": 82,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": true,
       "metadata": {
         "address": "부산광역시 강서구 범방동 2008번지",
@@ -6270,7 +6270,7 @@
     },
     {
       "id": "direct:sh_308549",
-      "title": "NEW [청년형] 특화형 매입임대주택(금천구) 입주자 모집 공고(운영기관 : 한지붕 협동조합)",
+      "title": "[청년형] 특화형 매입임대주택(금천구) 입주자 모집 공고(운영기관 : 한지붕 협동조합)",
       "organization": "SH",
       "source_id": "sh_308549",
       "source_type": "direct_collector",
@@ -6297,11 +6297,11 @@
       "homeless_required": null,
       "income_condition": "월평균소득이 전년도 도시근로자 가구원수별 가구당 월평균소득의 100% · 총자산가액세대구성원 · 자동차가액세대구성원",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 3335,
+        "view_count": 4149,
         "analysis_quality": "medium",
         "analysis_source": "official_notice_and_attachments",
         "source_char_count": 30034,
@@ -6323,7 +6323,7 @@
     },
     {
       "id": "direct:sh_307767",
-      "title": "NEW 행복주택 예비자 계약결과알림",
+      "title": "행복주택 예비자 계약결과알림",
       "organization": "SH",
       "source_id": "sh_307767",
       "source_type": "direct_collector",
@@ -6345,11 +6345,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 2567
+        "view_count": 3152
       }
     },
     {
@@ -6376,11 +6376,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 25
+        "view_count": 42
       }
     },
     {
@@ -6407,11 +6407,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 272
+        "view_count": 466
       }
     },
     {
@@ -6438,11 +6438,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 138
+        "view_count": 177
       }
     },
     {
@@ -6469,11 +6469,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 161
+        "view_count": 201
       }
     },
     {
@@ -6500,11 +6500,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 108
+        "view_count": 117
       }
     },
     {
@@ -6531,11 +6531,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 133
+        "view_count": 147
       }
     },
     {
@@ -6562,11 +6562,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 348
+        "view_count": 631
       }
     },
     {
@@ -6593,11 +6593,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 216
+        "view_count": 265
       }
     },
     {
@@ -6624,11 +6624,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 22
+        "view_count": 30
       }
     },
     {
@@ -6655,11 +6655,11 @@
       "homeless_required": null,
       "income_condition": "",
       "total_units": null,
-      "fetched_at": "2026-08-18T12:18:48.291394+00:00",
+      "fetched_at": "2026-08-18T22:21:58.006109+00:00",
       "schedule_confirmed": false,
       "metadata": {
         "notice_date": "2026-08-18",
-        "view_count": 29
+        "view_count": 38
       }
     }
   ]
