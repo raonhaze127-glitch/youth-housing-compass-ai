@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-17T03:08:54.788757+00:00",
+  "generated_at": "2026-08-21T03:12:32.793694+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,6 +18,135 @@
       "code": "A00040"
     }
   ],
-  "count": 0,
-  "items": []
+  "count": 7,
+  "items": [
+    {
+      "dedup_key": "policy_c7387f8bd4ad6bda",
+      "title": "[보도자료] 사회대개혁위원회, 동자동 쪽방촌 공공주택지구 지정 촉구 주민간담회",
+      "department": "국무조정실",
+      "published_at": "2026-08-21T00:00:00+09:00",
+      "published_date": "2026-08-21",
+      "collected_date": "2026-08-21",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775102&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-08-20&endDate=2026-08-21&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_opm.xml",
+      "summary": "",
+      "topics": [
+        "공공주택",
+        "주택공급",
+        "주거복지"
+      ],
+      "targets": [
+        "저소득층"
+      ],
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_1c59dee100f8a0ae",
+      "title": "[보도자료] 온통청년 내 주거 관련 청년 의견수렴 창구 개설",
+      "department": "국무조정실",
+      "published_at": "2026-08-21T00:00:00+09:00",
+      "published_date": "2026-08-21",
+      "collected_date": "2026-08-21",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775083&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-08-20&endDate=2026-08-21&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_opm.xml",
+      "summary": "",
+      "topics": [
+        "주거안정"
+      ],
+      "targets": [
+        "청년"
+      ],
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_de827f05f4226e98",
+      "title": "[장관동정] 김윤덕 장관, \"신길2 도심공공주택복합사업, 주민과 소통하며 속도감 있게 추진\" 지시",
+      "department": "국토교통부",
+      "published_at": "2026-08-20T00:00:00+09:00",
+      "published_date": "2026-08-20",
+      "collected_date": "2026-08-21",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156774998&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-20&endDate=2026-08-21&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "공공주택"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_a4269c7ef3e05bea",
+      "title": "[장관동정] 김윤덕 장관, 서울시장 만나 주택공급 협력 논의",
+      "department": "국토교통부",
+      "published_at": "2026-08-20T00:00:00+09:00",
+      "published_date": "2026-08-20",
+      "collected_date": "2026-08-21",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156774919&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-20&endDate=2026-08-21&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "주택공급"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_8c89f2405fa7052e",
+      "title": "[참고] 「녹색건축법」 · 「민간임대주택법」 ·「건설산업기본법」개정안 국회 본회의 통과",
+      "department": "국토교통부",
+      "published_at": "2026-08-20T00:00:00+09:00",
+      "published_date": "2026-08-20",
+      "collected_date": "2026-08-21",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775035&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-20&endDate=2026-08-21&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "주거안정"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_325c125ee60728b4",
+      "title": "[참고] 주택공급 확대방안 9.7대책 관련 법률 제·개정안 6건 국회 본회의 통과",
+      "department": "국토교통부",
+      "published_at": "2026-08-20T00:00:00+09:00",
+      "published_date": "2026-08-20",
+      "collected_date": "2026-08-21",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775036&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-20&endDate=2026-08-21&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "주택공급"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_072f5c1b7fe7c144",
+      "title": "새로운 개념의 \"전월세 안심신탁사업\",월세 주거부담 낮춘다.",
+      "department": "국토교통부",
+      "published_at": "2026-08-20T00:00:00+09:00",
+      "published_date": "2026-08-20",
+      "collected_date": "2026-08-21",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156774912&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-20&endDate=2026-08-21&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "전월세"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "높음"
+    }
+  ]
 }
