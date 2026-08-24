@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T03:03:56.097237+00:00",
+  "generated_at": "2026-08-24T03:12:58.810386+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,117 +18,6 @@
       "code": "A00040"
     }
   ],
-  "count": 6,
-  "items": [
-    {
-      "dedup_key": "policy_c7387f8bd4ad6bda",
-      "title": "[보도자료] 사회대개혁위원회, 동자동 쪽방촌 공공주택지구 지정 촉구 주민간담회",
-      "department": "국무조정실",
-      "published_at": "2026-08-21T00:00:00+09:00",
-      "published_date": "2026-08-21",
-      "collected_date": "2026-08-22",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775102&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-08-21&endDate=2026-08-22&srchWord=&period=day",
-      "rss": "https://www.korea.kr/rss/dept_opm.xml",
-      "summary": "",
-      "topics": [
-        "공공주택",
-        "주택공급",
-        "주거복지"
-      ],
-      "targets": [
-        "저소득층"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_4923664766051498",
-      "title": "[설명] 정부는 공공임대주택 불법전대 등 위법 행위에 대해 엄중히 조치하겠습니다",
-      "department": "국토교통부",
-      "published_at": "2026-08-21T00:00:00+09:00",
-      "published_date": "2026-08-21",
-      "collected_date": "2026-08-22",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775143&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-21&endDate=2026-08-22&srchWord=&period=day",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "",
-      "topics": [
-        "공공주택"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_1c59dee100f8a0ae",
-      "title": "[보도자료] 온통청년 내 주거 관련 청년 의견수렴 창구 개설",
-      "department": "국무조정실",
-      "published_at": "2026-08-21T00:00:00+09:00",
-      "published_date": "2026-08-21",
-      "collected_date": "2026-08-22",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775083&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-08-21&endDate=2026-08-22&srchWord=&period=day",
-      "rss": "https://www.korea.kr/rss/dept_opm.xml",
-      "summary": "",
-      "topics": [
-        "주거안정"
-      ],
-      "targets": [
-        "청년"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_4dceefe29b864650",
-      "title": "[보도자료] 한성숙 국무총리, 주택공급 관련 서울 구청장 간담회 개최",
-      "department": "기획예산처",
-      "published_at": "",
-      "published_date": "",
-      "collected_date": "2026-08-22",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775146&pWise=sub&pWiseSub=C4",
-      "rss": "https://www.korea.kr/rss/dept_mpb.xml",
-      "summary": "",
-      "topics": [
-        "주택공급"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_2947e95d915be0b8",
-      "title": "[보도자료] 한성숙 국무총리, 주택공급 관련 서울 구청장 간담회 개최",
-      "department": "국무조정실",
-      "published_at": "",
-      "published_date": "",
-      "collected_date": "2026-08-22",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775146&pWise=sub&pWiseSub=C4",
-      "rss": "https://www.korea.kr/rss/dept_opm.xml",
-      "summary": "",
-      "topics": [
-        "주택공급"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_20fa102ef2394caf",
-      "title": "[보도자료] 한성숙 국무총리, 주택공급 관련 서울 구청장 간담회 개최",
-      "department": "국토교통부",
-      "published_at": "",
-      "published_date": "",
-      "collected_date": "2026-08-22",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775146&pWise=sub&pWiseSub=C4",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "",
-      "topics": [
-        "주택공급"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "높음"
-    }
-  ]
+  "count": 0,
+  "items": []
 }
