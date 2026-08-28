@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-27T12:44:25.031898+00:00",
+  "generated_at": "2026-08-28T14:17:47.559650+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,16 +18,52 @@
       "code": "A00040"
     }
   ],
-  "count": 1,
+  "count": 3,
   "items": [
+    {
+      "dedup_key": "policy_aef2f3e12eb1d289",
+      "title": "[차관동정] 김이탁 1차관, \"남양주 도심·왕숙 주택공급 속도 높여 국민 체감 앞당길 것\" 강조",
+      "department": "국토교통부",
+      "published_at": "2026-08-28T00:00:00+09:00",
+      "published_date": "2026-08-28",
+      "collected_date": "2026-08-28",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775947&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-27&endDate=2026-08-28&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "주택공급"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_597146f4c3927a6c",
+      "title": "주택공급 촉진을 위한 건설·금융업계 간담회 개최",
+      "department": "국토교통부",
+      "published_at": "2026-08-28T00:00:00+09:00",
+      "published_date": "2026-08-28",
+      "collected_date": "2026-08-28",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775855&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-27&endDate=2026-08-28&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "주택공급"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "높음"
+    },
     {
       "dedup_key": "policy_d65977c69b66d670",
       "title": "[보도자료] 제19차 부동산 불법행위 대응협의회",
       "department": "국무조정실",
       "published_at": "2026-08-27T00:00:00+09:00",
       "published_date": "2026-08-27",
-      "collected_date": "2026-08-27",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775786&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-08-26&endDate=2026-08-27&srchWord=&period=day",
+      "collected_date": "2026-08-28",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775786&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-08-27&endDate=2026-08-28&srchWord=&period=day",
       "rss": "https://www.korea.kr/rss/dept_opm.xml",
       "summary": "",
       "topics": [
