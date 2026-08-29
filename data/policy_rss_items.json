@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-28T14:17:47.559650+00:00",
+  "generated_at": "2026-08-29T08:58:07.199418+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,7 +18,7 @@
       "code": "A00040"
     }
   ],
-  "count": 3,
+  "count": 5,
   "items": [
     {
       "dedup_key": "policy_aef2f3e12eb1d289",
@@ -26,8 +26,8 @@
       "department": "국토교통부",
       "published_at": "2026-08-28T00:00:00+09:00",
       "published_date": "2026-08-28",
-      "collected_date": "2026-08-28",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775947&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-27&endDate=2026-08-28&srchWord=&period=day",
+      "collected_date": "2026-08-29",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775947&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-28&endDate=2026-08-29&srchWord=&period=day",
       "rss": "https://www.korea.kr/rss/dept_molit.xml",
       "summary": "",
       "topics": [
@@ -44,8 +44,8 @@
       "department": "국토교통부",
       "published_at": "2026-08-28T00:00:00+09:00",
       "published_date": "2026-08-28",
-      "collected_date": "2026-08-28",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775855&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-27&endDate=2026-08-28&srchWord=&period=day",
+      "collected_date": "2026-08-29",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775855&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-28&endDate=2026-08-29&srchWord=&period=day",
       "rss": "https://www.korea.kr/rss/dept_molit.xml",
       "summary": "",
       "topics": [
@@ -57,14 +57,50 @@
       "relevance": "높음"
     },
     {
-      "dedup_key": "policy_d65977c69b66d670",
-      "title": "[보도자료] 제19차 부동산 불법행위 대응협의회",
+      "dedup_key": "policy_f169014220d5bbd6",
+      "title": "[보도자료] 한성숙 국무총리, 서울 민간재개발 사업 현장점검",
+      "department": "국토교통부",
+      "published_at": "",
+      "published_date": "",
+      "collected_date": "2026-08-29",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775978&pWise=sub&pWiseSub=C4",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "부동산시장"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "중간"
+    },
+    {
+      "dedup_key": "policy_c6ed5afb5e0b8ec9",
+      "title": "[보도자료] 한성숙 국무총리, 서울 민간재개발 사업 현장점검",
       "department": "국무조정실",
-      "published_at": "2026-08-27T00:00:00+09:00",
-      "published_date": "2026-08-27",
-      "collected_date": "2026-08-28",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775786&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-08-27&endDate=2026-08-28&srchWord=&period=day",
+      "published_at": "",
+      "published_date": "",
+      "collected_date": "2026-08-29",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775978&pWise=sub&pWiseSub=C4",
       "rss": "https://www.korea.kr/rss/dept_opm.xml",
+      "summary": "",
+      "topics": [
+        "부동산시장"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "중간"
+    },
+    {
+      "dedup_key": "policy_0ebb99c1c60c498a",
+      "title": "[보도자료] 한성숙 국무총리, 서울 민간재개발 사업 현장점검",
+      "department": "기획예산처",
+      "published_at": "",
+      "published_date": "",
+      "collected_date": "2026-08-29",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775978&pWise=sub&pWiseSub=C4",
+      "rss": "https://www.korea.kr/rss/dept_mpb.xml",
       "summary": "",
       "topics": [
         "부동산시장"
