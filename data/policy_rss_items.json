@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-29T08:58:07.199418+00:00",
+  "generated_at": "2026-08-31T08:35:50.724133+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,20 +18,20 @@
       "code": "A00040"
     }
   ],
-  "count": 5,
+  "count": 2,
   "items": [
     {
-      "dedup_key": "policy_aef2f3e12eb1d289",
-      "title": "[차관동정] 김이탁 1차관, \"남양주 도심·왕숙 주택공급 속도 높여 국민 체감 앞당길 것\" 강조",
+      "dedup_key": "policy_a6aae3a0fc461eb3",
+      "title": "'26년 7월 주택통계",
       "department": "국토교통부",
-      "published_at": "2026-08-28T00:00:00+09:00",
-      "published_date": "2026-08-28",
-      "collected_date": "2026-08-29",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775947&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-28&endDate=2026-08-29&srchWord=&period=day",
+      "published_at": "2026-08-31T00:00:00+09:00",
+      "published_date": "2026-08-31",
+      "collected_date": "2026-08-31",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156776040&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-30&endDate=2026-08-31&srchWord=&period=day",
       "rss": "https://www.korea.kr/rss/dept_molit.xml",
       "summary": "",
       "topics": [
-        "주택공급"
+        "주거안정"
       ],
       "targets": [
         "일반가구"
@@ -39,76 +39,22 @@
       "relevance": "높음"
     },
     {
-      "dedup_key": "policy_597146f4c3927a6c",
-      "title": "주택공급 촉진을 위한 건설·금융업계 간담회 개최",
+      "dedup_key": "policy_f0ead1c2f2a49bdc",
+      "title": "'주택 신속공급 방안' 후속조치 본격화, 9월 1일부터 정비사업 정책설명회",
       "department": "국토교통부",
-      "published_at": "2026-08-28T00:00:00+09:00",
-      "published_date": "2026-08-28",
-      "collected_date": "2026-08-29",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775855&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-28&endDate=2026-08-29&srchWord=&period=day",
+      "published_at": "2026-08-30T00:00:00+09:00",
+      "published_date": "2026-08-30",
+      "collected_date": "2026-08-31",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775988&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-30&endDate=2026-08-31&srchWord=&period=day",
       "rss": "https://www.korea.kr/rss/dept_molit.xml",
       "summary": "",
       "topics": [
-        "주택공급"
+        "주거안정"
       ],
       "targets": [
         "일반가구"
       ],
       "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_f169014220d5bbd6",
-      "title": "[보도자료] 한성숙 국무총리, 서울 민간재개발 사업 현장점검",
-      "department": "국토교통부",
-      "published_at": "",
-      "published_date": "",
-      "collected_date": "2026-08-29",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775978&pWise=sub&pWiseSub=C4",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "",
-      "topics": [
-        "부동산시장"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "중간"
-    },
-    {
-      "dedup_key": "policy_c6ed5afb5e0b8ec9",
-      "title": "[보도자료] 한성숙 국무총리, 서울 민간재개발 사업 현장점검",
-      "department": "국무조정실",
-      "published_at": "",
-      "published_date": "",
-      "collected_date": "2026-08-29",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775978&pWise=sub&pWiseSub=C4",
-      "rss": "https://www.korea.kr/rss/dept_opm.xml",
-      "summary": "",
-      "topics": [
-        "부동산시장"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "중간"
-    },
-    {
-      "dedup_key": "policy_0ebb99c1c60c498a",
-      "title": "[보도자료] 한성숙 국무총리, 서울 민간재개발 사업 현장점검",
-      "department": "기획예산처",
-      "published_at": "",
-      "published_date": "",
-      "collected_date": "2026-08-29",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775978&pWise=sub&pWiseSub=C4",
-      "rss": "https://www.korea.kr/rss/dept_mpb.xml",
-      "summary": "",
-      "topics": [
-        "부동산시장"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "중간"
     }
   ]
 }
