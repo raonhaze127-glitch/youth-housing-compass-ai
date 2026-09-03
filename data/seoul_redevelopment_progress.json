@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-09-02T19:41:05.559394+00:00",
+  "generated_at": "2026-09-03T19:42:47.354242+00:00",
   "source": "서울시 정비사업 추진경과",
   "criteria": "사업시행인가 이상 포함, 준공 완료 사업 제외",
   "site_match_note": "정비사업 추진경과 API의 BIZ_NO와 사업장검색 목록 사이에 공개 공통키가 없어 자치구+진행단계가 단일 후보일 때만 확정 매칭합니다.",
@@ -4750,13 +4750,13 @@
           "day": "2006-08-05",
           "stage": "기타",
           "detail_name": "업체선정",
-          "title": "정비사업업체 계약"
+          "title": "정비사업업체 선정"
         },
         {
           "day": "2006-08-05",
           "stage": "기타",
           "detail_name": "업체선정",
-          "title": "정비사업업체 선정"
+          "title": "정비사업업체 계약"
         },
         {
           "day": "2006-08-24",
@@ -5020,13 +5020,13 @@
           "day": "2020-06-03",
           "stage": "기타",
           "detail_name": "업체선정",
-          "title": "특별건축구역지정 설계"
+          "title": "복합청사 설계"
         },
         {
           "day": "2020-06-03",
           "stage": "기타",
           "detail_name": "업체선정",
-          "title": "복합청사 설계"
+          "title": "특별건축구역지정 설계"
         },
         {
           "day": "2020-06-05",
@@ -5344,16 +5344,16 @@
       "management_disposal_date": "2026-04-02",
       "construction_start_date": "",
       "completion_date": "",
-      "latest_progress_date": "2026-08-20",
-      "latest_stage": "기타",
-      "latest_detail": "계약(변경)",
-      "latest_title": "계약(변경)",
+      "latest_progress_date": "2026-09-03",
+      "latest_stage": "관리처분인가",
+      "latest_detail": "(변경)인가고시",
+      "latest_title": "(변경)인가고시",
       "title": "성동구 11200-100002017 공급예정지 (관리처분인가)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
       "content_status": "시작 전",
-      "history_count": 106,
+      "history_count": 109,
       "history": [
         {
           "day": "2006-08-26",
@@ -5986,9 +5986,27 @@
           "title": ""
         },
         {
+          "day": "2026-07-27",
+          "stage": "관리처분인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
           "day": "2026-08-20",
           "stage": "기타",
           "detail_name": "계약(변경)",
+          "title": ""
+        },
+        {
+          "day": "2026-09-02",
+          "stage": "관리처분인가",
+          "detail_name": "(변경)인가",
+          "title": ""
+        },
+        {
+          "day": "2026-09-03",
+          "stage": "관리처분인가",
+          "detail_name": "(변경)인가고시",
           "title": ""
         }
       ],
@@ -6002,7 +6020,7 @@
       "is_public_program": false,
       "public_program_type": "미분류",
       "public_program_reason": "사업장명/사업유형 매칭 부족",
-      "schedule_summary": "사업시행인가: 2023-04-20; 관리처분인가: 2026-04-02; 최근진행: 2026-08-20; 최근단계: 기타 / 계약(변경)"
+      "schedule_summary": "사업시행인가: 2023-04-20; 관리처분인가: 2026-04-02; 최근진행: 2026-09-03; 최근단계: 관리처분인가 / (변경)인가고시"
     },
     {
       "dedup_key": "redevelop_11530_900000743",
@@ -12269,7 +12287,7 @@
       "latest_stage": "기타",
       "latest_detail": "계약(변경)",
       "latest_title": "계약(변경)",
-      "title": "상봉7재정비촉진구역 도시환경정비사업조합 (사업시행인가)",
+      "title": "중랑구 11260-900000820 공급예정지 (사업시행인가)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
@@ -12349,16 +12367,16 @@
           "title": ""
         }
       ],
-      "project_name": "상봉7재정비촉진구역 도시환경정비사업조합",
-      "address_lot": "상봉동 88",
-      "business_type": "재개발(도시정비형)",
-      "site_url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=I1O1CEmx",
-      "map_id": "11260AGZ202009020003",
-      "site_match_status": "확정",
-      "site_candidates": "상봉7재정비촉진구역 도시환경정비사업조합",
+      "project_name": "",
+      "address_lot": "",
+      "business_type": "",
+      "site_url": "",
+      "map_id": "",
+      "site_match_status": "후보복수",
+      "site_candidates": "면목역2구역 가로주택정비사업 (면목동 1251-4, 사업시행인가) | 면목역1구역 가로주택정비사업 (면목동 1271, 사업시행인가) | 상봉7재정비촉진구역 도시환경정비사업조합 (상봉동 88, 사업시행인가)",
       "is_public_program": false,
-      "public_program_type": "민간/일반",
-      "public_program_reason": "공공사업 키워드 없음",
+      "public_program_type": "미분류",
+      "public_program_reason": "사업장명/사업유형 매칭 부족",
       "schedule_summary": "사업시행인가: 2025-08-20; 최근진행: 2026-08-18; 최근단계: 기타 / 계약(변경)"
     },
     {
@@ -17941,7 +17959,7 @@
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
       "content_status": "시작 전",
-      "history_count": 54,
+      "history_count": 58,
       "history": [
         {
           "day": "2003-05-03",
@@ -18030,12 +18048,6 @@
         {
           "day": "2009-12-11",
           "stage": "기타",
-          "detail_name": "계약(변경)",
-          "title": ""
-        },
-        {
-          "day": "2009-12-11",
-          "stage": "기타",
           "detail_name": "업체선정",
           "title": ""
         },
@@ -18049,6 +18061,12 @@
           "day": "2009-12-11",
           "stage": "기타",
           "detail_name": "업체선정",
+          "title": ""
+        },
+        {
+          "day": "2009-12-11",
+          "stage": "기타",
+          "detail_name": "계약(변경)",
           "title": ""
         },
         {
@@ -18078,13 +18096,13 @@
         {
           "day": "2011-04-22",
           "stage": "기타",
-          "detail_name": "계약(변경)",
+          "detail_name": "업체선정",
           "title": ""
         },
         {
           "day": "2011-04-22",
           "stage": "기타",
-          "detail_name": "업체선정",
+          "detail_name": "계약(변경)",
           "title": ""
         },
         {
@@ -18196,6 +18214,18 @@
           "title": ""
         },
         {
+          "day": "2022-12-05",
+          "stage": "관리처분인가",
+          "detail_name": "분양신청의 통지/공고",
+          "title": ""
+        },
+        {
+          "day": "2022-12-06",
+          "stage": "관리처분인가",
+          "detail_name": "분양신청",
+          "title": ""
+        },
+        {
           "day": "2023-06-24",
           "stage": "기타",
           "detail_name": "업체선정",
@@ -18232,6 +18262,12 @@
           "title": ""
         },
         {
+          "day": "2024-05-11",
+          "stage": "관리처분인가",
+          "detail_name": "총회개최",
+          "title": ""
+        },
+        {
           "day": "2024-05-17",
           "stage": "기타",
           "detail_name": "계약(변경)",
@@ -18253,6 +18289,12 @@
           "day": "2024-11-28",
           "stage": "관리처분인가",
           "detail_name": "(변경)인가고시",
+          "title": ""
+        },
+        {
+          "day": "2025-09-05",
+          "stage": "기타",
+          "detail_name": "이주개시",
           "title": ""
         },
         {
@@ -20112,13 +20154,13 @@
         {
           "day": "2026-04-30",
           "stage": "사업시행인가",
-          "detail_name": "(변경)인가고시",
+          "detail_name": "(변경)인가",
           "title": ""
         },
         {
           "day": "2026-04-30",
           "stage": "사업시행인가",
-          "detail_name": "(변경)인가",
+          "detail_name": "(변경)인가고시",
           "title": ""
         },
         {
@@ -25183,13 +25225,13 @@
           "day": "2009-02-12",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "제기 제6구역 구역지정고시"
+          "title": "제기 제6주택재개발정비구역 지정 및 지형도면 작성"
         },
         {
           "day": "2009-02-12",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "제기 제6주택재개발정비구역 지정 및 지형도면 작성"
+          "title": "제기 제6구역 구역지정고시"
         },
         {
           "day": "2013-03-04",
@@ -25901,7 +25943,7 @@
       "latest_stage": "기타",
       "latest_detail": "이주완료",
       "latest_title": "이주완료",
-      "title": "상봉7재정비촉진구역 도시환경정비사업조합 (사업시행인가)",
+      "title": "중랑구 11260-900001111 공급예정지 (사업시행인가)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
@@ -25969,16 +26011,16 @@
           "title": "이주완료"
         }
       ],
-      "project_name": "상봉7재정비촉진구역 도시환경정비사업조합",
-      "address_lot": "상봉동 88",
-      "business_type": "재개발(도시정비형)",
-      "site_url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=I1O1CEmx",
-      "map_id": "11260AGZ202009020003",
-      "site_match_status": "확정",
-      "site_candidates": "상봉7재정비촉진구역 도시환경정비사업조합",
+      "project_name": "",
+      "address_lot": "",
+      "business_type": "",
+      "site_url": "",
+      "map_id": "",
+      "site_match_status": "후보복수",
+      "site_candidates": "면목역2구역 가로주택정비사업 (면목동 1251-4, 사업시행인가) | 면목역1구역 가로주택정비사업 (면목동 1271, 사업시행인가) | 상봉7재정비촉진구역 도시환경정비사업조합 (상봉동 88, 사업시행인가)",
       "is_public_program": false,
-      "public_program_type": "민간/일반",
-      "public_program_reason": "공공사업 키워드 없음",
+      "public_program_type": "미분류",
+      "public_program_reason": "사업장명/사업유형 매칭 부족",
       "schedule_summary": "사업시행인가: 2023-10-17; 최근진행: 2024-11-30; 최근단계: 기타 / 이주완료"
     },
     {
@@ -30428,7 +30470,7 @@
       "latest_stage": "사업시행인가",
       "latest_detail": "(변경)인가고시",
       "latest_title": "(변경)인가고시",
-      "title": "상봉7재정비촉진구역 도시환경정비사업조합 (사업시행인가)",
+      "title": "중랑구 11260-900000682 공급예정지 (사업시행인가)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
@@ -30694,16 +30736,16 @@
           "title": ""
         }
       ],
-      "project_name": "상봉7재정비촉진구역 도시환경정비사업조합",
-      "address_lot": "상봉동 88",
-      "business_type": "재개발(도시정비형)",
-      "site_url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=I1O1CEmx",
-      "map_id": "11260AGZ202009020003",
-      "site_match_status": "확정",
-      "site_candidates": "상봉7재정비촉진구역 도시환경정비사업조합",
+      "project_name": "",
+      "address_lot": "",
+      "business_type": "",
+      "site_url": "",
+      "map_id": "",
+      "site_match_status": "후보복수",
+      "site_candidates": "면목역2구역 가로주택정비사업 (면목동 1251-4, 사업시행인가) | 면목역1구역 가로주택정비사업 (면목동 1271, 사업시행인가) | 상봉7재정비촉진구역 도시환경정비사업조합 (상봉동 88, 사업시행인가)",
       "is_public_program": false,
-      "public_program_type": "민간/일반",
-      "public_program_reason": "공공사업 키워드 없음",
+      "public_program_type": "미분류",
+      "public_program_reason": "사업장명/사업유형 매칭 부족",
       "schedule_summary": "사업시행인가: 2023-02-03; 최근진행: 2025-04-30; 최근단계: 사업시행인가 / (변경)인가고시"
     },
     {
@@ -34087,13 +34129,13 @@
           "day": "2005-12-29",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "정비구역지정"
+          "title": "제기제4주택재개발구역지정고시"
         },
         {
           "day": "2005-12-29",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "제기제4주택재개발구역지정고시"
+          "title": "정비구역지정"
         },
         {
           "day": "2007-02-01",
@@ -34660,13 +34702,13 @@
           "day": "2015-01-06",
           "stage": "기타",
           "detail_name": "계약(변경)",
-          "title": ""
+          "title": "(주)동우씨앤디 계약체결"
         },
         {
           "day": "2015-01-06",
           "stage": "기타",
           "detail_name": "계약(변경)",
-          "title": "(주)동우씨앤디 계약체결"
+          "title": ""
         },
         {
           "day": "2015-01-06",
@@ -38360,14 +38402,14 @@
         },
         {
           "day": "2024-07-05",
-          "stage": "기타",
-          "detail_name": "계약(변경)",
+          "stage": "사업시행인가",
+          "detail_name": "(변경)인가",
           "title": ""
         },
         {
           "day": "2024-07-05",
-          "stage": "사업시행인가",
-          "detail_name": "(변경)인가",
+          "stage": "기타",
+          "detail_name": "계약(변경)",
           "title": ""
         },
         {
@@ -39409,13 +39451,13 @@
           "day": "2009-02-18",
           "stage": "정비구역지정",
           "detail_name": "주민공람공고 : 자치구",
-          "title": "방화재정비 촉진계획 변경결정(안) 공람.공고 열람자료에 기재된 동의율 삭제에 대한 안내문"
+          "title": "방화재정비촉진지구 변경지정 및 재정비촉진계획 변경결정(안) 공람 공고"
         },
         {
           "day": "2009-02-18",
           "stage": "정비구역지정",
           "detail_name": "주민공람공고 : 자치구",
-          "title": "방화재정비촉진지구 변경지정 및 재정비촉진계획 변경결정(안) 공람 공고"
+          "title": "방화재정비 촉진계획 변경결정(안) 공람.공고 열람자료에 기재된 동의율 삭제에 대한 안내문"
         },
         {
           "day": "2010-03-25",
@@ -39763,16 +39805,16 @@
       "management_disposal_date": "",
       "construction_start_date": "",
       "completion_date": "",
-      "latest_progress_date": "2026-02-03",
-      "latest_stage": "기타",
-      "latest_detail": "계약(변경)",
-      "latest_title": "계약(변경)",
+      "latest_progress_date": "2026-09-03",
+      "latest_stage": "조합설립인가",
+      "latest_detail": "(변경)인가",
+      "latest_title": "(변경)인가",
       "title": "영등포구 11560-900000009 공급예정지 (사업시행인가)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
       "content_status": "시작 전",
-      "history_count": 38,
+      "history_count": 40,
       "history": [
         {
           "day": "2009-07-16",
@@ -40001,6 +40043,18 @@
           "stage": "기타",
           "detail_name": "계약(변경)",
           "title": ""
+        },
+        {
+          "day": "2026-08-25",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
+          "day": "2026-09-03",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가",
+          "title": ""
         }
       ],
       "project_name": "",
@@ -40013,7 +40067,7 @@
       "is_public_program": false,
       "public_program_type": "미분류",
       "public_program_reason": "사업장명/사업유형 매칭 부족",
-      "schedule_summary": "사업시행인가: 2021-07-23; 최근진행: 2026-02-03; 최근단계: 기타 / 계약(변경)"
+      "schedule_summary": "사업시행인가: 2021-07-23; 최근진행: 2026-09-03; 최근단계: 조합설립인가 / (변경)인가"
     },
     {
       "dedup_key": "redevelop_11560_100004020",
@@ -40056,19 +40110,19 @@
         {
           "day": "2008-09-03",
           "stage": "기타",
+          "detail_name": "계약(변경)",
+          "title": ""
+        },
+        {
+          "day": "2008-09-03",
+          "stage": "기타",
+          "detail_name": "계약(변경)",
+          "title": ""
+        },
+        {
+          "day": "2008-09-03",
+          "stage": "기타",
           "detail_name": "업체선정",
-          "title": ""
-        },
-        {
-          "day": "2008-09-03",
-          "stage": "기타",
-          "detail_name": "계약(변경)",
-          "title": ""
-        },
-        {
-          "day": "2008-09-03",
-          "stage": "기타",
-          "detail_name": "계약(변경)",
           "title": ""
         },
         {
@@ -42133,25 +42187,25 @@
           "day": "2010-06-28",
           "stage": "기타",
           "detail_name": "계약(변경)",
-          "title": "합병으로 인한 업체변경"
+          "title": ""
         },
         {
           "day": "2010-06-28",
           "stage": "기타",
           "detail_name": "계약(변경)",
-          "title": ""
-        },
-        {
-          "day": "2010-06-28",
-          "stage": "기타",
-          "detail_name": "업체선정",
-          "title": ""
+          "title": "합병으로 인한 업체변경"
         },
         {
           "day": "2010-06-28",
           "stage": "기타",
           "detail_name": "업체선정",
           "title": "정비사업전문관리업자 선정"
+        },
+        {
+          "day": "2010-06-28",
+          "stage": "기타",
+          "detail_name": "업체선정",
+          "title": ""
         },
         {
           "day": "2010-12-28",
@@ -45546,13 +45600,13 @@
         {
           "day": "2007-04-23",
           "stage": "기타",
-          "detail_name": "업체선정",
+          "detail_name": "계약(변경)",
           "title": ""
         },
         {
           "day": "2007-04-23",
           "stage": "기타",
-          "detail_name": "계약(변경)",
+          "detail_name": "업체선정",
           "title": ""
         },
         {
@@ -49450,13 +49504,13 @@
           "day": "2007-08-06",
           "stage": "정비구역지정",
           "detail_name": "주민공람공고 : 자치구",
-          "title": "서울특별시 구로구 공고 제2007-459호"
+          "title": "공람주민의견서"
         },
         {
           "day": "2007-08-06",
           "stage": "정비구역지정",
           "detail_name": "주민공람공고 : 자치구",
-          "title": "공람주민의견서"
+          "title": "서울특별시 구로구 공고 제2007-459호"
         },
         {
           "day": "2008-04-23",
@@ -59930,13 +59984,13 @@
         },
         {
           "day": "2011-05-11",
-          "stage": "사업시행인가",
+          "stage": "조합설립인가",
           "detail_name": "(변경)인가신청",
           "title": ""
         },
         {
           "day": "2011-05-11",
-          "stage": "조합설립인가",
+          "stage": "사업시행인가",
           "detail_name": "(변경)인가신청",
           "title": ""
         },
@@ -61406,7 +61460,7 @@
       "latest_stage": "기타",
       "latest_detail": "계약(변경)",
       "latest_title": "계약(변경)",
-      "title": "상봉7재정비촉진구역 도시환경정비사업조합 (사업시행인가)",
+      "title": "중랑구 11260-100003040 공급예정지 (사업시행인가)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
@@ -61594,16 +61648,16 @@
           "title": ""
         }
       ],
-      "project_name": "상봉7재정비촉진구역 도시환경정비사업조합",
-      "address_lot": "상봉동 88",
-      "business_type": "재개발(도시정비형)",
-      "site_url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=I1O1CEmx",
-      "map_id": "11260AGZ202009020003",
-      "site_match_status": "확정",
-      "site_candidates": "상봉7재정비촉진구역 도시환경정비사업조합",
+      "project_name": "",
+      "address_lot": "",
+      "business_type": "",
+      "site_url": "",
+      "map_id": "",
+      "site_match_status": "후보복수",
+      "site_candidates": "면목역2구역 가로주택정비사업 (면목동 1251-4, 사업시행인가) | 면목역1구역 가로주택정비사업 (면목동 1271, 사업시행인가) | 상봉7재정비촉진구역 도시환경정비사업조합 (상봉동 88, 사업시행인가)",
       "is_public_program": false,
-      "public_program_type": "민간/일반",
-      "public_program_reason": "공공사업 키워드 없음",
+      "public_program_type": "미분류",
+      "public_program_reason": "사업장명/사업유형 매칭 부족",
       "schedule_summary": "사업시행인가: 2015-11-19; 최근진행: 2026-05-21; 최근단계: 기타 / 계약(변경)"
     },
     {
@@ -62790,13 +62844,13 @@
         {
           "day": "2014-01-17",
           "stage": "기타",
-          "detail_name": "업체선정",
+          "detail_name": "계약(변경)",
           "title": ""
         },
         {
           "day": "2014-01-17",
           "stage": "기타",
-          "detail_name": "계약(변경)",
+          "detail_name": "업체선정",
           "title": ""
         },
         {
@@ -62865,13 +62919,13 @@
         {
           "day": "2004-12-22",
           "stage": "기타",
-          "detail_name": "계약(변경)",
+          "detail_name": "업체선정",
           "title": ""
         },
         {
           "day": "2004-12-22",
           "stage": "기타",
-          "detail_name": "업체선정",
+          "detail_name": "계약(변경)",
           "title": ""
         },
         {
@@ -62901,13 +62955,13 @@
         {
           "day": "2006-02-21",
           "stage": "기타",
-          "detail_name": "계약(변경)",
+          "detail_name": "업체선정",
           "title": ""
         },
         {
           "day": "2006-02-21",
           "stage": "기타",
-          "detail_name": "업체선정",
+          "detail_name": "계약(변경)",
           "title": ""
         },
         {
@@ -64285,13 +64339,13 @@
           "day": "2010-05-20",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "정비구역지정결정고시문(최초~변경)"
+          "title": "북아현재정비촉진지구 변경지정고시(북아현3구역)"
         },
         {
           "day": "2010-05-20",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "북아현재정비촉진지구 변경지정고시(북아현3구역)"
+          "title": "정비구역지정결정고시문(최초~변경)"
         },
         {
           "day": "2011-09-01",
@@ -64687,7 +64741,7 @@
       "site_url": "",
       "map_id": "",
       "site_match_status": "후보복수",
-      "site_candidates": "면목역1구역 가로주택정비사업 (면목동 1271, 관리처분인가) | 면목동 194번지일대 가로주택정비사업 (면목동 194-33, 관리처분인가) | 대명삼보연립 가로주택정비사업 (중화동 1-1, 관리처분인가)",
+      "site_candidates": "면목동 194번지일대 가로주택정비사업 (면목동 194-33, 관리처분인가) | 대명삼보연립 가로주택정비사업 (중화동 1-1, 관리처분인가)",
       "is_public_program": false,
       "public_program_type": "미분류",
       "public_program_reason": "사업장명/사업유형 매칭 부족",
@@ -65559,13 +65613,13 @@
         {
           "day": "2009-12-08",
           "stage": "기타",
-          "detail_name": "계약(변경)",
+          "detail_name": "업체선정",
           "title": ""
         },
         {
           "day": "2009-12-08",
           "stage": "기타",
-          "detail_name": "업체선정",
+          "detail_name": "계약(변경)",
           "title": ""
         },
         {
@@ -68610,25 +68664,25 @@
         {
           "day": "2009-12-02",
           "stage": "기타",
-          "detail_name": "업체선정",
-          "title": ""
-        },
-        {
-          "day": "2009-12-02",
-          "stage": "기타",
-          "detail_name": "업체선정",
-          "title": ""
-        },
-        {
-          "day": "2009-12-02",
-          "stage": "기타",
-          "detail_name": "업체선정",
-          "title": ""
-        },
-        {
-          "day": "2009-12-02",
-          "stage": "기타",
           "detail_name": "계약(변경)",
+          "title": ""
+        },
+        {
+          "day": "2009-12-02",
+          "stage": "기타",
+          "detail_name": "업체선정",
+          "title": ""
+        },
+        {
+          "day": "2009-12-02",
+          "stage": "기타",
+          "detail_name": "업체선정",
+          "title": ""
+        },
+        {
+          "day": "2009-12-02",
+          "stage": "기타",
+          "detail_name": "업체선정",
           "title": ""
         },
         {
