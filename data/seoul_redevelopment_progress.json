@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-09-03T19:42:47.354242+00:00",
+  "generated_at": "2026-09-04T19:23:01.704998+00:00",
   "source": "서울시 정비사업 추진경과",
   "criteria": "사업시행인가 이상 포함, 준공 완료 사업 제외",
   "site_match_note": "정비사업 추진경과 API의 BIZ_NO와 사업장검색 목록 사이에 공개 공통키가 없어 자치구+진행단계가 단일 후보일 때만 확정 매칭합니다.",
@@ -689,12 +689,12 @@
       "stage": "착공",
       "project_approval_date": "2026-07-02",
       "management_disposal_date": "",
-      "construction_start_date": "2026-03-19",
+      "construction_start_date": "2026-09-01",
       "completion_date": "",
-      "latest_progress_date": "2026-07-03",
-      "latest_stage": "사업시행인가",
-      "latest_detail": "(변경)인가고시",
-      "latest_title": "(변경)인가고시",
+      "latest_progress_date": "2026-09-01",
+      "latest_stage": "착공",
+      "latest_detail": "착공신고",
+      "latest_title": "착공신고",
       "title": "시흥동 현대아파트 재건축정비사업 (착공)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
@@ -712,12 +712,6 @@
           "day": "2026-01-02",
           "stage": "추진위원회",
           "detail_name": "(변경)승인",
-          "title": ""
-        },
-        {
-          "day": "2026-03-19",
-          "stage": "착공",
-          "detail_name": "착공신고",
           "title": ""
         },
         {
@@ -761,6 +755,12 @@
           "stage": "사업시행인가",
           "detail_name": "(변경)인가고시",
           "title": ""
+        },
+        {
+          "day": "2026-09-01",
+          "stage": "착공",
+          "detail_name": "착공신고",
+          "title": ""
         }
       ],
       "project_name": "시흥동 현대아파트 재건축정비사업",
@@ -773,7 +773,7 @@
       "is_public_program": false,
       "public_program_type": "민간/일반",
       "public_program_reason": "공공사업 키워드 없음",
-      "schedule_summary": "사업시행인가: 2026-07-02; 착공: 2026-03-19; 최근진행: 2026-07-03; 최근단계: 사업시행인가 / (변경)인가고시"
+      "schedule_summary": "사업시행인가: 2026-07-02; 착공: 2026-09-01; 최근진행: 2026-09-01; 최근단계: 착공 / 착공신고"
     },
     {
       "dedup_key": "redevelop_11710_100002002",
@@ -4750,13 +4750,13 @@
           "day": "2006-08-05",
           "stage": "기타",
           "detail_name": "업체선정",
-          "title": "정비사업업체 선정"
+          "title": "정비사업업체 계약"
         },
         {
           "day": "2006-08-05",
           "stage": "기타",
           "detail_name": "업체선정",
-          "title": "정비사업업체 계약"
+          "title": "정비사업업체 선정"
         },
         {
           "day": "2006-08-24",
@@ -4834,13 +4834,13 @@
           "day": "2009-03-27",
           "stage": "조합설립인가",
           "detail_name": "(변경)인가",
-          "title": "조합설림인가"
+          "title": "조합설립인가"
         },
         {
           "day": "2009-03-27",
           "stage": "조합설립인가",
           "detail_name": "(변경)인가",
-          "title": "조합설립인가"
+          "title": "조합설림인가"
         },
         {
           "day": "2009-09-07",
@@ -9875,14 +9875,14 @@
         },
         {
           "day": "2018-08-13",
-          "stage": "기타",
-          "detail_name": "업체선정",
+          "stage": "추진위원회",
+          "detail_name": "(변경)승인",
           "title": ""
         },
         {
           "day": "2018-08-13",
-          "stage": "추진위원회",
-          "detail_name": "(변경)승인",
+          "stage": "기타",
+          "detail_name": "업체선정",
           "title": ""
         },
         {
@@ -10756,13 +10756,13 @@
           "day": "2006-01-09",
           "stage": "추진위원회",
           "detail_name": "(변경)승인",
-          "title": "청량리제8구역주택재개발정비사업조합설립추진위원회 승인"
+          "title": ""
         },
         {
           "day": "2006-01-09",
           "stage": "추진위원회",
           "detail_name": "(변경)승인",
-          "title": ""
+          "title": "청량리제8구역주택재개발정비사업조합설립추진위원회 승인"
         },
         {
           "day": "2006-08-18",
@@ -13798,13 +13798,13 @@
           "day": "2009-09-09",
           "stage": "추진위원회",
           "detail_name": "(변경)승인",
-          "title": "봉천제14구역 주택재개발정비사업 조합설립추진위원회승인"
+          "title": ""
         },
         {
           "day": "2009-09-09",
           "stage": "추진위원회",
           "detail_name": "(변경)승인",
-          "title": ""
+          "title": "봉천제14구역 주택재개발정비사업 조합설립추진위원회승인"
         },
         {
           "day": "2010-04-05",
@@ -16984,7 +16984,7 @@
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
       "content_status": "시작 전",
-      "history_count": 39,
+      "history_count": 22,
       "history": [
         {
           "day": "2017-11-16",
@@ -17065,90 +17065,6 @@
           "title": "2020년 정기총회"
         },
         {
-          "day": "2020-12-11",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": "조합설립(변경) 인가신청"
-        },
-        {
-          "day": "2021-01-25",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": "가락1차현대아파트 재건축정비사업 조합설립변경인가서"
-        },
-        {
-          "day": "2021-06-10",
-          "stage": "조합설립인가",
-          "detail_name": "총회개최",
-          "title": "2021년 정기총회"
-        },
-        {
-          "day": "2021-12-10",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": "조합설립(변경) 인가신청"
-        },
-        {
-          "day": "2022-01-25",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": "가락1차현대아파트 재건축정비사업 조합설립변경인가서"
-        },
-        {
-          "day": "2022-03-21",
-          "stage": "조합설립인가",
-          "detail_name": "총회개최",
-          "title": "2022년 임시총회"
-        },
-        {
-          "day": "2022-04-13",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": "조합설립(변경) 인가신청"
-        },
-        {
-          "day": "2022-04-28",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": "가락1차현대아파트 재건축정비사업 조합설립변경인가서"
-        },
-        {
-          "day": "2022-06-25",
-          "stage": "조합설립인가",
-          "detail_name": "총회개최",
-          "title": "2022년 정기총회"
-        },
-        {
-          "day": "2022-07-06",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": "조합설립(변경) 인가신청"
-        },
-        {
-          "day": "2022-07-15",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": "가락1차현대아파트 재건축정비사업 조합설립변경인가서"
-        },
-        {
-          "day": "2023-03-30",
-          "stage": "조합설립인가",
-          "detail_name": "총회개최",
-          "title": "2023년 정기총회"
-        },
-        {
-          "day": "2023-04-07",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": "조합설립(변경) 인가신청"
-        },
-        {
-          "day": "2023-06-05",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": "가락1차현대아파트 재건축정비사업 조합설립변경인가서"
-        },
-        {
           "day": "2023-06-22",
           "stage": "기타",
           "detail_name": "업체선정",
@@ -17161,28 +17077,10 @@
           "title": ""
         },
         {
-          "day": "2023-07-20",
-          "stage": "조합설립인가",
-          "detail_name": "총회개최",
-          "title": "사업시행계획인가 신청을 위한 임시총회"
-        },
-        {
           "day": "2023-07-28",
           "stage": "사업시행인가",
           "detail_name": "(변경)인가신청",
           "title": ""
-        },
-        {
-          "day": "2023-07-31",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": "조합설립(변경) 인가신청"
-        },
-        {
-          "day": "2023-09-21",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": "가락1차현대아파트 재건축정비사업 조합설립변경인가서"
         },
         {
           "day": "2024-11-22",
@@ -29666,7 +29564,7 @@
       "latest_stage": "사업시행인가",
       "latest_detail": "(변경)인가",
       "latest_title": "(변경)인가",
-      "title": "동대문구 11230-900000726 공급예정지 (착공)",
+      "title": "제기1주택재건축정비구역(지정개발자방식) (착공)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
@@ -29806,16 +29704,16 @@
           "title": ""
         }
       ],
-      "project_name": "",
-      "address_lot": "",
-      "business_type": "",
-      "site_url": "",
-      "map_id": "",
-      "site_match_status": "후보복수",
-      "site_candidates": "제기1주택재건축정비구역(지정개발자방식) (제기동 892-68, 착공) | 청량리제7구역 주택재개발정비사업조합 (청량리동 199, 착공)",
+      "project_name": "제기1주택재건축정비구역(지정개발자방식)",
+      "address_lot": "제기동 892-68",
+      "business_type": "재건축",
+      "site_url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jegi1area",
+      "map_id": "11000ARZ201901100044",
+      "site_match_status": "확정",
+      "site_candidates": "제기1주택재건축정비구역(지정개발자방식)",
       "is_public_program": false,
-      "public_program_type": "미분류",
-      "public_program_reason": "사업장명/사업유형 매칭 부족",
+      "public_program_type": "민간/일반",
+      "public_program_reason": "공공사업 키워드 없음",
       "schedule_summary": "사업시행인가: 2021-04-01; 관리처분인가: 2023-04-11; 착공: 2025-03-31; 최근진행: 2025-07-07; 최근단계: 사업시행인가 / (변경)인가"
     },
     {
@@ -39451,13 +39349,13 @@
           "day": "2009-02-18",
           "stage": "정비구역지정",
           "detail_name": "주민공람공고 : 자치구",
-          "title": "방화재정비촉진지구 변경지정 및 재정비촉진계획 변경결정(안) 공람 공고"
+          "title": "방화재정비 촉진계획 변경결정(안) 공람.공고 열람자료에 기재된 동의율 삭제에 대한 안내문"
         },
         {
           "day": "2009-02-18",
           "stage": "정비구역지정",
           "detail_name": "주민공람공고 : 자치구",
-          "title": "방화재정비 촉진계획 변경결정(안) 공람.공고 열람자료에 기재된 동의율 삭제에 대한 안내문"
+          "title": "방화재정비촉진지구 변경지정 및 재정비촉진계획 변경결정(안) 공람 공고"
         },
         {
           "day": "2010-03-25",
@@ -40552,8 +40450,8 @@
       "management_disposal_date": "2021-06-10",
       "construction_start_date": "2025-05-28",
       "completion_date": "",
-      "latest_progress_date": "2026-07-06",
-      "latest_stage": "조합설립인가",
+      "latest_progress_date": "2026-08-28",
+      "latest_stage": "사업시행인가",
       "latest_detail": "(변경)인가",
       "latest_title": "(변경)인가",
       "title": "구로구 11530-900000056 공급예정지 (착공)",
@@ -40561,7 +40459,7 @@
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
       "content_status": "시작 전",
-      "history_count": 77,
+      "history_count": 80,
       "history": [
         {
           "day": "2004-06-04",
@@ -41015,6 +40913,12 @@
         },
         {
           "day": "2026-06-19",
+          "stage": "사업시행인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
+          "day": "2026-06-19",
           "stage": "조합설립인가",
           "detail_name": "(변경)인가신청",
           "title": ""
@@ -41023,6 +40927,18 @@
           "day": "2026-07-06",
           "stage": "조합설립인가",
           "detail_name": "(변경)인가",
+          "title": ""
+        },
+        {
+          "day": "2026-08-28",
+          "stage": "사업시행인가",
+          "detail_name": "(변경)인가",
+          "title": ""
+        },
+        {
+          "day": "2026-08-28",
+          "stage": "사업시행인가",
+          "detail_name": "(변경)인가고시",
           "title": ""
         }
       ],
@@ -41036,7 +40952,7 @@
       "is_public_program": false,
       "public_program_type": "미분류",
       "public_program_reason": "사업장명/사업유형 매칭 부족",
-      "schedule_summary": "사업시행인가: 2018-12-20; 관리처분인가: 2021-06-10; 착공: 2025-05-28; 최근진행: 2026-07-06; 최근단계: 조합설립인가 / (변경)인가"
+      "schedule_summary": "사업시행인가: 2018-12-20; 관리처분인가: 2021-06-10; 착공: 2025-05-28; 최근진행: 2026-08-28; 최근단계: 사업시행인가 / (변경)인가"
     },
     {
       "dedup_key": "redevelop_11560_100003014",
@@ -42175,13 +42091,13 @@
           "day": "2010-06-24",
           "stage": "기타",
           "detail_name": "업체선정",
-          "title": ""
+          "title": "설계자 선정"
         },
         {
           "day": "2010-06-24",
           "stage": "기타",
           "detail_name": "업체선정",
-          "title": "설계자 선정"
+          "title": ""
         },
         {
           "day": "2010-06-28",
@@ -43139,12 +43055,6 @@
         },
         {
           "day": "2023-11-23",
-          "stage": "기타",
-          "detail_name": "입주자모집 승인신청",
-          "title": "입주자 모집공고 승인신청"
-        },
-        {
-          "day": "2023-11-23",
           "stage": "관리처분인가",
           "detail_name": "(변경)인가",
           "title": ""
@@ -43154,6 +43064,12 @@
           "stage": "관리처분인가",
           "detail_name": "(변경)인가고시",
           "title": ""
+        },
+        {
+          "day": "2023-11-23",
+          "stage": "기타",
+          "detail_name": "입주자모집 승인신청",
+          "title": "입주자 모집공고 승인신청"
         },
         {
           "day": "2023-11-24",
@@ -44975,7 +44891,7 @@
       "latest_stage": "사업시행인가",
       "latest_detail": "(변경)인가신청",
       "latest_title": "(변경)인가신청",
-      "title": "동대문구 11230-100003014 공급예정지 (착공)",
+      "title": "제기1주택재건축정비구역(지정개발자방식) (착공)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
@@ -45535,16 +45451,16 @@
           "title": ""
         }
       ],
-      "project_name": "",
-      "address_lot": "",
-      "business_type": "",
-      "site_url": "",
-      "map_id": "",
-      "site_match_status": "후보복수",
-      "site_candidates": "제기1주택재건축정비구역(지정개발자방식) (제기동 892-68, 착공) | 청량리제7구역 주택재개발정비사업조합 (청량리동 199, 착공)",
+      "project_name": "제기1주택재건축정비구역(지정개발자방식)",
+      "address_lot": "제기동 892-68",
+      "business_type": "재건축",
+      "site_url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jegi1area",
+      "map_id": "11000ARZ201901100044",
+      "site_match_status": "확정",
+      "site_candidates": "제기1주택재건축정비구역(지정개발자방식)",
       "is_public_program": false,
-      "public_program_type": "미분류",
-      "public_program_reason": "사업장명/사업유형 매칭 부족",
+      "public_program_type": "민간/일반",
+      "public_program_reason": "공공사업 키워드 없음",
       "schedule_summary": "사업시행인가: 2009-04-02; 관리처분인가: 2020-04-23; 착공: 2022-12-29; 최근진행: 2023-11-21; 최근단계: 사업시행인가 / (변경)인가신청"
     },
     {
@@ -51024,13 +50940,13 @@
         {
           "day": "2025-10-13",
           "stage": "사업시행인가",
-          "detail_name": "(변경)인가",
+          "detail_name": "(변경)인가고시",
           "title": ""
         },
         {
           "day": "2025-10-13",
           "stage": "사업시행인가",
-          "detail_name": "(변경)인가고시",
+          "detail_name": "(변경)인가",
           "title": ""
         },
         {
@@ -51054,13 +50970,13 @@
         {
           "day": "2026-04-10",
           "stage": "사업시행인가",
-          "detail_name": "(변경)인가고시",
+          "detail_name": "(변경)인가",
           "title": ""
         },
         {
           "day": "2026-04-10",
           "stage": "사업시행인가",
-          "detail_name": "(변경)인가",
+          "detail_name": "(변경)인가고시",
           "title": ""
         },
         {
@@ -53153,7 +53069,7 @@
       "latest_stage": "기타",
       "latest_detail": "계약(변경)",
       "latest_title": "계약(변경)",
-      "title": "동대문구 11230-100006042 공급예정지 (착공)",
+      "title": "제기1주택재건축정비구역(지정개발자방식) (착공)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
@@ -53797,16 +53713,16 @@
           "title": ""
         }
       ],
-      "project_name": "",
-      "address_lot": "",
-      "business_type": "",
-      "site_url": "",
-      "map_id": "",
-      "site_match_status": "후보복수",
-      "site_candidates": "제기1주택재건축정비구역(지정개발자방식) (제기동 892-68, 착공) | 청량리제7구역 주택재개발정비사업조합 (청량리동 199, 착공)",
+      "project_name": "제기1주택재건축정비구역(지정개발자방식)",
+      "address_lot": "제기동 892-68",
+      "business_type": "재건축",
+      "site_url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jegi1area",
+      "map_id": "11000ARZ201901100044",
+      "site_match_status": "확정",
+      "site_candidates": "제기1주택재건축정비구역(지정개발자방식)",
       "is_public_program": false,
-      "public_program_type": "미분류",
-      "public_program_reason": "사업장명/사업유형 매칭 부족",
+      "public_program_type": "민간/일반",
+      "public_program_reason": "공공사업 키워드 없음",
       "schedule_summary": "사업시행인가: 2015-10-01; 관리처분인가: 2018-05-10; 착공: 2021-10-25; 최근진행: 2024-05-17; 최근단계: 기타 / 계약(변경)"
     },
     {
@@ -54331,16 +54247,16 @@
       "management_disposal_date": "2018-04-16",
       "construction_start_date": "2023-10-23",
       "completion_date": "",
-      "latest_progress_date": "2026-06-05",
-      "latest_stage": "조합설립인가",
-      "latest_detail": "(변경)인가",
-      "latest_title": "(변경)인가",
+      "latest_progress_date": "2026-09-04",
+      "latest_stage": "사업시행인가",
+      "latest_detail": "(변경)인가고시",
+      "latest_title": "(변경)인가고시",
       "title": "마포구 11440-100001010 공급예정지 (착공)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
       "content_status": "시작 전",
-      "history_count": 124,
+      "history_count": 127,
       "history": [
         {
           "day": "2006-06-07",
@@ -55069,6 +54985,12 @@
           "title": ""
         },
         {
+          "day": "2026-04-30",
+          "stage": "사업시행인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
           "day": "2026-05-14",
           "stage": "기타",
           "detail_name": "계약(변경)",
@@ -55085,6 +55007,18 @@
           "stage": "조합설립인가",
           "detail_name": "(변경)인가",
           "title": ""
+        },
+        {
+          "day": "2026-09-04",
+          "stage": "사업시행인가",
+          "detail_name": "(변경)인가고시",
+          "title": ""
+        },
+        {
+          "day": "2026-09-04",
+          "stage": "사업시행인가",
+          "detail_name": "(변경)인가",
+          "title": ""
         }
       ],
       "project_name": "",
@@ -55097,7 +55031,7 @@
       "is_public_program": false,
       "public_program_type": "미분류",
       "public_program_reason": "사업장명/사업유형 매칭 부족",
-      "schedule_summary": "사업시행인가: 2017-02-22; 관리처분인가: 2018-04-16; 착공: 2023-10-23; 최근진행: 2026-06-05; 최근단계: 조합설립인가 / (변경)인가"
+      "schedule_summary": "사업시행인가: 2017-02-22; 관리처분인가: 2018-04-16; 착공: 2023-10-23; 최근진행: 2026-09-04; 최근단계: 사업시행인가 / (변경)인가고시"
     },
     {
       "dedup_key": "redevelop_11650_900000616",
@@ -64043,7 +63977,7 @@
       "latest_stage": "기타",
       "latest_detail": "이전고시",
       "latest_title": "이전고시",
-      "title": "동대문구 11230-100005001 공급예정지 (착공)",
+      "title": "제기1주택재건축정비구역(지정개발자방식) (착공)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
@@ -64183,16 +64117,16 @@
           "title": ""
         }
       ],
-      "project_name": "",
-      "address_lot": "",
-      "business_type": "",
-      "site_url": "",
-      "map_id": "",
-      "site_match_status": "후보복수",
-      "site_candidates": "제기1주택재건축정비구역(지정개발자방식) (제기동 892-68, 착공) | 청량리제7구역 주택재개발정비사업조합 (청량리동 199, 착공)",
+      "project_name": "제기1주택재건축정비구역(지정개발자방식)",
+      "address_lot": "제기동 892-68",
+      "business_type": "재건축",
+      "site_url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jegi1area",
+      "map_id": "11000ARZ201901100044",
+      "site_match_status": "확정",
+      "site_candidates": "제기1주택재건축정비구역(지정개발자방식)",
       "is_public_program": false,
-      "public_program_type": "미분류",
-      "public_program_reason": "사업장명/사업유형 매칭 부족",
+      "public_program_type": "민간/일반",
+      "public_program_reason": "공공사업 키워드 없음",
       "schedule_summary": "사업시행인가: 2009-02-19; 관리처분인가: 2011-09-06; 착공: 2011-10-14; 최근진행: 2013-11-21; 최근단계: 기타 / 이전고시"
     },
     {
@@ -65789,7 +65723,7 @@
       "latest_stage": "착공",
       "latest_detail": "착공신고",
       "latest_title": "착공신고",
-      "title": "동대문구 11230-100001000 공급예정지 (착공)",
+      "title": "제기1주택재건축정비구역(지정개발자방식) (착공)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
@@ -65881,16 +65815,16 @@
           "title": ""
         }
       ],
-      "project_name": "",
-      "address_lot": "",
-      "business_type": "",
-      "site_url": "",
-      "map_id": "",
-      "site_match_status": "후보복수",
-      "site_candidates": "제기1주택재건축정비구역(지정개발자방식) (제기동 892-68, 착공) | 청량리제7구역 주택재개발정비사업조합 (청량리동 199, 착공)",
+      "project_name": "제기1주택재건축정비구역(지정개발자방식)",
+      "address_lot": "제기동 892-68",
+      "business_type": "재건축",
+      "site_url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jegi1area",
+      "map_id": "11000ARZ201901100044",
+      "site_match_status": "확정",
+      "site_candidates": "제기1주택재건축정비구역(지정개발자방식)",
       "is_public_program": false,
-      "public_program_type": "미분류",
-      "public_program_reason": "사업장명/사업유형 매칭 부족",
+      "public_program_type": "민간/일반",
+      "public_program_reason": "공공사업 키워드 없음",
       "schedule_summary": "관리처분인가: 2010-07-01; 착공: 2010-10-20; 최근진행: 2010-10-20; 최근단계: 착공 / 착공신고"
     },
     {
@@ -67772,7 +67706,7 @@
       "latest_stage": "기타",
       "latest_detail": "계약(변경)",
       "latest_title": "계약(변경)",
-      "title": "동대문구 11230-100003003 공급예정지 (착공)",
+      "title": "제기1주택재건축정비구역(지정개발자방식) (착공)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
@@ -67876,16 +67810,16 @@
           "title": ""
         }
       ],
-      "project_name": "",
-      "address_lot": "",
-      "business_type": "",
-      "site_url": "",
-      "map_id": "",
-      "site_match_status": "후보복수",
-      "site_candidates": "제기1주택재건축정비구역(지정개발자방식) (제기동 892-68, 착공) | 청량리제7구역 주택재개발정비사업조합 (청량리동 199, 착공)",
+      "project_name": "제기1주택재건축정비구역(지정개발자방식)",
+      "address_lot": "제기동 892-68",
+      "business_type": "재건축",
+      "site_url": "https://cleanup.seoul.go.kr/cafe/mainIndx.do?cafeUrl=jegi1area",
+      "map_id": "11000ARZ201901100044",
+      "site_match_status": "확정",
+      "site_candidates": "제기1주택재건축정비구역(지정개발자방식)",
       "is_public_program": false,
-      "public_program_type": "미분류",
-      "public_program_reason": "사업장명/사업유형 매칭 부족",
+      "public_program_type": "민간/일반",
+      "public_program_reason": "공공사업 키워드 없음",
       "schedule_summary": "관리처분인가: 2007-08-01; 착공: 2007-09-28; 최근진행: 2009-12-18; 최근단계: 기타 / 계약(변경)"
     },
     {
