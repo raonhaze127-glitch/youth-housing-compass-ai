@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-31T08:35:50.724133+00:00",
+  "generated_at": "2026-09-05T06:54:40.289442+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,35 +18,17 @@
       "code": "A00040"
     }
   ],
-  "count": 2,
+  "count": 1,
   "items": [
     {
-      "dedup_key": "policy_a6aae3a0fc461eb3",
-      "title": "'26년 7월 주택통계",
-      "department": "국토교통부",
-      "published_at": "2026-08-31T00:00:00+09:00",
-      "published_date": "2026-08-31",
-      "collected_date": "2026-08-31",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156776040&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-30&endDate=2026-08-31&srchWord=&period=day",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "",
-      "topics": [
-        "주거안정"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_f0ead1c2f2a49bdc",
-      "title": "'주택 신속공급 방안' 후속조치 본격화, 9월 1일부터 정비사업 정책설명회",
-      "department": "국토교통부",
-      "published_at": "2026-08-30T00:00:00+09:00",
-      "published_date": "2026-08-30",
-      "collected_date": "2026-08-31",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156775988&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-08-30&endDate=2026-08-31&srchWord=&period=day",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "dedup_key": "policy_25ec8534c8ed15f6",
+      "title": "[보도자료] 한성숙 국무총리 주재 주택건설·개발업계 간담회",
+      "department": "국무조정실",
+      "published_at": "2026-09-04T00:00:00+09:00",
+      "published_date": "2026-09-04",
+      "collected_date": "2026-09-05",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156780336&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-09-04&endDate=2026-09-05&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_opm.xml",
       "summary": "",
       "topics": [
         "주거안정"
