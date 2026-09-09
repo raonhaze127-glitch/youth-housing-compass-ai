@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "generated_at": "2026-09-08T19:48:57.298531+00:00",
+  "generated_at": "2026-09-09T19:40:05.017170+00:00",
   "source": "서울시 정비사업 추진경과",
   "criteria": "사업시행인가 이상 포함, 준공 완료 사업 제외",
   "site_match_note": "정비사업 추진경과 API의 BIZ_NO와 사업장검색 목록 사이에 공개 공통키가 없어 자치구+진행단계가 단일 후보일 때만 확정 매칭합니다.",
@@ -4870,13 +4870,13 @@
           "day": "2010-05-20",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "정비구역지정결정고시문(최초~변경)"
+          "title": "북아현재정비촉진지구 변경지정고시"
         },
         {
           "day": "2010-05-20",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "북아현재정비촉진지구 변경지정고시"
+          "title": "정비구역지정결정고시문(최초~변경)"
         },
         {
           "day": "2012-01-01",
@@ -11120,6 +11120,249 @@
       "schedule_summary": "사업시행인가: 2024-07-09; 관리처분인가: 2025-09-25; 최근진행: 2026-07-29; 최근단계: 조합설립인가 / (변경)인가"
     },
     {
+      "dedup_key": "redevelop_11470_900000679",
+      "biz_no": "11470-900000679",
+      "district": "양천구",
+      "stage": "관리처분인가",
+      "project_approval_date": "2024-07-22",
+      "management_disposal_date": "2025-09-23",
+      "construction_start_date": "",
+      "completion_date": "",
+      "latest_progress_date": "2026-09-08",
+      "latest_stage": "조합설립인가",
+      "latest_detail": "(변경)인가",
+      "latest_title": "(변경)인가",
+      "title": "양천구 11470-900000679 공급예정지 (관리처분인가)",
+      "detail": "",
+      "source": "서울시 정비사업 추진경과",
+      "supply_review": true,
+      "content_status": "시작 전",
+      "history_count": 35,
+      "history": [
+        {
+          "day": "2016-06-23",
+          "stage": "정비구역지정",
+          "detail_name": "주민공람공고 : 자치구",
+          "title": "신정재정비촉진지구 및 재정비촉진계획 변경 결정을 위한 공람공고"
+        },
+        {
+          "day": "2017-08-17",
+          "stage": "정비구역지정",
+          "detail_name": "구역지정(변경)고시 : 서울시",
+          "title": "신정재정비촉진지구 재정비촉진계획 변경결정 및 지형도면 고시"
+        },
+        {
+          "day": "2018-03-09",
+          "stage": "추진위원회",
+          "detail_name": "추진위원회구성(선출)",
+          "title": "예비추진위원 신원조회"
+        },
+        {
+          "day": "2018-03-20",
+          "stage": "추진위원회",
+          "detail_name": "동의서징구",
+          "title": "동의서 검인 발부"
+        },
+        {
+          "day": "2018-05-24",
+          "stage": "추진위원회",
+          "detail_name": "(변경)승인신청",
+          "title": "추진위원회 승인 신청"
+        },
+        {
+          "day": "2018-06-11",
+          "stage": "추진위원회",
+          "detail_name": "(변경)승인",
+          "title": "조합설립추진위원회 승인"
+        },
+        {
+          "day": "2018-10-29",
+          "stage": "기타",
+          "detail_name": "계약(변경)",
+          "title": ""
+        },
+        {
+          "day": "2019-06-29",
+          "stage": "기타",
+          "detail_name": "업체선정",
+          "title": ""
+        },
+        {
+          "day": "2019-06-29",
+          "stage": "조합설립인가",
+          "detail_name": "총회개최",
+          "title": "창립총회 개최"
+        },
+        {
+          "day": "2019-07-24",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
+          "day": "2019-08-27",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가",
+          "title": "조합설립인가"
+        },
+        {
+          "day": "2019-12-10",
+          "stage": "기타",
+          "detail_name": "계약(변경)",
+          "title": ""
+        },
+        {
+          "day": "2020-05-06",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
+          "day": "2020-05-20",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가",
+          "title": ""
+        },
+        {
+          "day": "2021-02-28",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
+          "day": "2021-03-17",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가",
+          "title": ""
+        },
+        {
+          "day": "2021-06-18",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
+          "day": "2021-06-28",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가",
+          "title": ""
+        },
+        {
+          "day": "2023-07-08",
+          "stage": "기타",
+          "detail_name": "업체선정",
+          "title": ""
+        },
+        {
+          "day": "2023-08-29",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
+          "day": "2023-09-12",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가",
+          "title": ""
+        },
+        {
+          "day": "2023-11-20",
+          "stage": "기타",
+          "detail_name": "계약(변경)",
+          "title": ""
+        },
+        {
+          "day": "2023-12-27",
+          "stage": "기타",
+          "detail_name": "계약(변경)",
+          "title": ""
+        },
+        {
+          "day": "2023-12-28",
+          "stage": "사업시행인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
+          "day": "2024-07-22",
+          "stage": "사업시행인가",
+          "detail_name": "(변경)인가",
+          "title": ""
+        },
+        {
+          "day": "2024-07-25",
+          "stage": "사업시행인가",
+          "detail_name": "(변경)인가고시",
+          "title": ""
+        },
+        {
+          "day": "2025-05-16",
+          "stage": "관리처분인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
+          "day": "2025-07-01",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
+          "day": "2025-07-30",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가",
+          "title": ""
+        },
+        {
+          "day": "2025-09-22",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가",
+          "title": ""
+        },
+        {
+          "day": "2025-09-22",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
+          "day": "2025-09-23",
+          "stage": "관리처분인가",
+          "detail_name": "(변경)인가",
+          "title": ""
+        },
+        {
+          "day": "2025-09-25",
+          "stage": "관리처분인가",
+          "detail_name": "(변경)인가고시",
+          "title": ""
+        },
+        {
+          "day": "2026-08-31",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가신청",
+          "title": ""
+        },
+        {
+          "day": "2026-09-08",
+          "stage": "조합설립인가",
+          "detail_name": "(변경)인가",
+          "title": ""
+        }
+      ],
+      "project_name": "",
+      "address_lot": "",
+      "business_type": "",
+      "site_url": "",
+      "map_id": "",
+      "site_match_status": "후보복수",
+      "site_candidates": "신정4재정비촉진구역 재건축정비사업조합 (신정동 1200-1, 관리처분인가) | 신정수정아파트 재건축정비사업 (신정동 733-31, 관리처분인가)",
+      "is_public_program": false,
+      "public_program_type": "미분류",
+      "public_program_reason": "사업장명/사업유형 매칭 부족",
+      "schedule_summary": "사업시행인가: 2024-07-22; 관리처분인가: 2025-09-23; 최근진행: 2026-09-08; 최근단계: 조합설립인가 / (변경)인가"
+    },
+    {
       "dedup_key": "redevelop_11650_900000648",
       "biz_no": "11650-900000648",
       "district": "서초구",
@@ -11325,237 +11568,6 @@
       "public_program_type": "미분류",
       "public_program_reason": "사업장명/사업유형 매칭 부족",
       "schedule_summary": "사업시행인가: 2023-01-12; 관리처분인가: 2025-09-23; 최근진행: 2025-09-25; 최근단계: 관리처분인가 / (변경)인가고시"
-    },
-    {
-      "dedup_key": "redevelop_11470_900000679",
-      "biz_no": "11470-900000679",
-      "district": "양천구",
-      "stage": "관리처분인가",
-      "project_approval_date": "2024-07-22",
-      "management_disposal_date": "2025-09-23",
-      "construction_start_date": "",
-      "completion_date": "",
-      "latest_progress_date": "2025-09-25",
-      "latest_stage": "관리처분인가",
-      "latest_detail": "(변경)인가고시",
-      "latest_title": "(변경)인가고시",
-      "title": "양천구 11470-900000679 공급예정지 (관리처분인가)",
-      "detail": "",
-      "source": "서울시 정비사업 추진경과",
-      "supply_review": true,
-      "content_status": "시작 전",
-      "history_count": 33,
-      "history": [
-        {
-          "day": "2016-06-23",
-          "stage": "정비구역지정",
-          "detail_name": "주민공람공고 : 자치구",
-          "title": "신정재정비촉진지구 및 재정비촉진계획 변경 결정을 위한 공람공고"
-        },
-        {
-          "day": "2017-08-17",
-          "stage": "정비구역지정",
-          "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "신정재정비촉진지구 재정비촉진계획 변경결정 및 지형도면 고시"
-        },
-        {
-          "day": "2018-03-09",
-          "stage": "추진위원회",
-          "detail_name": "추진위원회구성(선출)",
-          "title": "예비추진위원 신원조회"
-        },
-        {
-          "day": "2018-03-20",
-          "stage": "추진위원회",
-          "detail_name": "동의서징구",
-          "title": "동의서 검인 발부"
-        },
-        {
-          "day": "2018-05-24",
-          "stage": "추진위원회",
-          "detail_name": "(변경)승인신청",
-          "title": "추진위원회 승인 신청"
-        },
-        {
-          "day": "2018-06-11",
-          "stage": "추진위원회",
-          "detail_name": "(변경)승인",
-          "title": "조합설립추진위원회 승인"
-        },
-        {
-          "day": "2018-10-29",
-          "stage": "기타",
-          "detail_name": "계약(변경)",
-          "title": ""
-        },
-        {
-          "day": "2019-06-29",
-          "stage": "기타",
-          "detail_name": "업체선정",
-          "title": ""
-        },
-        {
-          "day": "2019-06-29",
-          "stage": "조합설립인가",
-          "detail_name": "총회개최",
-          "title": "창립총회 개최"
-        },
-        {
-          "day": "2019-07-24",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": ""
-        },
-        {
-          "day": "2019-08-27",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": "조합설립인가"
-        },
-        {
-          "day": "2019-12-10",
-          "stage": "기타",
-          "detail_name": "계약(변경)",
-          "title": ""
-        },
-        {
-          "day": "2020-05-06",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": ""
-        },
-        {
-          "day": "2020-05-20",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": ""
-        },
-        {
-          "day": "2021-02-28",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": ""
-        },
-        {
-          "day": "2021-03-17",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": ""
-        },
-        {
-          "day": "2021-06-18",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": ""
-        },
-        {
-          "day": "2021-06-28",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": ""
-        },
-        {
-          "day": "2023-07-08",
-          "stage": "기타",
-          "detail_name": "업체선정",
-          "title": ""
-        },
-        {
-          "day": "2023-08-29",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": ""
-        },
-        {
-          "day": "2023-09-12",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": ""
-        },
-        {
-          "day": "2023-11-20",
-          "stage": "기타",
-          "detail_name": "계약(변경)",
-          "title": ""
-        },
-        {
-          "day": "2023-12-27",
-          "stage": "기타",
-          "detail_name": "계약(변경)",
-          "title": ""
-        },
-        {
-          "day": "2023-12-28",
-          "stage": "사업시행인가",
-          "detail_name": "(변경)인가신청",
-          "title": ""
-        },
-        {
-          "day": "2024-07-22",
-          "stage": "사업시행인가",
-          "detail_name": "(변경)인가",
-          "title": ""
-        },
-        {
-          "day": "2024-07-25",
-          "stage": "사업시행인가",
-          "detail_name": "(변경)인가고시",
-          "title": ""
-        },
-        {
-          "day": "2025-05-16",
-          "stage": "관리처분인가",
-          "detail_name": "(변경)인가신청",
-          "title": ""
-        },
-        {
-          "day": "2025-07-01",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": ""
-        },
-        {
-          "day": "2025-07-30",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": ""
-        },
-        {
-          "day": "2025-09-22",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가",
-          "title": ""
-        },
-        {
-          "day": "2025-09-22",
-          "stage": "조합설립인가",
-          "detail_name": "(변경)인가신청",
-          "title": ""
-        },
-        {
-          "day": "2025-09-23",
-          "stage": "관리처분인가",
-          "detail_name": "(변경)인가",
-          "title": ""
-        },
-        {
-          "day": "2025-09-25",
-          "stage": "관리처분인가",
-          "detail_name": "(변경)인가고시",
-          "title": ""
-        }
-      ],
-      "project_name": "",
-      "address_lot": "",
-      "business_type": "",
-      "site_url": "",
-      "map_id": "",
-      "site_match_status": "후보복수",
-      "site_candidates": "신정4재정비촉진구역 재건축정비사업조합 (신정동 1200-1, 관리처분인가) | 신정수정아파트 재건축정비사업 (신정동 733-31, 관리처분인가)",
-      "is_public_program": false,
-      "public_program_type": "미분류",
-      "public_program_reason": "사업장명/사업유형 매칭 부족",
-      "schedule_summary": "사업시행인가: 2024-07-22; 관리처분인가: 2025-09-23; 최근진행: 2025-09-25; 최근단계: 관리처분인가 / (변경)인가고시"
     },
     {
       "dedup_key": "redevelop_11650_900000605",
@@ -12388,16 +12400,16 @@
       "management_disposal_date": "2025-08-13",
       "construction_start_date": "",
       "completion_date": "",
-      "latest_progress_date": "2025-12-15",
+      "latest_progress_date": "2026-04-30",
       "latest_stage": "기타",
-      "latest_detail": "이주개시",
-      "latest_title": "공덕현대아파트 조합원(세입자 포함) 이주개시 알림",
+      "latest_detail": "계약(변경)",
+      "latest_title": "계약(변경)",
       "title": "망원동 459번지 가로주택정비사업 (관리처분인가)",
       "detail": "",
       "source": "서울시 정비사업 추진경과",
       "supply_review": true,
       "content_status": "시작 전",
-      "history_count": 19,
+      "history_count": 21,
       "history": [
         {
           "day": "2022-10-28",
@@ -12512,6 +12524,18 @@
           "stage": "기타",
           "detail_name": "이주개시",
           "title": "공덕현대아파트 조합원(세입자 포함) 이주개시 알림"
+        },
+        {
+          "day": "2026-04-10",
+          "stage": "기타",
+          "detail_name": "업체선정",
+          "title": ""
+        },
+        {
+          "day": "2026-04-30",
+          "stage": "기타",
+          "detail_name": "계약(변경)",
+          "title": ""
         }
       ],
       "project_name": "망원동 459번지 가로주택정비사업",
@@ -12524,7 +12548,7 @@
       "is_public_program": false,
       "public_program_type": "민간/일반",
       "public_program_reason": "공공사업 키워드 없음",
-      "schedule_summary": "사업시행인가: 2025-08-13; 관리처분인가: 2025-08-13; 최근진행: 2025-12-15; 최근단계: 기타 / 이주개시"
+      "schedule_summary": "사업시행인가: 2025-08-13; 관리처분인가: 2025-08-13; 최근진행: 2026-04-30; 최근단계: 기타 / 계약(변경)"
     },
     {
       "dedup_key": "redevelop_11290_900000097",
@@ -13798,13 +13822,13 @@
           "day": "2009-09-09",
           "stage": "추진위원회",
           "detail_name": "(변경)승인",
-          "title": "봉천제14구역 주택재개발정비사업 조합설립추진위원회승인"
+          "title": ""
         },
         {
           "day": "2009-09-09",
           "stage": "추진위원회",
           "detail_name": "(변경)승인",
-          "title": ""
+          "title": "봉천제14구역 주택재개발정비사업 조합설립추진위원회승인"
         },
         {
           "day": "2010-04-05",
@@ -19730,7 +19754,7 @@
       "construction_start_date": "",
       "completion_date": "",
       "latest_progress_date": "2024-07-19",
-      "latest_stage": "조합설립인가",
+      "latest_stage": "사업시행인가",
       "latest_detail": "(변경)인가",
       "latest_title": "(변경)인가",
       "title": "서대문구 11410-900000821 공급예정지 (사업시행인가)",
@@ -19773,7 +19797,7 @@
         {
           "day": "2021-11-17",
           "stage": "기타",
-          "detail_name": "업체선정",
+          "detail_name": "계약(변경)",
           "title": ""
         },
         {
@@ -19785,12 +19809,6 @@
         {
           "day": "2021-11-17",
           "stage": "기타",
-          "detail_name": "계약(변경)",
-          "title": ""
-        },
-        {
-          "day": "2021-11-24",
-          "stage": "기타",
           "detail_name": "업체선정",
           "title": ""
         },
@@ -19798,6 +19816,12 @@
           "day": "2021-11-24",
           "stage": "기타",
           "detail_name": "계약(변경)",
+          "title": ""
+        },
+        {
+          "day": "2021-11-24",
+          "stage": "기타",
+          "detail_name": "업체선정",
           "title": ""
         },
         {
@@ -19820,25 +19844,25 @@
         },
         {
           "day": "2024-04-30",
-          "stage": "조합설립인가",
+          "stage": "사업시행인가",
           "detail_name": "(변경)인가신청",
           "title": ""
         },
         {
           "day": "2024-04-30",
-          "stage": "사업시행인가",
+          "stage": "조합설립인가",
           "detail_name": "(변경)인가신청",
           "title": ""
         },
         {
           "day": "2024-07-19",
-          "stage": "조합설립인가",
+          "stage": "사업시행인가",
           "detail_name": "(변경)인가",
           "title": ""
         },
         {
           "day": "2024-07-19",
-          "stage": "사업시행인가",
+          "stage": "조합설립인가",
           "detail_name": "(변경)인가",
           "title": ""
         },
@@ -19859,7 +19883,7 @@
       "is_public_program": true,
       "public_program_type": "모아타운",
       "public_program_reason": "사업장/진행 정보에 '모아타운' 키워드 포함",
-      "schedule_summary": "사업시행인가: 2024-07-19; 최근진행: 2024-07-19; 최근단계: 조합설립인가 / (변경)인가"
+      "schedule_summary": "사업시행인가: 2024-07-19; 최근진행: 2024-07-19; 최근단계: 사업시행인가 / (변경)인가"
     },
     {
       "dedup_key": "redevelop_11560_900000771",
@@ -25129,13 +25153,13 @@
           "day": "2009-02-12",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "제기 제6주택재개발정비구역 지정 및 지형도면 작성"
+          "title": "제기 제6구역 구역지정고시"
         },
         {
           "day": "2009-02-12",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "제기 제6구역 구역지정고시"
+          "title": "제기 제6주택재개발정비구역 지정 및 지형도면 작성"
         },
         {
           "day": "2013-03-04",
@@ -33832,13 +33856,13 @@
           "day": "2005-12-29",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "정비구역지정"
+          "title": "제기제4주택재개발구역지정고시"
         },
         {
           "day": "2005-12-29",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "제기제4주택재개발구역지정고시"
+          "title": "정비구역지정"
         },
         {
           "day": "2007-02-01",
@@ -34405,13 +34429,13 @@
           "day": "2015-01-06",
           "stage": "기타",
           "detail_name": "계약(변경)",
-          "title": ""
+          "title": "(주)동우씨앤디 계약체결"
         },
         {
           "day": "2015-01-06",
           "stage": "기타",
           "detail_name": "계약(변경)",
-          "title": "(주)동우씨앤디 계약체결"
+          "title": ""
         },
         {
           "day": "2015-01-06",
@@ -41920,13 +41944,13 @@
           "day": "2010-06-28",
           "stage": "기타",
           "detail_name": "업체선정",
-          "title": ""
+          "title": "정비사업전문관리업자 선정"
         },
         {
           "day": "2010-06-28",
           "stage": "기타",
           "detail_name": "업체선정",
-          "title": "정비사업전문관리업자 선정"
+          "title": ""
         },
         {
           "day": "2010-12-28",
@@ -42567,19 +42591,19 @@
         {
           "day": "2009-12-17",
           "stage": "기타",
-          "detail_name": "업체선정",
-          "title": ""
-        },
-        {
-          "day": "2009-12-17",
-          "stage": "기타",
-          "detail_name": "업체선정",
-          "title": ""
-        },
-        {
-          "day": "2009-12-17",
-          "stage": "기타",
           "detail_name": "계약(변경)",
+          "title": ""
+        },
+        {
+          "day": "2009-12-17",
+          "stage": "기타",
+          "detail_name": "업체선정",
+          "title": ""
+        },
+        {
+          "day": "2009-12-17",
+          "stage": "기타",
+          "detail_name": "업체선정",
           "title": ""
         },
         {
@@ -48902,26 +48926,26 @@
         },
         {
           "day": "2017-09-27",
-          "stage": "기타",
-          "detail_name": "업체선정",
-          "title": ""
-        },
-        {
-          "day": "2017-09-27",
           "stage": "사업시행인가",
           "detail_name": "(변경)인가",
           "title": ""
         },
         {
-          "day": "2017-09-28",
+          "day": "2017-09-27",
           "stage": "기타",
-          "detail_name": "계약(변경)",
+          "detail_name": "업체선정",
           "title": ""
         },
         {
           "day": "2017-09-28",
           "stage": "사업시행인가",
           "detail_name": "(변경)인가고시",
+          "title": ""
+        },
+        {
+          "day": "2017-09-28",
+          "stage": "기타",
+          "detail_name": "계약(변경)",
           "title": ""
         },
         {
@@ -50739,13 +50763,13 @@
         {
           "day": "2025-09-05",
           "stage": "사업시행인가",
-          "detail_name": "(변경)인가",
+          "detail_name": "(변경)인가고시",
           "title": ""
         },
         {
           "day": "2025-09-05",
           "stage": "사업시행인가",
-          "detail_name": "(변경)인가고시",
+          "detail_name": "(변경)인가",
           "title": ""
         },
         {
@@ -54756,13 +54780,13 @@
         {
           "day": "2025-06-30",
           "stage": "사업시행인가",
-          "detail_name": "(변경)인가고시",
+          "detail_name": "(변경)인가",
           "title": ""
         },
         {
           "day": "2025-06-30",
           "stage": "사업시행인가",
-          "detail_name": "(변경)인가",
+          "detail_name": "(변경)인가고시",
           "title": ""
         },
         {
@@ -60577,25 +60601,25 @@
           "day": "2012-04-05",
           "stage": "기타",
           "detail_name": "계약(변경)",
-          "title": "창립총회용 렌탈(임대)계약서"
+          "title": "창립총회 용역계약서 (속기.영상.개표)"
         },
         {
           "day": "2012-04-05",
           "stage": "기타",
           "detail_name": "계약(변경)",
-          "title": "창립총회 용역계약서 (속기.영상.개표)"
-        },
-        {
-          "day": "2012-04-05",
-          "stage": "기타",
-          "detail_name": "업체선정",
-          "title": "창립총회 용역계약서 (속기.영상.개표)"
+          "title": "창립총회용 렌탈(임대)계약서"
         },
         {
           "day": "2012-04-05",
           "stage": "기타",
           "detail_name": "업체선정",
           "title": "창립총회용 렌탈(임대)계약서"
+        },
+        {
+          "day": "2012-04-05",
+          "stage": "기타",
+          "detail_name": "업체선정",
+          "title": "창립총회 용역계약서 (속기.영상.개표)"
         },
         {
           "day": "2012-04-06",
@@ -64096,13 +64120,13 @@
           "day": "2010-05-20",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "정비구역지정결정고시문(최초~변경)"
+          "title": "북아현재정비촉진지구 변경지정고시(북아현3구역)"
         },
         {
           "day": "2010-05-20",
           "stage": "정비구역지정",
           "detail_name": "구역지정(변경)고시 : 서울시",
-          "title": "북아현재정비촉진지구 변경지정고시(북아현3구역)"
+          "title": "정비구역지정결정고시문(최초~변경)"
         },
         {
           "day": "2011-09-01",
