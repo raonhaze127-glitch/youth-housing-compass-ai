@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-19T07:17:17.780683+00:00",
+  "generated_at": "2026-09-20T07:42:36.521004+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,61 +18,6 @@
       "code": "A00040"
     }
   ],
-  "count": 3,
-  "items": [
-    {
-      "dedup_key": "policy_f224a0e7a6fc6424",
-      "title": "[보도자료] 한성숙 국무총리, 주택공급 현장점검",
-      "department": "국무조정실",
-      "published_at": "2026-09-18T00:00:00+09:00",
-      "published_date": "2026-09-18",
-      "collected_date": "2026-09-19",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156782481&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-09-18&endDate=2026-09-19&srchWord=&period=day",
-      "rss": "https://www.korea.kr/rss/dept_opm.xml",
-      "summary": "",
-      "topics": [
-        "주택공급"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "높음"
-    },
-    {
-      "dedup_key": "policy_7be1c458553c5aff",
-      "title": "[보도자료] 제20차 부동산 불법행위 대응협의회",
-      "department": "국무조정실",
-      "published_at": "2026-09-18T00:00:00+09:00",
-      "published_date": "2026-09-18",
-      "collected_date": "2026-09-19",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156782469&pageIndex=1&repCodeType=&repCode=A00004&startDate=2026-09-18&endDate=2026-09-19&srchWord=&period=day",
-      "rss": "https://www.korea.kr/rss/dept_opm.xml",
-      "summary": "",
-      "topics": [
-        "부동산시장"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "중간"
-    },
-    {
-      "dedup_key": "policy_21b0f7a484ea77a7",
-      "title": "\"주택인 줄 알았는데 숙박시설\" 부동산 불법 광고 1만여 건 적발",
-      "department": "국토교통부",
-      "published_at": "2026-09-18T00:00:00+09:00",
-      "published_date": "2026-09-18",
-      "collected_date": "2026-09-19",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156782442&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-09-18&endDate=2026-09-19&srchWord=&period=day",
-      "rss": "https://www.korea.kr/rss/dept_molit.xml",
-      "summary": "",
-      "topics": [
-        "부동산시장"
-      ],
-      "targets": [
-        "일반가구"
-      ],
-      "relevance": "높음"
-    }
-  ]
+  "count": 0,
+  "items": []
 }
