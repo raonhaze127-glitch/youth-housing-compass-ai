@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-20T07:42:36.521004+00:00",
+  "generated_at": "2026-09-22T07:39:44.900569+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,6 +18,45 @@
       "code": "A00040"
     }
   ],
-  "count": 0,
-  "items": []
+  "count": 2,
+  "items": [
+    {
+      "dedup_key": "policy_e6aa2b4c92ee74e6",
+      "title": "[차관동정] 김이탁 제1차관, \"전월세 안심신탁사업, 국민이 체감하는 주거지원 제도로 안착시킬 것\"",
+      "department": "기획예산처",
+      "published_at": "",
+      "published_date": "",
+      "collected_date": "2026-09-22",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156782960&pWise=sub&pWiseSub=C3",
+      "rss": "https://www.korea.kr/rss/dept_mpb.xml",
+      "summary": "",
+      "topics": [
+        "주거안정",
+        "전월세"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_987e52297b0e395d",
+      "title": "[차관동정] 김이탁 제1차관, \"전월세 안심신탁사업, 국민이 체감하는 주거지원 제도로 안착시킬 것\"",
+      "department": "국무조정실",
+      "published_at": "",
+      "published_date": "",
+      "collected_date": "2026-09-22",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156782960&pWise=sub&pWiseSub=C3",
+      "rss": "https://www.korea.kr/rss/dept_opm.xml",
+      "summary": "",
+      "topics": [
+        "주거안정",
+        "전월세"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "높음"
+    }
+  ]
 }
