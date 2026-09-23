@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-22T07:39:44.900569+00:00",
+  "generated_at": "2026-09-23T07:41:36.270512+00:00",
   "feeds": [
     {
       "department": "국무조정실",
@@ -18,17 +18,53 @@
       "code": "A00040"
     }
   ],
-  "count": 2,
+  "count": 4,
   "items": [
     {
-      "dedup_key": "policy_e6aa2b4c92ee74e6",
+      "dedup_key": "policy_a08d7b7f8cabf720",
+      "title": "[참고] 「외국인 부동산 거래」 더 촘촘히 들여다본다",
+      "department": "국토교통부",
+      "published_at": "2026-09-23T00:00:00+09:00",
+      "published_date": "2026-09-23",
+      "collected_date": "2026-09-23",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156783080&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-09-22&endDate=2026-09-23&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "부동산시장"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "중간"
+    },
+    {
+      "dedup_key": "policy_6804d611bafce4a1",
+      "title": "[참고] 청약 예·부금 등 가입자, 종합저축 전환기회 1년 더",
+      "department": "국토교통부",
+      "published_at": "2026-09-23T00:00:00+09:00",
+      "published_date": "2026-09-23",
+      "collected_date": "2026-09-23",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156783091&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-09-22&endDate=2026-09-23&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
+      "summary": "",
+      "topics": [
+        "주거안정"
+      ],
+      "targets": [
+        "일반가구"
+      ],
+      "relevance": "높음"
+    },
+    {
+      "dedup_key": "policy_dae8712e6ab4a120",
       "title": "[차관동정] 김이탁 제1차관, \"전월세 안심신탁사업, 국민이 체감하는 주거지원 제도로 안착시킬 것\"",
-      "department": "기획예산처",
-      "published_at": "",
-      "published_date": "",
-      "collected_date": "2026-09-22",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156782960&pWise=sub&pWiseSub=C3",
-      "rss": "https://www.korea.kr/rss/dept_mpb.xml",
+      "department": "국토교통부",
+      "published_at": "2026-09-22T00:00:00+09:00",
+      "published_date": "2026-09-22",
+      "collected_date": "2026-09-23",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156782960&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-09-22&endDate=2026-09-23&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
       "summary": "",
       "topics": [
         "주거안정",
@@ -40,18 +76,17 @@
       "relevance": "높음"
     },
     {
-      "dedup_key": "policy_987e52297b0e395d",
-      "title": "[차관동정] 김이탁 제1차관, \"전월세 안심신탁사업, 국민이 체감하는 주거지원 제도로 안착시킬 것\"",
-      "department": "국무조정실",
-      "published_at": "",
-      "published_date": "",
-      "collected_date": "2026-09-22",
-      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156782960&pWise=sub&pWiseSub=C3",
-      "rss": "https://www.korea.kr/rss/dept_opm.xml",
+      "dedup_key": "policy_1073756d671a5b82",
+      "title": "[장관동정] 홍지선 장관, 첫 행보로 3기 신도시 현장점검, \"주택공급 실행력 높여 국민 체감성과 창출\"",
+      "department": "국토교통부",
+      "published_at": "2026-09-22T00:00:00+09:00",
+      "published_date": "2026-09-22",
+      "collected_date": "2026-09-23",
+      "url": "https://www.korea.kr/briefing/pressReleaseView.do?newsId=156782980&pageIndex=1&repCodeType=&repCode=A00006&startDate=2026-09-22&endDate=2026-09-23&srchWord=&period=day",
+      "rss": "https://www.korea.kr/rss/dept_molit.xml",
       "summary": "",
       "topics": [
-        "주거안정",
-        "전월세"
+        "주택공급"
       ],
       "targets": [
         "일반가구"
